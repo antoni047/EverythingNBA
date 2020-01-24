@@ -20,6 +20,7 @@ namespace EverythingNBA.Data
 
         public DbSet<AllStarTeam> AllStarTeams { get; set; }
         public DbSet<Award> Awards { get; set; }
+        public DbSet<CloudinaryImage> CloudinaryImages { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Playoff> Playoffs { get; set; }
