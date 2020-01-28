@@ -10,7 +10,6 @@ namespace EverythingNBA.Models
     {
         public int Id { get; set; }
 
-        
         public int? SeasonId { get; set; }
         public Season Season { get; set; }
 
@@ -19,10 +18,5 @@ namespace EverythingNBA.Models
 
         [Required]
         public int Losses { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public int WinPercentage {
-            get { return (Wins / (Wins + Losses)) * 100;}
-}
     }
 }
