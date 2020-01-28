@@ -43,10 +43,7 @@
         public double FieldGoalsMade { get; set; }
 
         [Range(MinimumStat, MaximumGeneralStat)]
-        public double FieldgoalAttempts { get; set; }
-
-        [Range(MinimumStat, MaximumGeneralStat)]
-        public double Fielgoalpercentage { get; set; }
+        public double FieldGoalAttempts { get; set; }
 
         [Range(MinimumStat, MaximumGeneralStat)]
         public double ThreeMade { get; set; }
@@ -55,16 +52,10 @@
         public double ThreeAttempts { get; set; }
 
         [Range(MinimumStat, MaximumGeneralStat)]
-        public double ThreePercentage { get; set; }
-
-        [Range(MinimumStat, MaximumGeneralStat)]
         public double FreeThrowsMade { get; set; }
 
         [Range(MinimumStat, MaximumGeneralStat)]
-        public double FreethrowAttempts { get; set; }
-
-        [Range(MinimumStat, MaximumGeneralStat)]
-        public double FreeThrowPercentage { get; set; }
+        public double FreeThrowAttempts { get; set; }
 
     }
 }
