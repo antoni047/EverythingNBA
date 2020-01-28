@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EverythingNBA.Models
 {
-    public class SingleSeasonStatistic
+    public class SeasonStatistic
     {
         public int Id { get; set; }
 

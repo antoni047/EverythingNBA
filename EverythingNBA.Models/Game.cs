@@ -8,7 +8,7 @@
     {
         public Game()
         {
-            this.PlayerStats = new List<SingleGameStatistic>();
+            this.PlayerStats = new List<GameStatistic>();
         }
 
         public int Id { get; set; }
@@ -35,6 +35,6 @@
         [Required]
         public DateTime Date { get; set; }
 
-        public ICollection<SingleGameStatistic> PlayerStats{ get; set; }
+        public ICollection<GameStatistic> PlayerStats{ get; set; }
     }
 }

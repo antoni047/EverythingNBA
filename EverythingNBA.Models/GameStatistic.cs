@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using static EverythingNBA.Models.Utilities.DataConstants;
-    public class SingleGameStatistic
+    public class GameStatistic
     {
         public int Id { get; set; }
 

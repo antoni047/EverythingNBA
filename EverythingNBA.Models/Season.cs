@@ -9,7 +9,7 @@
         {
             this.AllStarTeams = new List<AllStarTeam>();
             this.Games = new List<Game>();
-            this.SingleSeasonStatistics = new List<SingleSeasonStatistic>();
+            this.SingleSeasonStatistics = new List<SeasonStatistic>();
         }
 
         public int Id { get; set; }
@@ -29,6 +29,6 @@
 
         public ICollection<Game> Games { get; set; }
 
-        public ICollection<SingleSeasonStatistic> SingleSeasonStatistics { get; set; }
+        public ICollection<SeasonStatistic> SingleSeasonStatistics { get; set; }
     }
 }

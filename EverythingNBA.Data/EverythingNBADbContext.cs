@@ -26,8 +26,8 @@ namespace EverythingNBA.Data
         public DbSet<Playoff> Playoffs { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Series> Series { get; set; }
-        public DbSet<SingleGameStatistic> SingleGameStatistics { get; set; }
-        public DbSet<SingleSeasonStatistic> SingleSeasonStatistics { get; set; }
+        public DbSet<GameStatistic> SingleGameStatistics { get; set; }
+        public DbSet<SeasonStatistic> SingleSeasonStatistics { get; set; }
         public DbSet<Team> Teams { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -60,7 +60,7 @@ namespace EverythingNBA.Data
 
             ////One-To-Many/Many-To-One
 
-            builder.Entity<SingleGameStatistic>()
+            builder.Entity<GameStatistic>()
                 .HasOne(g => g.Game)
                 .WithMany(g => g.PlayerStats)
                 .HasForeignKey(p => p.GameId);

@@ -13,7 +13,7 @@
         {
             this.AllStarTeams = new List<AllStarTeamsPlayers>();
             this.Awards = new List<Award>();
-            this.SingleGameStatistics = new List<SingleGameStatistic>();
+            this.SingleGameStatistics = new List<GameStatistic>();
         }
 
         public int Id { get; set; }
@@ -60,7 +60,7 @@
         public ICollection<Award> Awards { get; set; }
         public ICollection<AllStarTeamsPlayers> AllStarTeams { get; set; }
 
-        public ICollection<SingleGameStatistic> SingleGameStatistics { get; set; }
+        public ICollection<GameStatistic> SingleGameStatistics { get; set; }
 
         //Current Season Stats 
 

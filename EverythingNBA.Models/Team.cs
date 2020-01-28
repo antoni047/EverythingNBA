@@ -13,7 +13,7 @@
         {
             this.TitlesWon = new List<Season>();
             this.Players = new List<Player>();
-            this.SeasonsStatistics = new List<SingleSeasonStatistic>();
+            this.SeasonsStatistics = new List<SeasonStatistic>();
             this.AwayGames = new List<Game>();
             this.GamesWon = new List<Game>();
             this.HomeGames = new List<Game>();
@@ -36,7 +36,7 @@
         [Required]
         public string Venue { get; set; }
 
-        public ICollection<SingleSeasonStatistic> SeasonsStatistics { get; set; }
+        public ICollection<SeasonStatistic> SeasonsStatistics { get; set; }
         public ICollection<Game> AwayGames { get; set; }
         public ICollection<Game> GamesWon { get; set; }
         public ICollection<Game> HomeGames { get; set; }
