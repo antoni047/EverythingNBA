@@ -36,6 +36,10 @@
         [Required]
         public string Venue { get; set; }
 
+        public string Instagram { get; set; }
+
+        public string Twitter { get; set; }
+
         public ICollection<SeasonStatistic> SeasonsStatistics { get; set; }
         public ICollection<Game> AwayGames { get; set; }
         public ICollection<Game> GamesWon { get; set; }

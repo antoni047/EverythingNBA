@@ -57,6 +57,10 @@
         [Range(MinShirtNumber, MaxShirtNumber)]
         public int ShirtNumber { get; set; }
 
+        public string InstagramLink { get; set; }
+
+        public string TwitterLink { get; set; }
+
         public ICollection<Award> Awards { get; set; }
         public ICollection<AllStarTeamsPlayers> AllStarTeams { get; set; }
 
