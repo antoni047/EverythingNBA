@@ -11,20 +11,20 @@ namespace EverythingNBA.Services.Implementations
     public class PlayerService : IPlayerService
     {
         private readonly EverythingNBADbContext db;
-        //private readonly IPictureService pictureService;
+        private readonly IImageService imageService;
 
-        public PlayerService(EverythingNBADbContext db/*, IPictureService pictureService*/)
+        public PlayerService(EverythingNBADbContext db, IImageService imageService)
         {
             this.db = db;
-            //this.pictureService = pictureService;
+            this.imageService = imageService;
         }
 
         public async Task<int> AddPlayerAsync(string firstName, string lastName, int teamId, int? rookieYear, int age, int height, int weight, 
-            string position, bool isStarter, IFormFile pictureFile, int shirtNumber, string instagramLink, string twitterLink, 
+            string position, bool isStarter, IFormFile imageFile, int shirtNumber, string instagramLink, string twitterLink, 
             double currentPoints, double currentAssists, double currentRebounds, double currentBlocks, double currentSteals, 
             double currentFreeThrowPercentage, double currentThreePercentage, double currentFieldGoalPercentage)
         {
-            //var picId = await this.pictureService.UploadImageAsync(pictureFile);
+            var imageId = await this.imageService.UploadImageAsync(imageFile);
 
             var playerObj = new Player
             {
@@ -37,7 +37,7 @@ namespace EverythingNBA.Services.Implementations
                 Weight = weight,
                 Position = (PositionType)Enum.Parse(typeof(PositionType), position),
                 IsStarter = isStarter,
-                //CloudinaryImageId = picId,
+                CloudinaryImageId = imageId,
                 ShirtNumber = shirtNumber,
                 InstagramLink = instagramLink,
                 TwitterLink = twitterLink,

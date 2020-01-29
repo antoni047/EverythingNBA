@@ -7,11 +7,11 @@
         [Key]
         public int Id { get; set; }
 
-        public string PicturePublicId { get; set; }
+        public string ImagePublicId { get; set; }
 
-        public string PictureUrl { get; set; }
+        public string ImageURL { get; set; }
 
-        public string PictureThumbnailUrl { get; set; }
+        public string ImageThumbnailURL{ get; set; }
 
         public long Length { get; set; }
     }
