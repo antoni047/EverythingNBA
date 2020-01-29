@@ -11,5 +11,6 @@ namespace EverythingNBA.Services
             bool isStarter, IFormFile pictureFile, int shirtNumber, string instagramLink, string twitterLink, double currentPoints,
             double currentAssists, double currentRebounds, double currentBlocks, double currentSteals, double currentFreeThrowPercentage,
             double currentThreePercentage, double currentFieldGoalPercentage);
-    }
+
+        Task DeletePlayerAsync(int playerId);
 }
