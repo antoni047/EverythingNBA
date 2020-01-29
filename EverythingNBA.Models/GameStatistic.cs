@@ -8,11 +8,11 @@
 
         
         public int GameId { get; set; }
-        public Game Game { get; set; }
+        public virtual Game Game { get; set; }
 
         
         public int PlayerId { get; set; }
-        public Player Player { get; set; }
+        public virtual Player Player { get; set; }
 
         [Required]
         [Range(MinMinutesPlayed, MaxMinutesPlayed)]

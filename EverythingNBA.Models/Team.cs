@@ -27,7 +27,7 @@
 
         public int? CloudinaryImageId { get; set; }
 
-        public CloudinaryImage CloudinaryImage { get; set; }
+        public virtual CloudinaryImage CloudinaryImage { get; set; }
 
 
         [Required]
@@ -40,11 +40,11 @@
 
         public string Twitter { get; set; }
 
-        public ICollection<SeasonStatistic> SeasonsStatistics { get; set; }
-        public ICollection<Game> AwayGames { get; set; }
-        public ICollection<Game> GamesWon { get; set; }
-        public ICollection<Game> HomeGames { get; set; }
-        public ICollection<Player> Players { get; set; }
-        public ICollection<Season> TitlesWon { get; set; }
+        public virtual ICollection<SeasonStatistic> SeasonsStatistics { get; set; }
+        public virtual ICollection<Game> AwayGames { get; set; }
+        public virtual ICollection<Game> GamesWon { get; set; }
+        public virtual ICollection<Game> HomeGames { get; set; }
+        public virtual ICollection<Player> Players { get; set; }
+        public virtual ICollection<Season> TitlesWon { get; set; }
     }
 }

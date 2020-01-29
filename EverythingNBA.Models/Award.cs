@@ -18,6 +18,6 @@
         public int Year { get; set; }
         
         public int? WinnerId { get; set; }
-        public Player Winner { get; set; }
+        public virtual Player Winner { get; set; }
     }
 }

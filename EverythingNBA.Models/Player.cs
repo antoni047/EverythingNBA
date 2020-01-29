@@ -28,7 +28,7 @@
 
         
         public int? TeamId { get; set; }
-        public Team Team { get; set; }
+        public virtual Team Team { get; set; }
 
         public int? RookieYear { get; set; }
 
@@ -51,7 +51,7 @@
 
         public int? CloudinaryImageId { get; set; }
 
-        public CloudinaryImage CloudinaryImage { get; set; }
+        public virtual CloudinaryImage CloudinaryImage { get; set; }
 
         [Required]
         [Range(MinShirtNumber, MaxShirtNumber)]
@@ -61,10 +61,10 @@
 
         public string TwitterLink { get; set; }
 
-        public ICollection<Award> Awards { get; set; }
-        public ICollection<AllStarTeamsPlayers> AllStarTeams { get; set; }
+        public virtual ICollection<Award> Awards { get; set; }
+        public virtual ICollection<AllStarTeamsPlayers> AllStarTeams { get; set; }
 
-        public ICollection<GameStatistic> SingleGameStatistics { get; set; }
+        public virtual ICollection<GameStatistic> SingleGameStatistics { get; set; }
 
         //Current Season Stats 
 
