@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EverythingNBA.Data\EverythingNBA.Data.csproj" />
+    <ProjectReference Include="..\EverythingNBA.Models\EverythingNBA.Models.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -97,31 +97,31 @@
 
 
         //Career Stats
-        [Range(MinimumStat, MaximumGeneralStat)]
-        public double CareerAvereagePoints { get; set; }
+        //[Range(MinimumStat, MaximumGeneralStat)]
+        //public double CareerAvereagePoints { get; set; }
 
-        [Range(MinimumStat, MaximumGeneralStat)]
-        public double CareerAverageAssists { get; set; }
+        //[Range(MinimumStat, MaximumGeneralStat)]
+        //public double CareerAverageAssists { get; set; }
 
-        [Range(MinimumStat, MaximumGeneralStat)]
-        public double CareerAverageRebounds { get; set; }
+        //[Range(MinimumStat, MaximumGeneralStat)]
+        //public double CareerAverageRebounds { get; set; }
 
 
 
-        [Range(MinimumStat, MaximumGeneralStat)]
-        public double CareerAverageBlocks { get; set; }
+        //[Range(MinimumStat, MaximumGeneralStat)]
+        //public double CareerAverageBlocks { get; set; }
 
-        [Range(MinimumStat, MaximumGeneralStat)]
-        public double CareerAverageSteals { get; set; }
+        //[Range(MinimumStat, MaximumGeneralStat)]
+        //public double CareerAverageSteals { get; set; }
 
-        [Range(MinimumPercentage, MaximumPercentage)]
-        public double CareerAverageFieldGoalPercentage { get; set; }
+        //[Range(MinimumPercentage, MaximumPercentage)]
+        //public double CareerAverageFieldGoalPercentage { get; set; }
 
-        [Range(MinimumPercentage, MaximumPercentage)]
-        public double CareerAverageThreePercentage { get; set; }
+        //[Range(MinimumPercentage, MaximumPercentage)]
+        //public double CareerAverageThreePercentage { get; set; }
 
-        [Range(MinimumPercentage, MaximumPercentage)]
-        public double CareerAverageFreeThrowPercentage { get; set; }
+        //[Range(MinimumPercentage, MaximumPercentage)]
+        //public double CareerAverageFreeThrowPercentage { get; set; }
 
     }
 }
