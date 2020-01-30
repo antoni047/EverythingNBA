@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200130121828_FixedPlayoffTable.cs" />
+    <Compile Remove="Migrations\20200130121828_FixedPlayoffTable.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="CloudinaryDotNet" Version="1.9.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.1" />
