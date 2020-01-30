@@ -13,4 +13,5 @@ namespace EverythingNBA.Services
             double currentThreePercentage, double currentFieldGoalPercentage);
 
         Task DeletePlayerAsync(int playerId);
+    }
 }
