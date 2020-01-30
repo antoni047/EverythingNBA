@@ -24,6 +24,7 @@
                 Team2Id = team2Id,
                 WinnerPoints = winnerPoints,
                 LoserPoints = loserPoints,
+                Date = date,
                 IsFinished = isFinished
             };
 
