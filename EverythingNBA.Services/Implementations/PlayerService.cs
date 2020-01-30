@@ -58,13 +58,20 @@ namespace EverythingNBA.Services.Implementations
 
         }
 
-        public async Task DeletePlayerAsync(int playerId)
+        public async Task<bool> DeletePlayerAsync(int playerId)
         {
             var playerToDelete = await this.db.Players.FindAsync(playerId);
+
+            if (playerToDelete == null)
+            {
+                return false;
+            }
 
             this.db.Remove(playerToDelete);
 
             await this.db.SaveChangesAsync();
+
+            return true;
         }
 
 

@@ -12,6 +12,6 @@ namespace EverythingNBA.Services
             double currentAssists, double currentRebounds, double currentBlocks, double currentSteals, double currentFreeThrowPercentage,
             double currentThreePercentage, double currentFieldGoalPercentage);
 
-        Task DeletePlayerAsync(int playerId);
+        Task<bool> DeletePlayerAsync(int playerId);
     }
 }
