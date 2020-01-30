@@ -25,9 +25,7 @@
         public int? Team2Id { get; set; }
         public virtual Team Team2 { get; set; }
 
-        
-        public int? WinnerId { get; set; }
-        public virtual Team Winner { get; set; }
+        public bool IsFinished { get; set; }
 
         public int? WinnerPoints { get; set; }
         public int? LoserPoints { get; set; }
