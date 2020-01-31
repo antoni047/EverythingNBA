@@ -6,20 +6,23 @@
     using EverythingNBA.Services.Models;
 
     using Microsoft.AspNetCore.Http;
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using AutoMapper;
+    using System.Collections.Generic;
 
     public class TeamService : ITeamService
     {
         private readonly EverythingNBADbContext db;
         private readonly IImageService imageService;
+        private readonly ISeasonStatisticService statisticService;
 
-        public TeamService(EverythingNBADbContext db, IImageService imageService)
+        public TeamService(EverythingNBADbContext db, IImageService imageService, ISeasonStatisticService statisticService)
         {
             this.db = db;
             this.imageService = imageService;
+            this.statisticService = statisticService;
         }
 
         public async Task<int> AddTeamAsync(string name, IFormFile imageFile, string conference, string venue, string instagram, string twitter)
@@ -58,30 +61,32 @@
             return true;
         }
 
-        public async Task<TeamStandingsListingServiceModel> GetStandingsAsync(int seasonId)
+        public async Task<ICollection<TeamStandingsListingServiceModel>> GetStandingsAsync(int seasonId)
         {
-            //var teams = this.db.Teams.ToList();
+            var teams = this.db.Teams.ToList();
 
-            //foreach (var team in teams)
-            //{
-            //    var teamId = team.Id;
-            //    var seasonStatistic = //get season statistic
-            //    var winPercentage = //get winspercetage from seasonstatistic service
+            var standingsList = new List<TeamStandingsListingServiceModel>();
 
-            //    var result = new TeamStandingsListingServiceModel
-            //    {
-            //        Name = team.Name,
-            //        TeamLogoImageURL = team.CloudinaryImage.ImageURL,
-            //        Conference = team.Conference.ToString(),
-            //        Wins = //seasonStatistic.Wins,
-            //        //Losses = seasonStatistic.Losses,
-            //        //WinPercentage = winsPercentage,
+            foreach (var team in teams)
+            {
+                var model = statisticService.GetAsync(seasonId, team.Id);
+                var seasonStatistic = Mapper.Map<SeasonStatistic>(model);
+                var winPercentage = statisticService.GetWinPercentageAsync(seasonStatistic.Id);
 
+                var result = new TeamStandingsListingServiceModel
+                {
+                    Name = team.Name,
+                    TeamLogoImageURL = team.CloudinaryImage.ImageURL,
+                    Conference = team.Conference.ToString(),
+                    Wins = seasonStatistic.Wins,
+                    Losses = seasonStatistic.Losses,
+                    WinPercentage = winPercentage.ToString(),
+                };
 
-            //    };
-            //}
+                standingsList.Add(result);
+            }
 
-            throw new NotImplementedException();
+            return standingsList;
         }
     }
 }
