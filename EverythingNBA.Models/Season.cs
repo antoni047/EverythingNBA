@@ -30,6 +30,8 @@
 
         public virtual ICollection<AllStarTeam> AllStarTeams { get; set; }
 
+        public  ICollection<Award> Awards { get; set; }
+
         public virtual ICollection<Game> Games { get; set; }
 
         public virtual ICollection<SeasonStatistic> SingleSeasonStatistics { get; set; }
