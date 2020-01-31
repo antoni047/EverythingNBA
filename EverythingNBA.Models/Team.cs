@@ -25,6 +25,8 @@
         [MinLength(MinTeamName), MaxLength(MaxTeamName)]
         public string Name { get; set; }
 
+        public string AbbreviatedName { get; set; }
+
         public int? CloudinaryImageId { get; set; }
 
         public virtual CloudinaryImage CloudinaryImage { get; set; }
