@@ -19,5 +19,9 @@
         
         public int? WinnerId { get; set; }
         public virtual Player Winner { get; set; }
+
+        public int? SeasonId { get; set; }
+
+        public Season Season { get; set; }
     }
 }
