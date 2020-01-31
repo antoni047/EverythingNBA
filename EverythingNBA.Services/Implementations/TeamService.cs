@@ -63,15 +63,15 @@
 
         public async Task<ICollection<TeamStandingsListingServiceModel>> GetStandingsAsync(int seasonId)
         {
-            var teams = this.db.Teams.ToList();
-
             var standingsList = new List<TeamStandingsListingServiceModel>();
+
+            var teams = this.db.Teams.ToList();
 
             foreach (var team in teams)
             {
-                var model = statisticService.GetAsync(seasonId, team.Id);
+                var model = await statisticService.GetAsync(seasonId, team.Id);
                 var seasonStatistic = Mapper.Map<SeasonStatistic>(model);
-                var winPercentage = statisticService.GetWinPercentageAsync(seasonStatistic.Id);
+                var winPercentage = await statisticService.GetWinPercentageAsync(seasonStatistic.Id);
 
                 var result = new TeamStandingsListingServiceModel
                 {
