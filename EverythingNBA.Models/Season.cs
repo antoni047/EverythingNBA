@@ -21,7 +21,10 @@
         public int? TitleWinnerId { get; set; }
         public virtual Team TitleWinner { get; set; }
 
-        
+        [Required]
+        public int GamesPlayed { get; set; }
+
+
         public int? PlayoffId { get; set; }
         public virtual Playoff Playoff { get; set; }
 
