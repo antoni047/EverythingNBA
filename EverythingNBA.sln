@@ -13,12 +13,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D7C221AD
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{4A69DC16-E02A-4C4E-ABBA-82FA7D27097D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingNBA.Web", "EverythingNBA.Web\EverythingNBA.Web.csproj", "{73A0A68A-072E-4062-A274-AC073856E665}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingNBA.Services", "EverythingNBA.Services\EverythingNBA.Services.csproj", "{6B7AE355-B833-48A0-B54F-CFB591C08DEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingNBA.Services", "EverythingNBA.Services\EverythingNBA.Services.csproj", "{6B7AE355-B833-48A0-B54F-CFB591C08DEE}"
 	ProjectSection(ProjectDependencies) = postProject
+		{463261AC-77CA-4680-9964-1B8487409C97} = {463261AC-77CA-4680-9964-1B8487409C97}
 		{214ADAC2-BC46-4D74-A04D-6FDDA771B6D6} = {214ADAC2-BC46-4D74-A04D-6FDDA771B6D6}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EverythingNBA.Services.Mapping", "EverythingNBA.Services.Mapping\EverythingNBA.Services.Mapping.csproj", "{463261AC-77CA-4680-9964-1B8487409C97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp", "DemoApp\DemoApp.csproj", "{2585FEEB-4B3E-4EB5-B51A-20061518489D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,14 +37,18 @@ Global
 		{6FA95507-583B-4F0B-B01A-895275655035}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FA95507-583B-4F0B-B01A-895275655035}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FA95507-583B-4F0B-B01A-895275655035}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73A0A68A-072E-4062-A274-AC073856E665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73A0A68A-072E-4062-A274-AC073856E665}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73A0A68A-072E-4062-A274-AC073856E665}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73A0A68A-072E-4062-A274-AC073856E665}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B7AE355-B833-48A0-B54F-CFB591C08DEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6B7AE355-B833-48A0-B54F-CFB591C08DEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B7AE355-B833-48A0-B54F-CFB591C08DEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B7AE355-B833-48A0-B54F-CFB591C08DEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{463261AC-77CA-4680-9964-1B8487409C97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463261AC-77CA-4680-9964-1B8487409C97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463261AC-77CA-4680-9964-1B8487409C97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463261AC-77CA-4680-9964-1B8487409C97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2585FEEB-4B3E-4EB5-B51A-20061518489D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2585FEEB-4B3E-4EB5-B51A-20061518489D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2585FEEB-4B3E-4EB5-B51A-20061518489D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2585FEEB-4B3E-4EB5-B51A-20061518489D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -10,6 +10,9 @@ namespace EverythingNBA.Models
     {
         public int Id { get; set; }
 
+        public int TeamId { get; set; }
+        public Team Team { get; set; }
+
         public int? SeasonId { get; set; }
         public virtual Season Season { get; set; }
 
