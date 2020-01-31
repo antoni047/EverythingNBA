@@ -2,11 +2,17 @@
 {
     using System.Threading.Tasks;
     using System;
+    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
+    using System.Collections.Generic;
+    using System.Linq.Expressions;
 
     using EverythingNBA.Data;
     using EverythingNBA.Models;
+    using EverythingNBA.Services.Models;
+    using EverythingNBA.Services.Mapping;
 
-    public class SeasonStatisticService : ISeasonStatisticService;
+    public class SeasonStatisticService : ISeasonStatisticService
     {
         private readonly EverythingNBADbContext db;
 
@@ -43,6 +49,25 @@
             await this.db.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<GetSeasonStatisticDetailsServiceModel> GetAsync(int seasonId, int teamId)
+        {
+            var statistic = await this.db.SingleSeasonStatistics.Where(ss => ss.TeamId == teamId && ss.SeasonId == seasonId).FirstOrDefaultAsync();
+
+            var model = Mapping.Mapper.Map<GetSeasonStatisticDetailsServiceModel>(statistic);
+
+            return model;
+        }
+
+        public async Task<string> GetWinPercentageAsync(int seasonStatisticId)
+        {
+            var statistic = await this.db.SingleSeasonStatistics.FindAsync(seasonStatisticId);
+
+            var result = statistic.Wins / statistic.Season.GamesPlayed;
+
+            return result.ToString("0.000");
+
         }
     }
 }

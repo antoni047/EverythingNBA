@@ -38,6 +38,11 @@
             return seriesObj.Id;
         }
 
+        public Task<int> AddSeriesAsync(int team1Id, int team2Id, int winnerGamesWon, int loserGamesWon, int game1Id, int game2Id, int game3Id, int game4Id, int? game5Id, int? game6Id, int? game7Id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> DeleteSerieAsync(int seriesId)
         {
             var seriesToDelete = await this.db.Series.FindAsync(seriesId);
