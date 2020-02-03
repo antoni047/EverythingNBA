@@ -8,15 +8,20 @@
 
     using EverythingNBA.Data;
     using EverythingNBA.Models;
+    using EverythingNBA.Services.Models.AllStarTeam;
     using EverythingNBA.Services.Models;
 
     public class SeasonService : ISeasonService
     {
         private readonly EverythingNBADbContext db;
+        private readonly IAwardService awardService;
+        private readonly IAllStarTeamService ASTeamService;
 
-        public SeasonService(EverythingNBADbContext db)
+        public SeasonService(EverythingNBADbContext db, IAwardService awardService, IAllStarTeamService ASTeamService)
         {
             this.db = db;
+            this.awardService = awardService;
+            this.ASTeamService = ASTeamService;
         }
 
         public async Task<int> AddAsync(int year, int? titleWinnerId, int? playoffId)
@@ -72,22 +77,23 @@
             var bestSeed = season.SingleSeasonStatistics.OrderByDescending(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
             var worstSeed = season.SingleSeasonStatistics.OrderBy(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
 
-            //var topScorer = GetTopScorerAsync(season.Id)
-            //var MVP = GetMVPAsync(season.Id)
-            //var DPOTY = GetDPOTYAsync(season.Id)
-            //var sixthMOTY = GetSixthMOTYAsync(season.Id)
-            //var ROTY = GetROTYAsync(season.Id)
-            //var MIP = GetMIPAsync(season.Id)
+            var topScorer = await awardService.GetAwardWinnerAsync(season.Id, "Top Scorer");
+            var MVP = await awardService.GetAwardWinnerAsync(season.Id, "MVP");
+            var DPOTY = await awardService.GetAwardWinnerAsync(season.Id, "DPOTY");
+            var sixthMOTY = await awardService.GetAwardWinnerAsync(season.Id, "SixthMOTY");
+            var ROTY = await awardService.GetAwardWinnerAsync(season.Id, "ROTY");
+            var MIP = await awardService.GetAwardWinnerAsync(season.Id, "MIP");
 
-            //var firstAllNBATeam = GetFirstAllNBATeamAsync(season.Id);
-            //var secondAllNBATeam = GetSecondAllNBATeamAsync(season.Id);
-            //var thirdAllNBATeam = GetThirdAllNBATeamAsync(season.Id);
-            //var AllDefensiveTeam = GetAllDefensiveTeamAsync(season.Id);
-            //var AllrookieTeam = GetAllRookieTeamAsync(season.Id);
+            var firstAllNBATeam = await ASTeamService.GetAllStarTeamAsync("FirstAllNBA", season.Id);
+            var secondAllNBATeam = await ASTeamService.GetAllStarTeamAsync("SecondAllNBA", season.Id);
+            var thirdAllNBATeam = await ASTeamService.GetAllStarTeamAsync("ThirdAllNBA", season.Id);
+            var allDefensiveTeam = await ASTeamService.GetAllStarTeamAsync("AllDefensive", season.Id);
+            var allRookieTeam = await ASTeamService.GetAllStarTeamAsync("AllRookie", season.Id);
 
             var model = new GetSeasonDetailsServiceModel
             {
-
+                Year = season.Year,
+                FirstAllNBATeamId = firstAllNBATeam.Id,
             };
 
         }

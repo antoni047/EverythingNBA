@@ -41,14 +41,14 @@ namespace EverythingNBA.Services.Models
 
         public string MIP { get; set; }
 
-        public int FirstAllNBATeamId { get; set; }
+        public int FirstAllNBATeam { get; set; }
 
-        public int SecondAllNBATeamId { get; set; }
+        public int SecondAllNBATeam { get; set; }
 
-        public int ThirdAllNBATeamId { get; set; }
+        public int ThirdAllNBATeam { get; set; }
 
-        public int AllDefenesiveTeamId { get; set; }
+        public int AllDefenesiveTeam { get; set; }
 
-        public int AllRookieTeamId { get; set; }
+        public int AllRookieTeam { get; set; }
     }
 }
