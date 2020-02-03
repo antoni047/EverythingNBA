@@ -117,6 +117,13 @@ namespace EverythingNBA.Services.Implementations
 
                     return name;
 
+                case "FinalsMVP": 
+                    player  = awards.Where(a => a.Name.ToString() == "FinalsMVP").Select(a => a.Winner).FirstOrDefault();
+
+                    name = player.FirstName + " " + player.LastName;
+
+                    return name;
+
                 default:
                     return null;
             } //returns name
