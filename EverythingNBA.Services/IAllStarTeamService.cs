@@ -13,10 +13,12 @@
 
         Task<bool> DeleteAllStarTeamAsync(int allStarTeamId);
 
+        Task<GetAllStarTeamServiceModel> GetAllStarTeamAsync(int id);
+
         Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsByNameAsync (string type);
 
         Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsBySeasonAsync(int seasonId);
 
-        Task<GetAllStarTeamServiceModel> GetAllStarTeamAsync(string type, int Year);
+        Task<GetAllStarTeamServiceModel> GetAllStarTeamByTypeAndYearAsync(string type, int Year);
     }
 }
