@@ -84,13 +84,11 @@ namespace EverythingNBA.Services.Implementations
             return allStarTeamServiceModels;
         }
 
-        public async Task<GetAllStarTeamServiceModel> GetAllStarTeam(string type, int Year)
+        public async Task<AllStarTeam> GetAllStarTeamAsync(string type, int Year)
         {
             var allStarTeam = await this.db.AllStarTeams.Where(ast => ast.Type.ToString() == type && ast.Year == Year).FirstOrDefaultAsync();
 
-            var model = Mapper.Map<GetAllStarTeamServiceModel>(allStarTeam);
-
-            return model;
+            return allStarTeam;
         }
     }
 }

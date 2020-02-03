@@ -17,6 +17,6 @@
 
         Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsBySeasonAsync(int seasonId);
 
-        Task<GetAllStarTeamServiceModel> GetAllStarTeam(string type, int Year);
+        Task<AllStarTeam> GetAllStarTeamAsync(string type, int Year);
     }
 }
