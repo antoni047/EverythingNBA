@@ -8,5 +8,7 @@
         Task<int> AddAwardAsync(string name, int year, int winnerId);
 
         Task<bool> DeleteAwardAsync(int awardId);
+
+        Task<string> GetMVPAsync(int seasonId);
     }
 }

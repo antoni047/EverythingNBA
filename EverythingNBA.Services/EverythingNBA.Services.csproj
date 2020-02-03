@@ -14,4 +14,15 @@
     <ProjectReference Include="..\EverythingNBA.Models\EverythingNBA.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Award\" />
+    <Folder Include="Models\AllStarTeam\" />
+    <Folder Include="Models\Game\" />
+    <Folder Include="Models\GameStatistic\" />
+    <Folder Include="Models\Series\" />
+    <Folder Include="Models\Playoff\" />
+    <Folder Include="Models\Player\" />
+    <Folder Include="Models\SeasonStatistic\" />
+  </ItemGroup>
+
 </Project>

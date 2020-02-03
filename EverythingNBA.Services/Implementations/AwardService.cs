@@ -8,6 +8,9 @@ namespace EverythingNBA.Services.Implementations
 
     using System;
     using System.Threading.Tasks;
+    using System.Linq;
+    using System.Collections.Generic;
+    using Microsoft.EntityFrameworkCore;
 
     public class AwardService : IAwardService
     {
@@ -46,6 +49,19 @@ namespace EverythingNBA.Services.Implementations
             await this.db.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<string> GetMVPAsync(int seasonId)
+        {
+            var awards = await this.db.Awards.Where(a => a.SeasonId == seasonId).ToListAsync();
+
+            var player = awards.Where(a => a.Name.ToString() == "MVP").Select(a => a.Winner).FirstOrDefault();
+
+            var name = player.FirstName + player.LastName;
+
+            return name;
+
+            //switch case for award type
         }
     }
 }
