@@ -12,5 +12,7 @@
 
         Task<ICollection<string>> GetAllAwardWinnersAsync(int seasonId);
         Task<string> GetAwardWinnerAsync(int seasonId, string awardType);
+
+        Task<ICollection<string>> GetPlayerAwardsAsync (int playerId); 
     }
 }

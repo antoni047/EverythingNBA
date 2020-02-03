@@ -59,7 +59,7 @@ namespace EverythingNBA.Services.Implementations
 
             foreach (var award in awards)
             {
-                var name = award.Winner.FirstName + award.Winner.LastName;
+                var name = award.Winner.FirstName + " " + award.Winner.LastName;
 
                 winnersNames.Add(name);
             }
@@ -79,47 +79,59 @@ namespace EverythingNBA.Services.Implementations
                 case "MVP":
                     player = awards.Where(a => a.Name.ToString() == "MVP").Select(a => a.Winner).FirstOrDefault();
 
-                    name = player.FirstName + player.LastName;
+                    name = player.FirstName + " " + player.LastName;
 
                     return name;
                 case "Top Scorer":
                     player = awards.Where(a => a.Name.ToString() == "MVP").Select(a => a.Winner).FirstOrDefault();
 
-                    name = player.FirstName + player.LastName;
+                    name = player.FirstName + " " + player.LastName;
 
                     return name;
 
                 case "DPOTY":
                     player = awards.Where(a => a.Name.ToString() == "MVP").Select(a => a.Winner).FirstOrDefault();
 
-                    name = player.FirstName + player.LastName;
+                    name = player.FirstName + " " + player.LastName;
 
                     return name;
 
                 case "ROTY":
                     player = awards.Where(a => a.Name.ToString() == "MVP").Select(a => a.Winner).FirstOrDefault();
 
-                    name = player.FirstName + player.LastName;
+                    name = player.FirstName + " " + player.LastName;
 
                     return name;
 
                 case "MIP":
                     player = awards.Where(a => a.Name.ToString() == "MVP").Select(a => a.Winner).FirstOrDefault();
 
-                    name = player.FirstName + player.LastName;
+                    name = player.FirstName + " " + player.LastName;
 
                     return name;
 
                 case "SixthMOTY":
                     player = awards.Where(a => a.Name.ToString() == "MVP").Select(a => a.Winner).FirstOrDefault();
 
-                    name = player.FirstName + player.LastName;
+                    name = player.FirstName + " " + player.LastName;
 
                     return name;
 
                 default:
                     return null;
             } //returns name
+        }
+
+        public async Task<ICollection<string>> GetPlayerAwardsAsync(int playerId)
+        {
+            var playerAwards = await this.db.Awards.Where(a => a.WinnerId == playerId).Select(a => a.Name.ToString()).ToListAsync();
+
+            return playerAwards;
+
+            //foreach (var award in awards)
+            //{
+            //    awardType = award.Name.ToString();
+            //}
         }
     }
 }
