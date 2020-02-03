@@ -7,10 +7,10 @@ namespace EverythingNBA.Models.MappingTables
     {
         [Required]
         public int PlayerId { get; set; }
-        public virtual ICollection<Player> Players { get; set; }
+        public Player Player { get; set; }
 
         [Required]
         public int AllStarTeamId { get; set; }
-        public virtual ICollection<AllStarTeam> AllStarTeam { get; set; }
+        public AllStarTeam AllStarTeam { get; set; }
     }
 }
