@@ -1,6 +1,7 @@
 ﻿namespace EverythingNBA.Services
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface IAwardService
@@ -9,6 +10,7 @@
 
         Task<bool> DeleteAwardAsync(int awardId);
 
-        Task<string> GetMVPAsync(int seasonId);
+        Task<ICollection<string>> GetAllAwardWinnersAsync(int seasonId);
+        Task<string> GetAwardWinnerAsync(int seasonId, string awardType);
     }
 }
