@@ -98,11 +98,22 @@
             return model;
         }
 
-        public Task<string> GetWinnerAsync(int seriesId)
+        public async Task<string> GetWinnerAsync(int seriesId)
         {
-            throw new NotImplementedException();
+            var series = await this.db.Series.FindAsync(seriesId);
 
-            
+            var winner = string.Empty; 
+
+            if (series.Team1GamesWon > series.Team2GamesWon)
+            {
+                winner = series.Team1.Name;
+            }
+            else
+            {
+                winner = series.Team2.Name;
+            }
+
+            return winner;
         }
     }
 }
