@@ -14,8 +14,8 @@
         public int? Team2Id { get; set; }
         public virtual Team Team2 { get; set; }
 
-        public int? WinnerGamesWon { get; set; }
-        public int? LoserGamesWon { get; set; }
+        public int? Team1GamesWon { get; set; }
+        public int? Team2GamesWon { get; set; }
 
         public int? Game1Id { get; set; }
         public virtual Game Game1 { get; set; }
