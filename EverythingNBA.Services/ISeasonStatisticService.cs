@@ -11,8 +11,12 @@
 
         Task<bool> DeleteAsync(int seasonStatisticId);
 
-        Task<GetSeasonStatisticDetailsServiceModel> GetAsync(int seasonId, int teamId);
+        Task<GetSeasonStatisticDetailsServiceModel> GetBySeasonAndTeamAsync(int seasonId, int teamId);
+
+        Task<GetSeasonStatisticDetailsServiceModel> GetAsync(int id);
 
         Task<string> GetWinPercentageAsync(int seasonStatisticId);
+
+        Task AddGameAsync(int id, bool isWon);
     }
 }

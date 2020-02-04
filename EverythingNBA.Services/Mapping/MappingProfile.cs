@@ -15,7 +15,7 @@
     {
         public MappingProfile()
         {
-            this.CreateMap<GetSeasonStatisticDetailsServiceModel, SeasonStatistic>();
+            this.CreateMap<SeasonStatistic, GetSeasonStatisticDetailsServiceModel>();
             this.CreateMap<AllStarTeam, GetAllStarTeamServiceModel>()
                 .ForMember(mdl => mdl.Players, opt => opt.MapFrom(ast => ast.Players))
                 .ForMember(mdl => mdl.Type, opt => opt.MapFrom(ast => ast.Type.ToString()));

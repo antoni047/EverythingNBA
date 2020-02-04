@@ -36,6 +36,22 @@
             return seasonStatisticObj.Id;
         }
 
+        public async Task AddGameAsync(int id, bool isWon)
+        {
+            var statistic = await this.db.SingleSeasonStatistics.FindAsync(id);
+
+            if (isWon)
+            {
+                statistic.Wins++;
+            }
+            else
+            {
+                statistic.Losses++;
+            }
+
+            await this.db.SaveChangesAsync();
+        }
+
         public async Task<bool> DeleteAsync(int seasonStatisticId)
         {
             var statisticToDelete = await this.db.SingleSeasonStatistics.FindAsync(seasonStatisticId);
@@ -51,7 +67,16 @@
             return true;
         }
 
-        public async Task<GetSeasonStatisticDetailsServiceModel> GetAsync(int seasonId, int teamId)
+        public async Task<GetSeasonStatisticDetailsServiceModel> GetAsync(int id)
+        {
+            var statistic = await this.db.SingleSeasonStatistics.FindAsync(id);
+
+            var model = Mapping.Mapper.Map<GetSeasonStatisticDetailsServiceModel>(statistic);
+
+            return model;
+        }
+
+        public async Task<GetSeasonStatisticDetailsServiceModel> GetBySeasonAndTeamAsync(int seasonId, int teamId)
         {
             var statistic = await this.db.SingleSeasonStatistics.Where(ss => ss.TeamId == teamId && ss.SeasonId == seasonId).FirstOrDefaultAsync();
 
