@@ -13,6 +13,7 @@ namespace EverythingNBA.Services.Implementations
     using EverythingNBA.Data;
     using EverythingNBA.Models.Enums;
     using EverythingNBA.Services.Models.AllStarTeam;
+    using EverythingNBA.Models.MappingTables;
 
     public class AllStarTeamService : IAllStarTeamService
     {
@@ -35,6 +36,21 @@ namespace EverythingNBA.Services.Implementations
             await this.db.SaveChangesAsync();
 
             return allStarTeamObj.Id;
+        }
+
+        public async Task AddPlayerAsync(int allStarTeamId, int playerId)
+        {
+            var allStarTeam = await this.db.AllStarTeams.FindAsync(allStarTeamId);
+
+            var obj = new AllStarTeamsPlayers
+            {
+                AllStarTeamId = allStarTeamId,
+                PlayerId = playerId
+            };
+
+            allStarTeam.Players.Add(obj);
+
+            await this.db.SaveChangesAsync();
         }
 
         public async Task<bool> DeleteAllStarTeamAsync(int allStarTeamId)
