@@ -13,6 +13,7 @@
     using EverythingNBA.Services.Models;
     using EverythingNBA.Models.Enums;
     using EverythingNBA.Models.MappingTables;
+    using EverythingNBA.Services.Models.Season;
 
     public class SeasonService : ISeasonService
     {
@@ -175,6 +176,22 @@
             };
 
             return model;
+        }
+
+        public async Task<ICollection<GetSeasonListingServiceModel>> GetAllSeasonsAsync()
+        {
+            var seasons = await this.db.Seasons.ToListAsync();
+
+            var models = new List<GetSeasonListingServiceModel>();
+
+            foreach (var season in seasons)
+            {
+                var model = Mapper.Map<GetSeasonListingServiceModel>(season);
+
+                models.Add(model);
+            }
+
+            return models;
         }
 
         private List<AllStarTeam> GetAllStarTeams(Season season)

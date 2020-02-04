@@ -1,7 +1,10 @@
 ﻿namespace EverythingNBA.Services
 {
     using EverythingNBA.Services.Models;
+    using EverythingNBA.Services.Models.Season;
+
     using System.Threading.Tasks;
+    using System.Collections.Generic;
 
     public interface ISeasonService
     {
@@ -22,5 +25,7 @@
         Task AddSeasonStatisticAsync (int seasonId, int seasonStatisticId);
 
         Task AddGameAsync(int seasonId, int gameId);
+
+        Task<ICollection<GetSeasonListingServiceModel>> GetAllSeasonsAsync();
     }
 }
