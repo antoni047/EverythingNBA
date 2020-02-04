@@ -23,7 +23,7 @@
             this.db = db;
         }
 
-        public async Task<int> AddAsync(int year, int? titleWinnerId, int? playoffId)
+        public async Task<int> AddAsync(int year, int? titleWinnerId, int? playoffId, int gamesPlayed)
         {
             var seasonObj = new Season
             {
@@ -77,6 +77,17 @@
             var seasonStatistic = await this.db.SingleSeasonStatistics.FindAsync(seasonStatisticId);
 
             season.SingleSeasonStatistics.Add(seasonStatistic);
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task AddGameAsync(int seasonId, int gameId)
+        {
+            var season = await this.db.Seasons.FindAsync(seasonId);
+
+            var game = await this.db.Games.FindAsync(gameId);
+
+            season.Games.Add(game);
 
             await this.db.SaveChangesAsync();
         }

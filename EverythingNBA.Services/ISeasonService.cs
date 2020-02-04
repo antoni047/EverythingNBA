@@ -5,7 +5,7 @@
 
     public interface ISeasonService
     {
-        Task<int> AddAsync(int year, int? titleWinnerId, int? playoffId);
+        Task<int> AddAsync(int year, int? titleWinnerId, int? playoffId, int gamesPlayed);
 
         Task<bool> DeleteAsync (int seasonId);
 
@@ -20,5 +20,7 @@
         Task AddPlayoffAsync (int seasonId, int playoffId);
 
         Task AddSeasonStatisticAsync (int seasonId, int seasonStatisticId);
+
+        Task AddGameAsync(int seasonId, int gameId);
     }
 }
