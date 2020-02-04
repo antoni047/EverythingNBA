@@ -69,7 +69,7 @@
 
             foreach (var team in teams)
             {
-                var model = await statisticService.GetAsync(seasonId, team.Id);
+                var model = await statisticService.GetBySeasonAndTeamAsync(seasonId, team.Id);
                 var seasonStatistic = Mapper.Map<SeasonStatistic>(model);
                 var winPercentage = await statisticService.GetWinPercentageAsync(seasonStatistic.Id);
 
