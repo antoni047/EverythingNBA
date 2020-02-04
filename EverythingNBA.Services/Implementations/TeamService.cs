@@ -86,7 +86,7 @@
                 standingsList.Add(result);
             }
 
-            return standingsList;
+            return standingsList.OrderByDescending(x => x.WinPercentage).ToList();
         }
     }
 }
