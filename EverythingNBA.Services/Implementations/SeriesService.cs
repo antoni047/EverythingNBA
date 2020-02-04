@@ -50,14 +50,15 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<int> AddSeriesAsync(int team1Id, int team2Id, int winnerGamesWon, int loserGamesWon, int game1Id, int game2Id, int game3Id, int game4Id, int? game5Id, int? game6Id, int? game7Id)
+        public async Task<int> AddSeriesAsync(int team1Id, int team2Id, int team1GameWon, int team2GamesWon, int game1Id, int game2Id, 
+            int game3Id, int game4Id, int? game5Id, int? game6Id, int? game7Id)
         {
             var seriesObj = new Series
             {
                 Team1Id = team1Id,
                 Team2Id =team2Id,
-                WinnerGamesWon = winnerGamesWon,
-                LoserGamesWon = loserGamesWon,
+                Team1GamesWon = team1GameWon,
+                Team2GamesWon = team2GamesWon,
                 Game1Id = game1Id,
                 Game2Id = game2Id,
                 Game3Id = game3Id,
