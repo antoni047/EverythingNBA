@@ -1,5 +1,7 @@
 ﻿namespace EverythingNBA.Services
 {
+    using EverythingNBA.Services.Models.Series;
+
     using System;
     using System.Threading.Tasks;
 
@@ -9,5 +11,11 @@
             int game4Id, int? game5Id, int? game6Id, int? game7Id);
 
         Task<bool> DeleteSeriesAsync (int seriesId);
+
+        Task<GetSeriesDetailsServiceModel> GetSeriesAsync(int id);
+
+        Task AddGameAsync(int seriesId, int gameId, int gameNumber);
+
+        Task<string> GetWinnerAsync(int seriesId);
     }
 }
