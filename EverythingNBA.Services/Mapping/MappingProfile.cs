@@ -9,7 +9,7 @@
     using EverythingNBA.Services.Models.AllStarTeam;
     using EverythingNBA.Services.Models.Season;
     using EverythingNBA.Services.Models.Playoff;
-    using EverythingNBA.Services.Models.SeasonStatistic;
+    using EverythingNBA.Services.Models.Player;
     using EverythingNBA.Services.Models.Team;
     using EverythingNBA.Models.Enums;
     using EverythingNBA.Services.Models.Series;

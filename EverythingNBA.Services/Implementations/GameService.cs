@@ -15,15 +15,15 @@
             this.db = db;
         }
 
-        public async Task<int> AddGamesAsync(int seasonId, int teamHostId, int team2Id, int winnerPoints, int loserPoints, DateTime date, bool isFinished)
+        public async Task<int> AddGamesAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, DateTime date, bool isFinished)
         {
             var gameObj = new Game
             {
                 SeasonId = seasonId,
                 TeamHostId = teamHostId,
                 Team2Id = team2Id,
-                WinnerPoints = winnerPoints,
-                LoserPoints = loserPoints,
+                TeamHostPoints = teamHostPoints,
+                Team2Points = team2Points,
                 Date = date,
                 IsFinished = isFinished
             };

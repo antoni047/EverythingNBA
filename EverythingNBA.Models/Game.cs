@@ -27,8 +27,8 @@
 
         public bool IsFinished { get; set; }
 
-        public int? WinnerPoints { get; set; }
-        public int? LoserPoints { get; set; }
+        public int? TeamHostPoints { get; set; }
+        public int? Team2Points { get; set; }
 
         [Required]
         public DateTime Date { get; set; }
