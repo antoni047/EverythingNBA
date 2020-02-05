@@ -12,9 +12,9 @@
 
         Task<bool> DeleteAsync (int seasonId);
 
-        Task<GetSeasonDetailsServiceModel> GetSeasonByYearAsync(int year);
+        Task<GetSeasonDetailsServiceModel> GetDetailsByYearAsync(int year);
 
-        Task<GetSeasonDetailsServiceModel> GetSeasonByIdAsync(int seasonId);
+        Task<GetSeasonDetailsServiceModel> GetDetailsAsync(int seasonId);
 
         Task AddAwardAsync(int seasonId, int awardId);
 

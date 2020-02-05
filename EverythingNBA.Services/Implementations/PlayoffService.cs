@@ -122,7 +122,7 @@
             return true;
         }
 
-        public async Task<GetPlayoffServiceModel> GetPlayoffBySeasonAsync(int seasonId)
+        public async Task<GetPlayoffServiceModel> GetDetailsBySeasonAsync(int seasonId)
         {
             var season = await this.db.Seasons.FindAsync(seasonId);
 
@@ -138,9 +138,9 @@
             return model;
         }
 
-        public async Task<GetPlayoffServiceModel> GetPlayoffDetailsAsync(int playoffId)
+        public async Task<GetPlayoffServiceModel> GetDetailsAsync(int playoffId)
         {
-            var playoff = await this.db.Playoffs.FindAsync();
+            var playoff = await this.db.Playoffs.FindAsync(playoffId);
 
             var model = Mapper.Map<GetPlayoffServiceModel>(playoff);
 

@@ -18,8 +18,6 @@
     <Folder Include="Models\Award\" />
     <Folder Include="Models\Game\" />
     <Folder Include="Models\GameStatistic\" />
-    <Folder Include="Models\Series\" />
-    <Folder Include="Models\Playoff\" />
     <Folder Include="Models\Player\" />
   </ItemGroup>
 
