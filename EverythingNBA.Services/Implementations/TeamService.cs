@@ -168,23 +168,142 @@
             return await this.GetTeamDetailsAsync(teamId);
         }
 
-        //public async Task AddGameAsync(int gameId, int teamId)
-        //{
-        //    var team = await this.db.Teams.FindAsync(teamId);
-        //    var game = await this.db.Games.FindAsync(gameId);
+        public async Task<bool> AddGameAsync(int gameId, int teamId)
+        {
+            var team = await this.db.Teams.FindAsync(teamId);
+            var game = await this.db.Games.FindAsync(gameId);
+            bool teamIsHost;
 
-        //    if (game.TeamHostId == teamId)
-        //    {
-        //        team.HomeGames.Add(game);
-        //    }
-        //    else if (game.Team2Id == teamId)
-        //    {
-        //        team.AwayGames.Add(game);
-        //    }
+            if (game.TeamHostId == teamId)
+            {
+                team.HomeGames.Add(game);
+                teamIsHost = true;
+            }
+            else if(game.Team2Id == teamId)
+            {
+                team.AwayGames.Add(game);
+                teamIsHost = false;
+            }
+            else
+            {
+                return false;
+            }
 
+            if (game.IsFinished)
+            {
+                if (game.TeamHostPoints > game.Team2Points && teamIsHost)
+                {
+                    team.GamesWon.Add(game);
+                }
+                else
+                {
+                    if (teamIsHost == false)
+                    {
+                        team.GamesWon.Add(game);
+                    }
+                }
+            }
 
+            await this.db.SaveChangesAsync();
 
-        //    await this.db.SaveChangesAsync();
-        //}
+            return true;
+        }
+
+        public async Task<bool> RemoveGameAsync(int gameId, int teamId)
+        {
+            var team = await this.db.Teams.FindAsync(teamId);
+
+            var game = await this.db.Games.FindAsync(gameId);
+
+            if (game == null || team == null)
+            {
+                return false;
+            }
+
+            if (team.HomeGames.Contains(game))
+            {
+                team.HomeGames.Remove(game);
+
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            else if (team.AwayGames.Contains(game))
+            {
+                team.AwayGames.Remove(game);
+
+                await this.db.SaveChangesAsync();
+                return true;
+            }
+
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> AddTitleAsync(int teamId, int seasonId)
+        {
+            var team = await this.db.Teams.FindAsync(teamId);
+            var season = await this.db.Seasons.FindAsync(seasonId);
+
+            if (team == null || season == null)
+            {
+                return false;
+            }
+
+            team.TitlesWon.Add(season);
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> RemoveTitleAsync(int teamId, int seasonId)
+        {
+            var team = await this.db.Teams.FindAsync(teamId);
+            var season = await this.db.Seasons.FindAsync(seasonId);
+
+            if (team == null || season == null)
+            {
+                return false;
+            }
+
+            team.TitlesWon.Remove(season);
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> AddSeasonStatistic(int teamId, int seasonStatisticId)
+        {
+            var team = await this.db.Teams.FindAsync(teamId);
+            var seasonStatistic = await this.db.SingleSeasonStatistics.FindAsync(seasonStatisticId);
+
+            if (team == null || seasonStatistic == null)
+            {
+                return false;
+            }
+
+            team.SeasonsStatistics.Add(seasonStatistic);
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> RemoveSeasonStatistic(int teamId, int seasonStatisticId)
+        {
+            var team = await this.db.Teams.FindAsync(teamId);
+            var seasonStatistic = await this.db.SingleSeasonStatistics.FindAsync(seasonStatisticId);
+
+            if (team == null || seasonStatistic == null)
+            {
+                return false;
+            }
+
+            team.SeasonsStatistics.Remove(seasonStatistic);
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
     }
 }
