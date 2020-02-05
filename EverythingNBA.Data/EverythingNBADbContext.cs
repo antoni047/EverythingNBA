@@ -29,6 +29,8 @@ namespace EverythingNBA.Data
         public DbSet<GameStatistic> SingleGameStatistics { get; set; }
         public DbSet<SeasonStatistic> SingleSeasonStatistics { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<PlayerSeasonStatistic> PlayerSeasonStatistics { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

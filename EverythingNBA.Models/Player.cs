@@ -14,6 +14,7 @@
             this.AllStarTeams = new List<AllStarTeamsPlayers>();
             this.Awards = new List<Award>();
             this.SingleGameStatistics = new List<GameStatistic>();
+            this.SeasonStatistics = new List<PlayerSeasonStatistic>();
         }
 
         public int Id { get; set; }
@@ -62,66 +63,11 @@
         public string TwitterLink { get; set; }
 
         public virtual ICollection<Award> Awards { get; set; }
+
         public virtual ICollection<AllStarTeamsPlayers> AllStarTeams { get; set; }
 
         public virtual ICollection<GameStatistic> SingleGameStatistics { get; set; }
 
-        //Current Season Stats 
-
-        //Basic Stats
-        [Range(MinimumStat, MaximumPoints)]
-        public double CurrentAvereagePoints { get; set; }
-
-        [Range(MinimumStat, MaximumGeneralStat)]
-        public double CurrentAverageAssists { get; set; }
-
-        [Range(MinimumStat, MaximumGeneralStat)]
-        public double CurrentAverageRebounds { get; set; }
-
-        //Advanced Stats
-        [Range(MinimumStat, MaximumGeneralStat)]
-        public double CurrentAverageBlocks { get; set; }
-
-        [Range(MinimumStat, MaximumGeneralStat)]
-        public double CurrentAverageSteals { get; set; }
-
-        [Range(MinimumPercentage, MaximumPercentage)]
-        public double CurrentFieldGoalPercentage { get; set; }
-
-        [Range(MinimumPercentage, MaximumPercentage)]
-        public double CurrentThreePercentage { get; set; }
-
-        [Range(MinimumPercentage, MaximumPercentage)]
-        public double CurrentFreeThrowPercentage { get; set; }
-
-
-
-        //Career Stats
-        //[Range(MinimumStat, MaximumGeneralStat)]
-        //public double CareerAvereagePoints { get; set; }
-
-        //[Range(MinimumStat, MaximumGeneralStat)]
-        //public double CareerAverageAssists { get; set; }
-
-        //[Range(MinimumStat, MaximumGeneralStat)]
-        //public double CareerAverageRebounds { get; set; }
-
-
-
-        //[Range(MinimumStat, MaximumGeneralStat)]
-        //public double CareerAverageBlocks { get; set; }
-
-        //[Range(MinimumStat, MaximumGeneralStat)]
-        //public double CareerAverageSteals { get; set; }
-
-        //[Range(MinimumPercentage, MaximumPercentage)]
-        //public double CareerAverageFieldGoalPercentage { get; set; }
-
-        //[Range(MinimumPercentage, MaximumPercentage)]
-        //public double CareerAverageThreePercentage { get; set; }
-
-        //[Range(MinimumPercentage, MaximumPercentage)]
-        //public double CareerAverageFreeThrowPercentage { get; set; }
-
+        public virtual ICollection<PlayerSeasonStatistic> SeasonStatistics { get; set; }
     }
 }
