@@ -68,7 +68,7 @@ namespace EverythingNBA.Services.Implementations
             return true;
         }
 
-        public async Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsByNameAsync(string type)
+        public async Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsAsync(string type)
         {
             var allStarTeams = await this.db.AllStarTeams.Where(ast => ast.Type.ToString() == type).ToListAsync();
 
@@ -84,7 +84,7 @@ namespace EverythingNBA.Services.Implementations
             return allStarTeamServiceModels;
         }
 
-        public async Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsBySeasonAsync(int Year)
+        public async Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsAsync(int Year)
         {
             var allStarTeams = await this.db.AllStarTeams.Where(ast => ast.Year == Year).ToListAsync();
 

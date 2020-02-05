@@ -108,7 +108,7 @@
             return true;
         }
 
-        public async Task<GetSeasonDetailsServiceModel> GetSeasonByIdAsync(int seasonId)
+        public async Task<GetSeasonDetailsServiceModel> GetDetailsAsync(int seasonId)
         {
             var season = await this.db.Seasons.FindAsync(seasonId);
 
@@ -143,9 +143,9 @@
             return model;
         }
 
-        public async Task<GetSeasonDetailsServiceModel> GetSeasonByYearAsync(int Year)
+        public async Task<GetSeasonDetailsServiceModel> GetDetailsByYearAsync(int year)
         {
-            var season = await this.db.Seasons.Where(s => s.Year == Year).FirstOrDefaultAsync();
+            var season = await this.db.Seasons.Where(s => s.Year == year).FirstOrDefaultAsync();
 
             var bestSeed = season.SingleSeasonStatistics.OrderByDescending(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
             var worstSeed = season.SingleSeasonStatistics.OrderBy(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();

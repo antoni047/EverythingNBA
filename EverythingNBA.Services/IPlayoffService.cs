@@ -14,9 +14,9 @@
 
         Task<bool> DeletePlayoffAsync(int playoffId);
 
-        Task<GetPlayoffServiceModel> GetPlayoffDetailsAsync(int playoffId);
+        Task<GetPlayoffServiceModel> GetDetailsAsync(int playoffId);
 
-        Task<GetPlayoffServiceModel> GetPlayoffBySeasonAsync(int seasonId);
+        Task<GetPlayoffServiceModel> GetDetailsBySeasonAsync(int seasonId);
 
         Task AddSeriesAsync(int playoffId, int seriesId, string conference, string stage, string seriesNumber);
     }

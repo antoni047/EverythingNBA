@@ -67,7 +67,7 @@
             return true;
         }
 
-        public async Task<GetSeasonStatisticDetailsServiceModel> GetAsync(int id)
+        public async Task<GetSeasonStatisticDetailsServiceModel> GetDetailsAsync(int id)
         {
             var statistic = await this.db.SingleSeasonStatistics.FindAsync(id);
 
@@ -76,7 +76,7 @@
             return model;
         }
 
-        public async Task<GetSeasonStatisticDetailsServiceModel> GetBySeasonAndTeamAsync(int seasonId, int teamId)
+        public async Task<GetSeasonStatisticDetailsServiceModel> GetDetailsAsync(int seasonId, int teamId)
         {
             var statistic = await this.db.SingleSeasonStatistics.Where(ss => ss.TeamId == teamId && ss.SeasonId == seasonId).FirstOrDefaultAsync();
 

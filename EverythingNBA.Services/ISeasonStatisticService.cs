@@ -11,9 +11,9 @@
 
         Task<bool> DeleteAsync(int seasonStatisticId);
 
-        Task<GetSeasonStatisticDetailsServiceModel> GetBySeasonAndTeamAsync(int seasonId, int teamId);
+        Task<GetSeasonStatisticDetailsServiceModel> GetDetailsAsync(int seasonId, int teamId);
 
-        Task<GetSeasonStatisticDetailsServiceModel> GetAsync(int id);
+        Task<GetSeasonStatisticDetailsServiceModel> GetDetailsAsync(int id);
 
         Task<string> GetWinPercentageAsync(int seasonStatisticId);
 
