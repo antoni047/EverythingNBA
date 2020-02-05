@@ -17,6 +17,6 @@
 
         Task<string> GetWinPercentageAsync(int seasonStatisticId);
 
-        Task AddGameAsync(int id, bool isWon);
+        Task<bool> AddGameAsync(int id, bool isWon);
     }
 }

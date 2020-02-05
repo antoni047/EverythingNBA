@@ -36,9 +36,14 @@
             return seasonStatisticObj.Id;
         }
 
-        public async Task AddGameAsync(int id, bool isWon)
+        public async Task<bool> AddGameAsync(int id, bool isWon)
         {
             var statistic = await this.db.SingleSeasonStatistics.FindAsync(id);
+
+            if (statistic == null)
+            {
+                return false;
+            }
 
             if (isWon)
             {
@@ -50,6 +55,7 @@
             }
 
             await this.db.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> DeleteAsync(int seasonStatisticId)
