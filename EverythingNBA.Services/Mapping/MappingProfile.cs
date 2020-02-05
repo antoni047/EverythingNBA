@@ -9,7 +9,7 @@
     using EverythingNBA.Services.Models.AllStarTeam;
     using EverythingNBA.Services.Models.Season;
     using EverythingNBA.Services.Models.Playoff;
-    using EverythingNBA.Services.Models.Player;
+    using EverythingNBA.Services.Models.SeasonStatistic;
     using EverythingNBA.Services.Models.Team;
     using EverythingNBA.Models.Enums;
     using EverythingNBA.Services.Models.Series;
@@ -30,6 +30,7 @@
 
             this.CreateMap<Series, GetSeriesDetailsServiceModel>();
 
+
             this.CreateMap<Team, GetTeamDetailsServiceModel>()
                 .ForMember(mdl => mdl.CurrentSeasonStatistic, opt => opt.Ignore())
                 .ForMember(mdl => mdl.CurrentSeasonGames, opt => opt.Ignore())
@@ -38,7 +39,10 @@
 
             this.CreateMap<Player, PlayerOverviewServiceModel>()
                 .ForMember(mdl => mdl.Name, opt => opt.MapFrom(p => p.FirstName + " " + p.LastName))
-                .ForMember(mdl => mdl.Position, opt => opt.MapFrom(p => p.Position.ToString()));
+                .ForMember(mdl => mdl.Position, opt => opt.MapFrom(p => p.Position.ToString()))
+                .ForMember(mdl => mdl.PointsPerGame, opt => opt.Ignore())
+                .ForMember(mdl => mdl.AssistsPerGame, opt => opt.Ignore())
+                .ForMember(mdl => mdl.ReboundsPerGame, opt => opt.Ignore());
 
             //this.CreateMap<GetAllStarTeamBySeasonServiceModel, AllStarTeam>()
             //    .ForMember(at => at.Players, opt => opt.MapFrom(a => a.Players));

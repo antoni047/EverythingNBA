@@ -5,6 +5,7 @@
     using System.Collections.Generic;
 
     using EverythingNBA.Services.Models;
+    using EverythingNBA.Services.Models.Team;
 
     public interface ITeamService
     {
@@ -12,6 +13,8 @@
 
         Task<bool> DeleteTeamAsync(int teamId);
 
-        Task<ICollection<TeamStandingsListingServiceModel>> GetStandingsAsync(int seasonId);
+        Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(int teamId);
+
+        Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(string name);
     }
 }

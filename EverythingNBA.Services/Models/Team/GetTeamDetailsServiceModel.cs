@@ -21,7 +21,7 @@
 
         public string Twitter { get; set; }
 
-        public SeasonStatistic CurrentSeasonStatistic { get; set; }
+        public GetSeasonStatisticDetailsServiceModel CurrentSeasonStatistic { get; set; }
 
         public ICollection<Game> CurrentSeasonGames { get; set; }
 
