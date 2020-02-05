@@ -16,5 +16,11 @@
         Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(int teamId);
 
         Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(string name);
+
+        Task AddPlayerAsync(int playerId, int teamId);
+
+        Task<bool> RemovePlayerAsync(int playedId, int teamId);
+
+        //Task AddGameAsync(int gameId, int teamId);
     }
 }

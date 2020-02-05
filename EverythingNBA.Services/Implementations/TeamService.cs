@@ -5,7 +5,6 @@
     using EverythingNBA.Models.Enums;
     using EverythingNBA.Services.Models;
     using EverythingNBA.Services.Models.Team;
-    using EverythingNBA.Services.Models.SeasonStatistic;
 
     using Microsoft.AspNetCore.Http;
     using System;
@@ -27,6 +26,34 @@
             this.db = db;
             this.imageService = imageService;
             this.statisticService = statisticService;
+        }
+
+        public async Task AddPlayerAsync(int playerId, int teamId)
+        {
+            var player = await this.db.Players.FindAsync(playerId);
+            var team = await this.db.Teams.FindAsync(teamId);
+
+            team.Players.Add(player);
+
+            await this.db.SaveChangesAsync();
+        }
+
+        public async Task<bool> RemovePlayerAsync(int playedId, int teamId)
+        {
+            var team = await this.db.Teams.FindAsync(teamId);
+            var player = team.Players.Where(p => p.Id == playedId).FirstOrDefault();
+
+            if (player == null)
+            {
+                return false;
+            }
+
+            team.Players.Remove(player);
+
+            await this.db.SaveChangesAsync();
+
+            return true;
+
         }
 
         public async Task<int> AddTeamAsync(string name, IFormFile imageFile, string conference, string venue, string instagram, string twitter)
@@ -73,7 +100,7 @@
 
             foreach (var team in teams)
             {
-                var model = await statisticService.GetBySeasonAndTeamAsync(seasonId, team.Id);
+                var model = await statisticService.GetDetailsAsync(seasonId, team.Id);
                 var seasonStatistic = Mapper.Map<SeasonStatistic>(model);
                 var winPercentage = await statisticService.GetWinPercentageAsync(seasonStatistic.Id);
 
@@ -140,5 +167,24 @@
 
             return await this.GetTeamDetailsAsync(teamId);
         }
+
+        //public async Task AddGameAsync(int gameId, int teamId)
+        //{
+        //    var team = await this.db.Teams.FindAsync(teamId);
+        //    var game = await this.db.Games.FindAsync(gameId);
+
+        //    if (game.TeamHostId == teamId)
+        //    {
+        //        team.HomeGames.Add(game);
+        //    }
+        //    else if (game.Team2Id == teamId)
+        //    {
+        //        team.AwayGames.Add(game);
+        //    }
+
+
+
+        //    await this.db.SaveChangesAsync();
+        //}
     }
 }
