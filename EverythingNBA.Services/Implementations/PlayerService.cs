@@ -1,13 +1,18 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-
-using EverythingNBA.Models;
-using EverythingNBA.Models.Enums;
-using EverythingNBA.Data;
-
-namespace EverythingNBA.Services.Implementations
+﻿namespace EverythingNBA.Services.Implementations
 {
+    using System;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+    using AutoMapper;
+    using System.Linq;
+    using System.Collections.Generic;
+    using Microsoft.EntityFrameworkCore;
+
+    using EverythingNBA.Models;
+    using EverythingNBA.Models.Enums;
+    using EverythingNBA.Data;
+    using EverythingNBA.Services.Models.Player;
+
     public class PlayerService : IPlayerService
     {
         private readonly EverythingNBADbContext db;
@@ -64,7 +69,5 @@ namespace EverythingNBA.Services.Implementations
 
             return true;
         }
-
-
     }
 }
