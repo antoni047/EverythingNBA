@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
+    using AutoMapper;
 
     using EverythingNBA.Data;
     using EverythingNBA.Models;
@@ -9,10 +10,12 @@
     public class GameService : IGameService
     {
         private readonly EverythingNBADbContext db;
+        private readonly IMapper mapper;
 
-        public GameService(EverythingNBADbContext db)
+        public GameService(EverythingNBADbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task<int> AddGamesAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, DateTime date, bool isFinished)

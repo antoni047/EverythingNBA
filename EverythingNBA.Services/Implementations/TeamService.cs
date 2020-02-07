@@ -20,12 +20,14 @@
         private readonly EverythingNBADbContext db;
         private readonly IImageService imageService;
         private readonly ISeasonStatisticService statisticService;
+        private readonly IMapper mapper;
 
-        public TeamService(EverythingNBADbContext db, IImageService imageService, ISeasonStatisticService statisticService)
+        public TeamService(EverythingNBADbContext db, IImageService imageService, ISeasonStatisticService statisticService, IMapper mapper)
         {
             this.db = db;
             this.imageService = imageService;
             this.statisticService = statisticService;
+            this.mapper = mapper;
         }
 
         public async Task AddPlayerAsync(int playerId, int teamId)
@@ -101,7 +103,7 @@
             foreach (var team in teams)
             {
                 var model = await statisticService.GetDetailsAsync(seasonId, team.Id);
-                var seasonStatistic = Mapper.Map<SeasonStatistic>(model);
+                var seasonStatistic = mapper.Map<SeasonStatistic>(model);
                 var winPercentage = await statisticService.GetWinPercentageAsync(seasonStatistic.Id);
 
                 var result = new TeamStandingsListingServiceModel
@@ -125,7 +127,7 @@
             var team = await this.db.Teams.FindAsync(teamId);
             var seasonId = await this.db.Seasons.Where(s => s.Year == DateTime.Now.Year).Select(s => s.Id).FirstOrDefaultAsync();
 
-            var model = Mapper.Map<GetTeamDetailsServiceModel>(team);
+            var model = mapper.Map<GetTeamDetailsServiceModel>(team);
 
             var players = team.Players.ToList();
             var playerModels = new List<PlayerOverviewServiceModel>();

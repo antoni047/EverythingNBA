@@ -12,10 +12,12 @@
     public class SeriesService : ISeriesService
     {
         private readonly EverythingNBADbContext db;
+        private readonly IMapper mapper;
 
-        public SeriesService(EverythingNBADbContext db)
+        public SeriesService(EverythingNBADbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task AddGameAsync(int seriesId, int gameId, int gameNumber)
@@ -93,7 +95,7 @@
         {
             var series = await this.db.Series.FindAsync(id);
 
-            var model = Mapper.Map<GetSeriesDetailsServiceModel>(series);
+            var model = mapper.Map<GetSeriesDetailsServiceModel>(series);
 
             return model;
         }

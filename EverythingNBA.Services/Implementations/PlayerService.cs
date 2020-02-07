@@ -17,11 +17,13 @@
     {
         private readonly EverythingNBADbContext db;
         private readonly IImageService imageService;
+        private readonly IMapper mapper;
 
-        public PlayerService(EverythingNBADbContext db, IImageService imageService)
+        public PlayerService(EverythingNBADbContext db, IImageService imageService, IMapper mapper)
         {
             this.db = db;
             this.imageService = imageService;
+            this.mapper = mapper;
         }
 
         public async Task<int> AddPlayerAsync(string firstName, string lastName, int teamId, int? rookieYear, int age, int height, int weight, 

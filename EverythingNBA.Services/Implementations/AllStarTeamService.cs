@@ -18,10 +18,12 @@ namespace EverythingNBA.Services.Implementations
     public class AllStarTeamService : IAllStarTeamService
     {
         private readonly EverythingNBADbContext db;
+        private readonly IMapper mapper;
 
-        public AllStarTeamService(EverythingNBADbContext db)
+        public AllStarTeamService(EverythingNBADbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task<int> AddAllStarTeamAsync(int year, string type)
@@ -76,7 +78,7 @@ namespace EverythingNBA.Services.Implementations
 
             foreach (var team in allStarTeams)
             {
-                var model = Mapper.Map<GetAllStarTeamServiceModel>(team);
+                var model = mapper.Map<GetAllStarTeamServiceModel>(team);
 
                 allStarTeamServiceModels.Add(model);
             }
@@ -92,7 +94,7 @@ namespace EverythingNBA.Services.Implementations
 
             foreach (var team in allStarTeams)
             {
-                var model = Mapper.Map<GetAllStarTeamServiceModel>(team);
+                var model = mapper.Map<GetAllStarTeamServiceModel>(team);
 
                 allStarTeamServiceModels.Add(model);
             }
@@ -104,7 +106,7 @@ namespace EverythingNBA.Services.Implementations
         {
             var allStarTeam = await this.db.AllStarTeams.FindAsync(id);
 
-            var model = Mapper.Map<GetAllStarTeamServiceModel>(allStarTeam);
+            var model = mapper.Map<GetAllStarTeamServiceModel>(allStarTeam);
 
             return model;
         }
@@ -113,7 +115,7 @@ namespace EverythingNBA.Services.Implementations
         {
             var allStarTeam = await this.db.AllStarTeams.Where(ast => ast.Type.ToString() == type && ast.Year == Year).FirstOrDefaultAsync();
 
-            var model = Mapper.Map<GetAllStarTeamServiceModel>(allStarTeam);
+            var model = mapper.Map<GetAllStarTeamServiceModel>(allStarTeam);
 
             return model;
 

@@ -1,24 +1,23 @@
 ﻿namespace EverythingNBA.Services.Implementations
 {
     using System.Threading.Tasks;
-    using System;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
-    using System.Collections.Generic;
-    using System.Linq.Expressions;
+    using AutoMapper;
 
     using EverythingNBA.Data;
     using EverythingNBA.Models;
     using EverythingNBA.Services.Models;
-    using EverythingNBA.Services.Mapping;
 
     public class SeasonStatisticService : ISeasonStatisticService
     {
         private readonly EverythingNBADbContext db;
+        private readonly IMapper mapper;
 
-        public SeasonStatisticService(EverythingNBADbContext db)
+        public SeasonStatisticService(EverythingNBADbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task<int> AddAsync(int seasonId, int wins, int losses)
@@ -77,7 +76,7 @@
         {
             var statistic = await this.db.SingleSeasonStatistics.FindAsync(id);
 
-            var model = Mapping.Mapper.Map<GetSeasonStatisticDetailsServiceModel>(statistic);
+            var model = mapper.Map<GetSeasonStatisticDetailsServiceModel>(statistic);
 
             return model;
         }
@@ -86,7 +85,7 @@
         {
             var statistic = await this.db.SingleSeasonStatistics.Where(ss => ss.TeamId == teamId && ss.SeasonId == seasonId).FirstOrDefaultAsync();
 
-            var model = Mapping.Mapper.Map<GetSeasonStatisticDetailsServiceModel>(statistic);
+            var model = mapper.Map<GetSeasonStatisticDetailsServiceModel>(statistic);
 
             return model;
         }

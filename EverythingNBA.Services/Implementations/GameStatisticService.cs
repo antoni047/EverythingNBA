@@ -6,14 +6,17 @@ namespace EverythingNBA.Services.Implementations
 
     using System;
     using System.Threading.Tasks;
+    using AutoMapper;
 
     public class GameStatisticService : IGameStatisticService
     {
         private readonly EverythingNBADbContext db;
+        private readonly IMapper mapper;
 
-        public GameStatisticService(EverythingNBADbContext db)
+        public GameStatisticService(EverythingNBADbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task<int> AddAsync(int gameId, int playerId, int minutesPlayed, int points, int assists, int rebounds, int blocks, int steals, 

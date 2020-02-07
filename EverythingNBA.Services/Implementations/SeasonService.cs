@@ -2,9 +2,9 @@
 {
     using System.Linq;
     using System;
+    using AutoMapper;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
-    using AutoMapper;
     using System.Collections.Generic;
 
     using EverythingNBA.Data;
@@ -18,10 +18,12 @@
     public class SeasonService : ISeasonService
     {
         private readonly EverythingNBADbContext db;
+        private readonly IMapper mapper;
 
-        public SeasonService(EverythingNBADbContext db)
+        public SeasonService(EverythingNBADbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task<int> AddAsync(int year, int? titleWinnerId, int? playoffId, int gamesPlayed)
@@ -186,7 +188,7 @@
 
             foreach (var season in seasons)
             {
-                var model = Mapper.Map<GetSeasonListingServiceModel>(season);
+                var model = mapper.Map<GetSeasonListingServiceModel>(season);
 
                 models.Add(model);
             }

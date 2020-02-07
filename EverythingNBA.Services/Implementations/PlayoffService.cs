@@ -11,10 +11,12 @@
     public class PlayoffService : IPlayoffService
     {
         private readonly EverythingNBADbContext db;
+        private readonly IMapper mapper;
 
-        public PlayoffService(EverythingNBADbContext db)
+        public PlayoffService(EverythingNBADbContext db, IMapper mapper)
         {
             this.db = db;
+            this.mapper = mapper;
         }
 
         public async Task<int> AddPlayoffAsync(int? seasonId, int westernQuarterFinalFirstId, int westernQuarterFinalSecondId, int westernQuarterFinalThirdId,
@@ -133,7 +135,7 @@
 
             var playoff = season.Playoff;
 
-            var model = Mapper.Map<GetPlayoffServiceModel>(playoff);
+            var model = mapper.Map<GetPlayoffServiceModel>(playoff);
 
             return model;
         }
@@ -142,7 +144,7 @@
         {
             var playoff = await this.db.Playoffs.FindAsync(playoffId);
 
-            var model = Mapper.Map<GetPlayoffServiceModel>(playoff);
+            var model = mapper.Map<GetPlayoffServiceModel>(playoff);
 
             return model;
         }
