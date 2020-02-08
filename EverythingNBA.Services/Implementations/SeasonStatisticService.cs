@@ -93,11 +93,11 @@
         public async Task<string> GetWinPercentageAsync(int seasonStatisticId)
         {
             var statistic = await this.db.SingleSeasonStatistics.FindAsync(seasonStatisticId);
+            var season = await this.db.Seasons.FindAsync(statistic.SeasonId);
 
-            var result = statistic.Wins / statistic.Season.GamesPlayed;
+            double result = ((double)statistic.Wins / (double)season.GamesPlayed) * 100;
 
-            return result.ToString("0.000");
-
-        }
+            return (result / 100).ToString("0.000");
+        }//OK
     }
 }
