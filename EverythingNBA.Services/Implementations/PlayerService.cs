@@ -27,9 +27,9 @@
         }
 
         public async Task<int> AddPlayerAsync(string firstName, string lastName, int teamId, int? rookieYear, int age, int height, int weight, 
-            string position, bool isStarter, IFormFile imageFile, int shirtNumber, string instagramLink, string twitterLink)
+            string position, bool isStarter, /*IFormFile imageFile,*/ int shirtNumber, string instagramLink, string twitterLink)
         {
-            var imageId = await this.imageService.UploadImageAsync(imageFile);
+            //var imageId = await this.imageService.UploadImageAsync(imageFile);
 
             var playerObj = new Player
             {
@@ -42,7 +42,7 @@
                 Weight = weight,
                 Position = (PositionType)Enum.Parse(typeof(PositionType), position),
                 IsStarter = isStarter,
-                CloudinaryImageId = imageId,
+                //CloudinaryImageId = imageId,
                 ShirtNumber = shirtNumber,
                 InstagramLink = instagramLink,
                 TwitterLink = twitterLink,
