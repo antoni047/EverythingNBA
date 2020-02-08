@@ -109,7 +109,7 @@
                 var result = new TeamStandingsListingServiceModel
                 {
                     Name = team.Name,
-                    TeamLogoImageURL = team.CloudinaryImage.ImageURL,
+                    //TeamLogoImageURL = team.CloudinaryImage.ImageURL,
                     Conference = team.Conference.ToString(),
                     Wins = seasonStatistic.Wins,
                     Losses = seasonStatistic.Losses,
@@ -134,7 +134,7 @@
 
             foreach (var player in players)
             {
-                var playerOverviewModel = Mapper.Map<PlayerOverviewServiceModel>(player);
+                var playerOverviewModel = mapper.Map<PlayerOverviewServiceModel>(player);
 
                 var pointsPerGame = player.SeasonStatistics.Where(ss => ss.SeasonId == seasonId).Select(ss => ss.Points).FirstOrDefault();
                 var assistsPerGame = player.SeasonStatistics.Where(ss => ss.SeasonId == seasonId).Select(ss => ss.Assists).FirstOrDefault();
@@ -156,7 +156,7 @@
 
 
             var teamSeasonStatistic = team.SeasonsStatistics.Where(ss => ss.SeasonId == seasonId).FirstOrDefault();
-            model.CurrentSeasonStatistic = Mapper.Map<GetSeasonStatisticDetailsServiceModel>(teamSeasonStatistic);
+            model.CurrentSeasonStatistic = mapper.Map<GetSeasonStatisticDetailsServiceModel>(teamSeasonStatistic);
 
             model.TitlesWon = team.TitlesWon.Select(t => t.Year).ToList();
 

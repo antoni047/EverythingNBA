@@ -17,6 +17,8 @@
 
         Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(string name);
 
+        Task<ICollection<TeamStandingsListingServiceModel>> GetStandingsAsync(int seasonId);
+
         Task AddPlayerAsync(int playerId, int teamId);
 
         Task<bool> RemovePlayerAsync(int playedId, int teamId);
