@@ -149,16 +149,14 @@
                 playerModels.Add(playerOverviewModel);
             }
 
-            model.CurrentPlayers = playerModels;
+            model.Players = playerModels;
 
             var games = new List<Game>();
             games.AddRange(team.HomeGames);
             games.AddRange(team.AwayGames);
             model.CurrentSeasonGames = games.OrderByDescending(g => g.Date).ToList();
-
-
-            var teamSeasonStatistic = team.SeasonsStatistics.Where(ss => ss.SeasonId == seasonId && ss.TeamId == teamId).FirstOrDefault();
-            model.CurrentSeasonStatistic = mapper.Map<GetSeasonStatisticDetailsServiceModel>(teamSeasonStatistic);
+         
+            model.CurrentSeasonStatistic = team.SeasonsStatistics.Where(ss => ss.SeasonId == seasonId && ss.TeamId == teamId).FirstOrDefault();
 
             model.TitlesWon = team.TitlesWon.Select(t => t.Year).ToList();
 
@@ -281,7 +279,7 @@
         public async Task<bool> AddSeasonStatistic(int teamId, int seasonStatisticId)
         {
             var team = await this.db.FindAsync<Team>(teamId);
-            var seasonStatistic = await this.db.FindAsync<SeasonStatistic>(seasonStatisticId);
+            var seasonStatistic = await this.db.SeasonStatistics.FindAsync(seasonStatisticId);
 
             var someting = string.Empty;
 

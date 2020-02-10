@@ -32,17 +32,17 @@
 
 
             this.CreateMap<Team, GetTeamDetailsServiceModel>()
-                .ForMember(mdl => mdl.CurrentSeasonStatistic, opt => opt.Ignore())
-                .ForMember(mdl => mdl.CurrentSeasonGames, opt => opt.Ignore())
-                .ForMember(mdl => mdl.CurrentPlayers, opt => opt.Ignore())
-                .ForMember(mdl => mdl.TitlesWon, opt => opt.Ignore());
+            .ForMember(mdl => mdl.CurrentSeasonStatistic, opt => opt.Ignore())
+            .ForMember(mdl => mdl.CurrentSeasonGames, opt => opt.Ignore())
+            //.ForMember(mdl => mdl.CurrentPlayers, opt => opt.Ignore())
+            .ForMember(mdl => mdl.TitlesWon, opt => opt.MapFrom(t => t.TitlesWon.Select(x => x.Year).ToList()));
 
             this.CreateMap<Player, PlayerOverviewServiceModel>()
                 .ForMember(mdl => mdl.Name, opt => opt.MapFrom(p => p.FirstName + " " + p.LastName))
-                .ForMember(mdl => mdl.Position, opt => opt.MapFrom(p => p.Position.ToString()))
-                .ForMember(mdl => mdl.PointsPerGame, opt => opt.Ignore())
-                .ForMember(mdl => mdl.AssistsPerGame, opt => opt.Ignore())
-                .ForMember(mdl => mdl.ReboundsPerGame, opt => opt.Ignore());
+                .ForMember(mdl => mdl.Position, opt => opt.MapFrom(p => p.Position.ToString()));
+                //.ForMember(mdl => mdl.PointsPerGame, opt => opt.Ignore())
+                //.ForMember(mdl => mdl.AssistsPerGame, opt => opt.Ignore())
+                //.ForMember(mdl => mdl.ReboundsPerGame, opt => opt.Ignore());
 
             //this.CreateMap<GetAllStarTeamBySeasonServiceModel, AllStarTeam>()
             //    .ForMember(at => at.Players, opt => opt.MapFrom(a => a.Players));
