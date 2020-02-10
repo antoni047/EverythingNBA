@@ -9,7 +9,8 @@
         {
             this.AllStarTeams = new List<AllStarTeam>();
             this.Games = new List<Game>();
-            this.SingleSeasonStatistics = new List<SeasonStatistic>();
+            this.SeasonStatistics = new List<SeasonStatistic>();
+            this.Awards = new List<Award>();
         }
 
         public int Id { get; set; }
@@ -30,10 +31,10 @@
 
         public virtual ICollection<AllStarTeam> AllStarTeams { get; set; }
 
-        public  ICollection<Award> Awards { get; set; }
+        public virtual ICollection<Award> Awards { get; set; }
 
         public virtual ICollection<Game> Games { get; set; }
 
-        public virtual ICollection<SeasonStatistic> SingleSeasonStatistics { get; set; }
+        public virtual ICollection<SeasonStatistic> SeasonStatistics { get; set; }
     }
 }

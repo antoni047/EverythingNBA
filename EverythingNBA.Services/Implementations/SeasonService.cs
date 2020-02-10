@@ -78,9 +78,9 @@
         {
             var season = await this.db.Seasons.FindAsync(seasonId);
 
-            var seasonStatistic = await this.db.SingleSeasonStatistics.FindAsync(seasonStatisticId);
+            var seasonStatistic = await this.db.SeasonStatistics.FindAsync(seasonStatisticId);
 
-            season.SingleSeasonStatistics.Add(seasonStatistic);
+            season.SeasonStatistics.Add(seasonStatistic);
 
             await this.db.SaveChangesAsync();
         }
@@ -115,8 +115,8 @@
         {
             var season = await this.db.Seasons.FindAsync(seasonId);
 
-            var bestSeed = season.SingleSeasonStatistics.OrderByDescending(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
-            var worstSeed = season.SingleSeasonStatistics.OrderBy(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
+            var bestSeed = season.SeasonStatistics.OrderByDescending(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
+            var worstSeed = season.SeasonStatistics.OrderBy(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
 
             var awardWinners = this.GetSeasonAwards(season);
             var allStarTeams = this.GetAllStarTeams(season);
@@ -150,8 +150,8 @@
         {
             var season = await this.db.Seasons.Where(s => s.Year == year).FirstOrDefaultAsync();
 
-            var bestSeed = season.SingleSeasonStatistics.OrderByDescending(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
-            var worstSeed = season.SingleSeasonStatistics.OrderBy(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
+            var bestSeed = season.SeasonStatistics.OrderByDescending(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
+            var worstSeed = season.SeasonStatistics.OrderBy(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
 
             var awardWinners = this.GetSeasonAwards(season);
             var allStarTeams = this.GetAllStarTeams(season);

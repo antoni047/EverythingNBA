@@ -26,8 +26,8 @@ namespace EverythingNBA.Data
         public DbSet<Playoff> Playoffs { get; set; }
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Series> Series { get; set; }
-        public DbSet<GameStatistic> SingleGameStatistics { get; set; }
-        public DbSet<SeasonStatistic> SingleSeasonStatistics { get; set; }
+        public DbSet<GameStatistic> GameStatistics { get; set; }
+        public DbSet<SeasonStatistic> SeasonStatistics { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<PlayerSeasonStatistic> PlayerSeasonStatistics { get; set; }
 
@@ -107,10 +107,10 @@ namespace EverythingNBA.Data
             //   .WithMany(p => p.Awards)
             //   .HasForeignKey(a => a.WinnerId);
 
-            //builder.Entity<SingleSeasonStatistic>()
-            //    .HasOne(ss => ss.Season)
-            //    .WithMany(s => s.SingleSeasonStatistics)
-            //    .HasForeignKey(ss => ss.SeasonId);
+            builder.Entity<SeasonStatistic>()
+                .HasOne(ss => ss.Season)
+                .WithMany(s => s.SeasonStatistics)
+                .HasForeignKey(ss => ss.SeasonId);
 
             builder.Entity<Team>()
                 .HasMany(t => t.Players)

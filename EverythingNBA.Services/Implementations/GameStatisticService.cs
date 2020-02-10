@@ -40,7 +40,7 @@ namespace EverythingNBA.Services.Implementations
                 FieldGoalsMade = fieldGoalsMade
             };
 
-            this.db.SingleGameStatistics.Add(statObj);
+            this.db.GameStatistics.Add(statObj);
             await this.db.SaveChangesAsync();
 
             return statObj.Id;
@@ -48,14 +48,14 @@ namespace EverythingNBA.Services.Implementations
 
         public async Task<bool> DeleteAsync(int gameStatisticId)
         {
-            var statToDelete = await this.db.SingleGameStatistics.FindAsync(gameStatisticId);
+            var statToDelete = await this.db.GameStatistics.FindAsync(gameStatisticId);
 
             if (statToDelete == null)
             {
                 return false;
             }
 
-            this.db.SingleGameStatistics.Remove(statToDelete);
+            this.db.GameStatistics.Remove(statToDelete);
             await this.db.SaveChangesAsync();
 
             return true;

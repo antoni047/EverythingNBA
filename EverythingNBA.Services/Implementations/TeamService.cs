@@ -299,7 +299,7 @@
         public async Task<bool> RemoveSeasonStatistic(int teamId, int seasonStatisticId)
         {
             var team = await this.db.Teams.FindAsync(teamId);
-            var seasonStatistic = await this.db.SingleSeasonStatistics.FindAsync(seasonStatisticId);
+            var seasonStatistic = await this.db.SeasonStatistics.FindAsync(seasonStatisticId);
 
             var someting = string.Empty;
 

@@ -193,7 +193,7 @@ namespace EverythingNBA.Data.Migrations
 
                     b.HasIndex("PlayerId");
 
-                    b.ToTable("SingleGameStatistics");
+                    b.ToTable("GameStatistics");
                 });
 
             modelBuilder.Entity("EverythingNBA.Models.MappingTables.AllStarTeamsPlayers", b =>
@@ -461,7 +461,7 @@ namespace EverythingNBA.Data.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("SingleSeasonStatistics");
+                    b.ToTable("SeasonStatistics");
                 });
 
             modelBuilder.Entity("EverythingNBA.Models.Series", b =>
@@ -735,7 +735,7 @@ namespace EverythingNBA.Data.Migrations
             modelBuilder.Entity("EverythingNBA.Models.SeasonStatistic", b =>
                 {
                     b.HasOne("EverythingNBA.Models.Season", "Season")
-                        .WithMany("SingleSeasonStatistics")
+                        .WithMany("SeasonStatistics")
                         .HasForeignKey("SeasonId");
 
                     b.HasOne("EverythingNBA.Models.Team", "Team")
