@@ -10,6 +10,7 @@ namespace EverythingNBA.Models
     {
         public int Id { get; set; }
 
+        [Required]
         public int TeamId { get; set; }
         public Team Team { get; set; }
 

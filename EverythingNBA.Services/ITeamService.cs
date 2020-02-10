@@ -9,7 +9,7 @@
 
     public interface ITeamService
     {
-        Task<int> AddTeamAsync(string name, IFormFile imageFile, string conference, string venue, string instagram, string twitter);
+        Task<int> AddTeamAsync(string name, /*IFormFile imageFile,*/ string conference, string venue, string instagram, string twitter);
 
         Task<bool> DeleteTeamAsync(int teamId);
 

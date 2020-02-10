@@ -32,8 +32,10 @@
 
         public async Task AddPlayerAsync(int playerId, int teamId)
         {
-            var player = await this.db.Players.FindAsync(playerId);
-            var team = await this.db.Teams.FindAsync(teamId);
+            var player = await this.db.FindAsync<Player>(playerId);
+            var team = await this.db.FindAsync<Team>(teamId);
+
+            var someting = string.Empty;
 
             team.Players.Add(player);
 
@@ -58,14 +60,14 @@
 
         }
 
-        public async Task<int> AddTeamAsync(string name, IFormFile imageFile, string conference, string venue, string instagram, string twitter)
+        public async Task<int> AddTeamAsync(string name, /*IFormFile imageFile,*/ string conference, string venue, string instagram, string twitter)
         {
-            var imageId = await this.imageService.UploadImageAsync(imageFile);
+            //var imageId = await this.imageService.UploadImageAsync(imageFile);
 
             var teamObj = new Team
             {
                 Name = name,
-                CloudinaryImageId = imageId,
+                //CloudinaryImageId = imageId,
                 Conference = (ConferenceType)Enum.Parse(typeof(ConferenceType), conference),
                 Venue = venue,
                 Twitter = twitter,
@@ -124,7 +126,7 @@
 
         public async Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(int teamId)
         {
-            var team = await this.db.Teams.FindAsync(teamId);
+            var team = await this.db.Teams.Where(t => t.Id == teamId).FirstOrDefaultAsync();
             var seasonId = await this.db.Seasons.Where(s => s.Year == DateTime.Now.Year).Select(s => s.Id).FirstOrDefaultAsync();
 
             var model = mapper.Map<GetTeamDetailsServiceModel>(team);
@@ -155,7 +157,7 @@
             model.CurrentSeasonGames = games.OrderByDescending(g => g.Date).ToList();
 
 
-            var teamSeasonStatistic = team.SeasonsStatistics.Where(ss => ss.SeasonId == seasonId).FirstOrDefault();
+            var teamSeasonStatistic = team.SeasonsStatistics.Where(ss => ss.SeasonId == seasonId && ss.TeamId == teamId).FirstOrDefault();
             model.CurrentSeasonStatistic = mapper.Map<GetSeasonStatisticDetailsServiceModel>(teamSeasonStatistic);
 
             model.TitlesWon = team.TitlesWon.Select(t => t.Year).ToList();
@@ -246,8 +248,8 @@
 
         public async Task<bool> AddTitleAsync(int teamId, int seasonId)
         {
-            var team = await this.db.Teams.FindAsync(teamId);
-            var season = await this.db.Seasons.FindAsync(seasonId);
+            var team = await this.db.FindAsync<Team>(teamId);
+            var season = await this.db.FindAsync<Season>(seasonId);
 
             if (team == null || season == null)
             {
@@ -278,8 +280,10 @@
 
         public async Task<bool> AddSeasonStatistic(int teamId, int seasonStatisticId)
         {
-            var team = await this.db.Teams.FindAsync(teamId);
-            var seasonStatistic = await this.db.SingleSeasonStatistics.FindAsync(seasonStatisticId);
+            var team = await this.db.FindAsync<Team>(teamId);
+            var seasonStatistic = await this.db.FindAsync<SeasonStatistic>(seasonStatisticId);
+
+            var someting = string.Empty;
 
             if (team == null || seasonStatistic == null)
             {
@@ -296,6 +300,8 @@
         {
             var team = await this.db.Teams.FindAsync(teamId);
             var seasonStatistic = await this.db.SingleSeasonStatistics.FindAsync(seasonStatisticId);
+
+            var someting = string.Empty;
 
             if (team == null || seasonStatistic == null)
             {

@@ -56,6 +56,15 @@
 
         }
 
+        public async Task ChangePlayerName(int playerId, string change)
+        {
+            var player = await this.db.FindAsync<Player>(playerId);
+
+            player.FirstName = change;
+
+            await this.db.SaveChangesAsync();
+        }
+
         public async Task<bool> DeletePlayerAsync(int playerId)
         {
             var playerToDelete = await this.db.Players.FindAsync(playerId);

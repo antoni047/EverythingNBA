@@ -14,7 +14,5 @@ namespace EverythingNBA.Services
             bool isStarter, /*IFormFile pictureFile, */int shirtNumber, string instagramLink, string twitterLink);
 
         Task<bool> DeletePlayerAsync(int playerId);
-
-       
     }
 }

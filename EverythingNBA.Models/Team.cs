@@ -11,9 +11,9 @@
     {
         public Team()
         {
-            this.TitlesWon = new List<Season>();
-            this.Players = new List<Player>();
-            this.SeasonsStatistics = new List<SeasonStatistic>();
+            //this.TitlesWon = new List<Season>();
+            //this.Players = new List<Player>();
+            //this.SeasonsStatistics = new HashSet<SeasonStatistic>();
             this.AwayGames = new List<Game>();
             this.GamesWon = new List<Game>();
             this.HomeGames = new List<Game>();
@@ -42,11 +42,11 @@
 
         public string Twitter { get; set; }
 
-        public virtual ICollection<SeasonStatistic> SeasonsStatistics { get; set; }
-        public virtual ICollection<Game> AwayGames { get; set; }
-        public virtual ICollection<Game> GamesWon { get; set; }
-        public virtual ICollection<Game> HomeGames { get; set; }
-        public virtual ICollection<Player> Players { get; set; }
-        public virtual ICollection<Season> TitlesWon { get; set; }
+        public ICollection<SeasonStatistic> SeasonsStatistics { get; set; } = new List<SeasonStatistic>();
+        public ICollection<Game> AwayGames { get; set; }
+        public ICollection<Game> GamesWon { get; set; }
+        public ICollection<Game> HomeGames { get; set; }
+        public ICollection<Player> Players { get; set; } = new List<Player>();
+        public ICollection<Season> TitlesWon { get; set; } = new List<Season>();
     }
 }

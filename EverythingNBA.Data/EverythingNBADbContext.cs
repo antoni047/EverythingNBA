@@ -112,6 +112,11 @@ namespace EverythingNBA.Data
             //    .WithMany(s => s.SingleSeasonStatistics)
             //    .HasForeignKey(ss => ss.SeasonId);
 
+            builder.Entity<Team>()
+                .HasMany(t => t.Players)
+                .WithOne(p => p.Team)
+                .HasForeignKey(p => p.TeamId);
+
             ////One-To-One
             builder.Entity<Season>()
                .HasOne(s => s.Playoff)

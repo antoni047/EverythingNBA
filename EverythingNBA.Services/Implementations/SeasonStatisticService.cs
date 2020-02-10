@@ -20,11 +20,12 @@
             this.mapper = mapper;
         }
 
-        public async Task<int> AddAsync(int seasonId, int wins, int losses)
+        public async Task<int> AddAsync(int seasonId, int teamId ,int wins, int losses)
         {
             var seasonStatisticObj = new SeasonStatistic
             {
                 SeasonId = seasonId,
+                TeamId = teamId,
                 Wins = wins,
                 Losses = losses
             };

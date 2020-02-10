@@ -32,7 +32,8 @@
             {
                 Year = year,
                 TitleWinnerId = titleWinnerId,
-                PlayoffId = playoffId
+                PlayoffId = playoffId,
+                GamesPlayed = gamesPlayed
             };
 
             this.db.Seasons.Add(seasonObj);
