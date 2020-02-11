@@ -11,8 +11,11 @@
     using EverythingNBA.Services.Models.Playoff;
     using EverythingNBA.Services.Models.Player;
     using EverythingNBA.Services.Models.Team;
+    using EverythingNBA.Services.Models.Game;
+    using EverythingNBA.Services.Models.GameStatistic;
     using EverythingNBA.Models.Enums;
     using EverythingNBA.Services.Models.Series;
+    using System.Globalization;
 
     public class MappingProfile : Profile
     {
@@ -29,7 +32,6 @@
             this.CreateMap<Playoff, GetPlayoffServiceModel>();
 
             this.CreateMap<Series, GetSeriesDetailsServiceModel>();
-
 
             this.CreateMap<Team, GetTeamDetailsServiceModel>()
             .ForMember(mdl => mdl.CurrentSeasonStatistic, opt => opt.Ignore())
@@ -50,6 +52,8 @@
             this.CreateMap<Player, PlayerDetailsServiceModel>()
                 .ForMember(mdl => mdl.CurrentTeam, opt => opt.MapFrom(p => p.Team.Name))
                 .ForMember(mdl => mdl.Position, opt => opt.MapFrom(p => p.Position.ToString()));
+
+            this.CreateMap<Game, GameOverviewServiceModel>();
         }
     }
 }
