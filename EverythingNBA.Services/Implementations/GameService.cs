@@ -1,11 +1,16 @@
 ﻿namespace EverythingNBA.Services.Implementations
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using AutoMapper;
+    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
 
     using EverythingNBA.Data;
     using EverythingNBA.Models;
+    using EverythingNBA.Services.Models.Game;
+    using EverythingNBA.Services.Models.GameStatistic;
 
     public class GameService : IGameService
     {
@@ -50,6 +55,81 @@
             await this.db.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsAsync(int team1Id, int team2Id)
+        {
+            var games = await this.db.Games.Where(g => (g.TeamHostId == team1Id || g.Team2Id == team1Id) && (g.TeamHostId == team2Id || g.Team2Id == team2Id))
+                .ToListAsync();
+
+            var models = new List<GameOverviewServiceModel>();
+
+            foreach (var game in games.OrderByDescending(g => g.Date))
+            {
+                var model = mapper.Map<GameOverviewServiceModel>(game);
+
+                models.Add(model);
+            }
+
+            return models;
+        }
+
+        public async Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(int team1Id, int team2Id, int seasonId)
+        {
+            var games = await this.db.Games
+                .Where(g => (g.TeamHostId == team1Id || g.Team2Id == team1Id) && (g.TeamHostId == team2Id || g.Team2Id == team2Id) && g.SeasonId == seasonId)
+                .ToListAsync();
+
+            var models = new List<GameOverviewServiceModel>();
+
+            foreach (var game in games.OrderByDescending(g => g.Date))
+            {
+                var model = mapper.Map<GameOverviewServiceModel>(game);
+
+                models.Add(model);
+            }
+
+            return models;
+        }
+
+        public async Task<ICollection<GameOverviewServiceModel>> GetCurrentSeasonGamesAsync(int seasonId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<GameDetailsServiceModel> GetGameAsync(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<GameDetailsServiceModel> GetGameAsync(int gameId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<PlayerGameStatisticServiceModel> GetTopAssistsAsync(int gameId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<PlayerGameStatisticServiceModel> GetTopPointsAsync(int gameId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<PlayerGameStatisticServiceModel> GetTopReboundsAsync(int gameId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<string> GetWinnerAsync(int gameId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> SetScoreAsync(int gameId)
+        {
+            throw new NotImplementedException();
         }
     }
 }
