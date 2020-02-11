@@ -8,10 +8,10 @@
         public int Id { get; set; }
 
         public int PlayerId { get; set; }
-        public Player Player { get; set; }
+        public virtual Player Player { get; set; }
 
         public int SeasonId { get; set; }
-        public Season Season { get; set; }
+        public virtual Season Season { get; set; }
 
         //All Stats Are Averages!
         [Range(MinimumStat, MaximumPoints)]

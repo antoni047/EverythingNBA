@@ -12,10 +12,10 @@ namespace EverythingNBA.Models
 
         [Required]
         public int TeamId { get; set; }
-        public Team Team { get; set; }
+        public virtual Team Team { get; set; }
 
         public int? SeasonId { get; set; }
-        public Season Season { get; set; }
+        public virtual Season Season { get; set; }
 
         [Required]
         public int Wins { get; set; }

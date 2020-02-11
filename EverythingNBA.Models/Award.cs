@@ -22,6 +22,6 @@
 
         public int? SeasonId { get; set; }
 
-        public Season Season { get; set; }
+        public virtual Season Season { get; set; }
     }
 }
