@@ -1,7 +1,7 @@
 ﻿
 namespace EverythingNBA.Services
 {
-    using EverythingNBA.Services.Models.Team;
+    using EverythingNBA.Services.Models.Player;
 
     using Microsoft.AspNetCore.Http;
     using System;
@@ -14,5 +14,23 @@ namespace EverythingNBA.Services
             bool isStarter, /*IFormFile pictureFile, */int shirtNumber, string instagramLink, string twitterLink);
 
         Task<bool> DeletePlayerAsync(int playerId);
+
+        Task<ICollection<string>> GetAllPlayersAsync();
+
+        Task<PlayerDetailsServiceModel> GetPlayerDetailsAsync(int id);
+
+        Task<PlayerDetailsServiceModel> GetPlayerDetailsAsync(string name);
+
+        Task<bool> AddPlayerSeasonStatistic(int playerId, int seasonStatisticId);
+
+        Task<bool> RemovePlayerSeasonStatistic(int playerId, int seasonStatisticId);
+
+        Task<bool> AddGameStatistic(int playerId, int gameStatisticId);
+
+        Task<bool> RemoveGameStatisticStatistic(int playerId, int gameStatisticId);
+
+        Task<bool> AddAward(int playerId, int awardId);
+
+        Task<bool> RemoveAward(int playerId, int awardId);
     }
 }
