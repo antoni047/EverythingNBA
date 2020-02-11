@@ -2,7 +2,6 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
     using AutoMapper;
     using System.Linq;
     using System.Collections.Generic;
@@ -26,38 +25,7 @@
             this.mapper = mapper;
         }
 
-        public async Task<bool> AddAward(int playerId, int awardId)
-        {
-            var player = await this.db.Players.FindAsync(playerId);
-            var award = await this.db.Awards.FindAsync(awardId);
-
-            if (player== null || award == null)
-            {
-                return false;
-            }
-
-            player.Awards.Add(award);
-
-            await this.db.SaveChangesAsync();
-
-            return true;
-        }
-
-        public async Task<bool> AddGameStatistic(int playerId, int gameStatisticId)
-        {
-            var player = await this.db.Players.FindAsync(playerId);
-            var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
-
-            if (player == null || gameStatistic == null)
-            {
-                return false;
-            }
-
-
-            throw new NotImplementedException();
-        }
-
-        public async Task<int> AddPlayerAsync(string firstName, string lastName, int teamId, int? rookieYear, int age, int height, int weight, 
+        public async Task<int> AddPlayerAsync(string firstName, string lastName, int teamId, int? rookieYear, int age, int height, int weight,
             string position, bool isStarter, /*IFormFile imageFile,*/ int shirtNumber, string instagramLink, string twitterLink)
         {
             //var imageId = await this.imageService.UploadImageAsync(imageFile);
@@ -77,7 +45,7 @@
                 ShirtNumber = shirtNumber,
                 InstagramLink = instagramLink,
                 TwitterLink = twitterLink,
-                
+
             };
 
             await this.db.Players.AddAsync(playerObj);
@@ -85,12 +53,6 @@
 
             return playerObj.Id;
 
-        }
-
-        public async Task<bool> AddPlayerSeasonStatistic(int playerId, int seasonStatisticId)
-        {
-            var player = await this.db.Players.FindAsync(playerId);
-            throw new NotImplementedException();
         }
 
         public async Task<bool> DeletePlayerAsync(int playerId)
@@ -145,23 +107,101 @@
             return model;
         }
 
+        public async Task<bool> AddAward(int playerId, int awardId)
+        {
+            var player = await this.db.Players.FindAsync(playerId);
+            var award = await this.db.Awards.FindAsync(awardId);
+
+            if (player == null || award == null || playerId != award.WinnerId)
+            {
+                return false;
+            }
+
+            player.Awards.Add(award);
+
+            await this.db.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<bool> RemoveAward(int playerId, int awardId)
         {
             var player = await this.db.Players.FindAsync(playerId);
             var award = await this.db.Awards.FindAsync(awardId);
-            throw new NotImplementedException();
+
+            if (player == null || award == null || playerId != award.WinnerId)
+            {
+                return false;
+            }
+
+            player.Awards.Remove(award);
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> AddGameStatistic(int playerId, int gameStatisticId)
+        {
+            var player = await this.db.Players.FindAsync(playerId);
+            var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
+
+            if (player == null || gameStatistic == null || playerId != gameStatistic.PlayerId)
+            {
+                return false;
+            }
+
+            player.SingleGameStatistics.Add(gameStatistic);
+
+            await this.db.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> RemoveGameStatisticStatistic(int playerId, int gameStatisticId)
         {
             var player = await this.db.Players.FindAsync(playerId);
-            throw new NotImplementedException();
+            var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
+
+            if (player == null || gameStatistic == null || playerId != gameStatistic.PlayerId)
+            {
+                return false;
+            }
+
+            player.SingleGameStatistics.Remove(gameStatistic);
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> AddPlayerSeasonStatistic(int playerId, int seasonStatisticId)
+        {
+            var player = await this.db.Players.FindAsync(playerId);
+            var seasonStatistic = await this.db.PlayerSeasonStatistics.FindAsync(seasonStatisticId);
+
+            if (player == null || seasonStatistic == null || playerId != seasonStatistic.PlayerId)
+            {
+                return false;
+            }
+
+            player.SeasonStatistics.Add(seasonStatistic);
+
+            await this.db.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> RemovePlayerSeasonStatistic(int playerId, int seasonStatisticId)
         {
             var player = await this.db.Players.FindAsync(playerId);
-            throw new NotImplementedException();
+            var seasonStatistic = await this.db.PlayerSeasonStatistics.FindAsync(seasonStatisticId);
+
+            if (player == null || seasonStatistic == null || playerId != seasonStatistic.PlayerId)
+            {
+                return false;
+            }
+
+            player.SeasonStatistics.Remove(seasonStatistic);
+
+            await this.db.SaveChangesAsync();
+            return true;
         }
     }
 }
