@@ -54,6 +54,8 @@
                 .ForMember(mdl => mdl.Position, opt => opt.MapFrom(p => p.Position.ToString()));
 
             this.CreateMap<Game, GameOverviewServiceModel>();
+
+            this.CreateMap<Game, GameDetailsServiceModel>();
         }
     }
 }

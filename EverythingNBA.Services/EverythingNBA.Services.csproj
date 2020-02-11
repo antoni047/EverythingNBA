@@ -17,7 +17,7 @@
   <ItemGroup>
     <Folder Include="Models\Award\" />
     <Folder Include="Models\Game\" />
-    <Folder Include="Models\GameStatistic\" />
+    <Folder Include="Models\GameStatisticModels\" />
   </ItemGroup>
 
 </Project>

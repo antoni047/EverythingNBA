@@ -94,23 +94,48 @@
 
         public async Task<ICollection<GameOverviewServiceModel>> GetCurrentSeasonGamesAsync(int seasonId)
         {
-            throw new NotImplementedException();
+            var currentSeasonGames = await this.db.Games.Where(g => g.SeasonId == seasonId).ToListAsync();
+
+            var models = new List<GameOverviewServiceModel>();
+
+            foreach (var game in currentSeasonGames)
+            {
+                var model = mapper.Map<GameOverviewServiceModel>(game);
+
+                models.Add(model);
+            }
+
+            return models;
         }
 
         public async Task<GameDetailsServiceModel> GetGameAsync(DateTime date)
         {
-            throw new NotImplementedException();
+            var game = await this.db.Games.Where(g => g.Date == date).FirstOrDefaultAsync();
+
+            var result = await this.GetGameAsync(game.Id);
+
+            return result;
         }
 
         public async Task<GameDetailsServiceModel> GetGameAsync(int gameId)
         {
-            throw new NotImplementedException();
+            var game = await this.db.Games.FindAsync(gameId);
+
+            if (game == null)
+            {
+                return null;
+            }
+
+            var model = mapper.Map<GameDetailsServiceModel>(game);
+
+            return model;
         }
 
         public async Task<PlayerGameStatisticServiceModel> GetTopAssistsAsync(int gameId)
         {
             throw new NotImplementedException();
         }
+    }
 
         public async Task<PlayerGameStatisticServiceModel> GetTopPointsAsync(int gameId)
         {
