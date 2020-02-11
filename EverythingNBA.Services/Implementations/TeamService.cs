@@ -130,7 +130,7 @@
 
         public async Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(int teamId)
         {
-            var team = await this.db.Teams.Where(t => t.Id == teamId).FirstOrDefaultAsync();
+            var team = await this.db.Teams.FindAsync(teamId);
             var seasonId = await this.db.Seasons.Where(s => s.Year == DateTime.Now.Year).Select(s => s.Id).FirstOrDefaultAsync();
 
             var model = mapper.Map<GetTeamDetailsServiceModel>(team);
