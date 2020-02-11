@@ -8,7 +8,7 @@
     {
         public Game()
         {
-            this.PlayerStats = new List<GameStatistic>();
+            this.PlayerStats = new HashSet<GameStatistic>();
         }
 
         public int Id { get; set; }

@@ -11,7 +11,7 @@
     {
         public AllStarTeam()
         {
-            this.Players = new List<AllStarTeamsPlayers>();
+            this.Players = new HashSet<AllStarTeamsPlayers>();
         }
 
         public int Id { get; set; }

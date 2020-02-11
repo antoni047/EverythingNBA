@@ -11,10 +11,10 @@
     {
         public Player()
         {
-            this.AllStarTeams = new List<AllStarTeamsPlayers>();
-            this.Awards = new List<Award>();
-            this.SingleGameStatistics = new List<GameStatistic>();
-            this.SeasonStatistics = new List<PlayerSeasonStatistic>();
+            this.AllStarTeams = new HashSet<AllStarTeamsPlayers>();
+            this.Awards = new HashSet<Award>();
+            this.SingleGameStatistics = new HashSet<GameStatistic>();
+            this.SeasonStatistics = new HashSet<PlayerSeasonStatistic>();
         }
 
         public int Id { get; set; }

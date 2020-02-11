@@ -7,10 +7,10 @@
     {
         public Season()
         {
-            this.AllStarTeams = new List<AllStarTeam>();
-            this.Games = new List<Game>();
-            this.SeasonStatistics = new List<SeasonStatistic>();
-            this.Awards = new List<Award>();
+            this.AllStarTeams = new HashSet<AllStarTeam>();
+            this.Games = new HashSet<Game>();
+            this.SeasonStatistics = new HashSet<SeasonStatistic>();
+            this.Awards = new HashSet<Award>();
         }
 
         public int Id { get; set; }
