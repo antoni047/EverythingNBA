@@ -38,6 +38,8 @@
             var someting = string.Empty;
 
             team.Players.Add(player);
+            player.TeamId = teamId;
+            player.Team = team;
 
             await this.db.SaveChangesAsync();
         }
@@ -53,6 +55,8 @@
             }
 
             team.Players.Remove(player);
+            player.TeamId = null;
+            player.Team = null;
 
             await this.db.SaveChangesAsync();
 
