@@ -135,7 +135,7 @@
         {
             throw new NotImplementedException();
         }
-    }
+    
 
         public async Task<PlayerGameStatisticServiceModel> GetTopPointsAsync(int gameId)
         {

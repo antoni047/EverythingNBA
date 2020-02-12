@@ -32,10 +32,8 @@
 
         public async Task AddPlayerAsync(int playerId, int teamId)
         {
-            var player = await this.db.FindAsync<Player>(playerId);
-            var team = await this.db.FindAsync<Team>(teamId);
-
-            var someting = string.Empty;
+            var player = await this.db.Players.FindAsync(playerId);
+            var team = await this.db.Teams.FindAsync(teamId);
 
             team.Players.Add(player);
             player.TeamId = teamId;
@@ -46,7 +44,7 @@
 
         public async Task<bool> RemovePlayerAsync(int playedId, int teamId)
         {
-            var team = await this.db.Teams.FindAsync(teamId);
+            var team = await this.db.Teams.Include(t => t.Players).Where(t => t.Id == teamId).FirstOrDefaultAsync();
             var player = team.Players.Where(p => p.Id == playedId).FirstOrDefault();
 
             if (player == null)
@@ -130,7 +128,7 @@
 
         public async Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(int teamId)
         {
-            var team = await this.db.Teams.FindAsync(teamId);
+            var team = await this.db.Teams.Include(x => x.Players).Where(t => t.Id == teamId).FirstOrDefaultAsync();
             var seasonId = await this.db.Seasons.Where(s => s.Year == DateTime.Now.Year).Select(s => s.Id).FirstOrDefaultAsync();
 
             var model = mapper.Map<GetTeamDetailsServiceModel>(team);
