@@ -35,25 +35,20 @@ namespace EverythingNBA.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            await this.teamService.AddPlayerAsync(13, 1);
-            //await this.teamService.AddPlayerAsync(9, 1);
+            await this.teamService.RemovePlayerAsync(13, 1);
+            await this.teamService.RemovePlayerAsync(9, 1);
+            await this.teamService.RemovePlayerAsync(2, 1);
 
-            //var result2 = await this.teamService.AddTitleAsync(1, 2);
-            //var result = await this.teamService.AddSeasonStatistic(1, 9);
+            var model = await this.teamService.GetTeamDetailsAsync(1);
 
+            return this.View(model);
 
-            //var model = await this.teamService.GetTeamDetailsAsync("Lakers");
-
-            //await this.awardService.AddAwardAsync("MVP", 2019, 7);
-
-            return this.View();
+            //return this.View();
         }
 
         public async Task<IActionResult> Privacy()
         {
-            var list = await this.playerService.GetPlayerDetailsAsync(13); 
-
-            return this.View(list);
+            return this.View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

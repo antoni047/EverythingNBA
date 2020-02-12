@@ -1,4 +1,4 @@
-﻿@*@using EverythingNBA.Services.Models.Team
+﻿@using EverythingNBA.Services.Models.Team
 
 @model GetTeamDetailsServiceModel;
 
@@ -6,13 +6,7 @@
 <div>@Model.Venue</div>
 <div>@Model.Conference</div>
 <div>@Model.AbbreviatedName</div>
-<div>@Model.CurrentSeasonStatistic.Wins</div>
-<div>@Model.CurrentSeasonStatistic.Losses</div>
 @foreach (var player in @Model.Players)
 {
     <div>@player.Name</div>
 }
-@foreach (var title in @Model.TitlesWon)
-{
-    <div>@title</div>
-}*@

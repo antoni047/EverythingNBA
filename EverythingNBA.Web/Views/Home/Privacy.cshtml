@@ -1,11 +1,12 @@
-﻿@model EverythingNBA.Services.Models.Player.PlayerDetailsServiceModel;
+﻿@*@using EverythingNBA.Services.Models.Team
 
-    <div>@Model.FirstName</div>
-    <div>@Model.LastName</div>
-    <div>@Model.Age</div>
-    <div>@Model.CurrentTeam</div>
-    <div>@Model.Height</div>
-    <div>@Model.Weight</div>
-    <div>@Model.ShirtNumber</div>
+@model GetTeamDetailsServiceModel;
 
-
+<div>@Model.Name</div>
+<div>@Model.Venue</div>
+<div>@Model.Conference</div>
+<div>@Model.AbbreviatedName</div>
+@foreach (var player in @Model.Plaayers)
+{
+    <div>@player.Name</div>
+}*@
