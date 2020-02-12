@@ -39,6 +39,8 @@ namespace EverythingNBA.Data
                 optionsBuilder
                     .UseSqlServer(Configuration.ConnectionString);
             }
+
+            optionsBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
