@@ -23,9 +23,7 @@
         {
             this.CreateMap<SeasonStatistic, GetSeasonStatisticDetailsServiceModel>().ReverseMap();
 
-            this.CreateMap<AllStarTeam, GetAllStarTeamServiceModel>()
-                .ForMember(mdl => mdl.Players, opt => opt.MapFrom(ast => ast.Players))
-                .ForMember(mdl => mdl.Type, opt => opt.MapFrom(ast => ast.Type.ToString()));
+            
 
             this.CreateMap<Season, GetSeasonListingServiceModel>();
 

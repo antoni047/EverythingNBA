@@ -11,6 +11,8 @@
 
         public string Type { get; set; }
 
+        public int Year { get; set; }
+
         public ICollection<Player> Players { get; set; }
     }
 }

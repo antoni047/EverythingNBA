@@ -26,13 +26,30 @@ namespace EverythingNBA.Services.Implementations
             this.mapper = mapper;
         }
 
-        public async Task<int> AddAllStarTeamAsync(int year, string type)
+        public async Task<int> AddAllStarTeamAsync(int year, string type, ICollection<int> playerIds)
         {
             var allStarTeamObj = new AllStarTeam
             {
                 Year = year,
-                Type = (AllStarTeamType)Enum.Parse(typeof(AllStarTeamType), type),
+                Type = (AllStarTeamType)Enum.Parse(typeof(AllStarTeamType), type)
             };
+
+            var allStarTeamsPlayersList = new List<AllStarTeamsPlayers>();
+
+            foreach (var playerId in playerIds)
+            {
+                var player = await this.db.Players.FindAsync(playerId);
+
+                var obj = new AllStarTeamsPlayers
+                {
+                    AllStarTeam = allStarTeamObj,
+                    Player = player
+                };
+
+                allStarTeamsPlayersList.Add(obj);
+            }
+
+            allStarTeamObj.Players = allStarTeamsPlayersList;
 
             this.db.AllStarTeams.Add(allStarTeamObj);
             await this.db.SaveChangesAsync();
@@ -40,19 +57,32 @@ namespace EverythingNBA.Services.Implementations
             return allStarTeamObj.Id;
         }
 
-        public async Task AddPlayerAsync(int allStarTeamId, int playerId)
+        public async Task<bool> RemovePlayerAsync(int allStarTeamId, int playerId)
         {
-            var allStarTeam = await this.db.AllStarTeams.FindAsync(allStarTeamId);
+            var allStarTeam = await this.db.AllStarTeams
+                .Include(ast => ast.Players)
+                .Where(ast => ast.Id == allStarTeamId)
+                .FirstOrDefaultAsync();
 
-            var obj = new AllStarTeamsPlayers
+            if (allStarTeam == null)
             {
-                AllStarTeamId = allStarTeamId,
-                PlayerId = playerId
-            };
+                return false;
+            }
 
-            allStarTeam.Players.Add(obj);
+            var obj = await this.db.AllStarTeamsPlayers
+                .Where(x => x.PlayerId == playerId && x.AllStarTeamId == allStarTeamId)
+                .FirstOrDefaultAsync();
+
+            var IsSucessfulllyRemoved = allStarTeam.Players.Remove(obj);
+
+            if (!IsSucessfulllyRemoved)
+            {
+                return false;
+            }
 
             await this.db.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<bool> DeleteAllStarTeamAsync(int allStarTeamId)
@@ -72,14 +102,27 @@ namespace EverythingNBA.Services.Implementations
 
         public async Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsAsync(string type)
         {
-            var allStarTeams = await this.db.AllStarTeams.Where(ast => ast.Type.ToString() == type).ToListAsync();
+            var enumType = (AllStarTeamType)Enum.Parse(typeof(AllStarTeamType), type);
+            var allStarTeams = await this.db.AllStarTeams
+                .Include(ast => ast.Players)
+                    .ThenInclude(x => x.Player)
+                .Where(ast => ast.Type == enumType)
+                .ToListAsync();
 
             var allStarTeamServiceModels = new List<GetAllStarTeamServiceModel>();
 
-            foreach (var team in allStarTeams)
+            foreach (var (team, players, allStarTeamsPlayers) in from team in allStarTeams
+                                                                 let players = new List<Player>()
+                                                                 let allStarTeamsPlayers = team.Players.ToList()
+                                                                 select (team, players, allStarTeamsPlayers))
             {
-                var model = mapper.Map<GetAllStarTeamServiceModel>(team);
-
+                allStarTeamsPlayers.ForEach(x => players.Add(x.Player));
+                var model = new GetAllStarTeamServiceModel
+                {
+                    Type = team.Type.ToString(),
+                    Year = team.Year,
+                    Players = players
+                };
                 allStarTeamServiceModels.Add(model);
             }
 
@@ -88,37 +131,44 @@ namespace EverythingNBA.Services.Implementations
 
         public async Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsAsync(int Year)
         {
-            var allStarTeams = await this.db.AllStarTeams.Where(ast => ast.Year == Year).ToListAsync();
+            var allStarTeam = await this.db.AllStarTeams.Where(ast => ast.Year == Year).FirstOrDefaultAsync();
 
-            var allStarTeamServiceModels = new List<GetAllStarTeamServiceModel>();
+            var result = await this.GetAllASTeamsAsync(allStarTeam.Type.ToString());
 
-            foreach (var team in allStarTeams)
-            {
-                var model = mapper.Map<GetAllStarTeamServiceModel>(team);
-
-                allStarTeamServiceModels.Add(model);
-            }
-
-            return allStarTeamServiceModels;
+            return result;
         }
 
         public async Task<GetAllStarTeamServiceModel> GetAllStarTeamAsync(int id)
         {
-            var allStarTeam = await this.db.AllStarTeams.FindAsync(id);
+            var allStarTeam = await this.db.AllStarTeams
+                .Include(ast => ast.Players)
+                    .ThenInclude(x => x.Player)
+                .Where(ast => ast.Id == id)
+                .FirstOrDefaultAsync();
 
-            var model = mapper.Map<GetAllStarTeamServiceModel>(allStarTeam);
+            var playersList = new List<Player>();
+
+            foreach (var player in allStarTeam.Players)
+            {
+                playersList.Add(player.Player);
+            }
+
+            var model = new GetAllStarTeamServiceModel
+            {
+                Type = allStarTeam.Type.ToString(),
+                Year = allStarTeam.Year,
+                Players = playersList
+            };
 
             return model;
         }
 
         public async Task<GetAllStarTeamServiceModel> GetAllStarTeamByTypeAndYearAsync(string type, int Year)
         {
-            var allStarTeam = await this.db.AllStarTeams.Where(ast => ast.Type.ToString() == type && ast.Year == Year).FirstOrDefaultAsync();
+            var enumType = (AllStarTeamType)Enum.Parse(typeof(AllStarTeamType), type);
+            var allStarTeam = await this.db.AllStarTeams.Where(ast => ast.Type == enumType && ast.Year == Year).FirstOrDefaultAsync();
 
-            var model = mapper.Map<GetAllStarTeamServiceModel>(allStarTeam);
-
-            return model;
-
+            return await this.GetAllStarTeamAsync(allStarTeam.Id);
         }
     }
 }
