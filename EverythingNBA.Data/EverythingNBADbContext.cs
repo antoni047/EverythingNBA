@@ -30,6 +30,7 @@ namespace EverythingNBA.Data
         public DbSet<SeasonStatistic> SeasonStatistics { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<PlayerSeasonStatistic> PlayerSeasonStatistics { get; set; }
+        public DbSet<AllStarTeamsPlayers> AllStarTeamsPlayers { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -40,7 +41,7 @@ namespace EverythingNBA.Data
                     .UseSqlServer(Configuration.ConnectionString);
             }
 
-            optionsBuilder.UseLazyLoadingProxies();
+            //optionsBuilder.UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
