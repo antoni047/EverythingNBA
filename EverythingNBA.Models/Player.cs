@@ -20,11 +20,11 @@
         public int Id { get; set; }
 
         [Required]
-        [MinLength(NameMinLenght), MaxLength(NameMaxLenght)]
+        [MaxLength(NameMaxLenght)]
         public string FirstName { get; set; }
 
         [Required]
-        [MinLength(NameMinLenght), MaxLength(NameMaxLenght)]
+        [MaxLength(NameMaxLenght)]
         public string LastName { get; set; }
 
         
