@@ -60,5 +60,32 @@ namespace EverythingNBA.Services.Implementations
 
             return true;
         }
+
+        public async Task<double> GetFieldGoalPercentage(int gameStatisticId)
+        {
+            var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
+
+            var result = ((double)gameStatistic.FieldGoalAttempts / (double)gameStatistic.FieldGoalsMade)*100;
+
+            return result;
+        }
+
+        public async Task<double> GetFreeThrowPercentage(int gameStatisticId)
+        {
+            var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
+
+            var result = ((double)gameStatistic.FreeThrowAttempts / (double)gameStatistic.FreeThrowsMade) * 100;
+
+            return result;
+        }
+
+        public async Task<double> GetThreePointsPercentage(int gameStatisticId)
+        {
+            var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
+
+            var result = ((double)gameStatistic.FreeThrowAttempts / (double)gameStatistic.FreeThrowsMade) * 100;
+
+            return result;
+        }
     }
 }

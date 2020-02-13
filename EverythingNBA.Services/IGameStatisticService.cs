@@ -9,5 +9,11 @@
             int freeThrowAttemps, int freeThrowsMade, int threeAttemps, int threeMade, int fieldGoalAttempts, int fieldGoalsMade);
 
         Task<bool> DeleteAsync(int gameStatisticId);
+
+        Task<double> GetThreePointsPercentage(int gameStatisticId);
+
+        Task<double> GetFieldGoalPercentage(int gameStatisticId);
+
+        Task<double> GetFreeThrowPercentage(int gameStatisticId);
     }
 }
