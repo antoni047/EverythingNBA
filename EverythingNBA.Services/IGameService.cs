@@ -13,7 +13,7 @@
 
         Task<bool> DeleteGameAsync(int gameId);
 
-        Task<GameDetailsServiceModel> GetGameAsync(DateTime date);
+        Task<ICollection<GameDetailsServiceModel>> GetGamesOnDateAsync(string date);
 
         Task<GameDetailsServiceModel> GetGameAsync(int gameId);
 

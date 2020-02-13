@@ -109,18 +109,29 @@
             return models;
         }
 
-        public async Task<GameDetailsServiceModel> GetGameAsync(DateTime date)
+        public async Task<ICollection<GameDetailsServiceModel>> GetGamesOnDateAsync(string date)
         {
-            var game = await this.db.Games.Where(g => g.Date == date).FirstOrDefaultAsync();
+            var parsedDate = DateTime.ParseExact(date, "dd/MM/yyyy", null);
+            var games = await this.db.Games.Include(g => g.PlayerStats).Where(g => DateTime.Compare(g.Date, parsedDate) == 0).ToListAsync();
 
-            var result = await this.GetGameAsync(game.Id);
+            var gameModels = new List<GameDetailsServiceModel>();
 
-            return result;
+            foreach (var game in games)
+            {
+                var model = mapper.Map<GameDetailsServiceModel>(game);
+
+                gameModels.Add(model);
+            }
+
+            return gameModels;
         }
 
         public async Task<GameDetailsServiceModel> GetGameAsync(int gameId)
         {
-            var game = await this.db.Games.FindAsync(gameId);
+            var game = await this.db.Games
+                .Include(g => g.PlayerStats)
+                .Where(g => g.Id == gameId)
+                .FirstOrDefaultAsync();
 
             if (game == null)
             {
