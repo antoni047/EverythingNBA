@@ -113,7 +113,8 @@ namespace EverythingNBA.Data
             builder.Entity<SeasonStatistic>()
                 .HasOne(ss => ss.Season)
                 .WithMany(s => s.SeasonStatistics)
-                .HasForeignKey(ss => ss.SeasonId);
+                .HasForeignKey(ss => ss.SeasonId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Team>()
                 .HasMany(t => t.Players)

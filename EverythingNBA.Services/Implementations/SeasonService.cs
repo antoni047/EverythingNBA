@@ -98,11 +98,21 @@
 
         public async Task<bool> DeleteAsync(int seasonId)
         {
-            var seasonToDelete = await this.db.Seasons.FindAsync(seasonId);
+            var seasonToDelete = await this.db.Seasons
+                .Include(s => s.SeasonStatistics)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
+
+            var seasonStatistic = await this.db.SeasonStatistics.Where(s => s.SeasonId == seasonToDelete.Id).FirstOrDefaultAsync();
 
             if (seasonToDelete == null)
             {
                 return false;
+            }
+
+            if (seasonStatistic != null)
+            {
+                seasonToDelete.SeasonStatistics.Remove(seasonStatistic);
             }
 
             this.db.Seasons.Remove(seasonToDelete);
