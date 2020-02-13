@@ -23,11 +23,14 @@ namespace EverythingNBA.Services.Implementations
 
         public async Task<int> AddAwardAsync(string name, int year, int winnerId)
         {
+            var season = await this.db.Seasons.Include(s => s.Awards).Where(s => s.Year == year).FirstOrDefaultAsync();
+
             var awardObj = new Award
             {
                 Name = (AwardType)Enum.Parse(typeof(AwardType), name),
                 Year = year,
-                WinnerId = winnerId
+                WinnerId = winnerId,
+                SeasonId = season.Id
             };
 
             this.db.Awards.Add(awardObj);
@@ -55,7 +58,10 @@ namespace EverythingNBA.Services.Implementations
         {
             var winnersNames = new List<string>();
 
-            var awards = await this.db.Awards.Where(a => a.SeasonId == seasonId).ToListAsync();
+            var awards = await this.db.Awards
+                .Include(a => a.Winner)
+                .Where(a => a.SeasonId == seasonId)
+                .ToListAsync();
 
             foreach (var award in awards)
             {
@@ -72,7 +78,10 @@ namespace EverythingNBA.Services.Implementations
             Player player = new Player();
             string name = string.Empty;
 
-            var awards = await this.db.Awards.Where(a => a.SeasonId == seasonId).ToListAsync();
+            var awards = await this.db.Awards
+                .Include(a => a.Winner)
+                .Where(a => a.SeasonId == seasonId)
+                .ToListAsync();
 
             switch (awardType)
             {
