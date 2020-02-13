@@ -23,7 +23,7 @@
             this.mapper = mapper;
         }
 
-        public async Task<int> AddGamesAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, DateTime date, bool isFinished)
+        public async Task<int> AddGameAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, string date, bool isFinished)
         {
             var gameObj = new Game
             {
@@ -32,7 +32,7 @@
                 Team2Id = team2Id,
                 TeamHostPoints = teamHostPoints,
                 Team2Points = team2Points,
-                Date = date,
+                Date = DateTime.ParseExact(date, "dd/MM/yyyy", null),
                 IsFinished = isFinished
             };
 
@@ -42,7 +42,7 @@
             return gameObj.Id;
         }
 
-        public async Task<bool> DeletePlayerAsync(int gameId)
+        public async Task<bool> DeleteGameAsync(int gameId)
         {
             var gameToDelete = await this.db.Games.FindAsync(gameId);
 
@@ -59,7 +59,8 @@
 
         public async Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsAsync(int team1Id, int team2Id)
         {
-            var games = await this.db.Games.Where(g => (g.TeamHostId == team1Id || g.Team2Id == team1Id) && (g.TeamHostId == team2Id || g.Team2Id == team2Id))
+            var games = await this.db.Games
+                .Where(g => (g.TeamHostId == team1Id || g.Team2Id == team1Id) && (g.TeamHostId == team2Id || g.Team2Id == team2Id))
                 .ToListAsync();
 
             var models = new List<GameOverviewServiceModel>();
@@ -133,28 +134,104 @@
 
         public async Task<PlayerGameStatisticServiceModel> GetTopAssistsAsync(int gameId)
         {
-            throw new NotImplementedException();
+            var game = await this.db.Games
+                .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
+                .Where(g => g.Id == gameId)
+                .FirstOrDefaultAsync();
+
+            var playerStat = game.PlayerStats.Select(ps => new
+            {
+                ps.Assists,
+                Name = ps.Player.FirstName + " " + ps.Player.LastName,
+            }).OrderByDescending(ps => ps.Assists)
+              .FirstOrDefault();
+
+            var model = new PlayerGameStatisticServiceModel
+            {
+                PlayerName = playerStat.Name,
+                Value = playerStat.Assists
+            };
+
+            return model;
         }
     
-
         public async Task<PlayerGameStatisticServiceModel> GetTopPointsAsync(int gameId)
         {
-            throw new NotImplementedException();
+            var game = await this.db.Games
+                .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
+                .Where(g => g.Id == gameId)
+                .FirstOrDefaultAsync();
+
+            var playerStat = game.PlayerStats.Select(ps => new
+            {
+                ps.Points,
+                Name = ps.Player.FirstName + " " + ps.Player.LastName,
+            }).OrderByDescending(ps => ps.Points)
+              .FirstOrDefault();
+
+            var model = new PlayerGameStatisticServiceModel
+            {
+                PlayerName = playerStat.Name,
+                Value = playerStat.Points
+            };
+
+            return model;
         }
 
         public async Task<PlayerGameStatisticServiceModel> GetTopReboundsAsync(int gameId)
         {
-            throw new NotImplementedException();
+            var game = await this.db.Games
+                 .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
+                 .Where(g => g.Id == gameId)
+                 .FirstOrDefaultAsync();
+
+            var playerStat = game.PlayerStats.Select(ps => new
+            {
+                ps.Rebounds,
+                Name = ps.Player.FirstName + " " + ps.Player.LastName,
+            }).OrderByDescending(ps => ps.Rebounds)
+              .FirstOrDefault();
+
+            var model = new PlayerGameStatisticServiceModel
+            {
+                PlayerName = playerStat.Name,
+                Value = playerStat.Rebounds
+            };
+
+            return model;
         }
 
         public async Task<string> GetWinnerAsync(int gameId)
         {
-            throw new NotImplementedException();
+            var game = await this.db.Games
+                 .Include(g => g.Team2)
+                 .Include(g => g.TeamHost)
+                 .Where(g => g.Id == gameId)
+                 .FirstOrDefaultAsync();
+
+            if (!game.IsFinished)
+            {
+                return "Game has not finished.";
+            }
+
+            var winner = game.TeamHostPoints > game.Team2Points ? game.TeamHost.Name : game.TeamHost.Name;
+
+            return winner;
         }
 
-        public async Task<bool> SetScoreAsync(int gameId)
+        public async Task<bool> SetScoreAsync(int gameId, int teamHostScore, int team2Score)
         {
-            throw new NotImplementedException();
+            var game = await this.db.Games.Where(g => g.Id == gameId).FirstOrDefaultAsync();
+
+            if (game.IsFinished)
+            {
+                return false;
+            }
+            game.TeamHostPoints = teamHostScore;
+            game.Team2Points = team2Score;
+
+            await this.db.SaveChangesAsync();
+            return true;
         }
     }
 }
