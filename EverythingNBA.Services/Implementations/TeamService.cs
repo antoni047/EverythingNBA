@@ -44,7 +44,7 @@
 
         public async Task<bool> RemovePlayerAsync(int playedId, int teamId)
         {
-            var team = await this.db.Teams.Include(t => t.Players).Where(t => t.Id == teamId).FirstOrDefaultAsync();
+            var team = await this.db.Teams.Where(t => t.Id == teamId).FirstOrDefaultAsync();
             var player = team.Players.Where(p => p.Id == playedId).FirstOrDefault();
 
             if (player == null)
@@ -128,10 +128,19 @@
 
         public async Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(int teamId)
         {
-            var team = await this.db.Teams.Include(x => x.Players).Where(t => t.Id == teamId).FirstOrDefaultAsync();
+            var team = await this.db.Teams
+                .Include(t => t.Players).ThenInclude(p => p.SeasonStatistics)
+                .Include(t => t.SeasonsStatistics)
+                .Include(t => t.TitlesWon)
+                .Include(t => t.HomeGames)
+                .Include(t => t.AwayGames)
+                .Include(t => t.GamesWon)
+                .Where(t => t.Id == teamId)
+                .FirstOrDefaultAsync();
+
             var seasonId = await this.db.Seasons.Where(s => s.Year == DateTime.Now.Year).Select(s => s.Id).FirstOrDefaultAsync();
 
-            var model = mapper.Map<GetTeamDetailsServiceModel>(team);
+            var teamDetailsModel = mapper.Map<GetTeamDetailsServiceModel>(team);
 
             var players = team.Players.ToList();
             var playerModels = new List<PlayerOverviewServiceModel>();
@@ -151,18 +160,18 @@
                 playerModels.Add(playerOverviewModel);
             }
 
-            model.Players = playerModels;
+            teamDetailsModel.Players = playerModels;
 
             var games = new List<Game>();
             games.AddRange(team.HomeGames);
             games.AddRange(team.AwayGames);
-            model.CurrentSeasonGames = games.OrderByDescending(g => g.Date).ToList();
+            teamDetailsModel.CurrentSeasonGames = games.OrderByDescending(g => g.Date).ToList();
          
-            model.CurrentSeasonStatistic = team.SeasonsStatistics.Where(ss => ss.SeasonId == seasonId && ss.TeamId == teamId).FirstOrDefault();
+            teamDetailsModel.CurrentSeasonStatistic = team.SeasonsStatistics.Where(ss => ss.SeasonId == seasonId && ss.TeamId == teamId).FirstOrDefault();
 
-            model.TitlesWon = team.TitlesWon.Select(t => t.Year).ToList();
+            teamDetailsModel.TitlesWon = team.TitlesWon.Select(t => t.Year).ToList();
 
-            return model;
+            return teamDetailsModel;
         }
 
         public async Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(string name)
@@ -174,7 +183,13 @@
 
         public async Task<bool> AddGameAsync(int gameId, int teamId)
         {
-            var team = await this.db.Teams.FindAsync(teamId);
+            var team = await this.db.Teams
+                .Include(t => t.GamesWon)
+                .Include(t => t.HomeGames)
+                .Include(t => t.AwayGames)
+                .Where(t => t.Id == teamId)
+                .FirstOrDefaultAsync();
+
             var game = await this.db.Games.FindAsync(gameId);
             bool teamIsHost;
 
@@ -248,12 +263,24 @@
 
         public async Task<bool> AddTitleAsync(int teamId, int seasonId)
         {
-            var team = await this.db.FindAsync<Team>(teamId);
-            var season = await this.db.FindAsync<Season>(seasonId);
+            var team = await this.db.Teams
+                .Include(t => t.TitlesWon)
+                .Where(t => t.Id == teamId)
+                .FirstOrDefaultAsync();
+
+            var season = await this.db.Seasons
+                .Include(s => s.TitleWinner)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
 
             if (team == null || season == null)
             {
                 return false;
+            }
+
+            if (season.TitleWinner == null)
+            {
+                season.TitleWinner = team;
             }
 
             team.TitlesWon.Add(season);
@@ -280,10 +307,12 @@
 
         public async Task<bool> AddSeasonStatistic(int teamId, int seasonStatisticId)
         {
-            var team = await this.db.FindAsync<Team>(teamId);
-            var seasonStatistic = await this.db.SeasonStatistics.FindAsync(seasonStatisticId);
+            var team = await this.db.Teams
+                .Include(t => t.SeasonsStatistics)
+                .Where(t => t.Id == teamId)
+                .FirstOrDefaultAsync();
 
-            var someting = string.Empty;
+            var seasonStatistic = await this.db.SeasonStatistics.FindAsync(seasonStatisticId);
 
             if (team == null || seasonStatistic == null)
             {
@@ -300,8 +329,6 @@
         {
             var team = await this.db.Teams.FindAsync(teamId);
             var seasonStatistic = await this.db.SeasonStatistics.FindAsync(seasonStatisticId);
-
-            var someting = string.Empty;
 
             if (team == null || seasonStatistic == null)
             {
