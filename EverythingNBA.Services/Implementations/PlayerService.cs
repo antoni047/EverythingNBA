@@ -89,11 +89,17 @@
 
         public async Task<PlayerDetailsServiceModel> GetPlayerDetailsAsync(int id)
         {
-            var player = await this.db.Players.FindAsync(id);
+            var player = await this.db.Players
+                .Include(p => p.Awards)
+                .Include(p => p.AllStarTeams)
+                .Include(p => p.SeasonStatistics)
+                .Include(p => p.SingleGameStatistics)
+                .Where(p => p.Id == id)
+                .FirstOrDefaultAsync();
 
             var model = mapper.Map<PlayerDetailsServiceModel>(player);
 
-            model.CurrentTeam = await this.db.Teams.Where(t => t.Id == player.TeamId).Select(t => t.Name).FirstOrDefaultAsync();
+            model.CurrentTeam = await this.db.Teams.Include(t => t.Players).Where(t => t.Id == player.TeamId).Select(t => t.Name).FirstOrDefaultAsync();
 
             return model;
         }
@@ -109,7 +115,11 @@
 
         public async Task<bool> AddAward(int playerId, int awardId)
         {
-            var player = await this.db.Players.FindAsync(playerId);
+            var player = await this.db.Players
+                .Include(p => p.Awards)
+                .Where(p => p.Id == playerId)
+                .FirstOrDefaultAsync();
+
             var award = await this.db.Awards.FindAsync(awardId);
 
             if (player == null || award == null || playerId != award.WinnerId)
@@ -126,7 +136,11 @@
 
         public async Task<bool> RemoveAward(int playerId, int awardId)
         {
-            var player = await this.db.Players.FindAsync(playerId);
+            var player = await this.db.Players
+                 .Include(p => p.Awards)
+                 .Where(p => p.Id == playerId)
+                 .FirstOrDefaultAsync();
+
             var award = await this.db.Awards.FindAsync(awardId);
 
             if (player == null || award == null || playerId != award.WinnerId)
@@ -142,7 +156,11 @@
 
         public async Task<bool> AddGameStatistic(int playerId, int gameStatisticId)
         {
-            var player = await this.db.Players.FindAsync(playerId);
+            var player = await this.db.Players
+                .Include(p => p.SingleGameStatistics)
+                .Where(p => p.Id == playerId)
+                .FirstOrDefaultAsync();
+
             var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
 
             if (player == null || gameStatistic == null || playerId != gameStatistic.PlayerId)
@@ -158,7 +176,11 @@
 
         public async Task<bool> RemoveGameStatisticStatistic(int playerId, int gameStatisticId)
         {
-            var player = await this.db.Players.FindAsync(playerId);
+            var player = await this.db.Players
+              .Include(p => p.SingleGameStatistics)
+              .Where(p => p.Id == playerId)
+              .FirstOrDefaultAsync();
+
             var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
 
             if (player == null || gameStatistic == null || playerId != gameStatistic.PlayerId)
@@ -174,7 +196,11 @@
 
         public async Task<bool> AddPlayerSeasonStatistic(int playerId, int seasonStatisticId)
         {
-            var player = await this.db.Players.FindAsync(playerId);
+            var player = await this.db.Players
+              .Include(p => p.SeasonStatistics)
+              .Where(p => p.Id == playerId)
+              .FirstOrDefaultAsync();
+
             var seasonStatistic = await this.db.PlayerSeasonStatistics.FindAsync(seasonStatisticId);
 
             if (player == null || seasonStatistic == null || playerId != seasonStatistic.PlayerId)
@@ -190,7 +216,11 @@
 
         public async Task<bool> RemovePlayerSeasonStatistic(int playerId, int seasonStatisticId)
         {
-            var player = await this.db.Players.FindAsync(playerId);
+            var player = await this.db.Players
+             .Include(p => p.SeasonStatistics)
+             .Where(p => p.Id == playerId)
+             .FirstOrDefaultAsync();
+
             var seasonStatistic = await this.db.PlayerSeasonStatistics.FindAsync(seasonStatisticId);
 
             if (player == null || seasonStatistic == null || playerId != seasonStatistic.PlayerId)
