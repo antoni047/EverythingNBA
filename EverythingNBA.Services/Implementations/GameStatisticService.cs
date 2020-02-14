@@ -61,31 +61,31 @@ namespace EverythingNBA.Services.Implementations
             return true;
         }
 
-        public async Task<double> GetFieldGoalPercentage(int gameStatisticId)
+        public async Task<int> GetFieldGoalPercentage(int gameStatisticId)
         {
             var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
 
-            var result = ((double)gameStatistic.FieldGoalAttempts / (double)gameStatistic.FieldGoalsMade)*100;
+            var result = ((double)gameStatistic.FieldGoalsMade / (double)gameStatistic.FieldGoalAttempts)*100;
 
-            return result;
+            return (int)result;
         }
 
-        public async Task<double> GetFreeThrowPercentage(int gameStatisticId)
+        public async Task<int> GetFreeThrowPercentage(int gameStatisticId)
         {
             var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
 
-            var result = ((double)gameStatistic.FreeThrowAttempts / (double)gameStatistic.FreeThrowsMade) * 100;
+            var result = ((double)gameStatistic.FreeThrowsMade / (double)gameStatistic.FreeThrowAttempts) * 100;
 
-            return result;
+            return (int)result;
         }
 
-        public async Task<double> GetThreePointsPercentage(int gameStatisticId)
+        public async Task<int> GetThreePointsPercentage(int gameStatisticId)
         {
             var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
 
-            var result = ((double)gameStatistic.FreeThrowAttempts / (double)gameStatistic.FreeThrowsMade) * 100;
+            var result = ((double)gameStatistic.ThreeMade / (double)gameStatistic.ThreeAttempts) * 100;
 
-            return result;
+            return (int)result;
         }
     }
 }

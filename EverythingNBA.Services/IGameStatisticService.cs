@@ -10,10 +10,10 @@
 
         Task<bool> DeleteAsync(int gameStatisticId);
 
-        Task<double> GetThreePointsPercentage(int gameStatisticId);
+        Task<int> GetThreePointsPercentage(int gameStatisticId);
 
-        Task<double> GetFieldGoalPercentage(int gameStatisticId);
+        Task<int> GetFieldGoalPercentage(int gameStatisticId);
 
-        Task<double> GetFreeThrowPercentage(int gameStatisticId);
+        Task<int> GetFreeThrowPercentage(int gameStatisticId);
     }
 }
