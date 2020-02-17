@@ -8,6 +8,7 @@
     using EverythingNBA.Data;
     using EverythingNBA.Models;
     using EverythingNBA.Services.Models.Series;
+    using Microsoft.EntityFrameworkCore;
 
     public class SeriesService : ISeriesService
     {
@@ -47,7 +48,7 @@
                 case 7:
                     series.Game7Id = gameId;
                     break;
-            } //sets game to appropriate game number
+            } //sets gameId by the given game number
 
             await this.db.SaveChangesAsync();
         }
@@ -102,7 +103,11 @@
 
         public async Task<string> GetWinnerAsync(int seriesId)
         {
-            var series = await this.db.Series.FindAsync(seriesId);
+            var series = await this.db.Series
+                .Include(s => s.Team1)
+                .Include(s => s.Team2)
+                .Where(s => s.Id == seriesId)
+                .FirstOrDefaultAsync();
 
             var winner = string.Empty; 
 
