@@ -21,5 +21,7 @@ namespace EverythingNBA.Services.Models
         public int Losses { get; set; }
 
         public string  WinPercentage { get; set; }
+
+        public int GamesPlayed { get; set; }
     }
 }

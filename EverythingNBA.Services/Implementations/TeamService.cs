@@ -102,15 +102,21 @@
         {
             var standingsList = new List<TeamStandingsListingServiceModel>();
 
-            var teams = this.db.Teams.ToList();
+            var teams = this.db.Teams
+                .Include(t => t.SeasonsStatistics)
+                .Include(t => t.GamesWon)
+                .Include(t => t.HomeGames)
+                .Include(t => t.AwayGames)
+                .ToList();
 
             foreach (var team in teams)
             {
-                var model = await statisticService.GetDetailsAsync(seasonId, team.Id);
-                var seasonStatistic = mapper.Map<SeasonStatistic>(model);
+                var seasonStatisicmodel = await statisticService.GetDetailsAsync(seasonId, team.Id);
+                var seasonStatistic = mapper.Map<SeasonStatistic>(seasonStatisicmodel);
                 var winPercentage = await statisticService.GetWinPercentageAsync(seasonStatistic.Id);
+                var gamesPlayed = this.GetGamesPlayed(team, seasonId);
 
-                var result = new TeamStandingsListingServiceModel
+                var standingsModel = new TeamStandingsListingServiceModel
                 {
                     Name = team.Name,
                     //TeamLogoImageURL = team.CloudinaryImage.ImageURL,
@@ -118,9 +124,10 @@
                     Wins = seasonStatistic.Wins,
                     Losses = seasonStatistic.Losses,
                     WinPercentage = winPercentage.ToString(),
+                    GamesPlayed = gamesPlayed
                 };
 
-                standingsList.Add(result);
+                standingsList.Add(standingsModel);
             }
 
             return standingsList.OrderByDescending(x => x.WinPercentage).ToList();
@@ -176,7 +183,8 @@
 
         public async Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(string name)
         {
-            var teamId = await this.db.Teams.Where(t => t.Name.ToLower() == name.ToLower()).Select(t => t.Id).FirstOrDefaultAsync();
+            var teamId = await this.db.Teams
+                .Where(t => t.Name.ToLower() == name.ToLower()).Select(t => t.Id).FirstOrDefaultAsync();
 
             return await this.GetTeamDetailsAsync(teamId);
         }
@@ -339,6 +347,14 @@
 
             await this.db.SaveChangesAsync();
             return true;
+        }
+
+        private int GetGamesPlayed(Team team, int seasonId)
+        {
+            var homeGames = team.HomeGames.Where(g => g.SeasonId == seasonId).ToList();
+            var awayGames = team.AwayGames.Where(g => g.SeasonId == seasonId).ToList();
+
+            return homeGames.Count() + awayGames.Count();
         }
     }
 }
