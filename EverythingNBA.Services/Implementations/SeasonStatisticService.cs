@@ -84,11 +84,12 @@
 
         public async Task<GetSeasonStatisticDetailsServiceModel> GetDetailsAsync(int seasonId, int teamId)
         {
-            var statistic = await this.db.SeasonStatistics.Where(ss => ss.TeamId == teamId && ss.SeasonId == seasonId).FirstOrDefaultAsync();
+            var statisticId = await this.db.SeasonStatistics
+                .Where(ss => ss.TeamId == teamId && ss.SeasonId == seasonId)
+                .Select(ss => ss.Id)
+                .FirstOrDefaultAsync();
 
-            var model = mapper.Map<GetSeasonStatisticDetailsServiceModel>(statistic);
-
-            return model;
+            return await this.GetDetailsAsync(statisticId);
         }
 
         public async Task<string> GetWinPercentageAsync(int seasonStatisticId)
@@ -99,6 +100,6 @@
             double result = ((double)statistic.Wins / (double)season.GamesPlayed) * 100;
 
             return (result / 100).ToString("0.000");
-        }//OK
+        }
     }
 }

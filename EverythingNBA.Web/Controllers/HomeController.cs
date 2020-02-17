@@ -19,10 +19,14 @@ namespace EverythingNBA.Web.Controllers
         private readonly IPlayerService playerService;
         private readonly ISeasonStatisticService seasonStatisticService;
         private readonly IAwardService awardService;
+        private readonly IAllStarTeamService astService;
+        private readonly IGameStatisticService gameStatisticService;
+        private readonly IGameService gameService;
         private readonly EverythingNBADbContext db;
 
         public HomeController(ISeasonService seasonService, ITeamService teamService, ISeasonStatisticService statService,
-            EverythingNBADbContext db, IPlayerService playerService, ISeasonStatisticService seasonStatisticService, IAwardService awardService)
+            EverythingNBADbContext db, IPlayerService playerService, ISeasonStatisticService seasonStatisticService, IAwardService awardService,
+            IAllStarTeamService astService, IGameService gameService, IGameStatisticService gameStatisticService)
         {
             this.seasonService = seasonService;
             this.teamService = teamService;
@@ -31,19 +35,16 @@ namespace EverythingNBA.Web.Controllers
             this.playerService = playerService;
             this.seasonStatisticService = seasonStatisticService;
             this.awardService = awardService;
+            this.astService = astService;
+            this.gameService = gameService;
+            this.gameStatisticService = gameStatisticService;
         }
 
         public async Task<IActionResult> Index()
         {
-            await this.teamService.RemovePlayerAsync(13, 1);
-            await this.teamService.RemovePlayerAsync(9, 1);
-            await this.teamService.RemovePlayerAsync(2, 1);
-
-            var model = await this.teamService.GetTeamDetailsAsync(1);
+            var model = await this.playerService.GetPlayerDetailsAsync(12);
 
             return this.View(model);
-
-            //return this.View();
         }
 
         public async Task<IActionResult> Privacy()

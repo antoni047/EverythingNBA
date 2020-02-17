@@ -1,12 +1,14 @@
 ﻿namespace EverythingNBA.Services.Implementations
 {
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
 
     using EverythingNBA.Data;
     using EverythingNBA.Models;
     using EverythingNBA.Services.Models.Playoff;
+    using Microsoft.EntityFrameworkCore;
 
     public class PlayoffService : IPlayoffService
     {
@@ -126,9 +128,9 @@
 
         public async Task<GetPlayoffServiceModel> GetDetailsBySeasonAsync(int seasonId)
         {
-            var season = await this.db.Seasons.FindAsync(seasonId);
+            var season = await this.db.Seasons.Include(s => s.Playoff).Where(s => s.Id == seasonId).FirstOrDefaultAsync();
 
-            if (season.PlayoffId == null)
+            if (season.Playoff == null)
             {
                 return null;
             }
