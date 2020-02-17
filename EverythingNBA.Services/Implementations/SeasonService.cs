@@ -57,6 +57,31 @@
             await this.db.SaveChangesAsync();
         }
 
+        public async Task<bool> RemoveAllStarTeamAsync(int seasonId, int allStarTeamId)
+        {
+            var season = await this.db.Seasons
+                .Include(s => s.AllStarTeams)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
+
+            if (season == null)
+            {
+                return false;
+            }
+
+            var allStarTeam = await this.db.AllStarTeams.FindAsync(allStarTeamId);
+
+            if (allStarTeam == null)
+            {
+                return false;
+            }
+
+            season.AllStarTeams.Remove(allStarTeam);
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
         public async Task AddAwardAsync(int seasonId, int awardId)
         {
             var season = await this.db.Seasons
@@ -71,6 +96,31 @@
             await this.db.SaveChangesAsync();
         }
 
+        public async Task<bool> RemoveAwardAsync(int seasonId, int awardId)
+        {
+            var season = await this.db.Seasons
+                .Include(s => s.Awards)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
+
+            if (season == null)
+            {
+                return false;
+            }
+
+            var award = await this.db.Awards.FindAsync(awardId);
+
+            if (award == null)
+            {
+                return false;
+            }
+
+            season.Awards.Remove(award);
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
         public async Task AddPlayoffAsync(int seasonId, int playoffId)
         {
             var season = await this.db.Seasons
@@ -81,6 +131,24 @@
             season.PlayoffId = playoffId;
 
             await this.db.SaveChangesAsync();
+        }
+
+        public async Task<bool> RemovePlayoffAsync(int seasonId, int playoffId)
+        {
+            var season = await this.db.Seasons
+                .Include(s => s.Playoff)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
+
+            if (season == null || this.db.Playoffs.Find(playoffId) == null)
+            {
+                return false;
+            }
+
+            season.PlayoffId = null;
+
+            await this.db.SaveChangesAsync();
+            return true;
         }
 
         public async Task AddSeasonStatisticAsync(int seasonId, int seasonStatisticId)
@@ -97,6 +165,31 @@
             await this.db.SaveChangesAsync();
         }
 
+        public async Task<bool> RemoveSeasonStatisticAsync(int seasonId, int seasonStatisticId)
+        {
+            var season = await this.db.Seasons
+                 .Include(s => s.SeasonStatistics)
+                 .Where(s => s.Id == seasonId)
+                 .FirstOrDefaultAsync();
+
+            if (season == null)
+            {
+                return false;
+            }
+
+            var seasonStatistic = await this.db.SeasonStatistics.FindAsync(seasonStatisticId);
+
+            if (seasonStatistic == null)
+            {
+                return false;
+            }
+
+            season.SeasonStatistics.Remove(seasonStatistic);
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
         public async Task AddGameAsync(int seasonId, int gameId)
         {
             var season = await this.db.Seasons
@@ -109,6 +202,31 @@
             season.Games.Add(game);
 
             await this.db.SaveChangesAsync();
+        }
+
+        public async Task<bool> RemoveGameAsync(int seasonId, int gameId)
+        {
+            var season = await this.db.Seasons
+                   .Include(s => s.Games)
+                   .Where(s => s.Id == seasonId)
+                   .FirstOrDefaultAsync();
+
+            if (season == null)
+            {
+                return false;
+            }
+
+            var game = await this.db.Games.FindAsync(gameId);
+
+            if (game == null)
+            {
+                return false;
+            }
+
+            season.Games.Remove(game);
+
+            await this.db.SaveChangesAsync();
+            return true;
         }
 
         public async Task<bool> DeleteAsync(int seasonId)
@@ -258,5 +376,15 @@
 
             return list;
         }
+
+ 
+
+       
+
+       
+
+        
+
+        
     }
 }
