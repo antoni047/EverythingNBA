@@ -45,7 +45,10 @@
 
         public async Task AddAllStarTeamAsync(int seasonId, int allStarTeamId)
         {
-            var season = await this.db.Seasons.FindAsync(seasonId);
+            var season = await this.db.Seasons
+                .Include(s => s.AllStarTeams)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
 
             var allStarTeam = await this.db.AllStarTeams.FindAsync(allStarTeamId);
 
@@ -56,7 +59,10 @@
 
         public async Task AddAwardAsync(int seasonId, int awardId)
         {
-            var season = await this.db.Seasons.FindAsync(seasonId);
+            var season = await this.db.Seasons
+                .Include(s => s.Awards)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
 
             var award = await this.db.Awards.FindAsync(awardId);
 
@@ -67,7 +73,10 @@
 
         public async Task AddPlayoffAsync(int seasonId, int playoffId)
         {
-            var season = await this.db.Seasons.FindAsync(seasonId);
+            var season = await this.db.Seasons
+                .Include(s => s.Playoff)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
 
             season.PlayoffId = playoffId;
 
@@ -76,7 +85,10 @@
 
         public async Task AddSeasonStatisticAsync(int seasonId, int seasonStatisticId)
         {
-            var season = await this.db.Seasons.FindAsync(seasonId);
+            var season = await this.db.Seasons
+                .Include(s => s.SeasonStatistics)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
 
             var seasonStatistic = await this.db.SeasonStatistics.FindAsync(seasonStatisticId);
 
@@ -87,7 +99,10 @@
 
         public async Task AddGameAsync(int seasonId, int gameId)
         {
-            var season = await this.db.Seasons.FindAsync(seasonId);
+            var season = await this.db.Seasons
+                .Include(s => s.Games)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
 
             var game = await this.db.Games.FindAsync(gameId);
 
@@ -123,7 +138,12 @@
 
         public async Task<GetSeasonDetailsServiceModel> GetDetailsAsync(int seasonId)
         {
-            var season = await this.db.Seasons.FindAsync(seasonId);
+            var season = await this.db.Seasons
+                .Include(s => s.SeasonStatistics)
+                .Include(s => s.Awards)
+                .Include(s => s.AllStarTeams)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
 
             var bestSeed = season.SeasonStatistics.OrderByDescending(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
             var worstSeed = season.SeasonStatistics.OrderBy(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
@@ -158,37 +178,12 @@
 
         public async Task<GetSeasonDetailsServiceModel> GetDetailsByYearAsync(int year)
         {
-            var season = await this.db.Seasons.Where(s => s.Year == year).FirstOrDefaultAsync();
+            var seasonId = await this.db.Seasons
+                .Where(s => s.Year == year)
+                .Select(s => s.Id)
+                .FirstOrDefaultAsync();
 
-            var bestSeed = season.SeasonStatistics.OrderByDescending(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
-            var worstSeed = season.SeasonStatistics.OrderBy(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
-
-            var awardWinners = this.GetSeasonAwards(season);
-            var allStarTeams = this.GetAllStarTeams(season);
-
-            var model = new GetSeasonDetailsServiceModel
-            {
-                Year = season.Year,
-                TitleWinnerId = season.TitleWinnerId,
-                GamesPlayed = season.GamesPlayed,
-                PlayoffId = season.PlayoffId,
-                BestSeed = bestSeed,
-                WorstSeed = worstSeed,
-                MVP = awardWinners[0],
-                TopScorer = awardWinners[1],
-                DPOTY = awardWinners[2],
-                SixthMOTY = awardWinners[3],
-                ROTY = awardWinners[4],
-                MIP = awardWinners[5],
-                FinalsMVP = awardWinners[6],
-                FirstAllNBATeamId = allStarTeams[0].Id,
-                SecondAllNBATeamId = allStarTeams[1].Id,
-                ThirdAllNBATeamId = allStarTeams[2].Id,
-                AllDefenesiveTeamId = allStarTeams[3].Id,
-                AllRookieTeamId = allStarTeams[4].Id
-            };
-
-            return model;
+            return await this.GetDetailsAsync(seasonId);
         }
 
         public async Task<ICollection<GetSeasonListingServiceModel>> GetAllSeasonsAsync()
