@@ -1,10 +1,4 @@
-﻿using EverythingNBA.Models;
-using EverythingNBA.Models.Enums;
-
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
-
-namespace EverythingNBA.Services.Models
+﻿namespace EverythingNBA.Services.Models
 {
     public class TeamStandingsListingServiceModel
     {
@@ -23,5 +17,7 @@ namespace EverythingNBA.Services.Models
         public string  WinPercentage { get; set; }
 
         public int GamesPlayed { get; set; }
+
+        public string LastTenGames { get; set; }
     }
 }

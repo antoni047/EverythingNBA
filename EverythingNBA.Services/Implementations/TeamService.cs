@@ -20,14 +20,17 @@
         private readonly EverythingNBADbContext db;
         private readonly IImageService imageService;
         private readonly ISeasonStatisticService statisticService;
+        private readonly IGameService gameService;
         private readonly IMapper mapper;
 
-        public TeamService(EverythingNBADbContext db, IImageService imageService, ISeasonStatisticService statisticService, IMapper mapper)
+        public TeamService(EverythingNBADbContext db, IImageService imageService, ISeasonStatisticService statisticService, 
+            IMapper mapper, IGameService gameService)
         {
             this.db = db;
             this.imageService = imageService;
             this.statisticService = statisticService;
             this.mapper = mapper;
+            this.gameService = gameService;
         }
 
         public async Task AddPlayerAsync(int playerId, int teamId)
@@ -115,6 +118,7 @@
                 var seasonStatistic = mapper.Map<SeasonStatistic>(seasonStatisicmodel);
                 var winPercentage = await statisticService.GetWinPercentageAsync(seasonStatistic.Id);
                 var gamesPlayed = this.GetGamesPlayed(team, seasonId);
+                var lastTenGames = await this.GetLastTenGames(team, seasonId);
 
                 var standingsModel = new TeamStandingsListingServiceModel
                 {
@@ -124,7 +128,8 @@
                     Wins = seasonStatistic.Wins,
                     Losses = seasonStatistic.Losses,
                     WinPercentage = winPercentage.ToString(),
-                    GamesPlayed = gamesPlayed
+                    GamesPlayed = gamesPlayed,
+                    LastTenGames = lastTenGames
                 };
 
                 standingsList.Add(standingsModel);
@@ -132,6 +137,7 @@
 
             return standingsList.OrderByDescending(x => x.WinPercentage).ToList();
         }
+
 
         public async Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(int teamId)
         {
@@ -355,6 +361,35 @@
             var awayGames = team.AwayGames.Where(g => g.SeasonId == seasonId).ToList();
 
             return homeGames.Count() + awayGames.Count();
+        }
+
+        private async Task<string> GetLastTenGames(Team team, int seasonId)
+        {
+            var gamesWon = 0;
+            var gamesLost = 0;
+
+            var gamesPlayed = new List<Game>();
+
+            gamesPlayed.AddRange(team.HomeGames);
+            gamesPlayed.AddRange(team.AwayGames);
+
+            var lastTenGames = gamesPlayed.OrderByDescending(g => g.Date).Take(10).ToList();
+
+            foreach (var game in lastTenGames)
+            {
+                var winnerName = await this.gameService.GetWinnerAsync(game.Id);
+
+                if (winnerName == team.Name)
+                {
+                    gamesWon++;
+                }
+                else
+                {
+                    gamesLost++;
+                }
+            }
+
+            return $"{gamesWon}-{gamesLost}";
         }
     }
 }
