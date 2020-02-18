@@ -233,5 +233,68 @@
             await this.db.SaveChangesAsync();
             return true;
         }
+
+        public async Task<PlayerSeasonStatisticServiceModel> GetSeasonStatistics(int playerId, int seasonId)
+        {
+            var player = await this.db.Players
+                .Include(p => p.SingleGameStatistics).ThenInclude(gs => gs.Game)
+                .Where(p => p.Id == playerId)
+                .FirstOrDefaultAsync();
+
+            var seasonGameStatistics = player.SingleGameStatistics.Where(gs => gs.Game.SeasonId == seasonId).ToList();
+            var totalGames = seasonGameStatistics.Count();
+
+            var points = new List<double>();
+            var assists = new List<double>();
+            var rebounds = new List<double>();
+            var blocks = new List<double>();
+            var steals = new List<double>();
+            var freeThrowsMade = new List<double>();
+            var freeThrowsAttempted = new List<double>();
+            var fieldGoalsMade = new List<double>();
+            var fieldGoalsAttempted = new List<double>();
+            var threesMade = new List<double>();
+            var threesAttempted = new List<double>();
+
+            foreach (var gameStat in seasonGameStatistics)
+            {
+                points.Add(gameStat.Points);
+                assists.Add(gameStat.Assists);
+                rebounds.Add(gameStat.Rebounds);
+                steals.Add(gameStat.Steals);
+                blocks.Add(gameStat.Blocks);
+                freeThrowsMade.Add(gameStat.FreeThrowsMade); 
+                freeThrowsAttempted.Add(gameStat.FreeThrowAttempts);
+                fieldGoalsMade.Add(gameStat.FieldGoalsMade);
+                fieldGoalsAttempted.Add(gameStat.FieldGoalAttempts);
+                threesMade.Add(gameStat.ThreeMade);
+                threesAttempted.Add(gameStat.ThreeAttempts);
+            }
+
+            var averagePoints = points.Average();
+            var averageAssists = assists.Average();
+            var averageRebounds = rebounds.Average();
+            var averageSteals = steals.Average();
+            var averageBlocks = blocks.Average();
+            var averageFreeThrowPercentage = (freeThrowsMade.Average() / freeThrowsAttempted.Average()) * 100;
+            var averageFieldGoalPercentage = (fieldGoalsMade.Average() / fieldGoalsAttempted.Average()) * 100;
+            var averageThreePercentage = (threesMade.Average() / threesAttempted.Average()) * 100;
+
+            var seasonStatModel = new PlayerSeasonStatisticServiceModel
+            {
+                PlayerId = playerId,
+                SeasonId = seasonId,
+                AveragePoints = averagePoints.ToString("0.0"),
+                AverageAssists = averageAssists.ToString("0.0"),
+                AverageRebounds = averageRebounds.ToString("0.0"),
+                AverageBlocks = averageBlocks.ToString("0.0"),
+                AverageSteals = averageSteals.ToString("0.0"),
+                AverageFreeThrowPercentage = averageFreeThrowPercentage,
+                AverageFieldGoalPercentage = averageFieldGoalPercentage,
+                AverageThreePercentage = averageThreePercentage
+            };
+
+            return seasonStatModel;
+        }
     }
 }

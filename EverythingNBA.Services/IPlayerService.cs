@@ -21,6 +21,8 @@ namespace EverythingNBA.Services
 
         Task<PlayerDetailsServiceModel> GetPlayerDetailsAsync(string name);
 
+        Task<PlayerSeasonStatisticServiceModel> GetSeasonStatistics(int playerId, int seasonId);
+
         Task<bool> AddPlayerSeasonStatistic(int playerId, int seasonStatisticId);
 
         Task<bool> RemovePlayerSeasonStatistic(int playerId, int seasonStatisticId);
