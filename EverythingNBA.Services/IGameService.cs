@@ -17,7 +17,7 @@
 
         Task<GameDetailsServiceModel> GetGameAsync(int gameId);
 
-        Task<ICollection<GameOverviewServiceModel>> GetCurrentSeasonGamesAsync(int seasonId);
+        Task<ICollection<GameOverviewServiceModel>> GetSeasonGamesAsync(int seasonId);
 
         Task<bool> SetScoreAsync(int gameId, int teamHostScore, int team2Score);
 

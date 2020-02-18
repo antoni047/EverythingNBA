@@ -93,7 +93,7 @@
             return models;
         }
 
-        public async Task<ICollection<GameOverviewServiceModel>> GetCurrentSeasonGamesAsync(int seasonId)
+        public async Task<ICollection<GameOverviewServiceModel>> GetSeasonGamesAsync(int seasonId)
         {
             var currentSeasonGames = await this.db.Games.Where(g => g.SeasonId == seasonId).ToListAsync();
 
