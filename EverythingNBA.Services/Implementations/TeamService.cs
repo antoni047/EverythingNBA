@@ -22,15 +22,17 @@
         private readonly ISeasonStatisticService statisticService;
         private readonly IGameService gameService;
         private readonly IMapper mapper;
+        private readonly IPlayerService playerService;
 
         public TeamService(EverythingNBADbContext db, IImageService imageService, ISeasonStatisticService statisticService, 
-            IMapper mapper, IGameService gameService)
+            IMapper mapper, IGameService gameService, IPlayerService playerService)
         {
             this.db = db;
             this.imageService = imageService;
             this.statisticService = statisticService;
             this.mapper = mapper;
             this.gameService = gameService;
+            this.playerService = playerService;
         }
 
         public async Task AddPlayerAsync(int playerId, int teamId)
@@ -142,7 +144,6 @@
         public async Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(int teamId)
         {
             var team = await this.db.Teams
-                .Include(t => t.Players).ThenInclude(p => p.SeasonStatistics)
                 .Include(t => t.SeasonsStatistics)
                 .Include(t => t.TitlesWon)
                 .Include(t => t.HomeGames)
@@ -162,10 +163,17 @@
             {
                 var playerOverviewModel = mapper.Map<PlayerOverviewServiceModel>(player);
 
-                var pointsPerGame = player.SeasonStatistics.Where(ss => ss.SeasonId == seasonId).Select(ss => ss.Points).FirstOrDefault();
-                var assistsPerGame = player.SeasonStatistics.Where(ss => ss.SeasonId == seasonId).Select(ss => ss.Assists).FirstOrDefault();
-                var reboundsPerGame = player.SeasonStatistics.Where(ss => ss.SeasonId == seasonId).Select(ss => ss.AverageRebounds).FirstOrDefault();
+                //var pointsPerGame = player.SeasonStatistics.Where(ss => ss.SeasonId == seasonId).Select(ss => ss.Points).FirstOrDefault();
+                //var assistsPerGame = player.SeasonStatistics.Where(ss => ss.SeasonId == seasonId).Select(ss => ss.Assists).FirstOrDefault();
+                //var reboundsPerGame = player.SeasonStatistics.Where(ss => ss.SeasonId == seasonId).Select(ss => ss.AverageRebounds).FirstOrDefault();
+                var seasonStatsModel = await this.playerService.GetSeasonStatistics(player.Id, seasonId);
 
+                var pointsPerGame = seasonStatsModel.AveragePoints;
+                var assistsPerGame = seasonStatsModel.AverageAssists;
+                var reboundsPerGame = seasonStatsModel.AverageRebounds;
+                var stealsPerGame = seasonStatsModel.AverageSteals;
+                var blocksPerGame = seasonStatsModel.AverageBlocks;
+                
                 playerOverviewModel.PointsPerGame = pointsPerGame;
                 playerOverviewModel.AssistsPerGame = assistsPerGame;
                 playerOverviewModel.ReboundsPerGame = reboundsPerGame;

@@ -8,11 +8,11 @@
 
         public int Age { get; set; }
 
-        public double PointsPerGame { get; set; }
+        public string PointsPerGame { get; set; }
 
-        public double AssistsPerGame { get; set; }
+        public string AssistsPerGame { get; set; }
 
-        public double ReboundsPerGame { get; set; }
+        public string ReboundsPerGame { get; set; }
 
         public string Position { get; set; }
     }
