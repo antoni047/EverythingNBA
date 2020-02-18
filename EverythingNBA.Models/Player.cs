@@ -14,7 +14,6 @@
             this.AllStarTeams = new HashSet<AllStarTeamsPlayers>();
             this.Awards = new HashSet<Award>();
             this.SingleGameStatistics = new HashSet<GameStatistic>();
-            this.SeasonStatistics = new HashSet<PlayerSeasonStatistic>();
         }
 
         public int Id { get; set; }
@@ -67,7 +66,5 @@
         public virtual ICollection<AllStarTeamsPlayers> AllStarTeams { get; set; }
 
         public virtual ICollection<GameStatistic> SingleGameStatistics { get; set; }
-
-        public virtual ICollection<PlayerSeasonStatistic> SeasonStatistics { get; set; }
     }
 }

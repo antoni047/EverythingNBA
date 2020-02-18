@@ -92,7 +92,6 @@
             var player = await this.db.Players
                 .Include(p => p.Awards)
                 .Include(p => p.AllStarTeams)
-                .Include(p => p.SeasonStatistics)
                 .Include(p => p.SingleGameStatistics)
                 .Where(p => p.Id == id)
                 .FirstOrDefaultAsync();
@@ -189,46 +188,6 @@
             }
 
             player.SingleGameStatistics.Remove(gameStatistic);
-
-            await this.db.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> AddPlayerSeasonStatistic(int playerId, int seasonStatisticId)
-        {
-            var player = await this.db.Players
-              .Include(p => p.SeasonStatistics)
-              .Where(p => p.Id == playerId)
-              .FirstOrDefaultAsync();
-
-            var seasonStatistic = await this.db.PlayerSeasonStatistics.FindAsync(seasonStatisticId);
-
-            if (player == null || seasonStatistic == null || playerId != seasonStatistic.PlayerId)
-            {
-                return false;
-            }
-
-            player.SeasonStatistics.Add(seasonStatistic);
-
-            await this.db.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> RemovePlayerSeasonStatistic(int playerId, int seasonStatisticId)
-        {
-            var player = await this.db.Players
-             .Include(p => p.SeasonStatistics)
-             .Where(p => p.Id == playerId)
-             .FirstOrDefaultAsync();
-
-            var seasonStatistic = await this.db.PlayerSeasonStatistics.FindAsync(seasonStatisticId);
-
-            if (player == null || seasonStatistic == null || playerId != seasonStatistic.PlayerId)
-            {
-                return false;
-            }
-
-            player.SeasonStatistics.Remove(seasonStatistic);
 
             await this.db.SaveChangesAsync();
             return true;

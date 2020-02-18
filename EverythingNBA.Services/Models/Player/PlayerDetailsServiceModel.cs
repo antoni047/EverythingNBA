@@ -38,7 +38,5 @@ namespace EverythingNBA.Services.Models.Player
         public ICollection<GetAllStarTeamServiceModel> AllStarTeams { get; set; }
 
         public ICollection<EverythingNBA.Models.GameStatistic> SingleGameStatistics { get; set; }
-
-        public ICollection<PlayerSeasonStatistic> SeasonStatistics { get; set; }
     }
 }

@@ -29,7 +29,6 @@ namespace EverythingNBA.Data
         public DbSet<GameStatistic> GameStatistics { get; set; }
         public DbSet<SeasonStatistic> SeasonStatistics { get; set; }
         public DbSet<Team> Teams { get; set; }
-        public DbSet<PlayerSeasonStatistic> PlayerSeasonStatistics { get; set; }
         public DbSet<AllStarTeamsPlayers> AllStarTeamsPlayers { get; set; }
 
 
