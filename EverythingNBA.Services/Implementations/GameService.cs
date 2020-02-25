@@ -244,5 +244,14 @@
             await this.db.SaveChangesAsync();
             return true;
         }
+
+        public async Task<GameOverviewServiceModel> GetGameOverview(int gameId)
+        {
+            var game = await this.db.Games.Where(g => g.Id == gameId).FirstOrDefaultAsync();
+
+            var model = mapper.Map<GameOverviewServiceModel>(game);
+
+            return model;
+        }
     }
 }
