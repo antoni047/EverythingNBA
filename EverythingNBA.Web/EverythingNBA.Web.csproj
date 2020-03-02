@@ -19,4 +19,8 @@
     <ProjectReference Include="..\EverythingNBA.Services\EverythingNBA.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Administration\" />
+  </ItemGroup>
+
 </Project>
