@@ -2,7 +2,6 @@
 {
     using EverythingNBA.Services.Models;
     using EverythingNBA.Services.Models.Season;
-    using EverythingNBA.Web.Models.Seasons;
 
     using System.Threading.Tasks;
     using System.Collections.Generic;
