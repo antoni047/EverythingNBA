@@ -1,23 +1,11 @@
-﻿namespace EverythingNBA.Services.Models
+﻿namespace EverythingNBA.Services.Models.Team
 {
+    using System.Collections.Generic;
+
     public class TeamStandingsListingServiceModel
     {
-        public int Id { get; set; }
+        public ICollection<TeamSeasonStatisticServiceModel> EasternStandings { get; set; }
 
-        public string Name { get; set; }
-
-        public string TeamLogoImageURL{ get; set; }
-
-        public string Conference { get; set; }
-
-        public int Wins { get; set; }
-
-        public int Losses { get; set; }
-
-        public string  WinPercentage { get; set; }
-
-        public int GamesPlayed { get; set; }
-
-        public string LastTenGames { get; set; }
+        public ICollection<TeamSeasonStatisticServiceModel> WesternStandings { get; set; }
     }
 }

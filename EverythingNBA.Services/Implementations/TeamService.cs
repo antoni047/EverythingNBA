@@ -103,9 +103,10 @@
             return true;
         }
 
-        public async Task<ICollection<TeamStandingsListingServiceModel>> GetStandingsAsync(int seasonId)
+        public async Task<TeamStandingsListingServiceModel> GetStandingsAsync(int seasonId)
         {
-            var standingsList = new List<TeamStandingsListingServiceModel>();
+            var easternStandingsList = new List<TeamSeasonStatisticServiceModel>();
+            var westernStandingsList = new List<TeamSeasonStatisticServiceModel>();
 
             var teams = this.db.Teams
                 .Include(t => t.SeasonsStatistics)
@@ -122,7 +123,7 @@
                 var gamesPlayed = this.GetGamesPlayed(team, seasonId);
                 var lastTenGames = await this.GetLastTenGames(team, seasonId);
 
-                var standingsModel = new TeamStandingsListingServiceModel
+                var teamStatModel = new TeamSeasonStatisticServiceModel
                 {
                     Name = team.Name,
                     //TeamLogoImageURL = team.CloudinaryImage.ImageURL,
@@ -134,10 +135,24 @@
                     LastTenGames = lastTenGames
                 };
 
-                standingsList.Add(standingsModel);
+                if (teamStatModel.Conference == "Western")
+                {
+                    westernStandingsList.Add(teamStatModel);
+                }
+
+                else
+                {
+                    easternStandingsList.Add(teamStatModel);
+                }
             }
 
-            return standingsList.OrderByDescending(x => x.WinPercentage).ToList();
+            var standingsModel = new TeamStandingsListingServiceModel()
+            {
+                WesternStandings = westernStandingsList.OrderByDescending(x => x.WinPercentage).ToList(),
+                EasternStandings = easternStandingsList.OrderByDescending(x => x.WinPercentage).ToList()
+            };
+
+            return standingsModel;
         }
 
 
