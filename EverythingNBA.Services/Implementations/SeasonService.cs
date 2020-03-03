@@ -19,20 +19,23 @@
     {
         private readonly EverythingNBADbContext db;
         private readonly IMapper mapper;
+        private readonly ITeamService teamService;
 
-        public SeasonService(EverythingNBADbContext db, IMapper mapper)
+        public SeasonService(EverythingNBADbContext db, IMapper mapper, ITeamService teamService)
         {
             this.db = db;
             this.mapper = mapper;
+            this.teamService = teamService;
         }
 
-        public async Task<int> AddAsync(int year, int? titleWinnerId, int? playoffId, int gamesPlayed)
+        public async Task<int> AddAsync(int year, string titleWinner, int gamesPlayed)
         {
+            var titleWinnerObj = await this.teamService.GetTeamDetailsAsync(titleWinner);
+
             var seasonObj = new Season
             {
                 Year = year,
-                TitleWinnerId = titleWinnerId,
-                PlayoffId = playoffId,
+                TitleWinnerId = titleWinnerObj.Id,
                 GamesPlayed = gamesPlayed
             };
 
@@ -377,14 +380,14 @@
             return list;
         }
 
- 
 
-       
 
-       
 
-        
 
-        
+
+
+
+
+
     }
 }
