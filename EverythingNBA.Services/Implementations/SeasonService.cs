@@ -380,9 +380,9 @@
             return list;
         }
 
-        public async Task EditSeasonAsync(GetSeasonDetailsServiceModel model)
+        public async Task EditSeasonAsync(GetSeasonDetailsServiceModel model, int seasonId)
         {
-            var season = await this.db.Seasons.FindAsync(model.Id);
+            var season = await this.db.Seasons.FindAsync(seasonId);
 
             season.Year = model.Year;
             season.TitleWinnerId = model.TitleWinnerId;
