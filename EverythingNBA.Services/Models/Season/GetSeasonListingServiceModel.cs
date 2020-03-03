@@ -6,6 +6,8 @@
 
         public int Year { get; set; }
 
-        public int TitleWinnerId { get; set; }
+        public string TitleWinnerName { get; set; }
+
+        public int PlayoffId { get; set; }
     }
 }
