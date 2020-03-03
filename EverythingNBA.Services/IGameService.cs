@@ -34,5 +34,7 @@
         Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(int team1Id, int team2Id, int seasonId);
 
         Task<GameOverviewServiceModel> GetGameOverview(int gameId);
+
+        Task EditGameAsync(GameDetailsServiceModel model, int gameId);
     }
 }

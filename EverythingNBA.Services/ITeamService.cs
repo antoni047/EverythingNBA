@@ -34,5 +34,7 @@
         Task<bool> AddSeasonStatistic(int teamId, int seasonStatisticId);
 
         Task<bool> RemoveSeasonStatistic (int teamId, int seasonStatisticId);
+
+        Task EditTeamAsync(GetTeamDetailsServiceModel model, int id);
     }
 }

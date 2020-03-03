@@ -1,5 +1,6 @@
 ﻿namespace EverythingNBA.Services
 {
+    using EverythingNBA.Models;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -13,6 +14,8 @@
         Task<ICollection<string>> GetAllAwardWinnersAsync(int seasonId);
         Task<string> GetAwardWinnerAsync(int seasonId, string awardType);
 
-        Task<ICollection<string>> GetPlayerAwardsAsync (int playerId); 
+        Task<ICollection<string>> GetPlayerAwardsAsync (int playerId);
+
+        Task EditAwardWinnerAsync(string winnerName, int awardId);
     }
 }

@@ -54,6 +54,15 @@ namespace EverythingNBA.Services.Implementations
             return true;
         }
 
+        public async Task EditAwardWinnerAsync(string winnerName, int awardId)
+        {
+            var award = await this.db.Awards.FindAsync(awardId);
+
+            var winner = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == winnerName).FirstOrDefaultAsync();
+
+            award.WinnerId = winner.Id;
+        }
+
         public async Task<ICollection<string>> GetAllAwardWinnersAsync(int seasonId)
         {
             var winnersNames = new List<string>();

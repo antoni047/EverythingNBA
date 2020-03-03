@@ -255,5 +255,28 @@
 
             return seasonStatModel;
         }
+
+        public async Task EditPlayerAsync(PlayerDetailsServiceModel model, int id)
+        {
+            var player = await this.db.Players.FindAsync(id);
+
+            var playerTeam = await this.db.Teams.Where(t => t.Name == model.CurrentTeam).FirstOrDefaultAsync();
+
+            player.FirstName = model.FirstName;
+            player.LastName = model.LastName;
+            player.IsStarter = model.IsStarter;
+            player.Height = model.Height;
+            player.Weight = model.Weight;
+            player.Age = model.Age;
+            player.InstagramLink = model.InstagramLink;
+            player.TwitterLink = model.TwitterLink;
+            player.Position = (PositionType)Enum.Parse(typeof(PositionType), model.Position);
+            player.TeamId = playerTeam.Id;
+            player.ShirtNumber = model.ShirtNumber;
+            player.RookieYear = model.RookieYear;
+            player.CloudinaryImageId = model.CloudinaryImageId;
+
+            await this.db.SaveChangesAsync();
+        }
     }
 }

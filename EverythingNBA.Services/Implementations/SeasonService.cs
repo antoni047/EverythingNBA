@@ -380,14 +380,15 @@
             return list;
         }
 
+        public async Task EditSeasonAsync(GetSeasonDetailsServiceModel model)
+        {
+            var season = await this.db.Seasons.FindAsync(model.Id);
 
+            season.Year = model.Year;
+            season.TitleWinnerId = model.TitleWinnerId;
+            season.GamesPlayed = model.GamesPlayed;
 
-
-
-
-
-
-
-
+            await this.db.SaveChangesAsync();
+        }
     }
 }

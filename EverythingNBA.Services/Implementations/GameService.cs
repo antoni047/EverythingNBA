@@ -253,5 +253,16 @@
 
             return model;
         }
+
+        public async Task EditGameAsync(GameDetailsServiceModel model, int gameId)
+        {
+            var game = await this.db.Games.FindAsync(gameId);
+
+            game.Team2Points = model.Team2Points;
+            game.TeamHostPoints = model.TeamHostPoints;
+            game.Date = model.Date;
+
+            await this.db.SaveChangesAsync();
+        }
     }
 }

@@ -61,6 +61,26 @@ namespace EverythingNBA.Services.Implementations
             return true;
         }
 
+        public async Task EditGameStatisticAsync(GameStatistic editedStats, int statId)
+        {
+            var stats = await this.db.GameStatistics.FindAsync(statId);
+
+            stats.MinutesPlayed = editedStats.MinutesPlayed;
+            stats.Points = editedStats.Points;
+            stats.Rebounds = editedStats.Rebounds;
+            stats.Assists = editedStats.Assists;
+            stats.Steals = editedStats.Steals;
+            stats.Blocks = editedStats.Blocks;
+            stats.FieldGoalsMade = editedStats.FieldGoalsMade;
+            stats.FieldGoalAttempts = editedStats.FieldGoalAttempts;
+            stats.FreeThrowAttempts = editedStats.FreeThrowAttempts;
+            stats.FreeThrowsMade = editedStats.FreeThrowsMade;
+            stats.ThreeAttempts = editedStats.ThreeAttempts;
+            stats.ThreeMade = editedStats.ThreeMade;
+
+            await this.db.SaveChangesAsync();
+        }
+
         public async Task<int> GetFieldGoalPercentage(int gameStatisticId)
         {
             var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);

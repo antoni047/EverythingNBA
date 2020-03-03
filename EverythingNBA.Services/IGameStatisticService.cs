@@ -1,5 +1,6 @@
 ﻿namespace EverythingNBA.Services
 {
+    using EverythingNBA.Models;
     using System;
     using System.Threading.Tasks;
 
@@ -15,5 +16,7 @@
         Task<int> GetFieldGoalPercentage(int gameStatisticId);
 
         Task<int> GetFreeThrowPercentage(int gameStatisticId);
+
+        Task EditGameStatisticAsync(GameStatistic stats);
     }
 }

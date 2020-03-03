@@ -2,6 +2,7 @@
 {
     using EverythingNBA.Services.Models;
     using EverythingNBA.Services.Models.Season;
+    using EverythingNBA.Web.Models.Seasons;
 
     using System.Threading.Tasks;
     using System.Collections.Generic;
@@ -37,5 +38,7 @@
         Task<bool> RemoveGameAsync(int seasonId, int gameId);
 
         Task<ICollection<GetSeasonListingServiceModel>> GetAllSeasonsAsync();
+
+        Task EditSeasonAsync(GetSeasonDetailsServiceModel model);
     }
 }

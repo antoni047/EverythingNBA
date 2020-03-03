@@ -30,5 +30,7 @@ namespace EverythingNBA.Services
         Task<bool> AddAward(int playerId, int awardId);
 
         Task<bool> RemoveAward(int playerId, int awardId);
+
+        Task EditPlayerAsync(PlayerDetailsServiceModel model, int playerId);
     }
 }

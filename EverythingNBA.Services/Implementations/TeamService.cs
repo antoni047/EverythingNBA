@@ -414,5 +414,18 @@
 
             return $"{gamesWon}-{gamesLost}";
         }
+
+        public async Task EditTeamAsync(GetTeamDetailsServiceModel model, int id)
+        {
+            var team = await this.db.Teams.FindAsync(id);
+
+            team.Name = model.Name;
+            team.AbbreviatedName = model.AbbreviatedName;
+            team.CloudinaryImageId = model.CloudinaryImageId;
+            team.Conference = (ConferenceType)Enum.Parse(typeof(ConferenceType), model.Conference);
+            team.Venue = model.Venue;
+            team.Instagram = model.Instagram;
+            team.Twitter = model.Twitter;
+        }
     }
 }
