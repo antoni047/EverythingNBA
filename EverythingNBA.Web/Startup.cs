@@ -32,6 +32,7 @@ namespace EverythingNBA.Web
                 options => options.UseSqlServer(@"Server=DESKTOP-E6O5I68\SQLEXPRESS01;Database=EverythingNbaDb;Integrated Security=True;"));
 
             services.AddAutoMapper(typeof(Services.Mapping.MappingProfile));
+            services.AddAutoMapper(typeof(Web.Mapping.MappingProfile));
             services.AddMvc();
 
             services.AddTransient<ISeasonService, SeasonService>();
