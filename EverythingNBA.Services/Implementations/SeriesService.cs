@@ -105,33 +105,10 @@
 
             var model = mapper.Map<GetSeriesDetailsServiceModel>(series);
 
-            var mostPoints = string.Empty;
-            var mostAssists = string.Empty;
-            var mostRebounds = string.Empty;
+            var topStatsModel = await this.GetTopStats(model);
 
-            var stats = await this.GetTopStats(model);
-
-
-            for (int i = 0; i < stats.Count(); i++)
-            {
-                foreach (var player in dict)
-                {
-                    if (i == 0)
-                    {
-                        model.MostPoints = player.Value;
-                        model.MostPointsName = 
-                    }
-                    else if(i == 1)
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
-                }
-            }
-
+            model = mapper.Map<GetSeriesDetailsServiceModel>(topStatsModel);
+          
             return model;
         }
 
@@ -252,11 +229,11 @@
             var topStats = new TopStatsServiceModel
             {
                 MostPoints = mostPoints,
-                MostPointsPlayer = mostPointsPlayerName,
+                MostPointsPlayerName = mostPointsPlayerName,
                 MostAssists = mostAssists,
-                MostAssistsPlayer = mostAssistsPlayerName,
+                MostAssistsPlayerName = mostAssistsPlayerName,
                 MostRebounds = mostRebounds,
-                MostReboundsPlayer = mostReboundsPlayerName
+                MostReboundsPlayerName = mostReboundsPlayerName
             };
             
             return topStats;
