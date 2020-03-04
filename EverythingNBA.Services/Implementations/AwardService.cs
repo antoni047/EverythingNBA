@@ -11,6 +11,7 @@ namespace EverythingNBA.Services.Implementations
     using System.Linq;
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
+    using EverythingNBA.Services.Models.Award;
 
     public class AwardService : IAwardService
     {
@@ -63,23 +64,30 @@ namespace EverythingNBA.Services.Implementations
             award.WinnerId = winner.Id;
         }
 
-        public async Task<ICollection<string>> GetAllAwardWinnersAsync(int seasonId)
+        public async Task<ICollection<AwardDetailsServiceModel>> GetSeasonAwardsAsync(int seasonId)
         {
             var winnersNames = new List<string>();
 
             var awards = await this.db.Awards
-                .Include(a => a.Winner)
+                .Include(a => a.Winner).ThenInclude(p => p.Team)
                 .Where(a => a.SeasonId == seasonId)
                 .ToListAsync();
 
+            var seasonAwards = new List<AwardDetailsServiceModel>();
+
             foreach (var award in awards)
             {
-                var name = award.Winner.FirstName + " " + award.Winner.LastName;
+                var model = new AwardDetailsServiceModel
+                {
+                    Winner = award.Winner.FirstName + " " + award.Winner.LastName,
+                    Type = award.Name.ToString(),
+                    WinnerTeam = award.Winner.Team.Name
+                };
 
-                winnersNames.Add(name);
+                seasonAwards.Add(model);
             }
 
-            return winnersNames;
+            return seasonAwards;
         }
 
         public async Task<string> GetAwardWinnerAsync(int seasonId, string awardType)
@@ -135,8 +143,8 @@ namespace EverythingNBA.Services.Implementations
 
                     return name;
 
-                case "FinalsMVP": 
-                    player  = awards.Where(a => a.Name.ToString() == "FinalsMVP").Select(a => a.Winner).FirstOrDefault();
+                case "FinalsMVP":
+                    player = awards.Where(a => a.Name.ToString() == "FinalsMVP").Select(a => a.Winner).FirstOrDefault();
 
                     name = player.FirstName + " " + player.LastName;
 
