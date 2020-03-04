@@ -27,7 +27,7 @@ namespace EverythingNBA.Services.Implementations
             this.mapper = mapper;
         }
 
-        public async Task<int> AddAllStarTeamAsync(int year, string type, ICollection<string> playerNames)
+        public async Task<int?> AddAllStarTeamAsync(int year, string type, ICollection<string> playerNames)
         {
             var allStarTeamObj = new AllStarTeam
             {
@@ -40,6 +40,11 @@ namespace EverythingNBA.Services.Implementations
             foreach (var name in playerNames)
             {
                 var player = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == name).FirstOrDefaultAsync();
+
+                if (player == null)
+                {
+                    return null;
+                }
 
                 var obj = new AllStarTeamsPlayers
                 {
