@@ -390,5 +390,10 @@
 
             await this.db.SaveChangesAsync();
         }
+
+        public async Task<int> GetYearAsync(int seasonId)
+        {
+            return await this.db.Seasons.Where(s => s.Id == seasonId).Select(s => s.Year).FirstOrDefaultAsync();
+        }
     }
 }

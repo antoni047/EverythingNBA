@@ -39,5 +39,7 @@
         Task<ICollection<GetSeasonListingServiceModel>> GetAllSeasonsAsync();
 
         Task EditSeasonAsync(GetSeasonDetailsServiceModel model, int seasonId);
+
+        Task<int> GetYearAsync(int seasonId);
     }
 }
