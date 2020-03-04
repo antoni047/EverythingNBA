@@ -10,6 +10,7 @@
     using Services.Models;
     using Web.Models;
     using Data;
+    using EverythingNBA.Web.Models.AllStarTeams;
 
     public class AllStarTeamsController : Controller
     {
@@ -17,6 +18,7 @@
         private readonly EverythingNBADbContext db;
         private readonly IAllStarTeamService astService;
         private readonly ISeasonService seasonService;
+        private readonly IPlayerService playerService;
 
         public AllStarTeamsController(IMapper mapper, EverythingNBADbContext db, IAllStarTeamService allStarTeamService, ISeasonService seasonService)
         {
@@ -40,6 +42,54 @@
             var astTeams = await this.astService.GetAllASTeamsAsync(type);
 
             return this.View(astTeams);
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(AddAllStarTeamInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            if (model.PlayerNames.Any())
+            {
+                await this.astService.AddAllStarTeamAsync(model.Year, model.Type, model.PlayerNames);
+            }
+
+            else
+            {
+                await this.astService.AddAllStarTeamAsync(model.Year, model.Type, null);
+            }
+
+            var season = await this.seasonService.GetDetailsByYearAsync(model.Year);
+
+            return RedirectToAction($"SeasonAllStarTeams?{season.Id}");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(int allStarTeamId)
+        {
+            var model = await this.astService.GetAllStarTeamAsync(allStarTeamId);
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete (GetSeasonDetailsServiceModel model, int allStarTeamId)
+        {
+            var astTeam = await this.astService.GetAllStarTeamAsync(allStarTeamId);
+            var season = await this.seasonService.GetDetailsByYearAsync(astTeam.Year);
+
+            await this.astService.DeleteAllStarTeamAsync(allStarTeamId);
+
+            return RedirectToAction($"SeasonAllStarTeams?{season.Id}");
         }
     }
 }
