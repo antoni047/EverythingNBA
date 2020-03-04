@@ -7,6 +7,7 @@
         public string Type { get; set; }
 
         public string WinnerTeam { get; set; }
-            
+
+        public int Year { get; set; }
     }
 }
