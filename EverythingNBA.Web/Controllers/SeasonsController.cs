@@ -98,7 +98,7 @@
                 return RedirectToAction("All");
             }
 
-            return this.View(seasonId);
+            return this.View(season);
         }
 
         [HttpPost]
