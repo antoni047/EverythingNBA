@@ -111,6 +111,27 @@
 
             var stats = await this.GetTopStats(model);
 
+
+            for (int i = 0; i < stats.Count(); i++)
+            {
+                foreach (var player in dict)
+                {
+                    if (i == 0)
+                    {
+                        model.MostPoints = player.Value;
+                        model.MostPointsName = 
+                    }
+                    else if(i == 1)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+
             return model;
         }
 
@@ -136,22 +157,24 @@
             return winner;
         }
 
-        private async Task<IDictionary<string, int>> GetTopStats(GetSeriesDetailsServiceModel seriesModel)
+        private async Task<TopStatsServiceModel> GetTopStats(GetSeriesDetailsServiceModel seriesModel)
         {
-            var mostPoints = double.MinValue;
+            var mostPoints = int.MinValue;
             var mostPointsPlayerName = string.Empty;
 
-            var mostAssists = double.MinValue;
+            var mostAssists = int.MinValue;
             var mostAssistsPlayerName = string.Empty;
 
-            var mostRebounds = double.MinValue;
+            var mostRebounds = int.MinValue;
             var mostReboundsPlayerName = string.Empty;
+
+            var stats = new List<Dictionary<string, int>>();
 
             foreach (var game in seriesModel.Games)
             {
-                var playerPointsDict = new Dictionary<string, double>();
-                var playerAssistsDict = new Dictionary<string, double>();
-                var playerReboundsDict = new Dictionary<string, double>();
+                var playerPointsDict = new Dictionary<string, int>();
+                var playerAssistsDict = new Dictionary<string, int>();
+                var playerReboundsDict = new Dictionary<string, int>();
 
                 var playerStats = await this.db.Games
                     .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
@@ -167,21 +190,21 @@
                         playerAssistsDict.ContainsKey(playerFullName) &&
                         playerReboundsDict.ContainsKey(playerFullName))
                     {
-                        playerPointsDict[playerFullName] += stat.Points;
-                        playerAssistsDict[playerFullName] += stat.Assists;
-                        playerReboundsDict[playerFullName] += stat.Rebounds;
+                        playerPointsDict[playerFullName] += (int)stat.Points;
+                        playerAssistsDict[playerFullName] += (int)stat.Assists;
+                        playerReboundsDict[playerFullName] += (int)stat.Rebounds;
                     }
                     else
                     {
-                        playerPointsDict.Add(playerFullName, stat.Points);
-                        playerAssistsDict.Add(playerFullName, stat.Assists);
-                        playerReboundsDict.Add(playerFullName, stat.Rebounds);
+                        playerPointsDict.Add(playerFullName, (int)stat.Points);
+                        playerAssistsDict.Add(playerFullName, (int)stat.Assists);
+                        playerReboundsDict.Add(playerFullName, (int)stat.Rebounds);
                     }
                 }
 
-                var pointsList = new List<double>();
-                var assitsList = new List<double>();
-                var reboundsList = new List<double>();
+                var pointsList = new List<int>();
+                var assitsList = new List<int>();
+                var reboundsList = new List<int>();
 
                 foreach (var playerStat in playerPointsDict)
                 {
@@ -226,14 +249,17 @@
                 }
             }
 
-            var pointsDict = new Dictionary<string, double>();
-            pointsDict.Add(mostPointsPlayerName, mostPoints);
-
-            var assistsDict = new Dictionary<string, double>();
-            assistsDict.Add(mostAssistsPlayerName, mostAssists);
-
-            var reboundsDict = new Dictionary<string, double>();
-            reboundsDict.Add(mostReboundsPlayerName, mostRebounds);
+            var topStats = new TopStatsServiceModel
+            {
+                MostPoints = mostPoints,
+                MostPointsPlayer = mostPointsPlayerName,
+                MostAssists = mostAssists,
+                MostAssistsPlayer = mostAssistsPlayerName,
+                MostRebounds = mostRebounds,
+                MostReboundsPlayer = mostReboundsPlayerName
+            };
+            
+            return topStats;
         }
     }
 }
