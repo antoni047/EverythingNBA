@@ -9,7 +9,7 @@
 
     public interface IAllStarTeamService
     {
-        Task<int?> AddAllStarTeamAsync(int year, string type, ICollection<string> playerNames)
+        Task<int?> AddAllStarTeamAsync(int year, string type, ICollection<string> playerNames);
 
         Task<bool> DeleteAllStarTeamAsync(int allStarTeamId);
 

@@ -33,7 +33,7 @@ namespace EverythingNBA.Services.Models.Player
 
         public string TwitterLink { get; set; }
 
-        public ICollection<Award> Awards { get; set; }
+        public ICollection<EverythingNBA.Models.Award> Awards { get; set; }
 
         public ICollection<GetAllStarTeamServiceModel> AllStarTeams { get; set; }
 
