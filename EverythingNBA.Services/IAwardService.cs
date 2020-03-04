@@ -8,7 +8,7 @@
 
     public interface IAwardService
     {
-        Task<int> AddAwardAsync(string name, int year, int winnerId);
+        Task<int> AddAwardAsync(string name, int year, string winnerName, string winnerTeamName);
 
         Task<bool> DeleteAwardAsync(int awardId);
 
@@ -19,5 +19,9 @@
         Task<ICollection<string>> GetPlayerAwardsAsync (int playerId);
 
         Task EditAwardWinnerAsync(string winnerName, int awardId);
+
+        ICollection<AllAwardsServiceModel> GetAllAwards();
+
+        Task<AwardDetailsServiceModel> GetAwardDetails(int awardId);
     }
 }
