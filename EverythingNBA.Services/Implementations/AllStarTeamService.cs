@@ -14,6 +14,7 @@ namespace EverythingNBA.Services.Implementations
     using EverythingNBA.Models.Enums;
     using EverythingNBA.Services.Models.AllStarTeam;
     using EverythingNBA.Models.MappingTables;
+    using EverythingNBA.Services.Models.Player;
 
     public class AllStarTeamService : IAllStarTeamService
     {
@@ -26,7 +27,7 @@ namespace EverythingNBA.Services.Implementations
             this.mapper = mapper;
         }
 
-        public async Task<int> AddAllStarTeamAsync(int year, string type, ICollection<int> playerIds)
+        public async Task<int> AddAllStarTeamAsync(int year, string type, ICollection<string> playerNames)
         {
             var allStarTeamObj = new AllStarTeam
             {
@@ -36,9 +37,9 @@ namespace EverythingNBA.Services.Implementations
 
             var allStarTeamsPlayersList = new List<AllStarTeamsPlayers>();
 
-            foreach (var playerId in playerIds)
+            foreach (var name in playerNames)
             {
-                var player = await this.db.Players.FindAsync(playerId);
+                var player = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == name).FirstOrDefaultAsync();
 
                 var obj = new AllStarTeamsPlayers
                 {

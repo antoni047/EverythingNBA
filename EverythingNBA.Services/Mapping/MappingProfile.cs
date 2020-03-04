@@ -50,7 +50,8 @@
 
             this.CreateMap<Player, PlayerDetailsServiceModel>()
                 .ForMember(mdl => mdl.CurrentTeam, opt => opt.MapFrom(p => p.Team.Name))
-                .ForMember(mdl => mdl.Position, opt => opt.MapFrom(p => p.Position.ToString()));
+                .ForMember(mdl => mdl.Position, opt => opt.MapFrom(p => p.Position.ToString()))
+                .ReverseMap();
 
             this.CreateMap<Game, GameOverviewServiceModel>();
 
