@@ -2,6 +2,8 @@
 {
     public class SeriesOverviewServiceModel
     {
+        public int Id { get; set; }
+
         public string Team1Name { get; set; }
 
         public string Team2Name { get; set; }
