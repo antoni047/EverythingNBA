@@ -29,6 +29,7 @@
 
             this.CreateMap<Series, GetSeriesDetailsServiceModel>();
             this.CreateMap<TopStatsServiceModel, GetSeriesDetailsServiceModel>();
+            this.CreateMap<GetSeriesDetailsServiceModel, SeriesOverviewServiceModel>();
 
             this.CreateMap<Team, GetTeamDetailsServiceModel>()
                 .ForMember(mdl => mdl.CurrentSeasonStatistic, opt => opt.Ignore())

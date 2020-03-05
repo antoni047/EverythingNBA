@@ -16,12 +16,14 @@
         private readonly EverythingNBADbContext db;
         private readonly IMapper mapper;
         private readonly IGameService gameService;
+        private readonly ITeamService teamService;
 
-        public SeriesService(EverythingNBADbContext db, IMapper mapper, IGameService gameService)
+        public SeriesService(EverythingNBADbContext db, IMapper mapper, IGameService gameService, ITeamService teamService)
         {
             this.db = db;
             this.mapper = mapper;
             this.gameService = gameService;
+            this.teamService = teamService;
         }
 
         public async Task AddGameAsync(int seriesId, int gameId, int gameNumber)
@@ -105,10 +107,25 @@
 
             var model = mapper.Map<GetSeriesDetailsServiceModel>(series);
 
+            model.Team1Name = series.Team1.Name;
+            model.Team2Name = series.Team2.Name;
+
             var topStatsModel = await this.GetTopStats(model);
 
             model = mapper.Map<GetSeriesDetailsServiceModel>(topStatsModel);
           
+            return model;
+        }
+
+        public async Task<SeriesOverviewServiceModel> GetServiceOverview(int seriesId, string stage, string stageNumber, string conference)
+        {
+            var series = await this.GetSeriesAsync(seriesId);
+
+            var model = mapper.Map<SeriesOverviewServiceModel>(series);
+            model.Stage = stage;
+            model.Number = stageNumber;
+            model.Conference = conference;
+
             return model;
         }
 

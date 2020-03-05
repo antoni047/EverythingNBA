@@ -17,5 +17,7 @@
         Task AddGameAsync(int seriesId, int gameId, int gameNumber);
 
         Task<string> GetWinnerAsync(int seriesId);
+
+        Task<SeriesOverviewServiceModel> GetServiceOverview(int seriesId, string stage, string stageNumber, string conference);
     }
 }
