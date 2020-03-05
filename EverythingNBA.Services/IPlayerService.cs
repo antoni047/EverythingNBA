@@ -36,5 +36,7 @@ namespace EverythingNBA.Services
         Task<PlayerCareerStatisticServiceModel> GetCareerStatistics(int playerId);
 
         Task<ICollection<PlayerRecentGamesListingServiceModel>> GetRecentGamesAsync(int playerId);
+
+        Task<PlayerAccomplishmentsListingServiceModel> GetPlayerAccomplishentsAsync(int playerId);
     }
 }

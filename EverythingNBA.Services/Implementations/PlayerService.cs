@@ -23,7 +23,7 @@
         private readonly IAllStarTeamService astService;
         //private readonly IGameStatisticService gameStatsService;
 
-        public PlayerService(EverythingNBADbContext db, IImageService imageService, IMapper mapper, ISeasonService seasonService, 
+        public PlayerService(EverythingNBADbContext db, IImageService imageService, IMapper mapper, ISeasonService seasonService,
             IGameService gameService, IAwardService awardService, IAllStarTeamService astService/*, IGameStatisticService gameStatsService*/)
         {
             this.db = db;
@@ -376,21 +376,109 @@
             await this.db.SaveChangesAsync();
         }
 
-        //public async Task<PlayerAccomplishmentsListingServiceModel> GetPlayerAccomplishentsAsync(int playerId)
-        //{
-        //    var player = await this.db.Players
-        //        .Where(p => p.Id == playerId)
-        //        .Include(p => p.AllStarTeams)
-        //        .Include(p => p.Awards)
-        //        .FirstOrDefaultAsync();
+        public async Task<PlayerAccomplishmentsListingServiceModel> GetPlayerAccomplishentsAsync(int playerId)
+        {
+            var player = await this.db.Players
+                .Where(p => p.Id == playerId)
+                .Include(p => p.AllStarTeams)
+                    .ThenInclude(astp => astp.AllStarTeam)
+                .Include(p => p.Awards)
+                .FirstOrDefaultAsync();
 
-        //    var model = new PlayerAccomplishmentsListingServiceModel
-        //    {
+            var firstNBATeams = new List<int>();
+            var secondNBATeams = new List<int>();
+            var thirdNBATeams = new List<int>();
+            var allDefensiveTeams = new List<int>();
+            var allRookieTeams = new List<int>();
 
-        //    };
+            var MVPs = new List<int>();
+            var FinalsMVPs = new List<int>();
+            var TopScorerTitles = new List<int>();
+            var DPOTYs = new List<int>();
+            var ROTYs = new List<int>();
+            var SixthMOTYs = new List<int>();
+            var MIPs = new List<int>();
 
-        //    return model;
-        //}
+            foreach (var team in player.AllStarTeams)
+            {
+                if (team.AllStarTeam.Type.ToString() == "FirstAllNBA")
+                {
+                    firstNBATeams.Add(team.AllStarTeam.Year);
+                }
+
+                else if (team.AllStarTeam.Type.ToString() == "SecondAllNBA")
+                {
+                    secondNBATeams.Add(team.AllStarTeam.Year);
+                }
+
+                else if (team.AllStarTeam.Type.ToString() == "ThirdAllNBA")
+                {
+                    thirdNBATeams.Add(team.AllStarTeam.Year);
+                }
+
+                else if (team.AllStarTeam.Type.ToString() == "AllDefensive")
+                {
+                    allDefensiveTeams.Add(team.AllStarTeam.Year);
+                }
+
+                else if (team.AllStarTeam.Type.ToString() == "AllRookie")
+                {
+                    allRookieTeams.Add(team.AllStarTeam.Year);
+                }
+            }
+
+            foreach (var award in player.Awards)
+            {
+                if (award.Name.ToString() == "MVP")
+                {
+                    MVPs.Add(award.Year);
+                }
+
+                else if (award.Name.ToString() == "FinalsMVP")
+                {
+                    FinalsMVPs.Add(award.Year);
+                }
+
+                else if (award.Name.ToString() == "ROTY")
+                {
+                    ROTYs.Add(award.Year);
+                }
+
+                else if (award.Name.ToString() == "TopScorer")
+                {
+                    TopScorerTitles.Add(award.Year);
+                }
+
+                else if (award.Name.ToString() == "DPOTY")
+                {
+                    DPOTYs.Add(award.Year);
+                }
+
+                else if (award.Name.ToString() == "SixthMOTY")
+                {
+                    SixthMOTYs.Add(award.Year);
+                }
+
+                else if (award.Name.ToString() == "MIP")
+                {
+                    MIPs.Add(award.Year);
+                }
+            }
+
+
+            var model = new PlayerAccomplishmentsListingServiceModel
+            {
+                MVPs = MVPs,
+                FinalsMVPs = FinalsMVPs,
+                TopScorerTitles = TopScorerTitles,
+                DPOTYs = DPOTYs,
+                ROTYs = ROTYs,
+                SixthMOTYs = SixthMOTYs,
+                MIPs = MIPs
+            };
+
+            return model;
+        }
 
         private int GetCurrentSeasonYear()
         {
