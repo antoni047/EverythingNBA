@@ -33,7 +33,7 @@ namespace EverythingNBA.Services.Implementations
                 Year = year,
                 WinnerId = player.Id,
                 SeasonId = season.Id
-                //WinnerTeamName = winnerTeamName
+                WinnerTeamName = winnerTeamName
             };
 
             this.db.Awards.Add(awardObj);

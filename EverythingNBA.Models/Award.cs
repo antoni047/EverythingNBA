@@ -20,6 +20,8 @@
         public int? WinnerId { get; set; }
         public virtual Player Winner { get; set; }
 
+        public string WinnerTeamName { get; set; }
+
         public int? SeasonId { get; set; }
 
         public virtual Season Season { get; set; }
