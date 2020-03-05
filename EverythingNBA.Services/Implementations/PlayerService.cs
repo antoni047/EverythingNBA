@@ -19,16 +19,20 @@
         private readonly IMapper mapper;
         private readonly ISeasonService seasonService;
         private readonly IGameService gameService;
+        private readonly IAwardService awardService;
+        private readonly IAllStarTeamService astService;
         //private readonly IGameStatisticService gameStatsService;
 
         public PlayerService(EverythingNBADbContext db, IImageService imageService, IMapper mapper, ISeasonService seasonService, 
-            IGameService gameService/*, IGameStatisticService gameStatsService*/)
+            IGameService gameService, IAwardService awardService, IAllStarTeamService astService/*, IGameStatisticService gameStatsService*/)
         {
             this.db = db;
             this.imageService = imageService;
             this.mapper = mapper;
             this.seasonService = seasonService;
             this.gameService = gameService;
+            this.awardService = awardService;
+            this.astService = astService;
             //this.gameStatsService = gameStatsService;
         }
 
@@ -315,42 +319,32 @@
 
         public async Task<ICollection<PlayerRecentGamesListingServiceModel>> GetRecentGamesAsync(int playerId)
         {
-            var season = await this.seasonService.GetDetailsByYearAsync(this.GetCurrentSeasonYear());
-            var currentSeasonGames = await this.gameService.GetSeasonGamesAsync(season.Id);
+            var player = await this.db.Players
+                .Where(p => p.Id == playerId)
+                .Include(p => p.SingleGameStatistics)
+                    .ThenInclude(gs => gs.Game)
+                        .ThenInclude(g => g.Team2)
+                .Include(p => p.SingleGameStatistics)
+                    .ThenInclude(gs => gs.Game)
+                        .ThenInclude(g => g.TeamHost)
+                .FirstOrDefaultAsync();
+
+            var gameStats = player.SingleGameStatistics.OrderByDescending(gs => gs.Game.Date).ToList().Take(9).ToList();
 
             var modelsList = new List<PlayerRecentGamesListingServiceModel>();
 
-            foreach (var game in currentSeasonGames.OrderByDescending(g => g.Date).ToList().Take(9).ToList())
+            foreach (var gameStat in gameStats)
             {
-                var gameDetailsModel = await this.gameService.GetGameAsync(game.Id);
-
-                var teamHostName = await this.db.Teams.Where(t => t.Id == gameDetailsModel.TeamHostId).Select(t => t.Name).FirstOrDefaultAsync();
-                var team2Name = await this.db.Teams.Where(t => t.Id == gameDetailsModel.Team2Id).Select(t => t.Name).FirstOrDefaultAsync();
-
-                var points = 0;
-                var assists = 0;
-                var rebounds = 0;
-
-                foreach (var stat in gameDetailsModel.PlayerStats)
-                {
-                    if (stat.PlayerId == playerId)
-                    {
-                        points = (int)stat.Points;
-                        assists = (int)stat.Assists;
-                        rebounds = (int)stat.Rebounds;
-                    }
-                }
-
                 var model = new PlayerRecentGamesListingServiceModel
                 {
-                    TeamHostName = teamHostName,
-                    Team2Name = team2Name,
-                    TeamHostPoints = (int)gameDetailsModel.TeamHostPoints,
-                    Team2Points = (int)gameDetailsModel.Team2Points,
-                    Date = gameDetailsModel.Date.ToString(@"dd/MM/YYYY"),
-                    Points = points,
-                    Assists = assists,
-                    Rebounds = rebounds
+                    TeamHostName = gameStat.Game.TeamHost.Name,
+                    Team2Name = gameStat.Game.Team2.Name,
+                    TeamHostPoints = (int)gameStat.Game.TeamHostPoints,
+                    Team2Points = (int)gameStat.Game.Team2Points,
+                    Date = gameStat.Game.Date.ToString(@"dd/MM/yyyy"),
+                    Points = (int)gameStat.Points,
+                    Assists = (int)gameStat.Assists,
+                    Rebounds = (int)gameStat.Rebounds
                 };
 
                 modelsList.Add(model);
@@ -381,6 +375,22 @@
 
             await this.db.SaveChangesAsync();
         }
+
+        //public async Task<PlayerAccomplishmentsListingServiceModel> GetPlayerAccomplishentsAsync(int playerId)
+        //{
+        //    var player = await this.db.Players
+        //        .Where(p => p.Id == playerId)
+        //        .Include(p => p.AllStarTeams)
+        //        .Include(p => p.Awards)
+        //        .FirstOrDefaultAsync();
+
+        //    var model = new PlayerAccomplishmentsListingServiceModel
+        //    {
+
+        //    };
+
+        //    return model;
+        //}
 
         private int GetCurrentSeasonYear()
         {
