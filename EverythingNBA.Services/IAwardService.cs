@@ -16,7 +16,7 @@
 
         Task<string> GetAwardWinnerAsync(int seasonId, string awardType);
 
-        Task<ICollection<string>> GetPlayerAwardsAsync (int playerId);
+        Task<ICollection<PlayerAwardsServiceModel>> GetPlayerAwardsAsync(int playerId);
 
         Task EditAwardWinnerAsync(string winnerName, int awardId);
 
