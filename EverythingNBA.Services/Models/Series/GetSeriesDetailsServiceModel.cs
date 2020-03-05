@@ -7,9 +7,9 @@
     {
         public int Id { get; set; }
 
-        public string Team1Id { get; set; }
+        public string Team1Name { get; set; }
 
-        public string Team2Id { get; set; }
+        public string Team2Name { get; set; }
 
         public int? WinnerGamesWon { get; set; }
 
