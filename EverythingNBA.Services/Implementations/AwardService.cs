@@ -159,11 +159,24 @@ namespace EverythingNBA.Services.Implementations
             } //returns name
         }
 
-        public async Task<ICollection<string>> GetPlayerAwardsAsync(int playerId)
+        public async Task<ICollection<PlayerAwardsServiceModel>> GetPlayerAwardsAsync(int playerId)
         {
-            var playerAwards = await this.db.Awards.Where(a => a.WinnerId == playerId).Select(a => a.Name.ToString()).ToListAsync();
+            var playerAwards = await this.db.Awards.Where(a => a.WinnerId == playerId).ToListAsync();
 
-            return playerAwards;
+            var modelsList = new List<PlayerAwardsServiceModel>();
+
+            foreach (var award in playerAwards)
+            {
+                var model = new PlayerAwardsServiceModel
+                {
+                    AwardType = award.Name.ToString(),
+                    Year = award.Year
+                };
+
+                modelsList.Add(model);
+            }
+
+            return modelsList;
 
             //foreach (var award in awards)
             //{
