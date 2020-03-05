@@ -11,9 +11,9 @@
 
         public string Team2Name { get; set; }
 
-        public int? WinnerGamesWon { get; set; }
+        public int? Team1GamesWon { get; set; }
 
-        public int? LoserGamesWon { get; set; }
+        public int? Team2GamesWon { get; set; }
 
         public int MostPoints { get; set; }
 
