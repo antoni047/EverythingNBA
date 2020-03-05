@@ -14,11 +14,13 @@
     {
         private readonly EverythingNBADbContext db;
         private readonly IMapper mapper;
+        private readonly ISeriesService seriesService;
 
-        public PlayoffService(EverythingNBADbContext db, IMapper mapper)
+        public PlayoffService(EverythingNBADbContext db, IMapper mapper, ISeriesService seriesService)
         {
             this.db = db;
             this.mapper = mapper;
+            this.seriesService = seriesService;
         }
 
         public async Task<int> AddPlayoffAsync(int? seasonId, int westernQuarterFinalFirstId, int westernQuarterFinalSecondId, int westernQuarterFinalThirdId,
@@ -144,11 +146,62 @@
 
         public async Task<GetPlayoffServiceModel> GetDetailsAsync(int playoffId)
         {
-            var playoff = await this.db.Playoffs.FindAsync(playoffId);
+            var playoff = await this.db.Playoffs
+                .Where(p => p.Id == playoffId)
+                .Include(p => p.WesternQuarterFinalFirst)
+                .Include(p => p.WesternQuarterFinalSecond)
+                .Include(p => p.WesternQuarterFinalThird)
+                .Include(p => p.WesternQuarterFinalFourth)
+                .Include(p => p.EasternQuarterFinalFirst)
+                .Include(p => p.EasternQuarterFinalSecond)
+                .Include(p => p.EasternQuarterFinalThird)
+                .Include(p => p.EasternQuarterFinalFourth)
+                .Include(p => p.WesternSemiFinalFirst)
+                .Include(p => p.WesternSemiFinalSecond)
+                .Include(p => p.EasternSemiFinalFirst)
+                .Include(p => p.EasternSemiFinalSecond)
+                .Include(p => p.WesternFinal)
+                .Include(p => p.EasternFinal)
+                .Include(p => p.Final)
+                .FirstOrDefaultAsync();
 
-            var model = mapper.Map<GetPlayoffServiceModel>(playoff);
+            var WesternQuarterFinalFirst = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "QuarterFinal", "First", "Western");
+            var WesternQuarterFinalSecond = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "QuarterFinal", "Second", "Western");
+            var WesternQuarterFinalThird = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "QuarterFinal", "Third", "Western");
+            var WesternQuarterFinalFourth = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "QuarterFinal", "Fourth", "Western");
+            var EasternQuarterFinalFirst = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "QuarterFinal", "First", "Eastern");
+            var EasternQuarterFinalSecond = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "QuarterFinal", "Second", "Eastern");
+            var EasternQuarterFinalThird = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "QuarterFinal", "Third", "Eastern");
+            var EasternQuarterFinalFourth = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "QuarterFinal", "Fourth", "Eastern");
+            var WesternSemiFinalFirst = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "SemiFinal", "First", "Western");
+            var WesternSemiFinalSecond = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "SemiFinal", "Second", "Western");
+            var EasternSemiFinalFirst = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "SemiFinal", "First", "Eastern");
+            var EasternSemiFinalSecond = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "SemiFinal", "Second", "Eastern");
+            var WesternFinal = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "ConferenceFinal", "First", "Western");
+            var EasternFinal = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "ConferenceFinal", "First", "Western");
+            var Final = await this.seriesService.GetServiceOverview(playoff.WesternQuarterFinalFirst.Id, "Final", "First", "Western");
 
-            return model;
+            var winnerName = await this.seriesService.GetWinnerAsync(Final.Id);
+
+            var model = new GetPlayoffServiceModel
+            {
+                WesternQuarterFinalFirst = WesternQuarterFinalFirst,
+                WesternQuarterFinalSecond = WesternQuarterFinalSecond,
+                WesternQuarterFinalThird = WesternQuarterFinalThird,
+                WesternQuarterFinalFourth = WesternQuarterFinalFourth,
+                EasternQuarterFinalFirst = EasternQuarterFinalFirst,
+                EasternQuarterFinalSecond = EasternQuarterFinalSecond,
+                EasternQuarterFinalThird = EasternQuarterFinalThird,
+                EasternQuarterFinalFourth = EasternQuarterFinalFourth,
+                WesternSemiFinalFirst = WesternSemiFinalFirst,
+                WesternSemiFinalSecond = WesternSemiFinalSecond,
+                EasternSemiFinalFirst = EasternSemiFinalFirst,
+                EasternSemiFinalSecond = EasternSemiFinalSecond,
+                WesternFinal = WesternFinal,
+                EasternFinal = EasternFinal,
+                Final = Final,
+                WinnerName = winnerName
+            };
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EverythingNBA.Services.Models.Playoff
+﻿namespace EverythingNBA.Services.Models.Playoff
 {
+    using Services.Models.Series;
     public class GetPlayoffServiceModel
     {
         public int Id { get; set; }
@@ -11,33 +8,36 @@ namespace EverythingNBA.Services.Models.Playoff
         public int? SeasonId { get; set; }
 
 
-        public int? WesternQuarterFinalFirstId { get; set; }
+        public SeriesOverviewServiceModel WesternQuarterFinalFirst { get; set; }
 
-        public int? WesternQuarterFinalSecondId { get; set; }
+        public SeriesOverviewServiceModel WesternQuarterFinalSecond { get; set; }
 
-        public int? WesternQuarterFinalFourthId { get; set; }
+        public SeriesOverviewServiceModel WesternQuarterFinalThird { get; set; }
 
-        public int? EasternQuarterFinalFirstId { get; set; }
+        public SeriesOverviewServiceModel WesternQuarterFinalFourth { get; set; }
 
-        public int? EasternQuarterFinalSecondId { get; set; }
+        public SeriesOverviewServiceModel EasternQuarterFinalFirst { get; set; }
 
-        public int? EasternQuarterFinalThirdId { get; set; }
+        public SeriesOverviewServiceModel EasternQuarterFinalSecond { get; set; }
 
-        public int? EasternQuarterFinalFourthId { get; set; }
+        public SeriesOverviewServiceModel EasternQuarterFinalThird { get; set; }
 
-        public int? WesternSemiFinalFirstId { get; set; }
+        public SeriesOverviewServiceModel EasternQuarterFinalFourth { get; set; }
 
-        public int? WesternSemiFinalSecondId { get; set; }
+        public SeriesOverviewServiceModel WesternSemiFinalFirst { get; set; }
 
-        public int? EasternSemiFinalFirstId { get; set; }
+        public SeriesOverviewServiceModel WesternSemiFinalSecond { get; set; }
 
-        public int? EasternSemiFinalSecondId { get; set; }
+        public SeriesOverviewServiceModel EasternSemiFinalFirst { get; set; }
 
-        public int? WesternFinalId { get; set; }
+        public SeriesOverviewServiceModel EasternSemiFinalSecond { get; set; }
 
-        public int? EasternFinalId { get; set; }
+        public SeriesOverviewServiceModel WesternFinal { get; set; }
 
-        public int? FinalId { get; set; }
+        public SeriesOverviewServiceModel EasternFinal { get; set; }
 
+        public SeriesOverviewServiceModel Final { get; set; }
+
+        public string WinnerName { get; set; }
     }
 }
