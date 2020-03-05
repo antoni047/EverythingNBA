@@ -33,10 +33,12 @@ namespace EverythingNBA.Services.Models.Player
 
         public string TwitterLink { get; set; }
 
-        public ICollection<EverythingNBA.Models.Award> Awards { get; set; }
+        public PlayerCareerStatisticServiceModel CareerStatistics { get; set; }
 
-        public ICollection<GetAllStarTeamServiceModel> AllStarTeams { get; set; }
+        public PlayerSeasonStatisticServiceModel SeasonStatistics { get; set; }
 
-        public ICollection<EverythingNBA.Models.GameStatistic> SingleGameStatistics { get; set; }
+        public ICollection<PlayerRecentGamesListingServiceModel> RecentGames { get; set; }
+
+        //public ICollection<PlayerPastTeamsListingServiceModel> PastTeams { get; set; }
     }
 }

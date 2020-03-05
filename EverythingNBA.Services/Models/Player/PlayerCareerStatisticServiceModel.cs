@@ -1,11 +1,7 @@
 ﻿namespace EverythingNBA.Services.Models.Player
 {
-    public class PlayerSeasonStatisticServiceModel
+    public class PlayerCareerStatisticServiceModel
     {
-        public int PlayerId { get; set; }
-
-        public int SeasonId { get; set; }
-
         public double AveragePoints { get; set; }
 
         public double AverageAssists { get; set; }

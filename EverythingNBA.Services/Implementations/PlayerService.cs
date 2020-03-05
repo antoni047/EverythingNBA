@@ -17,12 +17,19 @@
         private readonly EverythingNBADbContext db;
         private readonly IImageService imageService;
         private readonly IMapper mapper;
+        private readonly ISeasonService seasonService;
+        private readonly IGameService gameService;
+        //private readonly IGameStatisticService gameStatsService;
 
-        public PlayerService(EverythingNBADbContext db, IImageService imageService, IMapper mapper)
+        public PlayerService(EverythingNBADbContext db, IImageService imageService, IMapper mapper, ISeasonService seasonService, 
+            IGameService gameService/*, IGameStatisticService gameStatsService*/)
         {
             this.db = db;
             this.imageService = imageService;
             this.mapper = mapper;
+            this.seasonService = seasonService;
+            this.gameService = gameService;
+            //this.gameStatsService = gameStatsService;
         }
 
         public async Task<int> AddPlayerAsync(string firstName, string lastName, int teamId, int? rookieYear, int age, int height, int weight,
@@ -90,15 +97,23 @@
         public async Task<PlayerDetailsServiceModel> GetPlayerDetailsAsync(int id)
         {
             var player = await this.db.Players
-                .Include(p => p.Awards)
-                .Include(p => p.AllStarTeams)
                 .Include(p => p.SingleGameStatistics)
                 .Where(p => p.Id == id)
                 .FirstOrDefaultAsync();
 
+            var season = await this.seasonService.GetDetailsByYearAsync(this.GetCurrentSeasonYear());
+
             var model = mapper.Map<PlayerDetailsServiceModel>(player);
 
             model.CurrentTeam = await this.db.Teams.Include(t => t.Players).Where(t => t.Id == player.TeamId).Select(t => t.Name).FirstOrDefaultAsync();
+
+            var seasonStatistics = await this.GetSeasonStatistics(player.Id, this.GetCurrentSeasonYear());
+            var careerStatistics = await this.GetCareerStatistics(player.Id);
+            var recentGames = await this.GetRecentGamesAsync(player.Id);
+
+            model.SeasonStatistics = await this.GetSeasonStatistics(player.Id, this.GetCurrentSeasonYear());
+            model.CareerStatistics = await this.GetCareerStatistics(player.Id);
+            model.RecentGames = await this.GetRecentGamesAsync(player.Id);
 
             return model;
         }
@@ -156,9 +171,9 @@
         public async Task<bool> AddGameStatistic(int playerId, int gameStatisticId)
         {
             var player = await this.db.Players
-                .Include(p => p.SingleGameStatistics)
-                .Where(p => p.Id == playerId)
-                .FirstOrDefaultAsync();
+              .Include(p => p.SingleGameStatistics)
+              .Where(p => p.Id == playerId)
+              .FirstOrDefaultAsync();
 
             var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
 
@@ -222,7 +237,7 @@
                 rebounds.Add(gameStat.Rebounds);
                 steals.Add(gameStat.Steals);
                 blocks.Add(gameStat.Blocks);
-                freeThrowsMade.Add(gameStat.FreeThrowsMade); 
+                freeThrowsMade.Add(gameStat.FreeThrowsMade);
                 freeThrowsAttempted.Add(gameStat.FreeThrowAttempts);
                 fieldGoalsMade.Add(gameStat.FieldGoalsMade);
                 fieldGoalsAttempted.Add(gameStat.FieldGoalAttempts);
@@ -243,17 +258,105 @@
             {
                 PlayerId = playerId,
                 SeasonId = seasonId,
-                AveragePoints = averagePoints.ToString("0.0"),
-                AverageAssists = averageAssists.ToString("0.0"),
-                AverageRebounds = averageRebounds.ToString("0.0"),
-                AverageBlocks = averageBlocks.ToString("0.0"),
-                AverageSteals = averageSteals.ToString("0.0"),
+                AveragePoints = Math.Round(averagePoints, 1, MidpointRounding.AwayFromZero),
+                AverageAssists = Math.Round(averageAssists, 1, MidpointRounding.AwayFromZero),
+                AverageRebounds = Math.Round(averageRebounds, 1, MidpointRounding.AwayFromZero),
+                AverageBlocks = Math.Round(averageBlocks, 1, MidpointRounding.AwayFromZero),
+                AverageSteals = Math.Round(averageSteals, 1, MidpointRounding.AwayFromZero),
                 AverageFreeThrowPercentage = averageFreeThrowPercentage,
                 AverageFieldGoalPercentage = averageFieldGoalPercentage,
                 AverageThreePercentage = averageThreePercentage
             };
 
             return seasonStatModel;
+        }
+
+        public async Task<PlayerCareerStatisticServiceModel> GetCareerStatistics(int playerId)
+        {
+            var seasonIds = await this.db.Seasons.Select(s => s.Id).ToListAsync();
+
+            double totalPoints = 0;
+            double totalAssists = 0;
+            double totalRebounds = 0;
+            double totalSteals = 0;
+            double totalBlocks = 0;
+            double totalFGPercentage = 0;
+            double totalFTPercentage = 0;
+            double totalThreePercentage = 0;
+
+            foreach (var seasonId in seasonIds)
+            {
+                var seasonStats = await this.GetSeasonStatistics(playerId, seasonId);
+
+                totalPoints += seasonStats.AveragePoints;
+                totalAssists += seasonStats.AverageAssists;
+                totalRebounds += seasonStats.AverageRebounds;
+                totalSteals += seasonStats.AverageSteals;
+                totalBlocks += seasonStats.AverageBlocks;
+                totalFGPercentage += seasonStats.AverageFieldGoalPercentage;
+                totalFTPercentage += seasonStats.AverageFreeThrowPercentage;
+                totalThreePercentage += seasonStats.AverageThreePercentage;
+            }
+
+            var model = new PlayerCareerStatisticServiceModel
+            {
+                AveragePoints = totalPoints / seasonIds.Count(),
+                AverageAssists = totalAssists / seasonIds.Count(),
+                AverageRebounds = totalRebounds / seasonIds.Count(),
+                AverageSteals = totalSteals / seasonIds.Count(),
+                AverageBlocks = totalBlocks / seasonIds.Count(),
+                AverageFieldGoalPercentage = totalFGPercentage / seasonIds.Count(),
+                AverageFreeThrowPercentage = totalFTPercentage / seasonIds.Count(),
+                AverageThreePercentage = totalThreePercentage / seasonIds.Count()
+            };
+
+            return model;
+        }
+
+        public async Task<ICollection<PlayerRecentGamesListingServiceModel>> GetRecentGamesAsync(int playerId)
+        {
+            var season = await this.seasonService.GetDetailsByYearAsync(this.GetCurrentSeasonYear());
+            var currentSeasonGames = await this.gameService.GetSeasonGamesAsync(season.Id);
+
+            var modelsList = new List<PlayerRecentGamesListingServiceModel>();
+
+            foreach (var game in currentSeasonGames.OrderByDescending(g => g.Date).ToList().Take(9).ToList())
+            {
+                var gameDetailsModel = await this.gameService.GetGameAsync(game.Id);
+
+                var teamHostName = await this.db.Teams.Where(t => t.Id == gameDetailsModel.TeamHostId).Select(t => t.Name).FirstOrDefaultAsync();
+                var team2Name = await this.db.Teams.Where(t => t.Id == gameDetailsModel.Team2Id).Select(t => t.Name).FirstOrDefaultAsync();
+
+                var points = 0;
+                var assists = 0;
+                var rebounds = 0;
+
+                foreach (var stat in gameDetailsModel.PlayerStats)
+                {
+                    if (stat.PlayerId == playerId)
+                    {
+                        points = (int)stat.Points;
+                        assists = (int)stat.Assists;
+                        rebounds = (int)stat.Rebounds;
+                    }
+                }
+
+                var model = new PlayerRecentGamesListingServiceModel
+                {
+                    TeamHostName = teamHostName,
+                    Team2Name = team2Name,
+                    TeamHostPoints = (int)gameDetailsModel.TeamHostPoints,
+                    Team2Points = (int)gameDetailsModel.Team2Points,
+                    Date = gameDetailsModel.Date.ToString(@"dd/MM/YYYY"),
+                    Points = points,
+                    Assists = assists,
+                    Rebounds = rebounds
+                };
+
+                modelsList.Add(model);
+            }
+
+            return modelsList;
         }
 
         public async Task EditPlayerAsync(PlayerDetailsServiceModel model, int id)
@@ -277,6 +380,22 @@
             player.CloudinaryImageId = model.CloudinaryImageId;
 
             await this.db.SaveChangesAsync();
+        }
+
+        private int GetCurrentSeasonYear()
+        {
+            var currentYear = 0;
+
+            if (DateTime.Now.Month >= 9)
+            {
+                currentYear = DateTime.Now.Year + 1;
+            }
+            else if (DateTime.Now.Month < 9)
+            {
+                currentYear = DateTime.Now.Year;
+            }
+
+            return currentYear;
         }
     }
 }
