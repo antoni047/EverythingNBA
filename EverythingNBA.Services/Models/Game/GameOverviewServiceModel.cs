@@ -16,6 +16,6 @@
         public int? TeamHostPoints { get; set; }
         public int? Team2Points { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
     }
 }
