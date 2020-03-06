@@ -32,7 +32,7 @@ namespace EverythingNBA.Services.Implementations
                 Name = (AwardType)Enum.Parse(typeof(AwardType), name),
                 Year = year,
                 WinnerId = player.Id,
-                SeasonId = season.Id
+                SeasonId = season.Id,
                 WinnerTeamName = winnerTeamName
             };
 
