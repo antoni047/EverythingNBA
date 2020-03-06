@@ -13,9 +13,9 @@
 
         Task<bool> DeleteTeamAsync(int teamId);
 
-        Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(int teamId);
+        Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(int teamId, int year);
 
-        Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(string name);
+        Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(string name, int year);
 
         Task<TeamStandingsListingServiceModel> GetStandingsAsync(int seasonId);
 
@@ -36,5 +36,7 @@
         Task<bool> RemoveSeasonStatistic (int teamId, int seasonStatisticId);
 
         Task EditTeamAsync(GetTeamDetailsServiceModel model, int id);
+
+        Task<ICollection<string>> GetAllTeamsAsync();
     }
 }

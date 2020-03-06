@@ -2,6 +2,8 @@
 {
     using EverythingNBA.Models;
     using EverythingNBA.Services.Models.Player;
+    using Services.Models.SeasonStatistic;
+    using Services.Models.Game;
 
     using System.Collections.Generic;
 
@@ -23,11 +25,11 @@
 
         public string Twitter { get; set; }
 
-        public SeasonStatistic CurrentSeasonStatistic { get; set; }
+        public ICollection<SeasonStatisticOverviewServiceModel> CurrentSeasonStatistic { get; set; }
 
-        public ICollection<Game> CurrentSeasonGames { get; set; }
+        public ICollection<TeamGameOverviewServiceModel> Last9Games { get; set; }
 
-        public ICollection<PlayerOverviewServiceModel> Players { get; set; }
+        public ICollection<TeamPlayerOverviewServiceModel> Players { get; set; }
 
         public ICollection<int> TitlesWon { get; set; }
     }
