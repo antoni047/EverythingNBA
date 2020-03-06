@@ -27,6 +27,10 @@
 
         public string MostReboundsPlayerName { get; set; }
 
+        public string Stage { get; set; }
+
+        public string Conference { get; set; }
+
         public ICollection<GameOverviewServiceModel> Games { get; set; }
     }
 }
