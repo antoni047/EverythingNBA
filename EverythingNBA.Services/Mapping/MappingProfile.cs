@@ -45,7 +45,8 @@
                 .ForMember(mdl => mdl.Position, opt => opt.MapFrom(p => p.Position.ToString()))
                 .ReverseMap();
 
-            this.CreateMap<Game, GameOverviewServiceModel>();
+            this.CreateMap<Game, GameOverviewServiceModel>()
+                .ForMember(mdl => mdl.Date, opt => opt.MapFrom(g => g.Date.ToString(@"dd/MM/yyyy", CultureInfo.InvariantCulture)));
 
             this.CreateMap<Game, GameDetailsServiceModel>();
         }
