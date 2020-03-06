@@ -8,8 +8,8 @@
     using AutoMapper;
 
     using Services;
-    using Services.Models;
-    using Web.Models;
+    using Services.Models.Team;
+    using Web.Models.Teams;
     using Data;
 
     public class TeamsController : Controller
@@ -24,9 +24,59 @@
             this.mapper = mapper;
             this.teamService = teamService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> All()
         {
-            return View();
+            var allTeams = await this.teamService.GetAllTeamsAsync();
+
+            return View(allTeams);
+        }
+
+        public async Task<IActionResult> TeamDetails(int teamId)
+        {
+            var currentYear = this.GetCurrentSeasonYear();
+            var teamDetailsModel = await this.teamService.GetTeamDetailsAsync(teamId, currentYear);
+
+            if (teamDetailsModel == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return this.View(teamDetailsModel);
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(TeamInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            await this.teamService.AddTeamAsync(model.Name, model.Conference, model.Venue, model.Instagram, model.Twitter);
+
+            return RedirectToAction("All");
+        }
+
+        private int GetCurrentSeasonYear()
+        {
+            var currentYear = 0;
+
+            if (DateTime.Now.Month >= 9)
+            {
+                currentYear = DateTime.Now.Year + 1;
+            }
+            else if (DateTime.Now.Month < 9)
+            {
+                currentYear = DateTime.Now.Year;
+            }
+
+            return currentYear;
         }
     }
 }
