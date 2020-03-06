@@ -11,6 +11,7 @@
     using EverythingNBA.Models.Enums;
     using EverythingNBA.Data;
     using EverythingNBA.Services.Models.Player;
+    using System.Globalization;
 
     public class PlayerService : IPlayerService
     {
@@ -341,7 +342,7 @@
                     Team2Name = gameStat.Game.Team2.Name,
                     TeamHostPoints = (int)gameStat.Game.TeamHostPoints,
                     Team2Points = (int)gameStat.Game.Team2Points,
-                    Date = gameStat.Game.Date.ToString(@"dd/MM/yyyy"),
+                    Date = gameStat.Game.Date.ToString(@"dd/MM/yyyy", CultureInfo.InvariantCulture),
                     Points = (int)gameStat.Points,
                     Assists = (int)gameStat.Assists,
                     Rebounds = (int)gameStat.Rebounds
