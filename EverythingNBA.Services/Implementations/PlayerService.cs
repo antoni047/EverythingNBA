@@ -481,6 +481,22 @@
             return model;
         }
 
+        public async Task<ICollection<TeamPlayerOverviewServiceModel>> GetAllPlayersFromTeam(int teamId)
+        {
+            var players = await this.db.Players.Where(p => p.TeamId == teamId).ToListAsync();
+
+            var playerModels = new List<TeamPlayerOverviewServiceModel>();
+
+            foreach (var player in players.OrderByDescending(p => p.IsStarter).ToList())
+            {
+                var model = mapper.Map<TeamPlayerOverviewServiceModel>(player);
+
+                playerModels.Add(model);
+            }
+
+            return playerModels;
+        }
+
         private int GetCurrentSeasonYear()
         {
             var currentYear = 0;
