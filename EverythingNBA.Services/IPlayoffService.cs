@@ -7,10 +7,7 @@
 
     public interface IPlayoffService
     {
-        Task<int> AddPlayoffAsync(int? seasonId, int westernQuarterFinalFirstId, int westernQuarterFinalSecondId, int westernQuarterFinalThirdId, 
-            int westernQuarterFinalFourthId, int westernSemiFinalFirstId, int westernSemiFinalSecondId, int westernFinalId, int easternQuarterFinalFirstId,
-            int easternQuarterFinalSecondId,  int easternQuarterFinalThird, int easternQuarterFinalFourth, int easternSemiFinalFirst, 
-            int easternSemiFinalSecondId, int easternFinalId, int finalId);
+        Task<int> AddPlayoffAsync(int? seasonId);
 
         Task<bool> DeletePlayoffAsync(int playoffId);
 
@@ -18,6 +15,6 @@
 
         Task<GetPlayoffServiceModel> GetDetailsBySeasonAsync(int seasonId);
 
-        Task AddSeriesAsync(int playoffId, int seriesId, string conference, string stage, string seriesNumber);
+        Task AddSeriesAsync(int playoffId, int seriesId);
     }
 }

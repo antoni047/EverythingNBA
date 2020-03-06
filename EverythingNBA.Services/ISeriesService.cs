@@ -7,8 +7,8 @@
 
     public interface ISeriesService
     {
-        Task<int> AddSeriesAsync(int team1Id, int team2Id, int team1GameWon, int team2GamesWon, int? game1Id, int? game2Id, int? game3Id, 
-            int? game4Id, int? game5Id, int? game6Id, int? game7Id);
+        Task<int> AddSeriesAsync(int playoffId, int team1Id, int team2Id, int team1GameWon, int team2GamesWon, int? game1Id, int? game2Id,
+            int? game3Id, int? game4Id, int? game5Id, int? game6Id, int? game7Id, string conference, string stage, int stageNumber);
 
         Task<bool> DeleteSeriesAsync (int seriesId);
 
@@ -18,6 +18,6 @@
 
         Task<string> GetWinnerAsync(int seriesId);
 
-        Task<SeriesOverviewServiceModel> GetSeriesOverview(int seriesId, string stage, string stageNumber, string conference);
+        Task<SeriesOverviewServiceModel> GetSeriesOverview(int seriesId);
     }
 }

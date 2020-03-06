@@ -4,6 +4,8 @@
     {
         public int Id { get; set; }
 
+        public int PlayoffId { get; set; }
+
         public string Team1Name { get; set; }
 
         public string Team2Name { get; set; }
@@ -14,7 +16,7 @@
 
         public string Stage { get; set; }
 
-        public string Number { get; set; }
+        public int StageNumber { get; set; }
 
         public string Conference { get; set; }
     }

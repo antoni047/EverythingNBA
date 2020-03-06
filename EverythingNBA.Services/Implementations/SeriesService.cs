@@ -58,11 +58,12 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<int> AddSeriesAsync(int team1Id, int team2Id, int team1GameWon, int team2GamesWon, int? game1Id, int? game2Id,
-            int? game3Id, int? game4Id, int? game5Id, int? game6Id, int? game7Id)
+        public async Task<int> AddSeriesAsync(int playoffId, int team1Id, int team2Id, int team1GameWon, int team2GamesWon, int? game1Id, int? game2Id,
+            int? game3Id, int? game4Id, int? game5Id, int? game6Id, int? game7Id, string conference, string stage, int stageNumber)
         {
             var seriesObj = new Series
             {
+                PlayoffId = playoffId,
                 Team1Id = team1Id,
                 Team2Id = team2Id,
                 Team1GamesWon = team1GameWon,
@@ -73,7 +74,10 @@
                 Game4Id = game4Id,
                 Game5Id = game5Id,
                 Game6Id = game6Id,
-                Game7Id = game7Id
+                Game7Id = game7Id,
+                Conference = conference,
+                Stage = stage,
+                StageNumber = stageNumber
             };
 
             this.db.Series.Add(seriesObj);
@@ -117,14 +121,11 @@
             return model;
         }
 
-        public async Task<SeriesOverviewServiceModel> GetSeriesOverview(int seriesId, string stage, string stageNumber, string conference)
+        public async Task<SeriesOverviewServiceModel> GetSeriesOverview(int seriesId)
         {
             var series = await this.GetSeriesAsync(seriesId);
 
             var model = mapper.Map<SeriesOverviewServiceModel>(series);
-            model.Stage = stage;
-            model.Number = stageNumber;
-            model.Conference = conference;
 
             return model;
         }

@@ -30,7 +30,7 @@
 
         [Required]
         [Range(1, 4)]
-        public string Number { get; set; }
+        public int Number { get; set; }
 
         [Required]
         [EnumDataType(typeof(ConferenceType))]

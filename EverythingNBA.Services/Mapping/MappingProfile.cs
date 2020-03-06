@@ -28,6 +28,9 @@
             this.CreateMap<Playoff, GetPlayoffServiceModel>();
 
             this.CreateMap<Series, GetSeriesDetailsServiceModel>();
+            this.CreateMap<Series, SeriesOverviewServiceModel>()
+                .ForMember(mdl => mdl.Team1Name, opt => opt.Ignore())
+                .ForMember(mdl => mdl.Team2Name, opt => opt.Ignore());
             this.CreateMap<TopStatsServiceModel, GetSeriesDetailsServiceModel>();
             this.CreateMap<GetSeriesDetailsServiceModel, SeriesOverviewServiceModel>();
 

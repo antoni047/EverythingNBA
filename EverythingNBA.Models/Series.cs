@@ -6,7 +6,19 @@
     {
         public int Id { get; set; }
 
-        
+        public int PlayoffId { get; set; }
+        public Playoff Playoff { get; set; }
+
+        [Required]
+        public string Conference { get; set; }
+
+        [Required]
+        public string Stage { get; set; }
+
+        [Required]
+        public int StageNumber { get; set; }
+
+
         public int? Team1Id { get; set; }
         public virtual Team Team1 { get; set; }
 

@@ -11,7 +11,6 @@
     using Services.Models.Playoff;
     using Web.Models.Playoff;
     using Data;
-    using EverythingNBA.Web.Models.Playoffs;
 
     public class PlayoffsController : Controller
     {
@@ -45,20 +44,18 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddPlayoffInputModel inputModel)
+        public async Task<IActionResult> Add(int seasonId)
         {
-            if (!ModelState.IsValid)
+            var season = await this.seasonService.GetDetailsAsync(seasonId);
+
+            if (season == null)
             {
-                return this.View(inputModel);
+                return RedirectToAction("/Seasons/All");
             }
 
-            var playoffId = await this.playoffService.AddPlayoffAsync(inputModel.SeasonId, inputModel.WesternQuarterFinalFirstId, 
-                inputModel.WesternQuarterFinalSecondId, inputModel.WesternQuarterFinalThirdId, inputModel.WesternQuarterFinalFourthId, 
-                inputModel.WesternSemiFinalFirstId, inputModel.WesternSemiFinalSecondId, inputModel.WesternFinalId, inputModel.EasternQuarterFinalFirstId,
-                inputModel.EasternQuarterFinalSecondId, inputModel.EasternQuarterFinalThirdId, inputModel.EasternQuarterFinalFourthId, 
-                inputModel.EasternSemiFinalFirstId,inputModel.EasternSemiFinalSecondId, inputModel.EasternFinalId, inputModel.FinalId);
+            var playoffId = await this.playoffService.AddPlayoffAsync(seasonId);
 
-            await this.seasonService.AddPlayoffAsync(inputModel.SeasonId, playoffId);
+            await this.seasonService.AddPlayoffAsync(seasonId, playoffId);
 
             return RedirectToAction($"PlayoffBracket?{playoffId}");
         }
@@ -72,13 +69,20 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int playoffId, AddPlayoffInputModel inputModel)
+        public async Task<IActionResult> Delete(int playoffId, int seasonId)
         {
             var playoff = await this.playoffService.GetDetailsAsync(playoffId);
 
             if (playoff == null)
             {
                 return this.View();
+            }
+
+            var playoffRemovedFromSeason = await this.seasonService.RemovePlayoffAsync(seasonId, playoffId);
+
+            if (!playoffRemovedFromSeason)
+            {
+                return this.View(playoff);
             }
 
             await this.playoffService.DeletePlayoffAsync(playoffId);
@@ -100,7 +104,7 @@
                 return this.View(inputModel);
             }
 
-            await this.playoffService.AddSeriesAsync(playoffId, inputModel.Id, inputModel.Conference, inputModel.Stage, inputModel.Number);
+            await this.playoffService.AddSeriesAsync(playoffId, inputModel.Id);
 
             return RedirectToAction($"PlayoffBracket?{playoffId}");
         }
