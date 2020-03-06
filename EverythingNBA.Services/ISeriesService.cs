@@ -18,6 +18,6 @@
 
         Task<string> GetWinnerAsync(int seriesId);
 
-        Task<SeriesOverviewServiceModel> GetServiceOverview(int seriesId, string stage, string stageNumber, string conference);
+        Task<SeriesOverviewServiceModel> GetSeriesOverview(int seriesId, string stage, string stageNumber, string conference);
     }
 }

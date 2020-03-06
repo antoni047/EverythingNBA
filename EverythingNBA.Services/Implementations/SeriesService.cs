@@ -117,7 +117,7 @@
             return model;
         }
 
-        public async Task<SeriesOverviewServiceModel> GetServiceOverview(int seriesId, string stage, string stageNumber, string conference)
+        public async Task<SeriesOverviewServiceModel> GetSeriesOverview(int seriesId, string stage, string stageNumber, string conference)
         {
             var series = await this.GetSeriesAsync(seriesId);
 
