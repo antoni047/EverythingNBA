@@ -4,7 +4,7 @@
 
     using static EverythingNBA.Models.Utilities.DataConstants;
     using EverythingNBA.Models.Enums;
-    using Web.Utilities.Enums
+    using Web.Utilities.Enums;
 
     public class AddSeriesInputModel
     {
