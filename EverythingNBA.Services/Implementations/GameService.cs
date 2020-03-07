@@ -11,16 +11,19 @@
     using EverythingNBA.Models;
     using EverythingNBA.Services.Models.Game;
     using EverythingNBA.Services.Models.GameStatistic;
+    using EverythingNBA.Services.Models.GameStatisticModels;
 
     public class GameService : IGameService
     {
         private readonly EverythingNBADbContext db;
         private readonly IMapper mapper;
+        private readonly IGameStatisticService gameStatisticService;
 
-        public GameService(EverythingNBADbContext db, IMapper mapper)
+        public GameService(EverythingNBADbContext db, IMapper mapper, IGameStatisticService gameStatisticService)
         {
             this.db = db;
             this.mapper = mapper;
+            this.gameStatisticService = gameStatisticService;
         }
 
         public async Task<int> AddGameAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, string date, bool isFinished)
@@ -70,6 +73,7 @@
             foreach (var game in games.OrderByDescending(g => g.Date))
             {
                 var model = mapper.Map<GameOverviewServiceModel>(game);
+                model.Venue = game.TeamHost.Venue;
 
                 models.Add(model);
             }
@@ -134,6 +138,9 @@
         {
             var game = await this.db.Games
                 .Include(g => g.PlayerStats)
+                    .ThenInclude(ps => ps.Player)
+                .Include(g => g.TeamHost)
+                .Include(g => g.Team2)
                 .Where(g => g.Id == gameId)
                 .FirstOrDefaultAsync();
 
@@ -143,6 +150,8 @@
             }
 
             var model = mapper.Map<GameDetailsServiceModel>(game);
+
+            model.Venue = game.TeamHost.Venue;
 
             return model;
         }

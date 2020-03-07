@@ -17,5 +17,7 @@
         public int? Team2Points { get; set; }
 
         public string Date { get; set; }
+
+        public string Venue { get; set; }
     }
 }

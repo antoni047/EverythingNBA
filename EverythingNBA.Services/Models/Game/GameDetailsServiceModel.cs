@@ -1,6 +1,7 @@
 ﻿namespace EverythingNBA.Services.Models.Game
 {
     using EverythingNBA.Models;
+    using EverythingNBA.Services.Models.GameStatisticModels;
 
     using System;
     using System.Collections.Generic;
@@ -18,8 +19,8 @@
         public int? TeamHostPoints { get; set; }
         public int? Team2Points { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
-        public ICollection<GameStatistic> PlayerStats { get; set; }
+        public string Venue { get; set; }
     }
 }

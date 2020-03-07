@@ -66,7 +66,8 @@
                 .ForMember(mdl => mdl.TeamHostName, opt => opt.MapFrom(g => g.TeamHost.Name))
                 .ForMember(mdl => mdl.IsHomeGame, opt => opt.Ignore());
 
-            this.CreateMap<Game, GameDetailsServiceModel>();
+            this.CreateMap<Game, GameDetailsServiceModel>()
+                .ForMember(mdl => mdl.PlayerStats, opt => opt.Ignore());
 
             this.CreateMap<GameStatistic, PlayerGameStatisticServiceModel>()
                 .ForMember(mdl => mdl.PlayerName, opt => opt.MapFrom(gs => gs.Player.FirstName + " " + gs.Player.LastName));
