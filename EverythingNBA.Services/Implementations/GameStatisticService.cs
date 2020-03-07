@@ -23,7 +23,7 @@ namespace EverythingNBA.Services.Implementations
             this.mapper = mapper;
         }
 
-        public async Task<int> AddAsync(int gameId, int playerId, int minutesPlayed, int points, int assists, int rebounds, int blocks, int steals, 
+        public async Task<int> AddAsync(int gameId, int playerId, int minutesPlayed, int points, int assists, int rebounds, int blocks, int steals,
             int freeThrowAttemps, int freeThrowsMade, int threeAttemps, int threeMade, int fieldGoalAttempts, int fieldGoalsMade)
         {
             var statObj = new GameStatistic
@@ -93,6 +93,25 @@ namespace EverythingNBA.Services.Implementations
                 .Where(gs => gs.Game.Id == gameId && gs.Player.FirstName + " " + gs.Player.LastName == playerName)
                 .FirstOrDefaultAsync();
 
+            var player = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == playerName).FirstOrDefaultAsync();
+            var game = await this.db.Games.FindAsync(gameId);
+
+            if (game == null || player == null)
+            {
+                return null;
+            }
+
+            if (gameStatistic == null)
+            {
+                var gameStatisticId = await this.AddAsync(gameId, player.Id, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+                gameStatistic = await this.db.GameStatistics
+                .Include(gs => gs.Game)
+                .Include(gs => gs.Player)
+                .Where(gs => gs.Id == gameStatisticId)
+                .FirstOrDefaultAsync();
+            }
+
             var model = mapper.Map<PlayerGameStatisticServiceModel>(gameStatistic);
 
             model.FieldGoalPercentage = await this.GetFieldGoalPercentage(gameStatistic.Id);
@@ -107,7 +126,7 @@ namespace EverythingNBA.Services.Implementations
         {
             var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
 
-            var result = ((double)gameStatistic.FieldGoalsMade / (double)gameStatistic.FieldGoalAttempts)*100;
+            var result = ((double)gameStatistic.FieldGoalsMade / (double)gameStatistic.FieldGoalAttempts) * 100;
 
             return (int)result;
         }
