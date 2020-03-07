@@ -265,6 +265,7 @@
 
             var game = await this.db.Games.FindAsync(gameId);
             bool teamIsHost;
+            bool isGameWon = false;
 
             if (game.TeamHostId == teamId)
             {
@@ -286,14 +287,24 @@
                 if (game.TeamHostPoints > game.Team2Points && teamIsHost)
                 {
                     team.GamesWon.Add(game);
+                    isGameWon = true;
                 }
                 else
                 {
                     if (teamIsHost == false)
                     {
                         team.GamesWon.Add(game);
+                        isGameWon = true;
                     }
                 }
+            }
+
+            var gameSeasonYear = this.GetSeasonYear(game.Date);
+            var currentYear = this.GetCurrentSeasonYear();
+
+            if (gameSeasonYear == currentYear && team.SeasonsStatistics.Count < 82)
+            {
+                await this.statisticService.AddGameAsync(gameId, isGameWon);
             }
 
             await this.db.SaveChangesAsync();
@@ -500,6 +511,38 @@
             }
 
             return lastNineGames.OrderByDescending(g => g.Date).ToList();
+        }
+
+        private int GetSeasonYear(DateTime date)
+        {
+            var seasonYear = 0;
+
+            if (date.Month >= 9)
+            {
+                seasonYear = date.Year + 1;
+            }
+            else if (date.Month < 9)
+            {
+                seasonYear = date.Year;
+            }
+
+            return seasonYear;
+        }
+
+        private int GetCurrentSeasonYear()
+        {
+            var currentYear = 0;
+
+            if (DateTime.Now.Month >= 9)
+            {
+                currentYear = DateTime.Now.Year + 1;
+            }
+            else if (DateTime.Now.Month < 9)
+            {
+                currentYear = DateTime.Now.Year;
+            }
+
+            return currentYear;
         }
     }
 }
