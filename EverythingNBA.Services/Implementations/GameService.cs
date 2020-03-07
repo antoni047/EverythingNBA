@@ -57,10 +57,12 @@
             return true;
         }
 
-        public async Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsAsync(int team1Id, int team2Id)
+        public async Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsAsync(string team1Name, string team2Name)
         {
             var games = await this.db.Games
-                .Where(g => (g.TeamHostId == team1Id || g.Team2Id == team1Id) && (g.TeamHostId == team2Id || g.Team2Id == team2Id))
+                .Include(g => g.TeamHost)
+                .Include(g => g.Team2)
+                .Where(g => (g.TeamHost.Name == team1Name || g.Team2.Name == team1Name) && (g.TeamHost.Name == team2Name || g.Team2.Name == team2Name))
                 .ToListAsync();
 
             var models = new List<GameOverviewServiceModel>();
@@ -75,10 +77,12 @@
             return models;
         }
 
-        public async Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(int team1Id, int team2Id, int seasonId)
+        public async Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(string team1Name, string team2Name, int seasonId)
         {
             var games = await this.db.Games
-                .Where(g => (g.TeamHostId == team1Id || g.Team2Id == team1Id) && (g.TeamHostId == team2Id || g.Team2Id == team2Id) && g.SeasonId == seasonId)
+                .Include(g => g.TeamHost)
+                .Include(g => g.Team2)
+                .Where(g => (g.TeamHost.Name == team1Name || g.Team2.Name == team1Name) && (g.TeamHost.Name == team2Name || g.Team2.Name == team2Name) && g.SeasonId == seasonId)
                 .ToListAsync();
 
             var models = new List<GameOverviewServiceModel>();

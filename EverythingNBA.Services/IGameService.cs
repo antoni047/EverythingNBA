@@ -29,9 +29,9 @@
 
         Task<PlayerGameStatisticServiceModel> GetTopReboundsAsync(int gameId);
 
-        Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsAsync(int team1Id, int team2Id);
+        Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsAsync(string team1Name, string team2Name);
 
-        Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(int team1Id, int team2Id, int seasonId);
+        Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(string team1Name, string team2Name, int seasonId);
 
         Task<GameOverviewServiceModel> GetGameOverview(int gameId);
 
