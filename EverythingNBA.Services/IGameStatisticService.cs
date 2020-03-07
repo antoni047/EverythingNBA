@@ -21,6 +21,6 @@
 
         Task<int> GetFreeThrowPercentage(int gameStatisticId);
 
-        Task EditGameStatisticAsync(GameStatistic editedStats, int statId);
+        Task EditGameStatisticAsync(EditGameStatisticServiceModel editedStats, int statId);
     }
 }
