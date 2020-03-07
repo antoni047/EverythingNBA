@@ -11,6 +11,8 @@
 
         public int? Team2Id { get; set; }
 
+        public int SeasonYear { get; set; }
+
         public bool IsFinished { get; set; }
 
         public int? TeamHostPoints { get; set; }

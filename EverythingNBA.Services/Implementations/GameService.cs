@@ -12,6 +12,7 @@
     using EverythingNBA.Services.Models.Game;
     using EverythingNBA.Services.Models.GameStatistic;
     using EverythingNBA.Services.Models.GameStatisticModels;
+    using System.Globalization;
 
     public class GameService : IGameService
     {
@@ -73,6 +74,7 @@
             foreach (var game in games.OrderByDescending(g => g.Date))
             {
                 var model = mapper.Map<GameOverviewServiceModel>(game);
+                model.SeasonYear = this.GetCurrentSeasonYear(DateTime.ParseExact(model.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture));
                 model.Venue = game.TeamHost.Venue;
 
                 models.Add(model);
@@ -276,6 +278,21 @@
             game.Date = model.Date;
 
             await this.db.SaveChangesAsync();
+        }
+        private int GetCurrentSeasonYear(DateTime date)
+        {
+            var seasonYear = 0;
+
+            if (date.Month >= 9)
+            {
+                seasonYear = date.Year + 1;
+            }
+            else if (date.Month < 9)
+            {
+                seasonYear = date.Year;
+            }
+
+            return seasonYear;
         }
     }
 }
