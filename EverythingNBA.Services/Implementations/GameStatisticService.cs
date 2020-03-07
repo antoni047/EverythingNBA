@@ -65,7 +65,7 @@ namespace EverythingNBA.Services.Implementations
             return true;
         }
 
-        public async Task EditGameStatisticAsync(GameStatistic editedStats, int statId)
+        public async Task EditGameStatisticAsync(EditGameStatisticServiceModel editedStats, int statId)
         {
             var stats = await this.db.GameStatistics.FindAsync(statId);
 
