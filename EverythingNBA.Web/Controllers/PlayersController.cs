@@ -83,12 +83,12 @@
         [HttpPost]
         public async Task<IActionResult> Edit(PlayerInputModel inputModel, int playerId)
         {
+            var model = mapper.Map<PlayerDetailsServiceModel>(inputModel);
+
             if (!ModelState.IsValid)
             {
-                return this.View(inputModel);
+                return this.View(model);
             }
-
-            var model = mapper.Map<PlayerDetailsServiceModel>(inputModel);
 
             await this.playerService.EditPlayerAsync(model, playerId);
 
