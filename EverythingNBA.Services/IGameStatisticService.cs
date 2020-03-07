@@ -1,6 +1,8 @@
 ﻿namespace EverythingNBA.Services
 {
     using EverythingNBA.Models;
+    using Services.Models.GameStatisticModels;
+
     using System;
     using System.Threading.Tasks;
 
@@ -10,6 +12,8 @@
             int freeThrowAttemps, int freeThrowsMade, int threeAttemps, int threeMade, int fieldGoalAttempts, int fieldGoalsMade);
 
         Task<bool> DeleteAsync(int gameStatisticId);
+
+        Task<PlayerGameStatisticServiceModel> GetGameStatisticsAsync(int gameId, string playerName);
 
         Task<int> GetThreePointsPercentage(int gameStatisticId);
 

@@ -3,10 +3,14 @@ namespace EverythingNBA.Services.Implementations
 {
     using EverythingNBA.Data;
     using EverythingNBA.Models;
+    using Services.Models.GameStatisticModels;
 
     using System;
+    using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
+    using System.Collections.Generic;
+    using Microsoft.EntityFrameworkCore;
 
     public class GameStatisticService : IGameStatisticService
     {
@@ -79,6 +83,24 @@ namespace EverythingNBA.Services.Implementations
             stats.ThreeMade = editedStats.ThreeMade;
 
             await this.db.SaveChangesAsync();
+        }
+
+        public async Task<PlayerGameStatisticServiceModel> GetGameStatisticsAsync(int gameId, string playerName)
+        {
+            var gameStatistic = await this.db.GameStatistics
+                .Include(gs => gs.Game)
+                .Include(gs => gs.Player)
+                .Where(gs => gs.Game.Id == gameId && gs.Player.FirstName + " " + gs.Player.LastName == playerName)
+                .FirstOrDefaultAsync();
+
+            var model = mapper.Map<PlayerGameStatisticServiceModel>(gameStatistic);
+
+            model.FieldGoalPercentage = await this.GetFieldGoalPercentage(gameStatistic.Id);
+            model.FreeThrowPercentage = await this.GetFreeThrowPercentage(gameStatistic.Id);
+            model.ThreePercentage = await this.GetThreePointsPercentage(gameStatistic.Id);
+            model.IsPlayerStarter = gameStatistic.Player.IsStarter;
+
+            return model;
         }
 
         public async Task<int> GetFieldGoalPercentage(int gameStatisticId)

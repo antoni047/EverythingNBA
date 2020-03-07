@@ -17,6 +17,7 @@
     using EverythingNBA.Models.Enums;
     using EverythingNBA.Services.Models.Series;
     using System.Globalization;
+    using Services.Models.GameStatisticModels;
 
     public class MappingProfile : Profile
     {
@@ -66,6 +67,9 @@
                 .ForMember(mdl => mdl.IsHomeGame, opt => opt.Ignore());
 
             this.CreateMap<Game, GameDetailsServiceModel>();
+
+            this.CreateMap<GameStatistic, PlayerGameStatisticServiceModel>()
+                .ForMember(mdl => mdl.PlayerName, opt => opt.MapFrom(gs => gs.Player.FirstName + " " + gs.Player.LastName));
         }
     }
 }
