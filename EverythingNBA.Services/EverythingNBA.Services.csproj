@@ -15,8 +15,4 @@
     <ProjectReference Include="..\EverythingNBA.Models\EverythingNBA.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\GameStatisticModels\" />
-  </ItemGroup>
-
 </Project>
