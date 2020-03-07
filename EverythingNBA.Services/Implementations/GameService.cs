@@ -147,7 +147,7 @@
             return model;
         }
 
-        public async Task<PlayerGameStatisticServiceModel> GetTopAssistsAsync(int gameId)
+        public async Task<PlayerTopStatisticServiceModel> GetTopAssistsAsync(int gameId)
         {
             var game = await this.db.Games
                 .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
@@ -161,7 +161,7 @@
             }).OrderByDescending(ps => ps.Assists)
               .FirstOrDefault();
 
-            var model = new PlayerGameStatisticServiceModel
+            var model = new PlayerTopStatisticServiceModel
             {
                 PlayerName = playerStat.Name,
                 Value = playerStat.Assists
@@ -170,7 +170,7 @@
             return model;
         }
     
-        public async Task<PlayerGameStatisticServiceModel> GetTopPointsAsync(int gameId)
+        public async Task<PlayerTopStatisticServiceModel> GetTopPointsAsync(int gameId)
         {
             var game = await this.db.Games
                 .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
@@ -184,7 +184,7 @@
             }).OrderByDescending(ps => ps.Points)
               .FirstOrDefault();
 
-            var model = new PlayerGameStatisticServiceModel
+            var model = new PlayerTopStatisticServiceModel
             {
                 PlayerName = playerStat.Name,
                 Value = playerStat.Points
@@ -193,7 +193,7 @@
             return model;
         }
 
-        public async Task<PlayerGameStatisticServiceModel> GetTopReboundsAsync(int gameId)
+        public async Task<PlayerTopStatisticServiceModel> GetTopReboundsAsync(int gameId)
         {
             var game = await this.db.Games
                  .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
@@ -207,7 +207,7 @@
             }).OrderByDescending(ps => ps.Rebounds)
               .FirstOrDefault();
 
-            var model = new PlayerGameStatisticServiceModel
+            var model = new PlayerTopStatisticServiceModel
             {
                 PlayerName = playerStat.Name,
                 Value = playerStat.Rebounds
