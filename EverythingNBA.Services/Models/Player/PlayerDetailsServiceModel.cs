@@ -7,6 +7,7 @@ namespace EverythingNBA.Services.Models.Player
 {
     public class PlayerDetailsServiceModel
     {
+        public int Id { get; set; }
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
