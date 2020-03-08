@@ -1,6 +1,8 @@
 ﻿namespace EverythingNBA.Web.Mapping
 {
     using AutoMapper;
+    using System.Globalization;
+
     using Models.Seasons;
     using Models.AllStarTeams;
     using Models.Players;
@@ -10,6 +12,7 @@
     using Services.Models.Player;
     using Services.Models.Game;
     using Services.Models.GameStatisticModels;
+    using EverythingNBA.Models;
 
     public class MappingProfile : Profile
     {
