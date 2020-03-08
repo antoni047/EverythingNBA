@@ -52,6 +52,8 @@ namespace EverythingNBA.Services.Implementations
                     Player = player
                 };
 
+                await this.db.AllStarTeamsPlayers.AddAsync(obj);
+
                 allStarTeamsPlayersList.Add(obj);
             }
 
@@ -93,6 +95,7 @@ namespace EverythingNBA.Services.Implementations
             player.AllStarTeams.Remove(obj);
 
             this.db.AllStarTeams.Remove(teamToDelete);
+            this.db.AllStarTeamsPlayers.Remove(obj);
             await this.db.SaveChangesAsync();
 
             return true;
