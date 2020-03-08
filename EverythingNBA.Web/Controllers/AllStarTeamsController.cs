@@ -70,7 +70,7 @@
 
             var season = await this.seasonService.GetDetailsByYearAsync(model.Year);
 
-            return RedirectToAction($"SeasonAllStarTeams?{season.Id}");
+            return RedirectToAction($"SeasonAllStarTeams", season.Id);
         }
 
         [HttpGet]
@@ -89,7 +89,7 @@
 
             await this.astService.DeleteAllStarTeamAsync(allStarTeamId);
 
-            return RedirectToAction($"SeasonAllStarTeams?{season.Id}");
+            return RedirectToAction($"SeasonAllStarTeams", season.Id);
         }
     }
 }

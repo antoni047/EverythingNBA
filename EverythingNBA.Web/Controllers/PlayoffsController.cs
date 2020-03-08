@@ -50,14 +50,14 @@
 
             if (season == null)
             {
-                return RedirectToAction("/Seasons/All");
+                return RedirectToAction("All", "Seasons");
             }
 
             var playoffId = await this.playoffService.AddPlayoffAsync(seasonId);
 
             await this.seasonService.AddPlayoffAsync(seasonId, playoffId);
 
-            return RedirectToAction($"PlayoffBracket?{playoffId}");
+            return RedirectToAction($"PlayoffBracket", playoffId);
         }
 
         [HttpGet]
@@ -87,7 +87,7 @@
 
             await this.playoffService.DeletePlayoffAsync(playoffId);
 
-            return RedirectToAction($"Home/Index/");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -106,7 +106,7 @@
 
             await this.playoffService.AddSeriesAsync(playoffId, inputModel.Id);
 
-            return RedirectToAction($"PlayoffBracket?{playoffId}");
+            return RedirectToAction("PlayoffBracket", playoffId);
         }
     }
 }
