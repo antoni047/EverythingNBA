@@ -91,5 +91,21 @@
 
             return RedirectToAction($"SeasonAllStarTeams", season.Id);
         }
+
+        private int GetCurrentSeasonYear()
+        {
+            var currentYear = 0;
+
+            if (DateTime.Now.Month >= 9)
+            {
+                currentYear = DateTime.Now.Year + 1;
+            }
+            else if (DateTime.Now.Month < 9)
+            {
+                currentYear = DateTime.Now.Year;
+            }
+
+            return currentYear;
+        }
     }
 }
