@@ -49,7 +49,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             return this.View();
         }
@@ -57,12 +57,14 @@
         [HttpPost]
         public async Task<IActionResult> Add(PlayerInputModel model)
         {
+            var year = this.GetCurrentSeasonYear();
+
             if (!ModelState.IsValid)
             {
                 return this.View(model);
             }
 
-            var team = await this.teamService.GetTeamDetailsAsync(model.Team);
+            var team = await this.teamService.GetTeamDetailsAsync(model.Team, year);
 
             await this.playerService.AddPlayerAsync(model.FirstName, model.LastName, team.Id, model.RookieYear, model.Age, model.Height, model.Weight,
                 model.Position, model.IsStarter, model.ShirtNumber, model.InstagramLink, model.TwitterLink);
@@ -109,6 +111,22 @@
             await this.playerService.DeletePlayerAsync(playerId);
 
             return RedirectToAction("All");
+        }
+
+        private int GetCurrentSeasonYear()
+        {
+            var currentYear = 0;
+
+            if (DateTime.Now.Month >= 9)
+            {
+                currentYear = DateTime.Now.Year + 1;
+            }
+            else if (DateTime.Now.Month < 9)
+            {
+                currentYear = DateTime.Now.Year;
+            }
+
+            return currentYear;
         }
     }
 }
