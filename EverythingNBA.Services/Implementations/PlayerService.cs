@@ -497,6 +497,49 @@
             return playerModels;
         }
 
+        public async Task<bool> AddAllStarTeam(string playerName, int allStarTeamId)
+        {
+            var obj = await this.db.AllStarTeamsPlayers
+                .Include(x => x.Player)
+                    .ThenInclude(p => p.AllStarTeams)
+                .Include(x => x.AllStarTeam)
+                    .ThenInclude(ast => ast.Players)
+                .Where(x => x.AllStarTeamId == allStarTeamId && x.Player.FirstName + " " + x.Player.LastName == playerName)
+                .FirstOrDefaultAsync();
+
+            if (obj == null || obj.Player == null)
+            {
+                return false;
+            }
+
+            obj.Player.AllStarTeams.Add(obj);
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> RemoveAllStarTeam(string playerName, int allStarTeamId)
+        {
+           var obj = await this.db.AllStarTeamsPlayers
+                .Include(x => x.Player)
+                    .ThenInclude(p => p.AllStarTeams)
+                .Include(x => x.AllStarTeam)
+                    .ThenInclude(ast => ast.Players)
+                .Where(x => x.AllStarTeamId == allStarTeamId && x.Player.FirstName + " " + x.Player.LastName == playerName)
+                .FirstOrDefaultAsync();
+
+            if (obj == null || obj.Player == null)
+            {
+                return false;
+            }
+
+            obj.Player.AllStarTeams.Remove(obj);
+            obj.Player = null;
+
+            await this.db.SaveChangesAsync();
+            return true;
+        }
+
         private int GetCurrentSeasonYear()
         {
             var currentYear = 0;

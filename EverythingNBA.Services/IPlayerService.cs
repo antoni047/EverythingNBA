@@ -40,5 +40,9 @@ namespace EverythingNBA.Services
         Task<PlayerAccomplishmentsListingServiceModel> GetPlayerAccomplishentsAsync(int playerId);
 
         Task<ICollection<TeamPlayerOverviewServiceModel>> GetAllPlayersFromTeam(int teamId);
+
+        Task<bool> RemoveAllStarTeam(string playerName, int allStarTeamId);
+
+        Task<bool> AddAllStarTeam(string playerName, int allStarTeamId);
     }
 }
