@@ -15,6 +15,7 @@
     using AutoMapper;
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
+    using System.Globalization;
 
     public class TeamService : ITeamService
     {
@@ -509,7 +510,7 @@
                 lastNineGames.Add(model);
             }
 
-            return lastNineGames.OrderByDescending(g => g.Date).ToList();
+            return lastNineGames.OrderByDescending(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture)).ToList();
         }
 
         private int GetSeasonYear(DateTime date)
