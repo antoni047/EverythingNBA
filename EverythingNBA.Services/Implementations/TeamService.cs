@@ -43,7 +43,6 @@
             var team = await this.db.Teams.FindAsync(teamId);
 
             team.Players.Add(player);
-            player.TeamId = teamId;
             player.Team = team;
 
             await this.db.SaveChangesAsync();
@@ -60,7 +59,6 @@
             }
 
             team.Players.Remove(player);
-            player.TeamId = null;
             player.Team = null;
 
             await this.db.SaveChangesAsync();
@@ -345,7 +343,7 @@
             }
         }
 
-        public async Task<bool> AddTitleAsync(int teamId, int seasonId)
+        public async Task<bool> AddTitleAsync(int teamId, int year)
         {
             var team = await this.db.Teams
                 .Include(t => t.TitlesWon)
@@ -354,7 +352,7 @@
 
             var season = await this.db.Seasons
                 .Include(s => s.TitleWinner)
-                .Where(s => s.Id == seasonId)
+                .Where(s => s.Year == year)
                 .FirstOrDefaultAsync();
 
             if (team == null || season == null)
@@ -383,6 +381,7 @@
                 return false;
             }
 
+            season.TitleWinner = null;
             team.TitlesWon.Remove(season);
 
             await this.db.SaveChangesAsync();
