@@ -51,6 +51,18 @@
             }
         }
 
+        public async Task RemoveSeriesAsync (int playoffId, int seriesId)
+        {
+            var playoff = await this.db.Playoffs.FindAsync(playoffId);
+            var series = await this.db.Series.FindAsync(seriesId);
+
+            if (series != null)
+            {
+                playoff.Series.Remove(series);
+                await this.db.SaveChangesAsync();
+            }
+        }
+
         public async Task<bool> DeletePlayoffAsync(int playoffId)
         {
             var playoffToDelete = await this.db.Playoffs.FindAsync(playoffId);

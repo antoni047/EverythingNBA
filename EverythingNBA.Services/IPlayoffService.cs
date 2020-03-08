@@ -16,5 +16,7 @@
         Task<GetPlayoffServiceModel> GetDetailsBySeasonAsync(int seasonId);
 
         Task AddSeriesAsync(int playoffId, int seriesId);
+
+        Task RemoveSeriesAsync(int playoffId, int seriesId);
     }
 }
