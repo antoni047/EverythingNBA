@@ -33,6 +33,6 @@
 
         public string Conference { get; set; }
 
-        public ICollection<GameOverviewServiceModel> Games { get; set; }
+        public ICollection<GameDetailsServiceModel> Games { get; set; }
     }
 }

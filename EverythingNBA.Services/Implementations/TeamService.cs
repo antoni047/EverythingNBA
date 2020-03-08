@@ -6,7 +6,7 @@
     using EverythingNBA.Services.Models;
     using EverythingNBA.Services.Models.Team;
     using EverythingNBA.Services.Models.SeasonStatistic;
-    using EverythingNBA.Services.Models.Player;
+    using EverythingNBA.Services.Models.Game;
 
     using Microsoft.AspNetCore.Http;
     using System;
@@ -15,7 +15,6 @@
     using AutoMapper;
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
-    using EverythingNBA.Services.Models.Game;
 
     public class TeamService : ITeamService
     {

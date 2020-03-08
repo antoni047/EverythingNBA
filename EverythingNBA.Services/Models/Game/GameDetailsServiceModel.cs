@@ -10,9 +10,9 @@
     {
         public int Id { get; set; }
 
-        public int? TeamHostId { get; set; }
+        public string TeamHostShortName { get; set; }
 
-        public int? Team2Id { get; set; }
+        public string Team2ShortName { get; set; }
 
         public bool IsFinished { get; set; }
 
@@ -22,5 +22,7 @@
         public string Date { get; set; }
 
         public string Venue { get; set; }
+
+        public int SeasonYear { get; set; }
     }
 }

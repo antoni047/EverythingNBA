@@ -58,16 +58,17 @@
                 .ForMember(mdl => mdl.Position, opt => opt.MapFrom(p => p.Position.ToString()))
                 .ReverseMap();
 
-            this.CreateMap<Game, GameOverviewServiceModel>()
-                .ForMember(mdl => mdl.Date, opt => opt.MapFrom(g => g.Date.ToString(@"dd/MM/yyyy", CultureInfo.InvariantCulture)));
-
             this.CreateMap<Game, TeamGameOverviewServiceModel>()
                 .ForMember(mdl => mdl.Date, opt => opt.MapFrom(g => g.Date.ToString(@"dd/MM/yyyy", CultureInfo.InvariantCulture)))
                 .ForMember(mdl => mdl.TeamHostName, opt => opt.MapFrom(g => g.TeamHost.Name))
                 .ForMember(mdl => mdl.IsHomeGame, opt => opt.Ignore());
 
             this.CreateMap<Game, GameDetailsServiceModel>()
-                .ForMember(mdl => mdl.PlayerStats, opt => opt.Ignore());
+                .ForMember(mdl => mdl.Date, opt => opt.MapFrom(g => g.Date.ToString(@"dd/MM/yyyy", CultureInfo.InvariantCulture)))
+                .ForMember(mdl => mdl.TeamHostShortName, opt => opt.MapFrom(g => g.TeamHost.AbbreviatedName))
+                .ForMember(mdl => mdl.Team2ShortName, opt => opt.MapFrom(g => g.Team2.AbbreviatedName))
+                .ForMember(mdl => mdl.Venue, opt => opt.MapFrom(g => g.TeamHost.Venue));
+
 
             this.CreateMap<GameStatistic, PlayerGameStatisticServiceModel>()
                 .ForMember(mdl => mdl.PlayerName, opt => opt.MapFrom(gs => gs.Player.FirstName + " " + gs.Player.LastName));

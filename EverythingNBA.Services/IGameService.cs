@@ -17,7 +17,7 @@
 
         Task<GameDetailsServiceModel> GetGameAsync(int gameId);
 
-        Task<ICollection<GameOverviewServiceModel>> GetSeasonGamesAsync(int seasonId);
+        Task<ICollection<GameDetailsServiceModel>> GetSeasonGamesAsync(int seasonId);
 
         Task<bool> SetScoreAsync(int gameId, int teamHostScore, int team2Score);
 
@@ -29,11 +29,11 @@
 
         Task<PlayerTopStatisticServiceModel> GetTopReboundsAsync(int gameId);
 
-        Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsAsync(string team1Name, string team2Name);
+        Task<ICollection<GameDetailsServiceModel>> GetAllGamesBetweenTeamsAsync(string team1Name, string team2Name);
 
-        Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(string team1Name, string team2Name, int seasonId);
+        Task<ICollection<GameDetailsServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(string team1Name, string team2Name, int seasonId);
 
-        Task<GameOverviewServiceModel> GetGameOverview(int gameId);
+        Task<GameDetailsServiceModel> GetGameOverview(int gameId);
 
         Task EditGameAsync(GameDetailsServiceModel model, int gameId);
     }

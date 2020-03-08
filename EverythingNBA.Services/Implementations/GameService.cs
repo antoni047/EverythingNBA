@@ -61,7 +61,7 @@
             return true;
         }
 
-        public async Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsAsync(string team1Name, string team2Name)
+        public async Task<ICollection<GameDetailsServiceModel>> GetAllGamesBetweenTeamsAsync(string team1Name, string team2Name)
         {
             var games = await this.db.Games
                 .Include(g => g.TeamHost)
@@ -69,11 +69,11 @@
                 .Where(g => (g.TeamHost.Name == team1Name || g.Team2.Name == team1Name) && (g.TeamHost.Name == team2Name || g.Team2.Name == team2Name))
                 .ToListAsync();
 
-            var models = new List<GameOverviewServiceModel>();
+            var models = new List<GameDetailsServiceModel>();
 
             foreach (var game in games.OrderByDescending(g => g.Date))
             {
-                var model = mapper.Map<GameOverviewServiceModel>(game);
+                var model = mapper.Map<GameDetailsServiceModel>(game);
                 model.SeasonYear = this.GetCurrentSeasonYear(DateTime.ParseExact(model.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture));
                 model.Venue = game.TeamHost.Venue;
 
@@ -83,7 +83,7 @@
             return models;
         }
 
-        public async Task<ICollection<GameOverviewServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(string team1Name, string team2Name, int seasonId)
+        public async Task<ICollection<GameDetailsServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(string team1Name, string team2Name, int seasonId)
         {
             var games = await this.db.Games
                 .Include(g => g.TeamHost)
@@ -91,11 +91,11 @@
                 .Where(g => (g.TeamHost.Name == team1Name || g.Team2.Name == team1Name) && (g.TeamHost.Name == team2Name || g.Team2.Name == team2Name) && g.SeasonId == seasonId)
                 .ToListAsync();
 
-            var models = new List<GameOverviewServiceModel>();
+            var models = new List<GameDetailsServiceModel>();
 
             foreach (var game in games.OrderByDescending(g => g.Date))
             {
-                var model = mapper.Map<GameOverviewServiceModel>(game);
+                var model = mapper.Map<GameDetailsServiceModel>(game);
 
                 models.Add(model);
             }
@@ -103,15 +103,15 @@
             return models;
         }
 
-        public async Task<ICollection<GameOverviewServiceModel>> GetSeasonGamesAsync(int seasonId)
+        public async Task<ICollection<GameDetailsServiceModel>> GetSeasonGamesAsync(int seasonId)
         {
             var currentSeasonGames = await this.db.Games.Where(g => g.SeasonId == seasonId).ToListAsync();
 
-            var models = new List<GameOverviewServiceModel>();
+            var models = new List<GameDetailsServiceModel>();
 
             foreach (var game in currentSeasonGames)
             {
-                var model = mapper.Map<GameOverviewServiceModel>(game);
+                var model = mapper.Map<GameDetailsServiceModel>(game);
 
                 models.Add(model);
             }
@@ -260,11 +260,11 @@
             return true;
         }
 
-        public async Task<GameOverviewServiceModel> GetGameOverview(int gameId)
+        public async Task<GameDetailsServiceModel> GetGameOverview(int gameId)
         {
             var game = await this.db.Games.Where(g => g.Id == gameId).FirstOrDefaultAsync();
 
-            var model = mapper.Map<GameOverviewServiceModel>(game);
+            var model = mapper.Map<GameDetailsServiceModel>(game);
 
             return model;
         }
@@ -275,10 +275,11 @@
 
             game.Team2Points = model.Team2Points;
             game.TeamHostPoints = model.TeamHostPoints;
-            game.Date = model.Date;
+            game.Date = DateTime.ParseExact(model.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
 
             await this.db.SaveChangesAsync();
         }
+
         private int GetCurrentSeasonYear(DateTime date)
         {
             var seasonYear = 0;
