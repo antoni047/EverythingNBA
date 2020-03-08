@@ -16,12 +16,17 @@
         private readonly IMapper mapper;
         private readonly EverythingNBADbContext db;
         private readonly IAwardService awardService;
+        private readonly ISeasonService seasonService;
+        private readonly IPlayerService playerService;
 
-        public AwardaController(IMapper mapper, EverythingNBADbContext db, IAwardService awardService)
+        public AwardaController(IMapper mapper, EverythingNBADbContext db, IAwardService awardService, ISeasonService seasonService, 
+            IPlayerService playerService)
         {
             this.mapper = mapper;
             this.db = db;
             this.awardService = awardService;
+            this.seasonService = seasonService;
+            this.playerService = playerService;
         }
 
         public async Task<IActionResult> SeasonAwards(int seasonId)
@@ -52,7 +57,13 @@
                 return this.View(model);
             }
 
-            await this.awardService.AddAwardAsync(model.Type, model.Year, model.WinnerName, model.WinnerTeamName);
+            var awardId = await this.awardService.AddAwardAsync(model.Type, model.Year, model.WinnerName, model.WinnerTeamName);
+
+            var season = await this.seasonService.GetDetailsByYearAsync(model.Year);
+            await this.seasonService.AddAwardAsync(season.Id, awardId);
+
+            var player = await this.playerService.GetPlayerDetailsAsync(model.WinnerName);
+            await this.playerService.AddAward(player.Id, awardId);
 
             return RedirectToAction("All");
         }
@@ -73,7 +84,14 @@
                 return this.View(model);
             }
 
+            var oldAwardWinner = await this.playerService.GetPlayerDetailsAsync(model.Winner);
+            await this.playerService.RemoveAward(oldAwardWinner.Id, awardId);
+
             await this.awardService.EditAwardWinnerAsync(model.Winner, awardId);
+            var award = await this.awardService.GetAwardDetails(awardId);
+
+            var newAwardWinner = await this.playerService.GetPlayerDetailsAsync(award.Winner);
+            await this.playerService.AddAward(newAwardWinner.Id, awardId);
 
             return RedirectToAction("All");
         }
@@ -89,6 +107,14 @@
         [HttpPost]
         public async Task<IActionResult> Delete (AwardDetailsInputModel model, int awardId)
         {
+            var award = await this.awardService.GetAwardDetails(awardId);
+
+            var season = await this.seasonService.GetDetailsByYearAsync(model.Year);
+            await this.seasonService.AddAwardAsync(season.Id, awardId);
+
+            var player = await this.playerService.GetPlayerDetailsAsync(award.Winner);
+            await this.playerService.AddAward(player.Id, awardId);
+
             await this.awardService.DeleteAwardAsync(awardId);
 
             return RedirectToAction("All");

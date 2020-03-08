@@ -114,6 +114,14 @@
         [HttpPost]
         public async Task<IActionResult> Delete(int teamId, TeamInputModel model)
         {
+            var year = this.GetCurrentSeasonYear();
+            var team = await this.teamService.GetTeamDetailsAsync(teamId, year);
+
+            foreach (var playerModel in team.Players)
+            {
+                await this.playerService.RemovePlayerFromTeamAsync(teamId, playerModel.Id);
+            }
+
             await this.teamService.DeleteTeamAsync(teamId);
 
             return RedirectToAction("All");

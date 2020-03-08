@@ -60,7 +60,12 @@
 
             if (model.PlayerNames.Any())
             {
-                await this.astService.AddAllStarTeamAsync(model.Year, model.Type, model.PlayerNames);
+                var id = (int)await this.astService.AddAllStarTeamAsync(model.Year, model.Type, model.PlayerNames);
+
+                foreach (var name in model.PlayerNames)
+                {
+                    var player = await this.playerService.AddAllStarTeam(name, id);
+                }
             }
 
             else
@@ -78,6 +83,8 @@
         {
             var model = await this.astService.GetAllStarTeamAsync(allStarTeamId);
 
+           
+
             return this.View(model);
         }
 
@@ -86,6 +93,14 @@
         {
             var astTeam = await this.astService.GetAllStarTeamAsync(allStarTeamId);
             var season = await this.seasonService.GetDetailsByYearAsync(astTeam.Year);
+
+            if (astTeam.Players.Any())
+            {
+                foreach (var player in astTeam.Players)
+                {
+                    await this.playerService.RemoveAllStarTeam(player.FirstName + " " + player.LastName, allStarTeamId);
+                }
+            }
 
             await this.astService.DeleteAllStarTeamAsync(allStarTeamId);
 

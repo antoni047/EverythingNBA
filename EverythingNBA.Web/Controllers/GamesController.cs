@@ -217,13 +217,23 @@
         public async Task<IActionResult> Delete(int gameId, GameInputModel model)
         {
             var game = await this.gameService.GetGameAsync(gameId);
+
             var year = this.GetSeasonYear(DateTime.ParseExact(game.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture));
             var season = await this.seasonService.GetDetailsByYearAsync(year);
-
             await this.seasonService.RemoveGameAsync(season.Id, gameId);
-            await this.teamService.RemoveGameAsync(gameId, (int)game.TeamHostId);
-            await this.teamService.RemoveGameAsync(gameId, (int)game.Team2Id);
 
+            var teamHostName = this.GetFullTeamName(game.TeamHostShortName);
+            var team2Name = this.GetFullTeamName(game.Team2ShortName);
+
+            if (teamHostName != "Error" || team2Name != "Error")
+            {
+                var teamHost = await this.teamService.GetTeamDetailsAsync(teamHostName, year);
+                var team2 = await this.teamService.GetTeamDetailsAsync(team2Name, year);
+
+                await this.teamService.RemoveGameAsync(gameId, team2.Id);
+                await this.teamService.RemoveGameAsync(gameId, teamHost.Id);
+            }
+            
             await this.gameService.DeleteGameAsync(gameId);
 
             return RedirectToAction("Index", "Home");
@@ -259,6 +269,73 @@
             }
 
             return seasonYear;
+        }
+
+        private string GetFullTeamName (string shortName)
+        {
+            switch (shortName)
+            {
+                case "ATL":
+                    return "Atlanta Hawks";
+                case "BKN":
+                    return "Brooklyn Nets";
+                case "BOS":
+                    return "Boston Celtics";
+                case "CHA":
+                    return "Charlotte Hornets";
+                case "CHI":
+                    return "Chicago Bulls";
+                case "CLE":
+                    return "Cleveland Cavaliers";
+                case "DAL":
+                    return "Dallas Mavericks";
+                case "DEN":
+                    return "Denver Nuggets";
+                case "DET":
+                    return "Detroit Pistons";
+                case "GSW":
+                    return "Golden State Warriors";
+                case "HOU":
+                    return "Indiana Pacers";
+                case "IND":
+                    return "Los Angeles Clippers";
+                case "LAC":
+                    return "Los Angeles Lakers";
+                case "LAL":
+                    return "Memphis Grizzlies";
+                case "MEM":
+                    return "Miami Heat";
+                case "MIA":
+                    return "Milwaukee Bucks";
+                case "MIN":
+                    return "Minnesota Timberwolves";
+                case "NOP":
+                    return "New Orleans Pelicans";
+                case "NYK":
+                    return "New York Knicks";
+                case "OKC":
+                    return "Oklahoma City Thunder";
+                case "ORL":
+                    return "Orlando Magic";
+                case "PHI":
+                    return "Philadelphia 76ers";
+                case "POR":
+                    return "Portland Trail Blazers";
+                case "SAC":
+                    return "Sacramento Kings";
+                case "TOR":
+                    return "Toronto Raptors";
+                case "UTA":
+                    return "Utah Jazz";
+                case "WAS":
+                    return "Washington Wizards";
+                case "PHX":
+                    return "Phoenix Suns";
+                case "SAS":
+                    return "San Antonio Spurs";
+                default:
+                    return "Error";
+            }
         }
     }
 }

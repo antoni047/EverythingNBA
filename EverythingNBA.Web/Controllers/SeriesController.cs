@@ -10,6 +10,7 @@
     using Services.Models.Series;
     using Web.Models.Series;
     using Data;
+    using System;
 
     public class SeriesController : Controller
     {
@@ -54,8 +55,10 @@
                 return this.View(inputModel);
             }
 
-            var team1 = await this.teamService.GetTeamDetailsAsync(inputModel.Team1Name);
-            var team2 = await this.teamService.GetTeamDetailsAsync(inputModel.Team2Name);
+            var year = this.GetCurrentSeasonYear();
+
+            var team1 = await this.teamService.GetTeamDetailsAsync(inputModel.Team1Name, year);
+            var team2 = await this.teamService.GetTeamDetailsAsync(inputModel.Team2Name, year);
 
             if (team1 == null || team2 == null)
             {
@@ -90,9 +93,43 @@
         {
             var series = await this.seriesService.GetSeriesAsync(seriesId);
 
+            await this.playoffService.RemoveSeriesAsync(series.PlayoffId, series.Id);
+
             await this.seriesService.DeleteSeriesAsync(seriesId);
 
             return RedirectToAction("PlayoffBracket", "Playoffs");
+        }
+
+        private int GetCurrentSeasonYear()
+        {
+            var currentYear = 0;
+
+            if (DateTime.Now.Month >= 9)
+            {
+                currentYear = DateTime.Now.Year + 1;
+            }
+            else if (DateTime.Now.Month < 9)
+            {
+                currentYear = DateTime.Now.Year;
+            }
+
+            return currentYear;
+        }
+
+        private int GetSeasonYear(DateTime date)
+        {
+            var seasonYear = 0;
+
+            if (date.Month >= 9)
+            {
+                seasonYear = date.Year + 1;
+            }
+            else if (date.Month < 9)
+            {
+                seasonYear = date.Year;
+            }
+
+            return seasonYear;
         }
     }
 }
