@@ -30,7 +30,7 @@
 
         public async Task<int> AddAsync(int year, string titleWinner, int gamesPlayed)
         {
-            var titleWinnerObj = await this.teamService.GetTeamDetailsAsync(titleWinner);
+            var titleWinnerObj = await this.teamService.GetTeamDetailsAsync(titleWinner, year);
 
             var seasonObj = new Season
             {
