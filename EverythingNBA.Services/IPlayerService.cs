@@ -44,5 +44,9 @@ namespace EverythingNBA.Services
         Task<bool> RemoveAllStarTeam(string playerName, int allStarTeamId);
 
         Task<bool> AddAllStarTeam(string playerName, int allStarTeamId);
+
+        Task<bool> AddPlayerToTeamAsync(int teamId, int playerId);
+
+        Task<bool> RemovePlayerFromTeamAsync(int teamId, int playerId);
     }
 }
