@@ -21,6 +21,8 @@
 
         Task<GetAllStarTeamServiceModel> GetAllStarTeamByTypeAndYearAsync(string type, int Year);
 
-        Task<bool> RemovePlayerAsync(int allStarTeamId, int playerId);
+        Task<bool> RemovePlayerAsync(int allStarTeamId, string playerName);
+
+        Task EditAllStarTeam(int allStarTeamId, List<string> playerNames);
     }
 }

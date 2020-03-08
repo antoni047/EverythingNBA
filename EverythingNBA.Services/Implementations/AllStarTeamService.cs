@@ -63,7 +63,7 @@ namespace EverythingNBA.Services.Implementations
             return allStarTeamObj.Id;
         }
 
-        public async Task<bool> RemovePlayerAsync(int allStarTeamId, int playerId)
+        public async Task<bool> RemovePlayerAsync(int allStarTeamId, string playerName)
         {
             var allStarTeam = await this.db.AllStarTeams
                 .Include(ast => ast.Players)
@@ -76,8 +76,15 @@ namespace EverythingNBA.Services.Implementations
             }
 
             var obj = await this.db.AllStarTeamsPlayers
-                .Where(x => x.PlayerId == playerId && x.AllStarTeamId == allStarTeamId)
+                .Where(x => x.Player.FirstName + " " + x.Player.LastName == playerName && x.AllStarTeamId == allStarTeamId)
                 .FirstOrDefaultAsync();
+
+            var player = await this.db.Players
+                .Include(p => p.AllStarTeams)
+                .Where(p => p.FirstName + " " + p.LastName == playerName)
+                .FirstOrDefaultAsync();
+
+            player.AllStarTeams.Remove(obj);
 
             var IsSucessfulllyRemoved = allStarTeam.Players.Remove(obj);
 
@@ -99,6 +106,26 @@ namespace EverythingNBA.Services.Implementations
             {
                 return false;
             }
+
+            var season = await this.db.Seasons
+                .Include(s => s.AllStarTeams)
+                .Where(s => s.Year == teamToDelete.Year)
+                .FirstOrDefaultAsync();
+
+            season.AllStarTeams.Remove(teamToDelete);
+
+            var player = await this.db.Players
+                .Include(p => p.AllStarTeams)
+                .Where(p => p.AllStarTeams.Where(ast => ast.AllStarTeam == teamToDelete)
+                                          .Select(ast => ast.AllStarTeam)
+                                          .FirstOrDefault() == teamToDelete)
+                .FirstOrDefaultAsync();
+
+            var obj = await this.db.AllStarTeamsPlayers
+                .Where(x => x.Player == player && x.AllStarTeam == teamToDelete)
+                .FirstOrDefaultAsync();
+
+            player.AllStarTeams.Remove(obj);
 
             this.db.AllStarTeams.Remove(teamToDelete);
             await this.db.SaveChangesAsync();
@@ -175,6 +202,32 @@ namespace EverythingNBA.Services.Implementations
             var allStarTeam = await this.db.AllStarTeams.Where(ast => ast.Type == enumType && ast.Year == Year).FirstOrDefaultAsync();
 
             return await this.GetAllStarTeamAsync(allStarTeam.Id);
+        }
+
+        public async Task EditAllStarTeam(int allStarTeamId, List<string> playerNames)
+        {
+            var team = await this.db.AllStarTeams
+                .Include(ast => ast.Players)
+                .Where(ast => ast.Id == allStarTeamId)
+                .FirstOrDefaultAsync();
+
+            var player1 = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == playerNames[0]).FirstOrDefaultAsync();
+            var player2 = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == playerNames[1]).FirstOrDefaultAsync();
+            var player3 = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == playerNames[2]).FirstOrDefaultAsync();
+            var player4 = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == playerNames[3]).FirstOrDefaultAsync();
+            var player5 = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == playerNames[4]).FirstOrDefaultAsync();
+
+            var players = new List<Player> { player1, player2, player3, player4, player5 };
+
+            var astPlayerObjects = await this.db.AllStarTeamsPlayers
+                    .Include(x => x.Player)
+                    .Where(x => x.AllStarTeamId == allStarTeamId)
+                    .ToListAsync();
+
+            for (int i = 0; i < astPlayerObjects.Count(); i++)
+            {
+                astPlayerObjects[i].Player = players[i];
+            }
         }
     }
 }
