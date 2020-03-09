@@ -52,6 +52,9 @@
                 .ForMember(mdl => mdl.TitlesWon, opt => opt.MapFrom(t => t.TitlesWon.Select(x => x.Year).ToList()))
                 .ForMember(mdl => mdl.Id, opt => opt.MapFrom(t => t.Id));
 
+            this.CreateMap<Team, TeamOverviewServiceModel>()
+                .ForMember(mdl => mdl.Id, opt => opt.MapFrom(t => t.Id));
+
             this.CreateMap<Player, PlayerOverviewServiceModel>()
                 .ForMember(mdl => mdl.Name, opt => opt.MapFrom(p => p.FirstName + " " + p.LastName))
                 .ForMember(mdl => mdl.Position, opt => opt.MapFrom(p => p.Position.ToString()))

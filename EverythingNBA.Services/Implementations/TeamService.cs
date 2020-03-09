@@ -117,19 +117,29 @@
 
             foreach (var team in teams)
             {
-                var seasonStatisicmodel = await statisticService.GetDetailsAsync(seasonId, team.Id);
-                var seasonStatistic = mapper.Map<SeasonStatistic>(seasonStatisicmodel);
-                var winPercentage = await statisticService.GetWinPercentageAsync(seasonStatistic.Id);
-                var gamesPlayed = this.GetGamesPlayed(team, seasonId);
-                var lastTenGames = await this.GetLastTenGames(team, seasonId);
+                var gamesPlayed = await this.GetGamesPlayed(team.Id, seasonId);
+                var lastTenGames = await this.GetLastTenGames(team.Id, seasonId);
+                var seasonStatisicModel = await statisticService.GetDetailsAsync(seasonId, team.Id);
+                
+                var wins = 0;
+                var losses = 0;
+                var winPercentage = string.Empty;
+
+                if (seasonStatisicModel != null)
+                {
+                    var seasonStatistic = mapper.Map<SeasonStatistic>(seasonStatisicModel);
+                    winPercentage = await statisticService.GetWinPercentageAsync(seasonStatistic.Id);
+                    wins = seasonStatistic.Wins;
+                    losses = seasonStatistic.Losses;
+                }
 
                 var teamStatModel = new TeamSeasonStatisticServiceModel
                 {
                     Name = team.Name,
                     //TeamLogoImageURL = team.CloudinaryImage.ImageURL,
                     Conference = team.Conference.ToString(),
-                    Wins = seasonStatistic.Wins,
-                    Losses = seasonStatistic.Losses,
+                    Wins = wins,
+                    Losses = losses,
                     WinPercentage = winPercentage.ToString(),
                     GamesPlayed = gamesPlayed,
                     LastTenGames = lastTenGames
@@ -250,6 +260,20 @@
                 .Where(t => t.Name.ToLower() == name.ToLower()).Select(t => t.Id).FirstOrDefaultAsync();
 
             return await this.GetTeamDetailsAsync(teamId, year);
+        }
+
+        public async Task<TeamOverviewServiceModel> GetTeamAsync(int teamId)
+        {
+            var team = await this.db.Teams.FindAsync(teamId);
+
+            return mapper.Map<TeamOverviewServiceModel>(team);
+        }
+
+        public async Task<TeamOverviewServiceModel> GetTeamAsync(string shortName)
+        {
+            var teamId = await this.db.Teams.Where(t => t.AbbreviatedName == shortName).Select(t => t.Id).FirstOrDefaultAsync();
+
+            return await this.GetTeamAsync(teamId);
         }
 
         public async Task<bool> AddGameAsync(int gameId, int teamId)
@@ -442,23 +466,35 @@
             return await this.db.Teams.Select(t => t.Name).ToListAsync();
         }
 
-        private int GetGamesPlayed(Team team, int seasonId)
+        private async Task<int> GetGamesPlayed(int teamId, int seasonId)
         {
+            var team = await this.db.Teams
+                .Include(t => t.HomeGames)
+                .Include(t => t.AwayGames)
+                .Where(t => t.Id == teamId)
+                .FirstOrDefaultAsync();
+
             var homeGames = team.HomeGames.Where(g => g.SeasonId == seasonId).ToList();
             var awayGames = team.AwayGames.Where(g => g.SeasonId == seasonId).ToList();
 
             return homeGames.Count() + awayGames.Count();
         }
 
-        private async Task<string> GetLastTenGames(Team team, int seasonId)
+        private async Task<string> GetLastTenGames(int teamId, int seasonId)
         {
+            var team = await this.db.Teams
+                .Include(t => t.HomeGames)
+                .Include(t => t.AwayGames)
+                .Where(t => t.Id == teamId)
+                .FirstOrDefaultAsync();
+
             var gamesWon = 0;
             var gamesLost = 0;
 
             var gamesPlayed = new List<Game>();
 
-            gamesPlayed.AddRange(team.HomeGames);
-            gamesPlayed.AddRange(team.AwayGames);
+            gamesPlayed.AddRange(team.HomeGames.Where(g => g.SeasonId == seasonId));
+            gamesPlayed.AddRange(team.AwayGames.Where(g => g.SeasonId == seasonId));
 
             var lastTenGames = gamesPlayed.OrderByDescending(g => g.Date).Take(10).ToList();
 
