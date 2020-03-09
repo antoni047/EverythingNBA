@@ -296,16 +296,18 @@
                 case "GSW":
                     return "Golden State Warriors";
                 case "HOU":
-                    return "Indiana Pacers";
+                    return "Houston Rockets";
                 case "IND":
-                    return "Los Angeles Clippers";
+                    return "Indiana Pacers";
                 case "LAC":
-                    return "Los Angeles Lakers";
+                    return "Los Angeles Clippers";
                 case "LAL":
-                    return "Memphis Grizzlies";
+                    return "Los Angeles Lakers";
                 case "MEM":
-                    return "Miami Heat";
+                    return "Memphis Grizzlies";
                 case "MIA":
+                    return "Miami Heat";
+                case "MIL":
                     return "Milwaukee Bucks";
                 case "MIN":
                     return "Minnesota Timberwolves";
