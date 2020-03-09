@@ -19,23 +19,21 @@
     {
         private readonly EverythingNBADbContext db;
         private readonly IMapper mapper;
-        private readonly ITeamService teamService;
 
-        public SeasonService(EverythingNBADbContext db, IMapper mapper, ITeamService teamService)
+        public SeasonService(EverythingNBADbContext db, IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
-            this.teamService = teamService;
         }
 
         public async Task<int> AddAsync(int year, string titleWinner, int gamesPlayed)
         {
-            var titleWinnerObj = await this.teamService.GetTeamDetailsAsync(titleWinner, year);
+            var team = await this.db.Teams.Where(t => t.Name == titleWinner).FirstOrDefaultAsync();
 
             var seasonObj = new Season
             {
                 Year = year,
-                TitleWinnerId = titleWinnerObj.Id,
+                TitleWinnerId = team.Id,
                 GamesPlayed = gamesPlayed
             };
 
@@ -261,16 +259,19 @@
         {
             var season = await this.db.Seasons
                 .Include(s => s.SeasonStatistics)
+                    .ThenInclude(ss => ss.Team)
                 .Include(s => s.Awards)
+                    .ThenInclude(a => a.Winner)
                 .Include(s => s.AllStarTeams)
+                    .ThenInclude(ast => ast.Players)
                 .Where(s => s.Id == seasonId)
                 .FirstOrDefaultAsync();
 
             var bestSeed = season.SeasonStatistics.OrderByDescending(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
             var worstSeed = season.SeasonStatistics.OrderBy(s => s.Wins).Select(s => s.Team.Name).FirstOrDefault();
 
-            var awardWinners = this.GetSeasonAwards(season);
-            var allStarTeams = this.GetAllStarTeams(season);
+            var awardWinners = await this.GetSeasonAwards(season.Id);
+            var allStarTeams = await this.GetAllStarTeams(season.Id);
 
             var model = new GetSeasonDetailsServiceModel
             {
@@ -278,20 +279,21 @@
                 TitleWinnerId = season.TitleWinnerId,
                 GamesPlayed = season.GamesPlayed,
                 PlayoffId = season.PlayoffId,
-                BestSeed = bestSeed,
-                WorstSeed = worstSeed,
-                MVP = awardWinners[0],
-                TopScorer = awardWinners[1],
-                DPOTY = awardWinners[2],
-                SixthMOTY = awardWinners[3],
-                ROTY = awardWinners[4],
-                MIP = awardWinners[5],
-                FinalsMVP = awardWinners[6],
-                FirstAllNBATeamId = allStarTeams[0].Id,
-                SecondAllNBATeamId = allStarTeams[1].Id,
-                ThirdAllNBATeamId = allStarTeams[2].Id,
-                AllDefenesiveTeamId = allStarTeams[3].Id,
-                AllRookieTeamId = allStarTeams[4].Id
+                SeasonId = season.Id,
+                //BestSeed = bestSeed,
+                //WorstSeed = worstSeed,
+                //MVP = awardWinners[0],
+                //TopScorer = awardWinners[1],
+                //DPOTY = awardWinners[2],
+                //SixthMOTY = awardWinners[3],
+                //ROTY = awardWinners[4],
+                //MIP = awardWinners[5],
+                //FinalsMVP = awardWinners[6],
+                //FirstAllNBATeamId = allStarTeams[0].Id,
+                //SecondAllNBATeamId = allStarTeams[1].Id,
+                //ThirdAllNBATeamId = allStarTeams[2].Id,
+                //AllDefenesiveTeamId = allStarTeams[3].Id,
+                //AllRookieTeamId = allStarTeams[4].Id
             };
 
             return model;
@@ -323,8 +325,14 @@
             return models;
         }
 
-        private List<AllStarTeam> GetAllStarTeams(Season season)
+        private async Task<List<AllStarTeam>> GetAllStarTeams(int seasonId)
         {
+            var season = await this.db.Seasons
+                .Include(s => s.AllStarTeams)
+                .ThenInclude(ast => ast.Players)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
+
             var firstAllNBATeam = season.AllStarTeams.Where(ast => ast.Type.ToString() == "FirstAllNBA").FirstOrDefault();
             var secondAllNBATeam = season.AllStarTeams.Where(ast => ast.Type.ToString() == "SecondAllNBA").FirstOrDefault();
             var thirdAllNBATeam = season.AllStarTeams.Where(ast => ast.Type.ToString() == "ThirdAllNBA").FirstOrDefault();
@@ -343,28 +351,34 @@
             return list;
         }
 
-        private List<string> GetSeasonAwards(Season season)
+        private async Task<List<string>> GetSeasonAwards(int seasonId)
         {
+            var season = await this.db.Seasons
+                .Include(s => s.Awards)
+                    .ThenInclude(a => a.Winner)
+                .Where(s => s.Id == seasonId)
+                .FirstOrDefaultAsync();
+
             var MVP = season.Awards.Where(a => a.Name.ToString() == "MVP").FirstOrDefault();
-            var MVPName = MVP.Winner.FirstName + " " + MVP.Winner.LastName;
+            var MVPName = MVP != null ? MVP.Winner.FirstName + " " + MVP.Winner.LastName : "N/A";
 
             var topScorer = season.Awards.Where(a => a.Name.ToString() == "Top Scorer").FirstOrDefault();
-            var topScorerName = topScorer.Winner.FirstName + " " + topScorer.Winner.LastName;
+            var topScorerName = topScorer != null ? topScorer.Winner.FirstName + " " + topScorer.Winner.LastName : "N/A";
 
             var DPOTY = season.Awards.Where(a => a.Name.ToString() == "DPOTY").FirstOrDefault();
-            var DPOTYName = DPOTY.Winner.FirstName + " " + DPOTY.Winner.LastName;
+            var DPOTYName = DPOTY != null ? DPOTY.Winner.FirstName + " " + DPOTY.Winner.LastName : "N/A";
 
             var sixthMOTY = season.Awards.Where(a => a.Name.ToString() == "SixthMOTY").FirstOrDefault();
-            var sixthMOTYName = sixthMOTY.Winner.FirstName + " " + sixthMOTY.Winner.LastName;
+            var sixthMOTYName = sixthMOTY != null ? sixthMOTY.Winner.FirstName + " " + sixthMOTY.Winner.LastName : "N/A";
 
             var ROTY = season.Awards.Where(a => a.Name.ToString() == "ROTY").FirstOrDefault();
-            var ROTYName = ROTY.Winner.FirstName + " " + ROTY.Winner.LastName;
+            var ROTYName = ROTY != null ? ROTY.Winner.FirstName + " " + ROTY.Winner.LastName : "N/A";
 
             var MIP = season.Awards.Where(a => a.Name.ToString() == "MIP").FirstOrDefault();
-            var MIPName = MIP.Winner.FirstName + " " + MIP.Winner.LastName;
+            var MIPName = MIP != null ? MIP.Winner.FirstName + " " + MIP.Winner.LastName : "N/A";
 
             var finalsMVP = season.Awards.Where(a => a.Name.ToString() == "FinalsMVP").FirstOrDefault();
-            var finalsMVPName = finalsMVP.Winner.FirstName + " " + finalsMVP.Winner.LastName;
+            var finalsMVPName = finalsMVP != null ? finalsMVP.Winner.FirstName + " " + finalsMVP.Winner.LastName : "N/A";
 
             var list = new List<string>
             {

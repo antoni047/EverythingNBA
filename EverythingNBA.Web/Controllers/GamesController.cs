@@ -51,7 +51,7 @@
             var year = this.GetCurrentSeasonYear();
             var season = await this.seasonService.GetDetailsByYearAsync(year);
 
-            return RedirectToAction("Results", season.Id);
+            return RedirectToAction("Results", season.SeasonId);
         }
 
         public async Task<IActionResult> Fixtures()
@@ -59,7 +59,7 @@
             var year = this.GetCurrentSeasonYear();
             var season = await this.seasonService.GetDetailsByYearAsync(year);
 
-            var seasonGames = await this.gameService.GetSeasonGamesAsync(season.Id);
+            var seasonGames = await this.gameService.GetSeasonGamesAsync(season.SeasonId);
 
             var gamesNotPlayed = seasonGames.Where(g => g.IsFinished == false)
                 .OrderBy(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture)).ToList();
@@ -86,8 +86,8 @@
             gameModel.TeamHostName = teamHost.Name;
             gameModel.Team2Name = team2.Name;
 
-            var teamHostSeasonStats = await this.statService.GetDetailsAsync(season.Id, teamHost.Id);
-            var team2SeasonStat = await this.statService.GetDetailsAsync(season.Id, team2.Id);
+            var teamHostSeasonStats = await this.statService.GetDetailsAsync(season.SeasonId, teamHost.Id);
+            var team2SeasonStat = await this.statService.GetDetailsAsync(season.SeasonId, team2.Id);
 
             gameModel.TeamHostSeasonStatistic = teamHostSeasonStats.Wins + "-" + teamHostSeasonStats.Losses;
             gameModel.Team2SeasonStatistic = team2SeasonStat.Wins + "-" + team2SeasonStat.Losses;
@@ -136,10 +136,10 @@
             var teamHost = await this.teamService.GetTeamDetailsAsync(inputModel.TeamHostName, year);
             var team2 = await this.teamService.GetTeamDetailsAsync(inputModel.Team2Name, year);
 
-            var gameId = await this.gameService.AddGameAsync(season.Id, teamHost.Id, team2.Id, inputModel.TeamHostPoints,
+            var gameId = await this.gameService.AddGameAsync(season.SeasonId, teamHost.Id, team2.Id, inputModel.TeamHostPoints,
                 inputModel.Team2Points, inputModel.Date, inputModel.IsFinished);
 
-            await this.seasonService.AddGameAsync(season.Id, gameId);
+            await this.seasonService.AddGameAsync(season.SeasonId, gameId);
             await this.teamService.AddGameAsync(gameId, teamHost.Id);
             await this.teamService.AddGameAsync(gameId, team2.Id);
 
@@ -220,7 +220,7 @@
 
             var year = this.GetSeasonYear(DateTime.ParseExact(game.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture));
             var season = await this.seasonService.GetDetailsByYearAsync(year);
-            await this.seasonService.RemoveGameAsync(season.Id, gameId);
+            await this.seasonService.RemoveGameAsync(season.SeasonId, gameId);
 
             var teamHostName = this.GetFullTeamName(game.TeamHostShortName);
             var team2Name = this.GetFullTeamName(game.Team2ShortName);

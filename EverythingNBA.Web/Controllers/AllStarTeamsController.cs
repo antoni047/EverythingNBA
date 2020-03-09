@@ -1,5 +1,6 @@
 ﻿namespace EverythingNBA.Web.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -75,7 +76,7 @@
 
             var season = await this.seasonService.GetDetailsByYearAsync(model.Year);
 
-            return RedirectToAction($"SeasonAllStarTeams", season.Id);
+            return RedirectToAction($"SeasonAllStarTeams", season.SeasonId);
         }
 
         [HttpGet]
@@ -104,7 +105,7 @@
 
             await this.astService.DeleteAllStarTeamAsync(allStarTeamId);
 
-            return RedirectToAction($"SeasonAllStarTeams", season.Id);
+            return RedirectToAction($"SeasonAllStarTeams", season.SeasonId);
         }
 
         private int GetCurrentSeasonYear()

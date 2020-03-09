@@ -37,7 +37,7 @@ namespace EverythingNBA.Web.Controllers
 
             var gamesToday = await this.gameService.GetGamesOnDateAsync(DateTime.UtcNow.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
             var gamesTomorrow = await this.gameService.GetGamesOnDateAsync(DateTime.UtcNow.AddDays(1).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
-            var teamStandings = await this.teamService.GetStandingsAsync(season.Id);
+            var teamStandings = await this.teamService.GetStandingsAsync(season.SeasonId);
 
             var westernShortTeamStandings = new List<ShortTeamStandingsViewModel>();
             var easternShortTeamStandings = new List<ShortTeamStandingsViewModel>();

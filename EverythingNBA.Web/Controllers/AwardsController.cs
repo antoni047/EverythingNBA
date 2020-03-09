@@ -60,7 +60,7 @@
             var awardId = await this.awardService.AddAwardAsync(model.Type, model.Year, model.WinnerName, model.WinnerTeamName);
 
             var season = await this.seasonService.GetDetailsByYearAsync(model.Year);
-            await this.seasonService.AddAwardAsync(season.Id, awardId);
+            await this.seasonService.AddAwardAsync(season.SeasonId, awardId);
 
             var player = await this.playerService.GetPlayerDetailsAsync(model.WinnerName);
             await this.playerService.AddAward(player.Id, awardId);
@@ -110,7 +110,7 @@
             var award = await this.awardService.GetAwardDetails(awardId);
 
             var season = await this.seasonService.GetDetailsByYearAsync(model.Year);
-            await this.seasonService.AddAwardAsync(season.Id, awardId);
+            await this.seasonService.AddAwardAsync(season.SeasonId, awardId);
 
             var player = await this.playerService.GetPlayerDetailsAsync(award.Winner);
             await this.playerService.AddAward(player.Id, awardId);
