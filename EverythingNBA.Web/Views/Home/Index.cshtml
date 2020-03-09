@@ -1,12 +1,3 @@
-﻿@using EverythingNBA.Services.Models.Team
+﻿@using EverythingNBA.Web.Models.Home
 
-@model GetTeamDetailsServiceModel;
-
-<div>@Model.Name</div>
-<div>@Model.Venue</div>
-<div>@Model.Conference</div>
-<div>@Model.AbbreviatedName</div>
-@foreach (var player in @Model.Players)
-{
-    <div>@player.Name</div>
-}
+@model IndexViewModel;
