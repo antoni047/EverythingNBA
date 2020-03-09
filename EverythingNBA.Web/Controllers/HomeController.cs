@@ -44,18 +44,20 @@ namespace EverythingNBA.Web.Controllers
 
             foreach (var standing in teamStandings.WesternStandings)
             {
+                var team = await this.teamService.GetTeamAsync(standing.Name);
                 var model = new ShortTeamStandingsViewModel();
-                var team = await this.teamService.GetTeamDetailsAsync(standing.Name, year);
                 model.TeamAbbreviation = team.AbbreviatedName;
                 //model.ImageId = standing.TeamLogoImageURL;
+                westernShortTeamStandings.Add(model);
             }
 
             foreach (var standing in teamStandings.EasternStandings)
             {
+                var team = await this.teamService.GetTeamAsync(standing.Name);
                 var model = new ShortTeamStandingsViewModel();
-                var team = await this.teamService.GetTeamDetailsAsync(standing.Name, year);
                 model.TeamAbbreviation = team.AbbreviatedName;
                 //model.ImageId = standing.TeamLogoImageURL;
+                easternShortTeamStandings.Add(model);
             }
 
             var viewModel = new IndexViewModel();
