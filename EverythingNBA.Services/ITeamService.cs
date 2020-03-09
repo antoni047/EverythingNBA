@@ -38,5 +38,9 @@
         Task EditTeamAsync(GetTeamDetailsServiceModel model, int id);
 
         Task<ICollection<string>> GetAllTeamsAsync();
+
+        Task<TeamOverviewServiceModel> GetTeamAsync(int teamId);
+
+        Task<TeamOverviewServiceModel> GetTeamAsync(string name);
     }
 }

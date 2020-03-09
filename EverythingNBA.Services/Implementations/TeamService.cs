@@ -269,9 +269,9 @@
             return mapper.Map<TeamOverviewServiceModel>(team);
         }
 
-        public async Task<TeamOverviewServiceModel> GetTeamAsync(string shortName)
+        public async Task<TeamOverviewServiceModel> GetTeamAsync(string name)
         {
-            var teamId = await this.db.Teams.Where(t => t.AbbreviatedName == shortName).Select(t => t.Id).FirstOrDefaultAsync();
+            var teamId = await this.db.Teams.Where(t => t.Name == name).Select(t => t.Id).FirstOrDefaultAsync();
 
             return await this.GetTeamAsync(teamId);
         }
