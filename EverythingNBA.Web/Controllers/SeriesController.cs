@@ -30,7 +30,7 @@
             this.playoffService = playoffService;
         }
 
-        [Route("[controller]/[action]/{conference}{stage}/{seriesId:int}")]
+        [Route("[controller]/[action]/{conference}&{stage}/{seriesId:int}")]
         public async Task<IActionResult> SeriesOverview(int seriesId, string conference, string stage)
         {
             var seriesModel = await this.seriesService.GetSeriesAsync(seriesId);
