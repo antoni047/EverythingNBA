@@ -1,18 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-
+﻿
 namespace EverythingNBA.Web.Areas.Archive.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
+
+    using Services;
+
     [Area("Archive")]
     [Route("Archive/[controller]/[action]")]
     public class TeamsController : Controller
     {
-        public IActionResult Index()
+        private readonly ITeamService teamService;
+
+        public TeamsController(ITeamService teamService)
         {
-            return View();
+            this.teamService = teamService;
+        }
+
+        [Route("Archive/[controller]/[action]/{teamId:int}/{year:int}")]
+        public async Task<IActionResult> TeamDetails(int teamId, int year)
+        {
+            var teamDetailsModel = await this.teamService.GetTeamDetailsAsync(teamId, year);
+
+            if (teamDetailsModel == null)
+            {
+                return RedirectToAction("All");
+            }
+
+            return this.View(teamDetailsModel);
         }
     }
 }
