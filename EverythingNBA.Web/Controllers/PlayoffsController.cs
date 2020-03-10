@@ -30,6 +30,7 @@
             this.seriesService = seriesService;
         }
 
+        [Route("[controller]/[action]/{playoffId:int}")]
         public async Task<IActionResult> PlayoffBracket(int playoffId)
         {
             var model = await this.playoffService.GetDetailsAsync(playoffId);
