@@ -85,7 +85,8 @@ namespace EverythingNBA.Services.Implementations
                 {
                     Winner = award.Winner.FirstName + " " + award.Winner.LastName,
                     Type = award.Name.ToString(),
-                    WinnerTeam = award.Winner.Team.Name
+                    WinnerTeam = award.Winner.Team.Name,
+                    Year = award.Year,
                 };
 
                 seasonAwards.Add(model);
@@ -184,46 +185,58 @@ namespace EverythingNBA.Services.Implementations
             //}
         }
 
-        public ICollection<AllAwardsServiceModel> GetAllAwards()
+        public async Task<ICollection<AllAwardsServiceModel>> GetAllAwardsAsync()
         {
-            var awards = this.db.Awards.ToList();
+            var currentYear = this.GetCurrentSeasonYear();
+            var seasonsYears = await this.db.Seasons.Where(s => s.Year != currentYear).Select(s => s.Year).ToListAsync();
+
+            var awards = this.db.Awards.Include(a => a.Winner).ToList();
 
             var allAwardsModels = new List<AllAwardsServiceModel>();
 
-            foreach (var award in awards)
+            foreach (var year in seasonsYears)
             {
                 var model = new AllAwardsServiceModel();
-
-                if (award.Name.ToString() == "MVP")
-                {
-                    model.MVP = award.Winner.FirstName + " " + award.Winner.LastName;
-                }
-                else if (award.Name.ToString() == "FinalsMVP")
-                {
-                    model.FinalsMVP = award.Winner.FirstName + " " + award.Winner.LastName;
-                }
-                else if (award.Name.ToString() == "MIP")
-                {
-                    model.MIP = award.Winner.FirstName + " " + award.Winner.LastName;
-                }
-                else if (award.Name.ToString() == "DPOTY")
-                {
-                    model.DPOTY = award.Winner.FirstName + " " + award.Winner.LastName;
-                }
-                else if (award.Name.ToString() == "ROTY")
-                {
-                    model.ROTY = award.Winner.FirstName + " " + award.Winner.LastName;
-                }
-                else if (award.Name.ToString() == "TopScorer")
-                {
-                    model.TopScorer = award.Winner.FirstName + " " + award.Winner.LastName;
-                }
-                else if (award.Name.ToString() == "SixthMOTY")
-                {
-                    model.SixthMOTY = award.Winner.FirstName + " " + award.Winner.LastName;
-                }
-
+                model.Year = year;
                 allAwardsModels.Add(model);
+            }
+
+            foreach (var award in awards)
+            {
+                foreach (var model in allAwardsModels)
+                {
+                    if (model.Year == award.Year)
+                    {
+                        if (award.Name.ToString() == "MVP")
+                        {
+                            model.MVP = award.Winner.FirstName + " " + award.Winner.LastName;
+                        }
+                        else if (award.Name.ToString() == "FinalsMVP")
+                        {
+                            model.FinalsMVP = award.Winner.FirstName + " " + award.Winner.LastName;
+                        }
+                        else if (award.Name.ToString() == "MIP")
+                        {
+                            model.MIP = award.Winner.FirstName + " " + award.Winner.LastName;
+                        }
+                        else if (award.Name.ToString() == "DPOTY")
+                        {
+                            model.DPOTY = award.Winner.FirstName + " " + award.Winner.LastName;
+                        }
+                        else if (award.Name.ToString() == "ROTY")
+                        {
+                            model.ROTY = award.Winner.FirstName + " " + award.Winner.LastName;
+                        }
+                        else if (award.Name.ToString() == "TopScorer")
+                        {
+                            model.TopScorer = award.Winner.FirstName + " " + award.Winner.LastName;
+                        }
+                        else if (award.Name.ToString() == "SixthMOTY")
+                        {
+                            model.SixthMOTY = award.Winner.FirstName + " " + award.Winner.LastName;
+                        }
+                    }
+                }
             }
 
             return allAwardsModels;
@@ -242,6 +255,22 @@ namespace EverythingNBA.Services.Implementations
             };
 
             return model;
+        }
+
+        private int GetCurrentSeasonYear()
+        {
+            var currentYear = 0;
+
+            if (DateTime.Now.Month >= 9)
+            {
+                currentYear = DateTime.Now.Year + 1;
+            }
+            else if (DateTime.Now.Month < 9)
+            {
+                currentYear = DateTime.Now.Year;
+            }
+
+            return currentYear;
         }
     }
 }

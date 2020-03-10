@@ -20,7 +20,7 @@
 
         Task EditAwardWinnerAsync(string winnerName, int awardId);
 
-        ICollection<AllAwardsServiceModel> GetAllAwards();
+        Task<ICollection<AllAwardsServiceModel>> GetAllAwardsAsync();
 
         Task<AwardDetailsServiceModel> GetAwardDetails(int awardId);
     }
