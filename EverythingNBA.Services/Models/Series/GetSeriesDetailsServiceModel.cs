@@ -17,21 +17,11 @@
 
         public int? Team2GamesWon { get; set; }
 
-        public int MostPoints { get; set; }
-
-        public string MostPointsPlayerName { get; set; }
-
-        public int MostAssists { get; set; }
-
-        public string MostAssistsPlayerName { get; set; }
-
-        public int MostRebounds { get; set; }
-
-        public string MostReboundsPlayerName { get; set; }
-
         public string Stage { get; set; }
 
         public string Conference { get; set; }
+
+        public TopStatsServiceModel TopStats { get; set; }
 
         public ICollection<GameDetailsServiceModel> Games { get; set; }
     }

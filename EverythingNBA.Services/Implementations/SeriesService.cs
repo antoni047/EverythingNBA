@@ -10,6 +10,7 @@
     using EverythingNBA.Services.Models.Series;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
+    using EverythingNBA.Services.Models.Game;
 
     public class SeriesService : ISeriesService
     {
@@ -110,14 +111,18 @@
                 .FirstOrDefaultAsync();
 
             var model = mapper.Map<GetSeriesDetailsServiceModel>(series);
+            model.TopStats = await this.GetTopStats(model);
 
-            model.Team1Name = series.Team1.Name;
-            model.Team2Name = series.Team2.Name;
+            var game1 = series.Game1 != null ? mapper.Map<GameDetailsServiceModel>(series.Game1) : null;
+            var game2 = series.Game2 != null ? mapper.Map<GameDetailsServiceModel>(series.Game2) : null;
+            var game3 = series.Game3 != null ? mapper.Map<GameDetailsServiceModel>(series.Game3) : null;
+            var game4 = series.Game4 != null ? mapper.Map<GameDetailsServiceModel>(series.Game4) : null;
+            var game5 = series.Game5 != null ? mapper.Map<GameDetailsServiceModel>(series.Game5) : null;
+            var game6 = series.Game6 != null ? mapper.Map<GameDetailsServiceModel>(series.Game6) : null;
+            var game7 = series.Game7 != null ? mapper.Map<GameDetailsServiceModel>(series.Game7) : null;
 
-            var topStatsModel = await this.GetTopStats(model);
+            model.Games = new List<GameDetailsServiceModel>() { game1, game2, game3, game4, game5, game6, game7 };
 
-            model = mapper.Map<GetSeriesDetailsServiceModel>(topStatsModel);
-          
             return model;
         }
 
@@ -165,83 +170,92 @@
 
             var stats = new List<Dictionary<string, int>>();
 
-            foreach (var game in seriesModel.Games)
+            if (seriesModel.Games != null)
             {
-                var playerPointsDict = new Dictionary<string, int>();
-                var playerAssistsDict = new Dictionary<string, int>();
-                var playerReboundsDict = new Dictionary<string, int>();
-
-                var playerStats = await this.db.Games
-                    .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
-                    .Where(g => g.Id == game.Id)
-                    .Select(g => g.PlayerStats)
-                    .FirstOrDefaultAsync();
-
-                foreach (var stat in playerStats)
+                foreach (var game in seriesModel.Games)
                 {
-                    var playerFullName = stat.Player.FirstName + " " + stat.Player.LastName;
+                    var playerPointsDict = new Dictionary<string, int>();
+                    var playerAssistsDict = new Dictionary<string, int>();
+                    var playerReboundsDict = new Dictionary<string, int>();
 
-                    if (playerPointsDict.ContainsKey(playerFullName) &&
-                        playerAssistsDict.ContainsKey(playerFullName) &&
-                        playerReboundsDict.ContainsKey(playerFullName))
+                    var playerStats = await this.db.Games
+                        .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
+                        .Where(g => g.Id == game.Id)
+                        .Select(g => g.PlayerStats)
+                        .FirstOrDefaultAsync();
+
+                    foreach (var stat in playerStats)
                     {
-                        playerPointsDict[playerFullName] += (int)stat.Points;
-                        playerAssistsDict[playerFullName] += (int)stat.Assists;
-                        playerReboundsDict[playerFullName] += (int)stat.Rebounds;
+                        var playerFullName = stat.Player.FirstName + " " + stat.Player.LastName;
+
+                        if (playerPointsDict.ContainsKey(playerFullName) &&
+                            playerAssistsDict.ContainsKey(playerFullName) &&
+                            playerReboundsDict.ContainsKey(playerFullName))
+                        {
+                            playerPointsDict[playerFullName] += (int)stat.Points;
+                            playerAssistsDict[playerFullName] += (int)stat.Assists;
+                            playerReboundsDict[playerFullName] += (int)stat.Rebounds;
+                        }
+                        else
+                        {
+                            playerPointsDict.Add(playerFullName, (int)stat.Points);
+                            playerAssistsDict.Add(playerFullName, (int)stat.Assists);
+                            playerReboundsDict.Add(playerFullName, (int)stat.Rebounds);
+                        }
                     }
-                    else
+
+                    var pointsList = new List<int>();
+                    var assitsList = new List<int>();
+                    var reboundsList = new List<int>();
+
+                    foreach (var playerStat in playerPointsDict)
                     {
-                        playerPointsDict.Add(playerFullName, (int)stat.Points);
-                        playerAssistsDict.Add(playerFullName, (int)stat.Assists);
-                        playerReboundsDict.Add(playerFullName, (int)stat.Rebounds);
+                        for (int i = 0; i < playerPointsDict.Count(); i++)
+                        {
+                            pointsList[i] = playerStat.Value;
+                        }
+
+                        if (pointsList.Sum() > mostPoints)
+                        {
+                            mostPoints = pointsList.Sum();
+                            mostPointsPlayerName = playerStat.Key;
+                        }
+                    }
+
+                    foreach (var playerStat in playerAssistsDict)
+                    {
+                        for (int i = 0; i < playerAssistsDict.Count(); i++)
+                        {
+                            assitsList[i] = playerStat.Value;
+                        }
+
+                        if (pointsList.Sum() > mostPoints)
+                        {
+                            mostAssists = pointsList.Sum();
+                            mostAssistsPlayerName = playerStat.Key;
+                        }
+                    }
+
+                    foreach (var playerStat in playerReboundsDict)
+                    {
+                        for (int i = 0; i < playerReboundsDict.Count(); i++)
+                        {
+                            reboundsList[i] = playerStat.Value;
+                        }
+
+                        if (pointsList.Sum() > mostPoints)
+                        {
+                            mostRebounds = pointsList.Sum();
+                            mostReboundsPlayerName = playerStat.Key;
+                        }
                     }
                 }
-
-                var pointsList = new List<int>();
-                var assitsList = new List<int>();
-                var reboundsList = new List<int>();
-
-                foreach (var playerStat in playerPointsDict)
-                {
-                    for (int i = 0; i < playerPointsDict.Count(); i++)
-                    {
-                        pointsList[i] = playerStat.Value;
-                    }
-
-                    if (pointsList.Sum() > mostPoints)
-                    {
-                        mostPoints = pointsList.Sum();
-                        mostPointsPlayerName = playerStat.Key;
-                    }
-                }
-
-                foreach (var playerStat in playerAssistsDict)
-                {
-                    for (int i = 0; i < playerAssistsDict.Count(); i++)
-                    {
-                        assitsList[i] = playerStat.Value;
-                    }
-
-                    if (pointsList.Sum() > mostPoints)
-                    {
-                        mostAssists = pointsList.Sum();
-                        mostAssistsPlayerName = playerStat.Key;
-                    }
-                }
-
-                foreach (var playerStat in playerReboundsDict)
-                {
-                    for (int i = 0; i < playerReboundsDict.Count(); i++)
-                    {
-                        reboundsList[i] = playerStat.Value;
-                    }
-
-                    if (pointsList.Sum() > mostPoints)
-                    {
-                        mostRebounds = pointsList.Sum();
-                        mostReboundsPlayerName = playerStat.Key;
-                    }
-                }
+            }
+            else
+            {
+                mostPoints = 0;
+                mostAssists = 0;
+                mostRebounds = 0;
             }
 
             var topStats = new TopStatsServiceModel
@@ -253,7 +267,7 @@
                 MostRebounds = mostRebounds,
                 MostReboundsPlayerName = mostReboundsPlayerName
             };
-            
+
             return topStats;
         }
     }
