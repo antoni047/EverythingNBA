@@ -111,12 +111,7 @@
             var model = mapper.Map<PlayerDetailsServiceModel>(player);
 
             model.CurrentTeam = await this.db.Teams.Include(t => t.Players).Where(t => t.Id == player.TeamId).Select(t => t.Name).FirstOrDefaultAsync();
-
-            var seasonStatistics = await this.GetSeasonStatistics(player.Id, this.GetCurrentSeasonYear());
-            var careerStatistics = await this.GetCareerStatistics(player.Id);
-            var recentGames = await this.GetRecentGamesAsync(player.Id);
-
-            model.SeasonStatistics = await this.GetSeasonStatistics(player.Id, this.GetCurrentSeasonYear());
+            model.SeasonStatistics = await this.GetSeasonStatistics(player.Id, season.SeasonId);
             model.CareerStatistics = await this.GetCareerStatistics(player.Id);
             model.RecentGames = await this.GetRecentGamesAsync(player.Id);
 
@@ -250,14 +245,23 @@
                 threesAttempted.Add(gameStat.ThreeAttempts);
             }
 
-            var averagePoints = points.Average();
-            var averageAssists = assists.Average();
-            var averageRebounds = rebounds.Average();
-            var averageSteals = steals.Average();
-            var averageBlocks = blocks.Average();
-            var averageFreeThrowPercentage = (freeThrowsMade.Average() / freeThrowsAttempted.Average()) * 100;
-            var averageFieldGoalPercentage = (fieldGoalsMade.Average() / fieldGoalsAttempted.Average()) * 100;
-            var averageThreePercentage = (threesMade.Average() / threesAttempted.Average()) * 100;
+            double averagePoints = points.Any() ? points.Average() : 0;
+            double averageAssists = assists.Any() ? assists.Average() : 0;
+            double averageRebounds = rebounds.Any() ? rebounds.Average() : 0;
+            double averageSteals = steals.Any() ? steals.Average() : 0;
+            double averageBlocks = blocks.Any() ? blocks.Average() : 0;
+
+            double averageThreePercentage = threesAttempted.Any() && threesMade.Any() 
+                ? threesMade.Average() != 0 && threesAttempted.Average() != 0 
+                ? (threesMade.Average() / threesAttempted.Average()) * 100 : 0 : 0;
+
+            double averageFreeThrowPercentage = freeThrowsMade.Any() && freeThrowsAttempted.Any()
+                ? freeThrowsMade.Average() != 0 && freeThrowsAttempted.Average() != 0
+                ? (freeThrowsMade.Average() / freeThrowsAttempted.Average()) * 100 : 0 :0;
+
+            double averageFieldGoalPercentage = fieldGoalsMade.Any() && fieldGoalsAttempted.Any() 
+                ? fieldGoalsMade.Average() != 0 && fieldGoalsAttempted.Average() != 0
+                ? (fieldGoalsMade.Average() / fieldGoalsAttempted.Average()) * 100 : 0 : 0;
 
             var seasonStatModel = new PlayerSeasonStatisticServiceModel
             {
@@ -268,9 +272,9 @@
                 AverageRebounds = Math.Round(averageRebounds, 1, MidpointRounding.AwayFromZero),
                 AverageBlocks = Math.Round(averageBlocks, 1, MidpointRounding.AwayFromZero),
                 AverageSteals = Math.Round(averageSteals, 1, MidpointRounding.AwayFromZero),
-                AverageFreeThrowPercentage = averageFreeThrowPercentage,
-                AverageFieldGoalPercentage = averageFieldGoalPercentage,
-                AverageThreePercentage = averageThreePercentage
+                AverageFreeThrowPercentage = Math.Round(averageFreeThrowPercentage, 1, MidpointRounding.AwayFromZero),
+                AverageFieldGoalPercentage = Math.Round(averageFieldGoalPercentage, 1, MidpointRounding.AwayFromZero),
+                AverageThreePercentage = Math.Round(averageThreePercentage, 1, MidpointRounding.AwayFromZero)
             };
 
             return seasonStatModel;
@@ -288,31 +292,40 @@
             double totalFGPercentage = 0;
             double totalFTPercentage = 0;
             double totalThreePercentage = 0;
+            var gamesPlayed = 0;
 
             foreach (var seasonId in seasonIds)
             {
                 var seasonStats = await this.GetSeasonStatistics(playerId, seasonId);
 
-                totalPoints += seasonStats.AveragePoints;
-                totalAssists += seasonStats.AverageAssists;
-                totalRebounds += seasonStats.AverageRebounds;
-                totalSteals += seasonStats.AverageSteals;
-                totalBlocks += seasonStats.AverageBlocks;
-                totalFGPercentage += seasonStats.AverageFieldGoalPercentage;
-                totalFTPercentage += seasonStats.AverageFreeThrowPercentage;
-                totalThreePercentage += seasonStats.AverageThreePercentage;
+                gamesPlayed = await this.db.Players
+                    .Where(p => p.Id == playerId)
+                    .Select(p => p.SingleGameStatistics.Count())
+                    .FirstOrDefaultAsync();
+
+                if (seasonStats != null)
+                {
+                    totalPoints += seasonStats.AveragePoints;
+                    totalAssists += seasonStats.AverageAssists;
+                    totalRebounds += seasonStats.AverageRebounds;
+                    totalSteals += seasonStats.AverageSteals;
+                    totalBlocks += seasonStats.AverageBlocks;
+                    totalFGPercentage += seasonStats.AverageFieldGoalPercentage;
+                    totalFTPercentage += seasonStats.AverageFreeThrowPercentage;
+                    totalThreePercentage += seasonStats.AverageThreePercentage;
+                }
             }
 
             var model = new PlayerCareerStatisticServiceModel
             {
-                AveragePoints = totalPoints / seasonIds.Count(),
-                AverageAssists = totalAssists / seasonIds.Count(),
-                AverageRebounds = totalRebounds / seasonIds.Count(),
-                AverageSteals = totalSteals / seasonIds.Count(),
-                AverageBlocks = totalBlocks / seasonIds.Count(),
-                AverageFieldGoalPercentage = totalFGPercentage / seasonIds.Count(),
-                AverageFreeThrowPercentage = totalFTPercentage / seasonIds.Count(),
-                AverageThreePercentage = totalThreePercentage / seasonIds.Count()
+                AveragePoints = totalPoints != 0 ? Math.Round(totalPoints / gamesPlayed, 0) : 0,
+                AverageAssists = totalAssists != 0 ? Math.Round(totalAssists / gamesPlayed, 0): 0,
+                AverageRebounds = totalRebounds != 0 ? Math.Round(totalRebounds / gamesPlayed, 0) : 0,
+                AverageSteals = totalSteals != 0 ? Math.Round(totalSteals / gamesPlayed, 0) : 0,
+                AverageBlocks = totalBlocks != 0 ? Math.Round(totalBlocks / gamesPlayed, 0) : 0,
+                AverageFieldGoalPercentage = totalFGPercentage  != 0 ? Math.Round(totalFGPercentage / gamesPlayed, 0) : 0,
+                AverageFreeThrowPercentage = totalFTPercentage != 0 ? Math.Round(totalFTPercentage / gamesPlayed, 0) : 0,
+                AverageThreePercentage = totalThreePercentage != 0 ? Math.Round(totalThreePercentage / gamesPlayed, 0) : 0
             };
 
             return model;
