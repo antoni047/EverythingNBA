@@ -51,7 +51,7 @@
             }
         }
 
-        public async Task RemoveSeriesAsync (int playoffId, int seriesId)
+        public async Task RemoveSeriesAsync(int playoffId, int seriesId)
         {
             var playoff = await this.db.Playoffs.FindAsync(playoffId);
             var series = await this.db.Series.FindAsync(seriesId);
@@ -103,7 +103,7 @@
             }
 
             var finalSeries = playoff.Series.Where(s => s.Stage == "Final").FirstOrDefault();
-            var winnerName = await this.seriesService.GetWinnerAsync(finalSeries.Id);
+            var winnerName = finalSeries != null ? await this.seriesService.GetWinnerAsync(finalSeries.Id) : "";
 
             var seriesModels = new List<SeriesOverviewServiceModel>();
 
@@ -116,6 +116,7 @@
 
             var model = new GetPlayoffServiceModel
             {
+                Id = playoff.Id,
                 SeasonId = playoff.SeasonId,
                 Series = seriesModels,
                 WinnerName = winnerName
