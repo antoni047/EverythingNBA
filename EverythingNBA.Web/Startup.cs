@@ -31,7 +31,6 @@ namespace EverythingNBA.Web
             services.AddDbContext<EverythingNBADbContext>(
                 options => options.UseSqlServer(@"Server=DESKTOP-E6O5I68\SQLEXPRESS01;Database=EverythingNbaDb;Integrated Security=True;"));
 
-            services.AddAutoMapper(typeof(Services.Mapping.MappingProfile));
             services.AddAutoMapper(typeof(Web.Mapping.MappingProfile));
             services.AddMvc();
 
@@ -79,6 +78,8 @@ namespace EverythingNBA.Web
                     areaName : "areas",
                     pattern : "{area}/{controller=Home}/{action=Index}/{id?}"
                     );
+
+                endpoints.MapControllerRoute("HeadToHeadGames", "Games/HeadToHead/{team1Name}-vs-{team2Name}", new { controller = "Games", action = "HeadToHead" });
 
                 endpoints.MapControllerRoute(
                     name: "default",
