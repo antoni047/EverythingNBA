@@ -22,8 +22,8 @@
 
         public string Venue { get; set; }
 
-        public ICollection<PlayerGameStatisticServiceModel> TeamHostPlayerStats { get; set; }
+        public ICollection<PlayerGameStatisticServiceModel> TeamHostPlayerStats { get; set; } = new HashSet<PlayerGameStatisticServiceModel>();
 
-        public ICollection<PlayerGameStatisticServiceModel> Team2PlayerStats { get; set; }
+        public ICollection<PlayerGameStatisticServiceModel> Team2PlayerStats { get; set; } = new HashSet<PlayerGameStatisticServiceModel>();
     }
 }
