@@ -44,7 +44,7 @@
 
             if (teamDetailsModel == null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("All");
             }
 
             return this.View(teamDetailsModel);
