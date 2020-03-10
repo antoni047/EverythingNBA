@@ -103,40 +103,12 @@ namespace EverythingNBA.Services.Implementations
 
         public async Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsAsync(string type)
         {
-            var enumType = (AllStarTeamType)Enum.Parse(typeof(AllStarTeamType), type);
-            var allStarTeams = await this.db.AllStarTeams
-                .Include(ast => ast.Players)
-                    .ThenInclude(x => x.Player)
-                .Where(ast => ast.Type == enumType)
-                .ToListAsync();
-
-            var allStarTeamServiceModels = new List<GetAllStarTeamServiceModel>();
-
-            foreach (var (team, players, allStarTeamsPlayers) in from team in allStarTeams
-                                                                 let players = new List<Player>()
-                                                                 let allStarTeamsPlayers = team.Players.ToList()
-                                                                 select (team, players, allStarTeamsPlayers))
-            {
-                allStarTeamsPlayers.ForEach(x => players.Add(x.Player));
-                var model = new GetAllStarTeamServiceModel
-                {
-                    Type = team.Type.ToString(),
-                    Year = team.Year,
-                    Players = players
-                };
-                allStarTeamServiceModels.Add(model);
-            }
-
-            return allStarTeamServiceModels;
+            return await this.CreateAllStarTeamServiceModelCollection(null, type);
         }
 
-        public async Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsAsync(int Year)
+        public async Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsAsync(int year)
         {
-            var allStarTeam = await this.db.AllStarTeams.Where(ast => ast.Year == Year).FirstOrDefaultAsync();
-
-            var result = await this.GetAllASTeamsAsync(allStarTeam.Type.ToString());
-
-            return result;
+            return await this.CreateAllStarTeamServiceModelCollection(year, "");
         }
 
         public async Task<GetAllStarTeamServiceModel> GetAllStarTeamAsync(int id)
@@ -170,6 +142,51 @@ namespace EverythingNBA.Services.Implementations
             var allStarTeam = await this.db.AllStarTeams.Where(ast => ast.Type == enumType && ast.Year == Year).FirstOrDefaultAsync();
 
             return await this.GetAllStarTeamAsync(allStarTeam.Id);
+        }
+
+        private async Task<ICollection<GetAllStarTeamServiceModel>> CreateAllStarTeamServiceModelCollection(int? year, string type)
+        {
+            var allStarTeams = new List<AllStarTeam>();
+
+            if (String.IsNullOrWhiteSpace(type))
+            {
+                allStarTeams = await this.db.AllStarTeams
+                .Include(ast => ast.Players)
+                    .ThenInclude(x => x.Player)
+                .Where(ast => ast.Year == year)
+                .ToListAsync();
+            }
+
+            else
+            {
+                var enumType = (AllStarTeamType)Enum.Parse(typeof(AllStarTeamType), type);
+
+                allStarTeams = await this.db.AllStarTeams
+                .Include(ast => ast.Players)
+                    .ThenInclude(x => x.Player)
+                .Where(ast => ast.Type == enumType)
+                .ToListAsync();
+            }
+
+
+            var allStarTeamServiceModels = new List<GetAllStarTeamServiceModel>();
+
+            foreach (var (team, players, allStarTeamsPlayers) in from team in allStarTeams
+                                                                 let players = new List<Player>()
+                                                                 let allStarTeamsPlayers = team.Players.ToList()
+                                                                 select (team, players, allStarTeamsPlayers))
+            {
+                allStarTeamsPlayers.ForEach(x => players.Add(x.Player));
+                var model = new GetAllStarTeamServiceModel
+                {
+                    Type = team.Type.ToString(),
+                    Year = team.Year,
+                    Players = players
+                };
+                allStarTeamServiceModels.Add(model);
+            }
+
+            return allStarTeamServiceModels;
         }
     }
 }
