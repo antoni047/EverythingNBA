@@ -11,7 +11,7 @@
     using Web.Models.Awards;
     using Data;
 
-    public class AwardaController : Controller
+    public class AwardsController : Controller
     {
         private readonly IMapper mapper;
         private readonly EverythingNBADbContext db;
@@ -19,7 +19,7 @@
         private readonly ISeasonService seasonService;
         private readonly IPlayerService playerService;
 
-        public AwardaController(IMapper mapper, EverythingNBADbContext db, IAwardService awardService, ISeasonService seasonService, 
+        public AwardsController(IMapper mapper, EverythingNBADbContext db, IAwardService awardService, ISeasonService seasonService, 
             IPlayerService playerService)
         {
             this.mapper = mapper;
@@ -39,7 +39,7 @@
 
         public async Task<IActionResult> All()
         {
-            var awards = this.awardService.GetAllAwards();
+            var awards = await this.awardService.GetAllAwardsAsync();
 
             return this.View(awards);
         }
