@@ -34,6 +34,7 @@
             return this.View(players);
         }
 
+        [Route("[controller]/[action]/{playerId:int}")]
         public async Task<IActionResult> PlayerDetails(int playerId)
         {
             var playerDetails = await this.playerService.GetPlayerDetailsAsync(playerId);
@@ -41,6 +42,7 @@
             return this.View(playerDetails);
         }
 
+        [Route("[controller]/[action]/{playerId:int}")]
         public async Task<IActionResult> PlayerAccomplishments(int playerId)
         {
             var playerAccomplishments = await this.playerService.GetPlayerAccomplishentsAsync(playerId);
@@ -73,6 +75,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{playerId:int}")]
         public async Task<IActionResult> Edit(int playerId)
         {
             var playerDetails = await this.playerService.GetPlayerDetailsAsync(playerId);
@@ -98,6 +101,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{playerId:int}")]
         public async Task<IActionResult> Delete(int playerId)
         {
             var player = await this.playerService.GetPlayerDetailsAsync(playerId);

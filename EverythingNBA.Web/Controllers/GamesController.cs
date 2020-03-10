@@ -36,6 +36,7 @@
             this.gameStatisticService = gameStatisticService;
         }
 
+        [Route("[controller]/[action]/{seasonId:int}")]
         public async Task<IActionResult> Results(int seasonId)
         {
             var seasonGames = await this.gameService.GetSeasonGamesAsync(seasonId);
@@ -67,6 +68,7 @@
             return this.View(gamesNotPlayed);
         }
 
+        [Route("[controller]/[action]/{gameId:int}")]
         public async Task<IActionResult> GameDetails(int gameId)
         {
             var currentYear = this.GetCurrentSeasonYear();
@@ -109,6 +111,7 @@
             return this.View(gameModel);
         }
 
+        [Route("[controller]/[action]/{team1Name}&{team2Name}")]
         public async Task<IActionResult> HeadToHead(string team1Name, string team2Name)
         {
             var games = await this.gameService.GetAllGamesBetweenTeamsAsync(team1Name, team2Name);
@@ -147,6 +150,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{gameId:int}")]
         public async Task<IActionResult> EditGame(int gameId)
         {
             var gameModel = await this.gameService.GetGameAsync(gameId);
@@ -175,6 +179,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{gameId:int}/{playerName}")]
         public async Task<IActionResult> EditGameStatistic(int gameId, string playerName)
         {
             var gameStatistic = await this.gameStatisticService.GetGameStatisticsAsync(gameId, playerName);

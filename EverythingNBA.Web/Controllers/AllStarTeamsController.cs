@@ -29,6 +29,7 @@
             this.seasonService = seasonService;
         }
 
+        [Route("[controller]/[action]/{seasonId:int}")]
         public async Task<IActionResult> SeasonAllStarTeams(int seasonId)
         {
             var year = await this.seasonService.GetYearAsync(seasonId);
@@ -38,6 +39,7 @@
             return this.View(astTeams);
         }
 
+        [Route("[controller]/[action]/{type}")]
         public async Task<IActionResult> AllStarTeamType(string type)
         {
             var astTeams = await this.astService.GetAllASTeamsAsync(type);
@@ -80,6 +82,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{allStarTeamId:int}")]
         public async Task<IActionResult> Delete(int allStarTeamId)
         {
             var model = await this.astService.GetAllStarTeamAsync(allStarTeamId);

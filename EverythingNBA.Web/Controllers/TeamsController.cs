@@ -36,6 +36,7 @@
             return View(allTeams);
         }
 
+        [Route("[controller]/[action]/{teamId:int}")]
         public async Task<IActionResult> TeamDetails(int teamId)
         {
             var currentYear = this.GetCurrentSeasonYear();
@@ -69,6 +70,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{teamId:int}")]
         public async Task<IActionResult> Edit(int teamId)
         {
             var year = this.GetCurrentSeasonYear();
@@ -83,7 +85,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit (TeamInputModel inputModel, int teamId)
+        public async Task<IActionResult> Edit(TeamInputModel inputModel, int teamId)
         {
             if (!ModelState.IsValid)
             {
@@ -98,7 +100,8 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete (int teamId)
+        [Route("[controller]/[action]/{teamId:int}")]
+        public async Task<IActionResult> Delete(int teamId)
         {
             var year = this.GetCurrentSeasonYear();
             var team = await this.teamService.GetTeamDetailsAsync(teamId, year);
@@ -127,20 +130,20 @@
             return RedirectToAction("All");
         }
 
-    private int GetCurrentSeasonYear()
-    {
-        var currentYear = 0;
-
-        if (DateTime.Now.Month >= 9)
+        private int GetCurrentSeasonYear()
         {
-            currentYear = DateTime.Now.Year + 1;
-        }
-        else if (DateTime.Now.Month < 9)
-        {
-            currentYear = DateTime.Now.Year;
-        }
+            var currentYear = 0;
 
-        return currentYear;
+            if (DateTime.Now.Month >= 9)
+            {
+                currentYear = DateTime.Now.Year + 1;
+            }
+            else if (DateTime.Now.Month < 9)
+            {
+                currentYear = DateTime.Now.Year;
+            }
+
+            return currentYear;
+        }
     }
-}
 }

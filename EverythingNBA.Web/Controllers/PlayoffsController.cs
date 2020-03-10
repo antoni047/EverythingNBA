@@ -61,6 +61,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{playoffId:int}")]
         public async Task<IActionResult> Delete(int playoffId)
         {
             var playoff = await this.playoffService.GetDetailsAsync(playoffId);
@@ -91,7 +92,7 @@
         }
 
         [HttpGet]
-        public IActionResult AddSeries(int seriesId)
+        public IActionResult AddSeries()
         {
             return this.View();
         }

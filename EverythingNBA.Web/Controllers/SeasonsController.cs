@@ -28,6 +28,7 @@
             this.teamService = teamService;
         }
 
+        [Route("[controller]/[action]/{seasonId:int}")]
         public async Task<IActionResult> Standings(int seasonId)
         {
             var allTeamsStandings = await this.teamService.GetStandingsAsync(seasonId);
@@ -65,6 +66,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{seasonId:int}")]
         public async Task<IActionResult> Edit(int seasonId)
         {
             var seasonDetails = await this.seasonService.GetDetailsAsync(seasonId);
@@ -92,6 +94,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{seasonId:int}")]
         public async Task<IActionResult> Delete(int seasonId)
         {
             var season = await this.seasonService.GetDetailsAsync(seasonId);

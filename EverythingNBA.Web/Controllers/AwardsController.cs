@@ -29,6 +29,7 @@
             this.playerService = playerService;
         }
 
+        [Route("[controller]/[action]/{seasonId:int}")]
         public async Task<IActionResult> SeasonAwards(int seasonId)
         {
             var awards = await this.awardService.GetSeasonAwardsAsync(seasonId);
@@ -69,6 +70,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{awardId:int}")]
         public async Task<IActionResult> Edit(int awardId)
         {
             var award = await this.awardService.GetAwardDetails(awardId);
@@ -97,6 +99,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{awardId:int}")]
         public async Task<IActionResult> Delete(int awardId)
         {
             var award = await this.awardService.GetAwardDetails(awardId);
