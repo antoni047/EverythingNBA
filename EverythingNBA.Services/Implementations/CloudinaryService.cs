@@ -5,18 +5,22 @@ using System.Threading.Tasks;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
+using System.Linq;
+using Microsoft.Extensions.Configuration;
 
 using EverythingNBA.Services.Utilities;
-using System.Linq;
+
 
 namespace EverythingNBA.Services.Implementations
 {
     public class CloudinaryService : ICloudinaryService
     {
         private Cloudinary cloudinary;
+        private readonly IConfiguration configuration;
 
-        public CloudinaryService()
+        public CloudinaryService(IConfiguration configuration)
         {
+            this.configuration = configuration;
             this.StartCloudinary();
         }
 
@@ -68,14 +72,12 @@ namespace EverythingNBA.Services.Implementations
 
         private void StartCloudinary()
         {
-            Account account = new Account()
-            {
-                Cloud = CloudConfiguration.CloudName,
-                ApiKey = CloudConfiguration.APIKey,
-                ApiSecret = CloudConfiguration.APIPass
-            };
-
-            Cloudinary cloudinary = new Cloudinary(account);
+            var key = configuration.GetSection("Cloudinary:AppName").Value;
+            this.cloudinary = new Cloudinary(
+                new Account(
+                    configuration.GetSection("Cloudinary:AppName").Value,
+                    configuration.GetSection("Cloudinary:ApiKey").Value,
+                    configuration.GetSection("Cloudinary:ApiSecret").Value));
         }
     }
 }

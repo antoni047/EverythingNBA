@@ -53,8 +53,8 @@ namespace EverythingNBA.Web
 
             Account account = new Account(
                 this.Configuration["Cloudinary:AppName"],
-                this.Configuration["Cloudinary:AppKey"],
-                this.Configuration["Cloudinary:AppSecret"]);
+                this.Configuration["Cloudinary:ApiKey"],
+                this.Configuration["Cloudinary:ApiSecret"]);
 
             Cloudinary cloudinary = new Cloudinary(account);
 
@@ -84,9 +84,9 @@ namespace EverythingNBA.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapAreaControllerRoute(
-                    name : "areas",
-                    areaName : "areas",
-                    pattern : "{area}/{controller=Home}/{action=Index}/{id?}"
+                    name : "TeamsArchiveArea",
+                    areaName : "Archive",
+                    pattern : "{area}/{controller=Teams}/{action=TeamDetails}/{teamId:int}/{year:int}"
                     );
 
                 endpoints.MapControllerRoute("HeadToHeadGames", "Games/HeadToHead/{team1Name}-vs-{team2Name}", new { controller = "Games", action = "HeadToHead" });

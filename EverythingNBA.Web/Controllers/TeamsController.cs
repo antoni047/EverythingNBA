@@ -11,6 +11,7 @@
     using Services.Models.Team;
     using Web.Models.Teams;
     using Data;
+    using Microsoft.AspNetCore.Http;
 
     public class TeamsController : Controller
     {
@@ -85,7 +86,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(TeamInputModel inputModel, int teamId)
+        public async Task<IActionResult> Edit(TeamInputModel inputModel, int teamId, IFormFile image)
         {
             if (!ModelState.IsValid)
             {
@@ -94,7 +95,7 @@
 
             var model = mapper.Map<GetTeamDetailsServiceModel>(inputModel);
 
-            await this.teamService.EditTeamAsync(model, teamId);
+            await this.teamService.EditTeamAsync(model, teamId, image);
 
             return RedirectToAction("TeamDetails");
         }
