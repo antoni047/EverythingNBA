@@ -21,12 +21,13 @@
         private readonly ISeasonService seasonService;
         private readonly IPlayerService playerService;
 
-        public AllStarTeamsController(IMapper mapper, EverythingNBADbContext db, IAllStarTeamService allStarTeamService, ISeasonService seasonService)
+        public AllStarTeamsController(IMapper mapper, EverythingNBADbContext db, IPlayerService playerService, IAllStarTeamService allStarTeamService, ISeasonService seasonService)
         {
             this.mapper = mapper;
             this.db = db;
             this.astService = allStarTeamService;
             this.seasonService = seasonService;
+            this.playerService = playerService;
         }
 
         [Route("[controller]/[action]/{seasonId:int}")]
