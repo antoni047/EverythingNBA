@@ -1,5 +1,6 @@
 ﻿namespace EverythingNBA.Web.Models.Teams
 {
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
 
     using static EverythingNBA.Models.Utilities.DataConstants;
@@ -13,7 +14,7 @@
         [Required]
         public string AbbreviatedName { get; set; }
 
-        public int? CloudinaryImageId { get; set; }
+        public IFormFile Image { get; set; }
 
         [Required]
         public string Conference { get; set; }

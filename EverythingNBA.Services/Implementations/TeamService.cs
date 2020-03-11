@@ -67,14 +67,14 @@
 
         }
 
-        public async Task<int> AddTeamAsync(string name, /*IFormFile imageFile,*/ string conference, string venue, string instagram, string twitter)
+        public async Task<int> AddTeamAsync(string name, IFormFile imageFile, string conference, string venue, string instagram, string twitter)
         {
-            //var imageId = await this.imageService.UploadImageAsync(imageFile);
+            var imageId = await this.imageService.UploadImageAsync(imageFile);
 
             var teamObj = new Team
             {
                 Name = name,
-                //CloudinaryImageId = imageId,
+                CloudinaryImageId = imageId,
                 Conference = (ConferenceType)Enum.Parse(typeof(ConferenceType), conference),
                 Venue = venue,
                 Twitter = twitter,
@@ -448,13 +448,22 @@
             return true;
         }
 
-        public async Task EditTeamAsync(GetTeamDetailsServiceModel model, int id)
+        public async Task EditTeamAsync(GetTeamDetailsServiceModel model, int id, IFormFile image)
         {
             var team = await this.db.Teams.FindAsync(id);
 
+            if (image != null)
+            {
+                var imageId = await this.imageService.UploadImageAsync(image);
+                team.CloudinaryImageId = imageId;
+            }
+            else
+            {
+                team.CloudinaryImageId = model.CloudinaryImageId;
+            }
+
             team.Name = model.Name;
             team.AbbreviatedName = model.AbbreviatedName;
-            team.CloudinaryImageId = model.CloudinaryImageId;
             team.Conference = (ConferenceType)Enum.Parse(typeof(ConferenceType), model.Conference);
             team.Venue = model.Venue;
             team.Instagram = model.Instagram;

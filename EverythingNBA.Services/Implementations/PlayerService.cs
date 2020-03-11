@@ -6,12 +6,13 @@
     using System.Linq;
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
+    using System.Globalization;
+    using Microsoft.AspNetCore.Http;
 
     using EverythingNBA.Models;
     using EverythingNBA.Models.Enums;
     using EverythingNBA.Data;
     using EverythingNBA.Services.Models.Player;
-    using System.Globalization;
 
     public class PlayerService : IPlayerService
     {
@@ -38,9 +39,9 @@
         }
 
         public async Task<int> AddPlayerAsync(string firstName, string lastName, int teamId, int? rookieYear, int age, int height, int weight,
-            string position, bool isStarter, /*IFormFile imageFile,*/ int shirtNumber, string instagramLink, string twitterLink)
+            string position, bool isStarter, IFormFile imageFile, int shirtNumber, string instagramLink, string twitterLink)
         {
-            //var imageId = await this.imageService.UploadImageAsync(imageFile);
+            var imageId = await this.imageService.UploadImageAsync(imageFile);
 
             var playerObj = new Player
             {
@@ -53,7 +54,7 @@
                 Weight = weight,
                 Position = (PositionType)Enum.Parse(typeof(PositionType), position),
                 IsStarter = isStarter,
-                //CloudinaryImageId = imageId,
+                CloudinaryImageId = imageId,
                 ShirtNumber = shirtNumber,
                 InstagramLink = instagramLink,
                 TwitterLink = twitterLink,
@@ -367,11 +368,21 @@
             return modelsList;
         }
 
-        public async Task EditPlayerAsync(PlayerDetailsServiceModel model, int id)
+        public async Task EditPlayerAsync(PlayerDetailsServiceModel model, int id, IFormFile image)
         {
             var player = await this.db.Players.FindAsync(id);
 
             var playerTeam = await this.db.Teams.Where(t => t.Name == model.CurrentTeam).FirstOrDefaultAsync();
+
+            if (image != null)
+            {
+                var imageId = await this.imageService.UploadImageAsync(image);
+                player.CloudinaryImageId = imageId;
+            }
+            else
+            {
+                player.CloudinaryImageId = model.CloudinaryImageId;
+            }
 
             player.FirstName = model.FirstName;
             player.LastName = model.LastName;
@@ -385,7 +396,6 @@
             player.TeamId = playerTeam.Id;
             player.ShirtNumber = model.ShirtNumber;
             player.RookieYear = model.RookieYear;
-            player.CloudinaryImageId = model.CloudinaryImageId;
 
             await this.db.SaveChangesAsync();
         }

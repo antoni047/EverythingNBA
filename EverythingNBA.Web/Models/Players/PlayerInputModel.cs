@@ -1,5 +1,6 @@
 ﻿namespace EverythingNBA.Web.Models.Players
 {
+    using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
 
     using static EverythingNBA.Models.Utilities.DataConstants;
@@ -36,7 +37,7 @@
 
         public bool IsStarter { get; set; }
 
-        //Image
+        public IFormFile Image { get; set; }
 
         [Required]
         [Range(MinShirtNumber, MaxShirtNumber)]

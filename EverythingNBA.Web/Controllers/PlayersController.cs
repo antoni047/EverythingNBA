@@ -68,8 +68,8 @@
 
             var team = await this.teamService.GetTeamDetailsAsync(model.Team, year);
 
-            await this.playerService.AddPlayerAsync(model.FirstName, model.LastName, team.Id, model.RookieYear, model.Age, model.Height, model.Weight,
-                model.Position, model.IsStarter, model.ShirtNumber, model.InstagramLink, model.TwitterLink);
+            await this.playerService.AddPlayerAsync(model.FirstName, model.LastName, team.Id, model.RookieYear, model.Age, model.Height,
+                model.Weight, model.Position, model.IsStarter, model.Image ,model.ShirtNumber, model.InstagramLink, model.TwitterLink);
 
             return RedirectToAction("All");
         }
@@ -95,7 +95,7 @@
                 return this.View(model);
             }
 
-            await this.playerService.EditPlayerAsync(model, playerId);
+            await this.playerService.EditPlayerAsync(model, playerId, inputModel.Image);
 
             return RedirectToAction("PlayerDetails");
         }

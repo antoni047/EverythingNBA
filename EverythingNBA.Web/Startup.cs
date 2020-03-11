@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
+using CloudinaryDotNet;
 
 namespace EverythingNBA.Web
 {
@@ -49,6 +50,15 @@ namespace EverythingNBA.Web
             services.AddTransient<ICloudinaryService, CloudinaryService>();
 
             services.AddControllersWithViews();
+
+            Account account = new Account(
+                this.Configuration["Cloudinary:AppName"],
+                this.Configuration["Cloudinary:AppKey"],
+                this.Configuration["Cloudinary:AppSecret"]);
+
+            Cloudinary cloudinary = new Cloudinary(account);
+
+            services.AddSingleton(cloudinary);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -64,7 +64,7 @@
                 return this.View(model);
             }
 
-            await this.teamService.AddTeamAsync(model.Name, model.Conference, model.Venue, model.Instagram, model.Twitter);
+            await this.teamService.AddTeamAsync(model.Name, model.Image ,model.Conference, model.Venue, model.Instagram, model.Twitter);
 
             return RedirectToAction("All");
         }
