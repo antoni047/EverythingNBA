@@ -1,17 +1,15 @@
-﻿
-
-namespace EverythingNBA.Services.Implementations
+﻿namespace EverythingNBA.Services.Implementations
 {
-    using EverythingNBA.Data;
-    using EverythingNBA.Models;
-    using EverythingNBA.Models.Enums;
-
     using System;
     using System.Threading.Tasks;
     using System.Linq;
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
-    using EverythingNBA.Services.Models.Award;
+    
+    using Data;
+    using EverythingNBA.Models;
+    using EverythingNBA.Models.Enums;
+    using Services.Models.Award;
 
     public class AwardService : IAwardService
     {
@@ -73,7 +71,8 @@ namespace EverythingNBA.Services.Implementations
             var winnersNames = new List<string>();
 
             var awards = await this.db.Awards
-                .Include(a => a.Winner).ThenInclude(p => p.Team)
+                .Include(a => a.Winner)
+                    .ThenInclude(p => p.Team)
                 .Where(a => a.SeasonId == seasonId)
                 .ToListAsync();
 
@@ -178,11 +177,6 @@ namespace EverythingNBA.Services.Implementations
             }
 
             return modelsList;
-
-            //foreach (var award in awards)
-            //{
-            //    awardType = award.Name.ToString();
-            //}
         }
 
         public async Task<ICollection<AllAwardsServiceModel>> GetAllAwardsAsync()
@@ -249,7 +243,7 @@ namespace EverythingNBA.Services.Implementations
             var model = new AwardDetailsServiceModel
             {
                 Winner = award.Winner.FirstName + " " + award.Winner.LastName,
-                //WinnerTeam = award.WinnerTeamName
+                WinnerTeam = award.WinnerTeamName,
                 Year = award.Year,
                 Type = award.Name.ToString()
             };

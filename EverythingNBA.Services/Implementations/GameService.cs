@@ -6,25 +6,22 @@
     using AutoMapper;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
-
-    using EverythingNBA.Data;
-    using EverythingNBA.Models;
-    using EverythingNBA.Services.Models.Game;
-    using EverythingNBA.Services.Models.GameStatistic;
-    using EverythingNBA.Services.Models.GameStatisticModels;
     using System.Globalization;
+
+    using Data;
+    using EverythingNBA.Models;
+    using Services.Models.Game;
+    using Services.Models.GameStatistic;
 
     public class GameService : IGameService
     {
         private readonly EverythingNBADbContext db;
         private readonly IMapper mapper;
-        private readonly IGameStatisticService gameStatisticService;
 
-        public GameService(EverythingNBADbContext db, IMapper mapper, IGameStatisticService gameStatisticService)
+        public GameService(EverythingNBADbContext db, IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
-            this.gameStatisticService = gameStatisticService;
         }
 
         public async Task<int> AddGameAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, string date, bool isFinished)
@@ -170,7 +167,8 @@
         public async Task<PlayerTopStatisticServiceModel> GetTopAssistsAsync(int gameId)
         {
             var game = await this.db.Games
-                .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
+                .Include(g => g.PlayerStats)
+                    .ThenInclude(ps => ps.Player)
                 .Where(g => g.Id == gameId)
                 .FirstOrDefaultAsync();
 
@@ -193,7 +191,8 @@
         public async Task<PlayerTopStatisticServiceModel> GetTopPointsAsync(int gameId)
         {
             var game = await this.db.Games
-                .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
+                .Include(g => g.PlayerStats)
+                    .ThenInclude(ps => ps.Player)
                 .Where(g => g.Id == gameId)
                 .FirstOrDefaultAsync();
 
@@ -216,7 +215,8 @@
         public async Task<PlayerTopStatisticServiceModel> GetTopReboundsAsync(int gameId)
         {
             var game = await this.db.Games
-                 .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
+                 .Include(g => g.PlayerStats)
+                    .ThenInclude(ps => ps.Player)
                  .Where(g => g.Id == gameId)
                  .FirstOrDefaultAsync();
 

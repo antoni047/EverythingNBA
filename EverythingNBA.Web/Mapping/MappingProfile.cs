@@ -2,7 +2,6 @@
 {
     using AutoMapper;
     using System.Linq;
-    using System;
     using System.Globalization;
 
     using Models.Seasons;
@@ -13,14 +12,12 @@
     using Services.Models.AllStarTeam;
     using Services.Models.Player;
     using Services.Models.Game;
-    using Services.Models.GameStatisticModels;
+    using Services.Models.GameStatistic;
     using EverythingNBA.Models;
     using Services.Models;
     using Services.Models.Playoff;
     using Services.Models.Team;
     using Services.Models.SeasonStatistic;
-    using Services.Models.GameStatistic;
-    using EverythingNBA.Models.Enums;
     using Services.Models.Series;
 
     public class MappingProfile : Profile

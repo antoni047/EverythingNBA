@@ -1,16 +1,13 @@
-﻿
-namespace EverythingNBA.Services.Implementations
+﻿namespace EverythingNBA.Services.Implementations
 {
-    using EverythingNBA.Data;
-    using EverythingNBA.Models;
-    using Services.Models.GameStatisticModels;
-
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
-    using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
+
+    using Data;
+    using EverythingNBA.Models;
+    using Services.Models.GameStatistic;
 
     public class GameStatisticService : IGameStatisticService
     {

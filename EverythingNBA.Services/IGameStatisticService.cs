@@ -1,9 +1,7 @@
 ﻿namespace EverythingNBA.Services
 {
-    using EverythingNBA.Models;
-    using Services.Models.GameStatisticModels;
+    using Services.Models.GameStatistic;
 
-    using System;
     using System.Threading.Tasks;
 
     public interface IGameStatisticService

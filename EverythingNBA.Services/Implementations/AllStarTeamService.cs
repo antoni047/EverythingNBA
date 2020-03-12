@@ -1,30 +1,24 @@
-﻿
-
-namespace EverythingNBA.Services.Implementations
+﻿namespace EverythingNBA.Services.Implementations
 {
     using System;
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.EntityFrameworkCore;
-    using AutoMapper;
 
     using EverythingNBA.Models;
-    using EverythingNBA.Data;
     using EverythingNBA.Models.Enums;
-    using EverythingNBA.Services.Models.AllStarTeam;
     using EverythingNBA.Models.MappingTables;
-    using EverythingNBA.Services.Models.Player;
+    using Data;
+    using Services.Models.AllStarTeam;
 
     public class AllStarTeamService : IAllStarTeamService
     {
         private readonly EverythingNBADbContext db;
-        private readonly IMapper mapper;
 
-        public AllStarTeamService(EverythingNBADbContext db, IMapper mapper)
+        public AllStarTeamService(EverythingNBADbContext db)
         {
             this.db = db;
-            this.mapper = mapper;
         }
 
         public async Task<int?> AddAllStarTeamAsync(int year, string type, ICollection<string> playerNames)

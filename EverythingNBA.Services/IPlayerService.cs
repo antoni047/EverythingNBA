@@ -1,10 +1,8 @@
-﻿
-namespace EverythingNBA.Services
+﻿namespace EverythingNBA.Services
 {
     using EverythingNBA.Services.Models.Player;
 
     using Microsoft.AspNetCore.Http;
-    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 

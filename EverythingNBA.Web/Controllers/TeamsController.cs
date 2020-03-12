@@ -1,8 +1,6 @@
 ﻿namespace EverythingNBA.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using AutoMapper;
@@ -10,24 +8,18 @@
     using Services;
     using Services.Models.Team;
     using Web.Models.Teams;
-    using Data;
     using Microsoft.AspNetCore.Http;
 
     public class TeamsController : Controller
     {
         private readonly IMapper mapper;
-        private readonly EverythingNBADbContext db;
         private readonly ITeamService teamService;
-        private readonly ISeasonService seasonService;
         private readonly IPlayerService playerService;
 
-        public TeamsController(IMapper mapper, EverythingNBADbContext db, ITeamService teamService, ISeasonService seasonService,
-            IPlayerService playerService)
+        public TeamsController(IMapper mapper, ITeamService teamService, IPlayerService playerService)
         {
-            this.db = db;
             this.mapper = mapper;
             this.teamService = teamService;
-            this.seasonService = seasonService;
             this.playerService = playerService;
         }
         public async Task<IActionResult> All()

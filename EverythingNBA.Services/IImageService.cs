@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-
-namespace EverythingNBA.Services
+﻿namespace EverythingNBA.Services
 {
+    using Microsoft.AspNetCore.Http;
+    using System.Threading.Tasks;
+
     public interface IImageService
     {
         Task<int> UploadImageAsync(IFormFile imageFile);

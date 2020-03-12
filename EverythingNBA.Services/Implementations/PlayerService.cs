@@ -11,8 +11,8 @@
 
     using EverythingNBA.Models;
     using EverythingNBA.Models.Enums;
-    using EverythingNBA.Data;
-    using EverythingNBA.Services.Models.Player;
+    using Data;
+    using Services.Models.Player;
 
     public class PlayerService : IPlayerService
     {
@@ -20,22 +20,13 @@
         private readonly IImageService imageService;
         private readonly IMapper mapper;
         private readonly ISeasonService seasonService;
-        private readonly IGameService gameService;
-        private readonly IAwardService awardService;
-        private readonly IAllStarTeamService astService;
-        //private readonly IGameStatisticService gameStatsService;
 
-        public PlayerService(EverythingNBADbContext db, IImageService imageService, IMapper mapper, ISeasonService seasonService,
-            IGameService gameService, IAwardService awardService, IAllStarTeamService astService/*, IGameStatisticService gameStatsService*/)
+        public PlayerService(EverythingNBADbContext db, IImageService imageService, IMapper mapper, ISeasonService seasonService)
         {
             this.db = db;
             this.imageService = imageService;
             this.mapper = mapper;
             this.seasonService = seasonService;
-            this.gameService = gameService;
-            this.awardService = awardService;
-            this.astService = astService;
-            //this.gameStatsService = gameStatsService;
         }
 
         public async Task<int> AddPlayerAsync(string firstName, string lastName, int teamId, int? rookieYear, int age, int height, int weight,
@@ -121,7 +112,10 @@
 
         public async Task<PlayerDetailsServiceModel> GetPlayerDetailsAsync(string name)
         {
-            var playerId = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == name).Select(p => p.Id).FirstOrDefaultAsync();
+            var playerId = await this.db.Players
+                .Where(p => p.FirstName + " " + p.LastName == name)
+                .Select(p => p.Id)
+                .FirstOrDefaultAsync();
 
             var model = await this.GetPlayerDetailsAsync(playerId);
 

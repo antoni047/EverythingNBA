@@ -1,30 +1,25 @@
 ﻿namespace EverythingNBA.Services.Implementations
 {
-    using System;
     using System.Threading.Tasks;
     using AutoMapper;
     using System.Linq;
-
-    using EverythingNBA.Data;
-    using EverythingNBA.Models;
-    using EverythingNBA.Services.Models.Series;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
-    using EverythingNBA.Services.Models.Game;
+
+    using EverythingNBA.Models;
+    using Data;
+    using Services.Models.Series;
+    using Services.Models.Game;
 
     public class SeriesService : ISeriesService
     {
         private readonly EverythingNBADbContext db;
         private readonly IMapper mapper;
-        private readonly IGameService gameService;
-        private readonly ITeamService teamService;
 
-        public SeriesService(EverythingNBADbContext db, IMapper mapper, IGameService gameService, ITeamService teamService)
+        public SeriesService(EverythingNBADbContext db, IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
-            this.gameService = gameService;
-            this.teamService = teamService;
         }
 
         public async Task AddGameAsync(int seriesId, int gameId, int gameNumber)

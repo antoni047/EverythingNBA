@@ -1,29 +1,19 @@
 ﻿namespace EverythingNBA.Web.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using AutoMapper;
 
     using Services;
-    using Services.Models;
     using Web.Models.Awards;
-    using Data;
 
     public class AwardsController : Controller
     {
-        private readonly IMapper mapper;
-        private readonly EverythingNBADbContext db;
         private readonly IAwardService awardService;
         private readonly ISeasonService seasonService;
         private readonly IPlayerService playerService;
 
-        public AwardsController(IMapper mapper, EverythingNBADbContext db, IAwardService awardService, ISeasonService seasonService, 
-            IPlayerService playerService)
+        public AwardsController(IAwardService awardService, ISeasonService seasonService, IPlayerService playerService)
         {
-            this.mapper = mapper;
-            this.db = db;
             this.awardService = awardService;
             this.seasonService = seasonService;
             this.playerService = playerService;

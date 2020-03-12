@@ -1,28 +1,21 @@
 ﻿namespace EverythingNBA.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using AutoMapper;
 
     using Services;
-    using Services.Models;
-    using Web.Models;
-    using Data;
     using EverythingNBA.Web.Models.Seasons;
+    using EverythingNBA.Services.Models.Season;
 
     public class SeasonsController : Controller
     {
         private readonly IMapper mapper;
-        private readonly EverythingNBADbContext db;
         private readonly ISeasonService seasonService;
         private readonly ITeamService teamService;
 
-        public SeasonsController(ISeasonService seasonService, EverythingNBADbContext db, IMapper mapper, ITeamService teamService)
+        public SeasonsController(ISeasonService seasonService, IMapper mapper, ITeamService teamService)
         {
-            this.db = db;
             this.mapper = mapper;
             this.seasonService = seasonService;
             this.teamService = teamService;

@@ -1,7 +1,6 @@
 ﻿namespace EverythingNBA.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
@@ -9,9 +8,8 @@
 
     using Services;
     using Services.Models.Game;
-    using Services.Models.GameStatisticModels;
+    using Services.Models.GameStatistic;
     using Web.Models.Games;
-    using Data;
     using System.Globalization;
 
     public class GamesController : Controller
@@ -19,18 +17,16 @@
         private readonly IMapper mapper;
         private readonly IGameService gameService;
         private readonly ISeasonService seasonService;
-        private readonly IPlayerService playerService;
         private readonly ISeasonStatisticService statService;
         private readonly ITeamService teamService;
         private readonly IGameStatisticService gameStatisticService;
 
-        public GamesController(IMapper mapper, IGameService gameService, ISeasonService seasonService, IPlayerService playerService,
-            ISeasonStatisticService statService, ITeamService teamService, IGameStatisticService gameStatisticService)
+        public GamesController(IMapper mapper, IGameService gameService, ISeasonService seasonService, ITeamService teamService,
+            ISeasonStatisticService statService, IGameStatisticService gameStatisticService)
         {
             this.mapper = mapper;
             this.gameService = gameService;
             this.seasonService = seasonService;
-            this.playerService = playerService;
             this.statService = statService;
             this.teamService = teamService;
             this.gameStatisticService = gameStatisticService;

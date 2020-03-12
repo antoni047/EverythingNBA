@@ -1,33 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
-
-using EverythingNBA.Web.Models.Home;
-using EverythingNBA.Web.Models;
-using EverythingNBA.Services;
-using EverythingNBA.Data;
-using EverythingNBA.Services.Models.Game;
-using System.Globalization;
-
-namespace EverythingNBA.Web.Controllers
+﻿namespace EverythingNBA.Web.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+    using AutoMapper;
+    using System.Globalization;
+    using Microsoft.AspNetCore.Http;
+
+    using EverythingNBA.Web.Models.Home;
+    using EverythingNBA.Web.Models;
+    using EverythingNBA.Services;
+
     public class HomeController : Controller
     {
         private readonly ITeamService teamService;
         private readonly IGameService gameService;
         private readonly ISeasonService seasonService;
-        private readonly IMapper mapper;
+        private readonly IImageService imageService;
 
-        public HomeController(ITeamService teamService, IGameService gameService, IMapper mapper, ISeasonService seasonService)
+        public HomeController(ITeamService teamService, IGameService gameService, ISeasonService seasonService,
+            IImageService imageService)
         {
             this.teamService = teamService;
             this.gameService = gameService;
-            this.mapper = mapper;
             this.seasonService = seasonService;
+            this.imageService = imageService;
         }
 
         public async Task<IActionResult> Index()
@@ -68,6 +67,22 @@ namespace EverythingNBA.Web.Controllers
             viewModel.WesternTop8Standings = westernShortTeamStandings;
 
             return this.View(viewModel);
+        }
+
+        public IActionResult Add()
+        {
+            return this.View();
+        }
+
+        [HttpPost("AddPost")]
+        public async Task<IActionResult> AddPost(ICollection<IFormFile> images)
+        {
+            foreach (var image in images)
+            {
+                await this.imageService.UploadImageAsync(image);
+            }
+
+            return RedirectToAction("Index");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

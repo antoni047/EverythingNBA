@@ -1,19 +1,14 @@
 ﻿namespace EverythingNBA.Services.Implementations
 {
     using System.Linq;
-    using System;
     using AutoMapper;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
 
-    using EverythingNBA.Data;
     using EverythingNBA.Models;
-    using EverythingNBA.Services.Models.AllStarTeam;
-    using EverythingNBA.Services.Models;
-    using EverythingNBA.Models.Enums;
-    using EverythingNBA.Models.MappingTables;
-    using EverythingNBA.Services.Models.Season;
+    using Data;
+    using Services.Models.Season;
 
     public class SeasonService : ISeasonService
     {
@@ -329,7 +324,7 @@
         {
             var season = await this.db.Seasons
                 .Include(s => s.AllStarTeams)
-                .ThenInclude(ast => ast.Players)
+                    .ThenInclude(ast => ast.Players)
                 .Where(s => s.Id == seasonId)
                 .FirstOrDefaultAsync();
 

@@ -1,6 +1,5 @@
 ﻿namespace EverythingNBA.Services
 {
-    using EverythingNBA.Services.Models;
     using EverythingNBA.Services.Models.Season;
 
     using System.Threading.Tasks;

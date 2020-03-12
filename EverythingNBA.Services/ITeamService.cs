@@ -4,7 +4,6 @@
     using System.Threading.Tasks;
     using System.Collections.Generic;
 
-    using EverythingNBA.Services.Models;
     using EverythingNBA.Services.Models.Team;
 
     public interface ITeamService

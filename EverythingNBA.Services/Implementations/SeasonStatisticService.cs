@@ -5,9 +5,9 @@
     using Microsoft.EntityFrameworkCore;
     using AutoMapper;
 
-    using EverythingNBA.Data;
     using EverythingNBA.Models;
-    using EverythingNBA.Services.Models;
+    using Data;
+    using Services.Models.SeasonStatistic;
 
     public class SeasonStatisticService : ISeasonStatisticService
     {

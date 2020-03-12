@@ -1,30 +1,24 @@
 ﻿namespace EverythingNBA.Web.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using AutoMapper;
 
     using Services;
-    using Services.Models.Series;
     using Web.Models.Series;
-    using Data;
     using System;
 
     public class SeriesController : Controller
     {
         private readonly IMapper mapper;
-        private readonly EverythingNBADbContext db;
         private readonly ISeriesService seriesService;
         private readonly ITeamService teamService;
         private readonly IPlayoffService playoffService;
 
-        public SeriesController(IMapper mapper, EverythingNBADbContext db, ISeriesService seriesService, ITeamService teamService, 
+        public SeriesController(IMapper mapper, ISeriesService seriesService, ITeamService teamService, 
             IPlayoffService playoffService)
         {
             this.mapper = mapper;
-            this.db = db;
             this.seriesService = seriesService;
             this.teamService = teamService;
             this.playoffService = playoffService;

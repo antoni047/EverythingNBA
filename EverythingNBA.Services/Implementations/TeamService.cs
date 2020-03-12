@@ -1,13 +1,5 @@
 ﻿namespace EverythingNBA.Services.Implementations
 {
-    using EverythingNBA.Data;
-    using EverythingNBA.Models;
-    using EverythingNBA.Models.Enums;
-    using EverythingNBA.Services.Models;
-    using EverythingNBA.Services.Models.Team;
-    using EverythingNBA.Services.Models.SeasonStatistic;
-    using EverythingNBA.Services.Models.Game;
-
     using Microsoft.AspNetCore.Http;
     using System;
     using System.Linq;
@@ -16,6 +8,14 @@
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
     using System.Globalization;
+    
+    using EverythingNBA.Models;
+    using EverythingNBA.Models.Enums;
+    using Data;
+    using Services.Models;
+    using Services.Models.Team;
+    using Services.Models.SeasonStatistic;
+    using Services.Models.Game;
 
     public class TeamService : ITeamService
     {

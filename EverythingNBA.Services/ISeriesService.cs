@@ -2,7 +2,6 @@
 {
     using EverythingNBA.Services.Models.Series;
 
-    using System;
     using System.Threading.Tasks;
 
     public interface ISeriesService

@@ -1,7 +1,6 @@
 ﻿namespace EverythingNBA.Services
 {
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
 
     using EverythingNBA.Services.Models.Playoff;
 

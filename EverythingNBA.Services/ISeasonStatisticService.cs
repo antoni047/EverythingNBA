@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
 
-    using EverythingNBA.Services.Models;
+    using EverythingNBA.Services.Models.SeasonStatistic;
 
     public interface ISeasonStatisticService
     {

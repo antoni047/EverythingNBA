@@ -1,16 +1,15 @@
 ﻿namespace EverythingNBA.Services.Implementations
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
     using Microsoft.EntityFrameworkCore;
 
-    using EverythingNBA.Data;
+    using Data;
+    using Services.Models.Playoff;
+    using Services.Models.Series;
     using EverythingNBA.Models;
-    using EverythingNBA.Services.Models.Playoff;
-    using EverythingNBA.Services.Models.Series;
 
     public class PlayoffService : IPlayoffService
     {
