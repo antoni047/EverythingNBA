@@ -1,4 +1,4 @@
-﻿namespace EverythingNBA.Services.Models.GameStatisticModels
+﻿namespace EverythingNBA.Services.Models.GameStatistic
 {
     public class EditGameStatisticServiceModel
     {

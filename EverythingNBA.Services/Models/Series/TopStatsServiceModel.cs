@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EverythingNBA.Services.Models.Series
+﻿namespace EverythingNBA.Services.Models.Series
 {
     public class TopStatsServiceModel
     {

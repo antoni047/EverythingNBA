@@ -1,11 +1,5 @@
 ﻿namespace EverythingNBA.Services.Models.Game
 {
-    using EverythingNBA.Models;
-    using EverythingNBA.Services.Models.GameStatisticModels;
-
-    using System;
-    using System.Collections.Generic;
-
     public class GameDetailsServiceModel
     {
         public int Id { get; set; }

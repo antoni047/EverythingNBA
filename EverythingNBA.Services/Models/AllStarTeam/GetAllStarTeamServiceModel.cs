@@ -1,7 +1,6 @@
 ﻿namespace EverythingNBA.Services.Models.AllStarTeam
 {
     using EverythingNBA.Models;
-    using EverythingNBA.Models.Enums;
 
     using System.Collections.Generic;
 

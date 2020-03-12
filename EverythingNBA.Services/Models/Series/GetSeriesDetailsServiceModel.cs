@@ -1,6 +1,7 @@
 ﻿namespace EverythingNBA.Services.Models.Series
 {
     using System.Collections.Generic;
+
     using EverythingNBA.Services.Models.Game;
 
     public class GetSeriesDetailsServiceModel

@@ -1,9 +1,4 @@
-﻿using EverythingNBA.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EverythingNBA.Services.Models
+﻿namespace EverythingNBA.Services.Models.Season
 {
     public class GetSeasonDetailsServiceModel
     {

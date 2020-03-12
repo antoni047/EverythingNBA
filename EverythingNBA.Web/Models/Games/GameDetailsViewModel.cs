@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
 
-    using Services.Models.GameStatisticModels;
+    using Services.Models.GameStatistic;
 
     public class GameDetailsViewModel
     {

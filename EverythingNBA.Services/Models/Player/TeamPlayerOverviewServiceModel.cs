@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EverythingNBA.Services.Models.Player
+﻿namespace EverythingNBA.Services.Models.Player
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
     public class TeamPlayerOverviewServiceModel
     {
         public int Id { get; set; }

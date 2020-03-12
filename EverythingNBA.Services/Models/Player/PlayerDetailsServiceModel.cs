@@ -1,10 +1,7 @@
-﻿using EverythingNBA.Models;
-using EverythingNBA.Services.Models.AllStarTeam;
-
-using System.Collections.Generic;
-
-namespace EverythingNBA.Services.Models.Player
+﻿namespace EverythingNBA.Services.Models.Player
 {
+    using System.Collections.Generic;
+
     public class PlayerDetailsServiceModel
     {
         public int Id { get; set; }
