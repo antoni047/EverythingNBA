@@ -7,9 +7,9 @@ using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 using EverythingNBA.Services.Utilities;
-
 
 namespace EverythingNBA.Services.Implementations
 {
@@ -35,13 +35,13 @@ namespace EverythingNBA.Services.Implementations
             await cloudinary.DeleteResourcesAsync(deleteParams);
         }
 
-        public string GetImageThumbnailURL(string thumbnailPublicId)
-        {
-            var imageURL = cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(200).Width(200).Crop("thumb"))
-                .BuildUrl(string.Format(thumbnailPublicId));
+        //public string GetImageThumbnailURL(string thumbnailPublicId)
+        //{
+        //    var imageURL = cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(200).Width(200).Crop("thumb"))
+        //        .BuildUrl(string.Format(thumbnailPublicId));
 
-            return imageURL;
-        }
+        //    return imageURL;
+        //}
 
         public string GetImageURL(string publicId)
         {
@@ -54,10 +54,12 @@ namespace EverythingNBA.Services.Implementations
         {
             using var memoryStream = file.OpenReadStream();
 
+            var generator = new Random();
+
             var uploadParams = new ImageUploadParams()
             {
                 File = new FileDescription(Guid.NewGuid().ToString(), memoryStream),
-                PublicId = $"nba{Guid.NewGuid()}",
+                PublicId = $"nba{generator.Next(0, 999999).ToString("000000")}{Path.GetFileNameWithoutExtension(file.FileName)}",
                 Transformation = new Transformation().Crop("limit").Width(800).Height(600),
                 EagerTransforms = new List<Transformation>()
                 {

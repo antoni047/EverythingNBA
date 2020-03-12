@@ -13,6 +13,6 @@ namespace EverythingNBA.Services
 
         string GetImageURL(string publicId);
 
-        string GetImageThumbnailURL(string thumbnailPublicId);
+        //string GetImageThumbnailURL(string thumbnailPublicId);
     }
 }

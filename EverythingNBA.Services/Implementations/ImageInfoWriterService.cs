@@ -15,12 +15,12 @@
             this.db = db;
         }
 
-        public async Task<int> WriteToDbAsync(string imageURL, string imageThumbnailURL, string publicId, long imageLenght)
+        public async Task<int> WriteToDbAsync(string imageURL,/* string imageThumbnailURL,*/ string publicId, long imageLenght)
         {
             var image = new CloudinaryImage
             {
                 ImageURL = imageURL,
-                ImageThumbnailURL = imageThumbnailURL,
+                //ImageThumbnailURL = imageThumbnailURL,
                 Length = imageLenght,
                 ImagePublicId = publicId
             };

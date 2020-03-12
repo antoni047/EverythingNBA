@@ -37,9 +37,9 @@ namespace EverythingNBA.Services.Implementations
 
             var cloudinaryImageURL = this.cloudinary.GetImageURL(uploadResult.PublicId);
 
-            var cloduinaryThumbnailImageURL = this.cloudinary.GetImageThumbnailURL(uploadResult.PublicId);
+            //var cloduinaryThumbnailImageURL = this.cloudinary.GetImageThumbnailURL(uploadResult.PublicId);
 
-            var imageId = await this.imageInfoWriter.WriteToDbAsync(cloudinaryImageURL, cloduinaryThumbnailImageURL, uploadResult.PublicId, uploadResult.Length);
+            var imageId = await this.imageInfoWriter.WriteToDbAsync(cloudinaryImageURL/*, cloduinaryThumbnailImageURL*/, uploadResult.PublicId, uploadResult.Length);
 
             return imageId;
         }
