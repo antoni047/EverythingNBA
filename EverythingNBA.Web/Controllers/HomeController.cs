@@ -34,6 +34,7 @@
             var year = this.GetCurrentSeasonYear();
             var season = await this.seasonService.GetDetailsByYearAsync(year);
 
+            var gamesYesterday = await this.gameService.GetGamesOnDateAsync(DateTime.UtcNow.AddDays(-1).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
             var gamesToday = await this.gameService.GetGamesOnDateAsync(DateTime.UtcNow.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
             var gamesTomorrow = await this.gameService.GetGamesOnDateAsync(DateTime.UtcNow.AddDays(1).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
             var teamStandings = await this.teamService.GetStandingsAsync(season.SeasonId);
@@ -46,7 +47,7 @@
                 var team = await this.teamService.GetTeamAsync(standing.Name);
                 var model = new ShortTeamStandingsViewModel();
                 model.TeamAbbreviation = team.AbbreviatedName;
-                //model.ImageId = standing.TeamLogoImageURL;
+                model.ImageId = standing.ImageId;
                 westernShortTeamStandings.Add(model);
             }
 
@@ -55,16 +56,18 @@
                 var team = await this.teamService.GetTeamAsync(standing.Name);
                 var model = new ShortTeamStandingsViewModel();
                 model.TeamAbbreviation = team.AbbreviatedName;
-                //model.ImageId = standing.TeamLogoImageURL;
+                model.ImageId = standing.ImageId;
                 easternShortTeamStandings.Add(model);
             }
 
-            var viewModel = new IndexViewModel();
-
-            viewModel.GamesToday = gamesToday;
-            viewModel.GamesTomorrow = gamesTomorrow;
-            viewModel.EasternTop8Standings = easternShortTeamStandings;
-            viewModel.WesternTop8Standings = westernShortTeamStandings;
+            var viewModel = new IndexViewModel()
+            {
+                GamesYesterday = gamesYesterday,
+                GamesToday = gamesToday,
+                GamesTomorrow = gamesTomorrow,
+                EasternTop8Standings = easternShortTeamStandings,
+                WesternTop8Standings = westernShortTeamStandings,
+            };
 
             return this.View(viewModel);
         }
