@@ -67,14 +67,17 @@
 
         }
 
-        public async Task<int> AddTeamAsync(string name, IFormFile imageFile, string conference, string venue, string instagram, string twitter)
+        public async Task<int> AddTeamAsync(string name, IFormFile FullImageFile, IFormFile smallImageFile, string conference, 
+            string venue, string instagram, string twitter)
         {
-            var imageId = await this.imageService.UploadImageAsync(imageFile);
+            var fullImageId = await this.imageService.UploadImageAsync(FullImageFile);
+            var smallImageId = await this.imageService.UploadImageAsync(smallImageFile);
 
             var teamObj = new Team
             {
                 Name = name,
-                CloudinaryImageId = imageId,
+                FullImageId = fullImageId,
+                SmallImageId = smallImageId, 
                 Conference = (ConferenceType)Enum.Parse(typeof(ConferenceType), conference),
                 Venue = venue,
                 Twitter = twitter,
@@ -113,6 +116,7 @@
                 .Include(t => t.GamesWon)
                 .Include(t => t.HomeGames)
                 .Include(t => t.AwayGames)
+                .Include(t => t.SmallImage)
                 .ToList();
 
             foreach (var team in teams)
@@ -136,7 +140,7 @@
                 var teamStatModel = new TeamSeasonStatisticServiceModel
                 {
                     Name = team.Name,
-                    //TeamLogoImageURL = team.CloudinaryImage.ImageURL,
+                    ImageId = team.SmallImage.ImagePublicId,
                     Conference = team.Conference.ToString(),
                     Wins = wins,
                     Losses = losses,
@@ -175,6 +179,7 @@
                 .Include(t => t.HomeGames)
                 .Include(t => t.AwayGames)
                 .Include(t => t.GamesWon)
+                .Include(t => t.SmallImage)
                 .Where(t => t.Id == teamId)
                 .FirstOrDefaultAsync();
 
@@ -448,18 +453,19 @@
             return true;
         }
 
-        public async Task EditTeamAsync(GetTeamDetailsServiceModel model, int id, IFormFile image)
+        public async Task EditTeamAsync(GetTeamDetailsServiceModel model, int id, IFormFile fullImage, IFormFile smallImage)
         {
             var team = await this.db.Teams.FindAsync(id);
 
-            if (image != null)
+            if (fullImage != null)
             {
-                var imageId = await this.imageService.UploadImageAsync(image);
-                team.CloudinaryImageId = imageId;
+                var imageId = await this.imageService.UploadImageAsync(fullImage);
+                team.FullImageId = imageId;
             }
-            else
+            if (smallImage != null)
             {
-                team.CloudinaryImageId = model.CloudinaryImageId;
+                var smallImageId = await this.imageService.UploadImageAsync(smallImage);
+                team.SmallImageId = smallImageId;
             }
 
             team.Name = model.Name;

@@ -8,7 +8,8 @@
 
     public interface ITeamService
     {
-        Task<int> AddTeamAsync(string name, IFormFile imageFile, string conference, string venue, string instagram, string twitter);
+        Task<int> AddTeamAsync(string name, IFormFile FullImageFile, IFormFile smallImageFile, string conference, 
+            string venue, string instagram, string twitter);
 
         Task<bool> DeleteTeamAsync(int teamId);
 
@@ -34,7 +35,7 @@
 
         Task<bool> RemoveSeasonStatistic (int teamId, int seasonStatisticId);
 
-        Task EditTeamAsync(GetTeamDetailsServiceModel model, int id, IFormFile image);
+        Task EditTeamAsync(GetTeamDetailsServiceModel model, int id, IFormFile fullImage, IFormFile smallImage);
 
         Task<ICollection<string>> GetAllTeamsAsync();
 

@@ -2,7 +2,7 @@
 {
     public class ShortTeamStandingsViewModel
     {
-        public int ImageId { get; set; }
+        public string ImageId { get; set; }
 
         public string TeamAbbreviation { get; set; }
     }

@@ -57,7 +57,8 @@
                 return this.View(model);
             }
 
-            await this.teamService.AddTeamAsync(model.Name, model.Image ,model.Conference, model.Venue, model.Instagram, model.Twitter);
+            await this.teamService.AddTeamAsync(model.Name, model.FullImage, model.SmallImage, model.Conference, model.Venue, 
+                model.Instagram, model.Twitter);
 
             return RedirectToAction("All");
         }
@@ -78,7 +79,7 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(TeamInputModel inputModel, int teamId, IFormFile image)
+        public async Task<IActionResult> Edit(TeamInputModel inputModel, int teamId, IFormFile fullImageId, IFormFile smallImageId)
         {
             if (!ModelState.IsValid)
             {
@@ -87,7 +88,7 @@
 
             var model = mapper.Map<GetTeamDetailsServiceModel>(inputModel);
 
-            await this.teamService.EditTeamAsync(model, teamId, image);
+            await this.teamService.EditTeamAsync(model, teamId, fullImageId, smallImageId);
 
             return RedirectToAction("TeamDetails");
         }

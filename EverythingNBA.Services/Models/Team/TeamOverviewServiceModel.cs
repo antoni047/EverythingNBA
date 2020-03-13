@@ -8,8 +8,6 @@
 
         public string AbbreviatedName { get; set; }
 
-        public int? CloudinaryImageId { get; set; }
-
         public string Conference { get; set; }
 
         public string Venue { get; set; }

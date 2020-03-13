@@ -27,10 +27,13 @@
 
         public string AbbreviatedName { get; set; }
 
-        public int? CloudinaryImageId { get; set; }
+        public int? FullImageId { get; set; }
 
-        public virtual CloudinaryImage CloudinaryImage { get; set; }
+        public virtual CloudinaryImage FullImage { get; set; }
 
+        public int? SmallImageId { get; set; }
+
+        public virtual CloudinaryImage SmallImage { get; set; }
 
         [Required]
         public ConferenceType Conference { get; set; }

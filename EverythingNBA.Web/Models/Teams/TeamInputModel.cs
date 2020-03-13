@@ -14,7 +14,9 @@
         [Required]
         public string AbbreviatedName { get; set; }
 
-        public IFormFile Image { get; set; }
+        public IFormFile FullImage { get; set; }
+
+        public IFormFile SmallImage { get; set; }
 
         [Required]
         public string Conference { get; set; }

@@ -15,7 +15,7 @@
 
         public string AbbreviatedName { get; set; }
 
-        public int? CloudinaryImageId { get; set; }
+        public int? FullImageId { get; set; }
 
         public string Conference { get; set; }
 
