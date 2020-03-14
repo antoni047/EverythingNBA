@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.Collections.Generic;
+    using System;
 
     public class Season
     {
@@ -28,6 +29,10 @@
 
         public int? PlayoffId { get; set; }
         public virtual Playoff Playoff { get; set; }
+
+        public DateTime SeasonStartDate { get; set; }
+
+        public DateTime SeasonEndDate { get; set; }
 
         public virtual ICollection<AllStarTeam> AllStarTeams { get; set; }
 
