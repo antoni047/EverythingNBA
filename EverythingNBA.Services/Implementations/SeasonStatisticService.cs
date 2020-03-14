@@ -99,7 +99,7 @@
 
             double result = ((double)statistic.Wins / (double)season.GamesPlayed) * 100;
 
-            return (result / 100).ToString("0.000");
+            return (result / 100).ToString(".000");
         }
     }
 }
