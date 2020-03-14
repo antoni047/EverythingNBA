@@ -1,2 +1,31 @@
 ﻿@using EverythingNBA.Services.Models.Game
 @model ICollection<GameDetailsServiceModel>
+@{
+    var i = 0;
+    var date = DateTime.UtcNow;
+}
+
+    <div class="container-fluid m-3 p-0 border-top">
+        @while (date.AddDays(+i) < ViewBag.SeasonEndDate)
+        {
+            if (i == 6)
+            {
+                break;
+            }
+
+            <div class="section-title ml-4 px-2 mt-1 text-center ">@date.AddDays(+i).DayOfWeek @date.AddDays(+i).Day/@date.AddDays(+i).Month</div>
+            <div class="container-fluid row m-0 p-4 border">
+                @if (!Model.Where(g => g.Date.Split("/")[0] == @date.AddDays(+i).Day.ToString()).Any())
+                {
+                    <h4 class="py-2 text-center ml-3 w-100">No Games</h4>
+                }
+                @foreach (var game in Model.Where(g => g.Date.Split("/")[0] == @date.AddDays(+i).Day.ToString()))
+                {
+                    @await Html.PartialAsync("_FixturesScoreboxesPartial", game)
+                }
+                @{
+                    i++;
+                }
+            </div>
+        }
+    </div>

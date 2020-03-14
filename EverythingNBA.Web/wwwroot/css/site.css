@@ -115,12 +115,23 @@ counter{
     font-size: 24px;
 }
 
+/*Standings*/
+.standings-table {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+}
+.team-name {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+}
 
 
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
 /* Sticky footer styles
