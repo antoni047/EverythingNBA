@@ -9,6 +9,7 @@
     using EverythingNBA.Models;
     using Data;
     using Services.Models.Season;
+    using System;
 
     public class SeasonService : ISeasonService
     {
@@ -403,6 +404,16 @@
         public async Task<int> GetYearAsync(int seasonId)
         {
             return await this.db.Seasons.Where(s => s.Id == seasonId).Select(s => s.Year).FirstOrDefaultAsync();
+        }
+
+        public async Task<DateTime> GetSeasonStartDateAsync(int seasonId)
+        {
+            return await this.db.Seasons.Where(s => s.Id == seasonId).Select(s => s.SeasonStartDate).FirstOrDefaultAsync();
+        }
+
+        public async Task<DateTime> GetSeasonEndDateAsync(int seasonId)
+        {
+            return await this.db.Seasons.Where(s => s.Id == seasonId).Select(s => s.SeasonEndDate).FirstOrDefaultAsync();
         }
     }
 }

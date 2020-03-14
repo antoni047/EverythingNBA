@@ -4,6 +4,7 @@
 
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using System;
 
     public interface ISeasonService
     {
@@ -40,5 +41,9 @@
         Task EditSeasonAsync(GetSeasonDetailsServiceModel model, int seasonId);
 
         Task<int> GetYearAsync(int seasonId);
+
+        Task<DateTime> GetSeasonStartDateAsync(int seasonId);
+
+        Task<DateTime> GetSeasonEndDateAsync(int seasonId);
     }
 }
