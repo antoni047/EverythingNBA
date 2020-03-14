@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using AutoMapper;
+    using System;
 
     using Services;
     using EverythingNBA.Web.Models.Seasons;
@@ -13,12 +14,14 @@
         private readonly IMapper mapper;
         private readonly ISeasonService seasonService;
         private readonly ITeamService teamService;
+        private readonly IPlayoffService playoffService;
 
-        public SeasonsController(ISeasonService seasonService, IMapper mapper, ITeamService teamService)
+        public SeasonsController(ISeasonService seasonService, IMapper mapper, ITeamService teamService, IPlayoffService playoffService)
         {
             this.mapper = mapper;
             this.seasonService = seasonService;
             this.teamService = teamService;
+            this.playoffService = playoffService;
         }
 
         [Route("[controller]/[action]/{seasonId:int}")]
@@ -26,10 +29,19 @@
         {
             var allTeamsStandings = await this.teamService.GetStandingsAsync(seasonId);
 
+            var playoff = await this.playoffService.GetDetailsBySeasonAsync(seasonId);
+            ViewBag.playoffId = playoff.Id;
+
             return this.View(allTeamsStandings);
         }
 
-        
+        public async Task<IActionResult> CurrentStandings()
+        {
+            var year = this.GetCurrentSeasonYear();
+            var season = await this.seasonService.GetDetailsByYearAsync(year);
+
+            return RedirectToAction("Standings", new { season.SeasonId });
+        }
         public async Task<IActionResult> All()
         {
             var seasons = await this.seasonService.GetAllSeasonsAsync();
@@ -105,6 +117,22 @@
             await this.seasonService.DeleteAsync(seasonId);
 
             return RedirectToAction("All");
+        }
+
+        private int GetCurrentSeasonYear()
+        {
+            var currentYear = 0;
+
+            if (DateTime.Now.Month >= 9)
+            {
+                currentYear = DateTime.Now.Year + 1;
+            }
+            else if (DateTime.Now.Month < 9)
+            {
+                currentYear = DateTime.Now.Year;
+            }
+
+            return currentYear;
         }
     }
 }
