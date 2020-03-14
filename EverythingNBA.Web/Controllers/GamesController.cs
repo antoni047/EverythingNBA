@@ -32,23 +32,27 @@
             this.gameStatisticService = gameStatisticService;
         }
 
-        [Route("[controller]/[action]/{seasonId:int}")]
-        public async Task<IActionResult> Results(int seasonId)
+        [Route("[controller]/[action]/{year:int}")]
+        public async Task<IActionResult> Results(int year)
         {
-            var seasonGames = await this.gameService.GetSeasonGamesAsync(seasonId);
+            var season = await this.seasonService.GetDetailsByYearAsync(year);
+           
+            var seasonGames = await this.gameService.GetSeasonGamesAsync(season.SeasonId);
 
             var results = seasonGames.Where(g => g.IsFinished == true).
                 OrderByDescending(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture)).ToList();
 
+            ViewBag.SeasonStartDate = await this.seasonService.GetSeasonStartDateAsync(season.SeasonId);
+            ViewBag.SeasonEndDate = await this.seasonService.GetSeasonEndDateAsync(season.SeasonId);
+
             return this.View(results);
         }
 
-        public async Task<IActionResult> CurrentResults()
+        public IActionResult CurrentResults()
         {
             var year = this.GetCurrentSeasonYear();
-            var season = await this.seasonService.GetDetailsByYearAsync(year);
 
-            return RedirectToAction("Results", "Games", new { season.SeasonId });
+            return RedirectToAction("Results", "Games", new { year });
         }
 
         public async Task<IActionResult> Fixtures()
@@ -60,6 +64,9 @@
 
             var gamesNotPlayed = seasonGames.Where(g => g.IsFinished == false)
                 .OrderBy(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture)).ToList();
+
+            ViewBag.SeasonStartDate = await this.seasonService.GetSeasonStartDateAsync(season.SeasonId);
+            ViewBag.SeasonEndDate = await this.seasonService.GetSeasonEndDateAsync(season.SeasonId);
 
             return this.View(gamesNotPlayed);
         }
@@ -172,7 +179,7 @@
 
             await this.gameService.EditGameAsync(model, gameId);
 
-            return RedirectToAction($"GameDetails", gameId);
+            return RedirectToAction($"GameDetails", new { gameId });
         }
 
         [HttpGet]
@@ -199,7 +206,7 @@
 
             await this.gameStatisticService.EditGameStatisticAsync(editedStats, inputModel.Id);
 
-            return RedirectToAction("GameDetails", inputModel.GameId);
+            return RedirectToAction("GameDetails", new { inputModel.GameId });
         }
 
         [HttpGet]
