@@ -6,7 +6,7 @@
 
         public string Name { get; set; }
 
-        public string ImageId{ get; set; }
+        public string ImageURL{ get; set; }
 
         public string Conference { get; set; }
 

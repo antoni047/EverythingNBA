@@ -6,14 +6,14 @@
 
     public class IndexViewModel
     {
-        public ICollection<GameDetailsServiceModel> GamesToday { get; set; }
+        public List<GameDetailsServiceModel> GamesToday { get; set; }
 
-        public ICollection<GameDetailsServiceModel> GamesTomorrow { get; set; }
+        public List<GameDetailsServiceModel> GamesTomorrow { get; set; }
 
-        public ICollection<GameDetailsServiceModel> GamesYesterday { get; set; }
+        public List<GameDetailsServiceModel> GamesYesterday { get; set; }
 
-        public ICollection<ShortTeamStandingsViewModel> WesternTop8Standings { get; set; }
+        public List<ShortTeamStandingsViewModel> WesternTop8Standings { get; set; }
 
-        public ICollection<ShortTeamStandingsViewModel> EasternTop8Standings { get; set; }
+        public List<ShortTeamStandingsViewModel> EasternTop8Standings { get; set; }
     }
 }

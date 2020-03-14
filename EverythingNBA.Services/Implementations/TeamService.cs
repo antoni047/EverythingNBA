@@ -137,10 +137,10 @@
                     losses = seasonStatistic.Losses;
                 }
 
-                var teamStatModel = new TeamSeasonStatisticServiceModel
+                var teamStatModel = new TeamSeasonStatisticServiceModel()
                 {
                     Name = team.Name,
-                    ImageId = team.SmallImage.ImagePublicId,
+                    ImageURL = team.SmallImage.ImageURL,
                     Conference = team.Conference.ToString(),
                     Wins = wins,
                     Losses = losses,
@@ -180,10 +180,12 @@
                 .Include(t => t.AwayGames)
                 .Include(t => t.GamesWon)
                 .Include(t => t.SmallImage)
+                .Include(t => t.FullImage)
                 .Where(t => t.Id == teamId)
                 .FirstOrDefaultAsync();
 
             var teamDetailsModel = mapper.Map<GetTeamDetailsServiceModel>(team);
+            teamDetailsModel.FullImageURL = team.FullImage.ImageURL;
 
             var players = await this.playerService.GetAllPlayersFromTeam(teamId);
             teamDetailsModel.Players = players;

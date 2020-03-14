@@ -84,9 +84,9 @@ namespace EverythingNBA.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapAreaControllerRoute(
-                    name : "TeamsArchiveArea",
-                    areaName : "Archive",
-                    pattern : "{area}/{controller=Teams}/{action=TeamDetails}/{teamId:int}/{year:int}"
+                    name: "TeamsArchiveArea",
+                    areaName: "Archive",
+                    pattern: "{area}/{controller=Teams}/{action=TeamDetails}/{teamId:int}/{year:int}"
                     );
 
                 endpoints.MapControllerRoute("HeadToHeadGames", "Games/HeadToHead/{team1Name}-vs-{team2Name}", new { controller = "Games", action = "HeadToHead" });

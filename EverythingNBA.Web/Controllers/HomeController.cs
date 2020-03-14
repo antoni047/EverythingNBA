@@ -12,6 +12,7 @@
     using EverythingNBA.Web.Models.Home;
     using EverythingNBA.Web.Models;
     using EverythingNBA.Services;
+    using System.Linq;
 
     public class HomeController : Controller
     {
@@ -42,29 +43,29 @@
             var westernShortTeamStandings = new List<ShortTeamStandingsViewModel>();
             var easternShortTeamStandings = new List<ShortTeamStandingsViewModel>();
 
-            foreach (var standing in teamStandings.WesternStandings)
+            foreach (var standing in teamStandings.WesternStandings.Take(8))
             {
                 var team = await this.teamService.GetTeamAsync(standing.Name);
                 var model = new ShortTeamStandingsViewModel();
                 model.TeamAbbreviation = team.AbbreviatedName;
-                model.ImageId = standing.ImageId;
+                model.ImageURL = standing.ImageURL;
                 westernShortTeamStandings.Add(model);
             }
 
-            foreach (var standing in teamStandings.EasternStandings)
+            foreach (var standing in teamStandings.EasternStandings.Take(8))
             {
                 var team = await this.teamService.GetTeamAsync(standing.Name);
                 var model = new ShortTeamStandingsViewModel();
                 model.TeamAbbreviation = team.AbbreviatedName;
-                model.ImageId = standing.ImageId;
+                model.ImageURL = standing.ImageURL;
                 easternShortTeamStandings.Add(model);
             }
 
             var viewModel = new IndexViewModel()
             {
-                GamesYesterday = gamesYesterday,
-                GamesToday = gamesToday,
-                GamesTomorrow = gamesTomorrow,
+                GamesYesterday = gamesYesterday.ToList(),
+                GamesToday = gamesToday.ToList(),
+                GamesTomorrow = gamesTomorrow.ToList(),
                 EasternTop8Standings = easternShortTeamStandings,
                 WesternTop8Standings = westernShortTeamStandings,
             };
