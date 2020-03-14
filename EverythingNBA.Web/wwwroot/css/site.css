@@ -27,12 +27,16 @@ a {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
 }
+
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+        
+    }
 }
 
 .border-top {
@@ -45,6 +49,74 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
+/*Navbar*/
+.navbar-nba {
+    background: #ebebeb;
+    border-bottom: 2.5px solid #1861ac;
+}
+
+.nav-item {
+    margin-right: 5px;
+    text-align: center;
+}
+
+.red-line {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    background: #f00;
+    border-bottom: 2.5px solid #f00;
+}
+
+
+
+/*General*/
+.container {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+.section-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.navbar {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+
+
+/*Home*/
+.nba-scorebox {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+.standings-title{
+    height: 40px;
+}
+.home-team-logo{
+    height: 45px;
+    width: 45px;
+}
+.home-team-name{
+    text-decoration: none;
+    background-color: none;
+    color: black;
+    text-align: center;
+    font-size: 26px;
+}
+.home-team-standings{
+    text-align: center;
+}
+counter{
+    font-size: 24px;
+}
+
+
+
 
 button.accept-policy {
   font-size: 1rem;

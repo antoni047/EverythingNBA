@@ -1,3 +1,168 @@
 ﻿@using EverythingNBA.Web.Models.Home
-
 @model IndexViewModel;
+
+    
+    <div class="container-fluid row m-3">
+        <div class="container col-md-9 px-3">
+            <div class="section-title ml-4 mt-1">Games Yesterday @DateTime.Now.AddDays(-1).Day/@DateTime.Now.AddDays(-1).Month,  @DateTime.Now.AddDays(-1).DayOfWeek </div>
+
+            <div class="container-fluid row p-0 m-0">
+                @if (!Model.GamesYesterday.Any())
+                {
+                    <h4 class="ml-4">No Games</h4>
+                }
+                @foreach (var game in Model.GamesYesterday)
+                {
+                    <div class="border nba-scorebox p-1 m-0 col-md-3">
+                        <div asp-controller="" class="container row px-1 text-center">
+                            <h4 class="col-md-5 px-1">@game.TeamHostShortName</h4>
+                            <h4 class="col-md-2 m-0 p-0">-</h4>
+                            <h4 class="col-md-5 px-1">@game.Team2ShortName</h4>
+                        </div>
+
+                        <div class="container-fluid row px-1 text-center">
+                            @if (game.Team2Points < game.TeamHostPoints)
+                            {
+                                <h4 class="col-md-5 px-1 font-weight-bold">@game.TeamHostPoints</h4>
+                                <h4 class="col-md-2 m-0 p-0">-</h4>
+                                <h4 class="col-md-5 px-1">@game.Team2Points</h4>
+                            }
+                            else
+                            {
+                                <h4 class="col-md-5 px-1">@game.TeamHostPoints</h4>
+                                <h4 class="col-md-2 m-0 p-0">-</h4>
+                                <h4 class="col-md-5 px-1 font-weight-bold">@game.Team2Points</h4>
+                            }
+                        </div>
+
+                        <a asp-controller="Games" asp-action="GameDetails" asp-route-gameId="@game.Id">G</a>
+                    </div>
+                }
+            </div>
+
+            <div class="section-title ml-4 mt-1">Games Today @DateTime.Now.Day/@DateTime.Now.Month, @DateTime.Now.DayOfWeek </div>
+
+            <div class="container-fluid row p-0 m-0">
+                @if (!Model.GamesYesterday.Any())
+                {
+                    <h4 class="ml-4">No Games</h4>
+                }
+                @foreach (var game in Model.GamesYesterday)
+                {
+                    <div class="border nba-scorebox p-1 m-0 col-md-3">
+                        <div asp-controller="" class="container row px-1 text-center">
+                            <h4 class="col-md-5 px-1">@game.TeamHostShortName</h4>
+                            <h4 class="col-md-2 m-0 p-0">-</h4>
+                            <h4 class="col-md-5 px-1">@game.Team2ShortName</h4>
+                        </div>
+
+                        <div class="container-fluid row px-1 text-center">
+                            @if (game.Team2Points < game.TeamHostPoints)
+                            {
+                                <h4 class="col-md-5 px-1 font-weight-bold">@game.TeamHostPoints</h4>
+                                <h4 class="col-md-2 m-0 p-0">-</h4>
+                                <h4 class="col-md-5 px-1">@game.Team2Points</h4>
+                            }
+                            else
+                            {
+                                <h4 class="col-md-5 px-1">@game.TeamHostPoints</h4>
+                                <h4 class="col-md-2 m-0 p-0">-</h4>
+                                <h4 class="col-md-5 px-1 font-weight-bold">@game.Team2Points</h4>
+                            }
+                        </div>
+
+                        <a asp-controller="Games" asp-action="GameDetails" asp-route-gameId="@game.Id">G</a>
+                    </div>
+                }
+            </div>
+
+            <div class="section-title ml-4 mt-1">Games Tomorrow @DateTime.Now.AddDays(1).Day/@DateTime.Now.AddDays(1).Month, @DateTime.Now.AddDays(1).DayOfWeek </div>
+
+            <div class="container-fluid row p-0 m-0">
+                @if (!Model.GamesYesterday.Any())
+                {
+                    <h4 class="ml-4">No Games</h4>
+                }
+                @foreach (var game in Model.GamesYesterday)
+                {
+                    <div class="border nba-scorebox p-1 m-0 col-md-3">
+                        <div asp-controller="" class="container row px-1 text-center">
+                            <h4 class="col-md-5 px-1">@game.TeamHostShortName</h4>
+                            <h4 class="col-md-2 m-0 p-0">-</h4>
+                            <h4 class="col-md-5 px-1">@game.Team2ShortName</h4>
+                        </div>
+
+                        <div class="container-fluid row px-1 text-center">
+                            @if (game.Team2Points < game.TeamHostPoints)
+                            {
+                                <h4 class="col-md-5 px-1 font-weight-bold">@game.TeamHostPoints</h4>
+                                <h4 class="col-md-2 m-0 p-0">-</h4>
+                                <h4 class="col-md-5 px-1">@game.Team2Points</h4>
+                            }
+                            else
+                            {
+                                <h4 class="col-md-5 px-1">@game.TeamHostPoints</h4>
+                                <h4 class="col-md-2 m-0 p-0">-</h4>
+                                <h4 class="col-md-5 px-1 font-weight-bold">@game.Team2Points</h4>
+                            }
+                        </div>
+
+                        <a asp-controller="Games" asp-action="GameDetails" asp-route-gameId="@game.Id">G</a>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="container-fluid col-md-3 m-0 border-left">
+            <h3 class="w-100 p-0 m-0 text-center border-right border-top border-left standings-title">Standings</h3>
+            <div class="container-fluid row border p-0 m-0">
+                <h4 class="col-md-6 text-center mb-0 pb-1 border-right">Western</h4>
+                <h4 class="col-md-6 text-center mb-0 pb-1">Eastern</h4>
+            </div>
+            <div class="container-fluid row border p-0 m-0">
+                <div class="container-fluid col-md-6 p-0 m-0 row border-right">
+                    <table class="w-100 p-0 home-team-standings" type="1">
+                        @{
+                            var westernCounter = 0;
+                        }
+                        @for (int i = 0; i < Model.WesternTop8Standings.Count(); i++)
+                        {
+                            westernCounter++;
+                            <tr class="border">
+                                <td class="border-right">
+                                    <h3 class="">@westernCounter</h3>
+                                </td>
+                                <td asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@Model.WesternTop8Standings[i].TeamAbbreviation" class="home-team-name">
+                                    <img class="home-team-logo pr-1" src="@Model.WesternTop8Standings[i].ImageURL" alt="logo" />  @Model.WesternTop8Standings[i].TeamAbbreviation
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+
+                <div class="container-fluid col-md-6 p-0 m-0 row border-right">
+                    <table class="w-100 p-0 home-team-standings" type="1">
+                        @{
+                            var easternCounter = 0;
+                        }
+                        @for (int i = 0; i < Model.EasternTop8Standings.Count(); i++)
+                        {
+                            easternCounter++;
+                            <tr class="border">
+                                <td class="border-right">
+                                    <h3 class="">@easternCounter</h3>
+                                </td>
+                                <td asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@Model.EasternTop8Standings[i].TeamAbbreviation" class="home-team-name">
+                                    <img class="home-team-logo pr-1" src="@Model.EasternTop8Standings[i].ImageURL" alt="logo" />  @Model.EasternTop8Standings[i].TeamAbbreviation
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+  
+
+    
