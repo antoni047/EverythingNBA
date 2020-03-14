@@ -35,14 +35,10 @@
             var currentYear = this.GetCurrentSeasonYear();
             var teamDetailsModel = await this.teamService.GetTeamDetailsAsync(teamId, currentYear);
 
-            if (teamDetailsModel == null)
-            {
-                return RedirectToAction("All");
-            }
-
-            return this.View(teamDetailsModel);
+            return RedirectToAction("TeamDetails", new { teamDetailsModel.Name });
         }
 
+        [Route("[controller]/[action]/{teamName}")]
         public async Task<IActionResult> TeamDetails(string teamName)
         {
             //checking if the name is an abbreviation
@@ -51,7 +47,12 @@
             var currentYear = this.GetCurrentSeasonYear();
             var teamDetailsModel = await this.teamService.GetTeamDetailsAsync(fullName, currentYear);
 
-            return RedirectToAction("TeamDetails", teamDetailsModel.Id);
+            if (teamDetailsModel == null)
+            {
+                return RedirectToAction("All");
+            }
+
+            return this.View(teamDetailsModel);
         }
 
         [HttpGet]
