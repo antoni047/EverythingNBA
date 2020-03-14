@@ -480,7 +480,7 @@
 
         public async Task<ICollection<string>> GetAllTeamsAsync()
         {
-            return await this.db.Teams.Select(t => t.Name).ToListAsync();
+            return await this.db.Teams.OrderBy(t => t.Name).Select(t => t.Name).ToListAsync();
         }
 
         private async Task<int> GetGamesPlayed(int teamId, int seasonId)
