@@ -43,12 +43,12 @@
             return this.View(results);
         }
 
-        public async Task<IActionResult> Results()
+        public async Task<IActionResult> CurrentResults()
         {
             var year = this.GetCurrentSeasonYear();
             var season = await this.seasonService.GetDetailsByYearAsync(year);
 
-            return RedirectToAction("Results", season.SeasonId);
+            return RedirectToAction("Results", "Games", new { season.SeasonId });
         }
 
         public async Task<IActionResult> Fixtures()
