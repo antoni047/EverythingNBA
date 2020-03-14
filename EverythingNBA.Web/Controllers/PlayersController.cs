@@ -37,6 +37,13 @@
             return this.View(playerDetails);
         }
 
+        public async Task<IActionResult> PlayerDetails(string playerName)
+        {
+            var player = await this.playerService.GetPlayerDetailsAsync(playerName);
+
+            return RedirectToAction("PlayerDetails", new { player.Id});
+        }
+
         [Route("[controller]/[action]/{playerId:int}")]
         public async Task<IActionResult> PlayerAccomplishments(int playerId)
         {
