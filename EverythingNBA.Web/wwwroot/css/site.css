@@ -127,6 +127,15 @@ counter{
     color: black;
 }
 
+/*Players*/
+.player-name {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+    font-size: 22px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
 
 
 button.accept-policy {

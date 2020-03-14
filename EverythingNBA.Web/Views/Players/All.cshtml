@@ -1,1 +1,10 @@
 ﻿@model ICollection<string>
+
+<div class="p-3 m-0">
+    <h2 class="p-2">All Players</h2>
+
+    @foreach (var player in Model)
+    {
+        <h3><a class="ml-3 mb-1 container-fluid w-100 player-name" asp-controller="Players" asp-action="PlayerDetails" asp-route-playerName="@player">@player</a></h3>
+    }
+</div>
