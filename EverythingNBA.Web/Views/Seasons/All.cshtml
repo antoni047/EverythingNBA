@@ -1,3 +1,27 @@
 ﻿@using EverythingNBA.Services.Models.Season
 @model ICollection<GetSeasonListingServiceModel>
+<div class="m-3 container-fluid">
+    @foreach (var season in Model)
+    {
+        <div class="container-fluid row">
+            <div class="col-md-2 pl-3 pt-3 pr-0 border all-seasons-link-year">@season.Year</div>
+            <div class="col-md-2 pl-3 pt-0 pr-0 border">
+                <h6>Title Winner:</h6>
+                <a class="all-seasons-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@season.TitleWinnerName">@season.TitleWinnerName</a>
+            </div>
+            <div class="col-md-2 pl-3 pt-3 pr-0 border">
+                <a class="all-seasons-link" asp-controller="Seasons" asp-action="Standings" asp-route-seasonId="@season.Id">Regular Season Standings</a>
+            </div>
+            <div class="col-md-2 pl-3 pt-3 pr-0 border">
+                <a class="all-seasons-link" asp-controller="Playoffs" asp-action="PlayoffBracket" asp-route-year="@season.Year">Playoff Bracket</a>
+            </div>
+            <div class="col-md-2 pl-3 pt-3 pr-0 border">
+                <a class="all-seasons-link " asp-controller="AllStarTeams" asp-action="SeasonAllStarTeams" asp-route-year="@season.Year">All Star Teams</a>
+            </div>
+            <div class="col-md-2 pl-3 pt-3 pr-0  border">
+                <a class="all-seasons-link" asp-controller="Awards" asp-action="SeasonAwards" asp-route-year="@season.Year">Player Awards</a>
+            </div>
+        </div>
+    }
+</div>
 

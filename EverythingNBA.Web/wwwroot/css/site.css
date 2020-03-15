@@ -137,6 +137,25 @@ counter{
     font-weight: 500;
 }
 
+/*Seasons*/
+.all-seasons-link {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
+.all-seasons-link-year {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+    font-size: 21px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
 
 button.accept-policy {
     font-size: 1rem;
