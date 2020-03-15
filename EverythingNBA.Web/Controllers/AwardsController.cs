@@ -19,10 +19,10 @@
             this.playerService = playerService;
         }
 
-        [Route("[controller]/[action]/{seasonId:int}")]
-        public async Task<IActionResult> SeasonAwards(int seasonId)
+        [Route("[controller]/[action]/{year:int}")]
+        public async Task<IActionResult> SeasonAwards(int year)
         {
-            var awards = await this.awardService.GetSeasonAwardsAsync(seasonId);
+            var awards = await this.awardService.GetSeasonAwardsAsync(year);
 
             return this.View(awards);
         }

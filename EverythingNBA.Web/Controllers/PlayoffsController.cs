@@ -17,10 +17,10 @@
             this.seasonService = seasonService;
         }
 
-        [Route("[controller]/[action]/{playoffId:int}")]
-        public async Task<IActionResult> PlayoffBracket(int playoffId)
+        [Route("[controller]/[action]/{year:int}")]
+        public async Task<IActionResult> PlayoffBracket(int year)
         {
-            var model = await this.playoffService.GetDetailsAsync(playoffId);
+            var model = await this.playoffService.GetDetailsBySeasonAsync(year);
 
             return View(model);
         }

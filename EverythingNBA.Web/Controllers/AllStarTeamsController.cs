@@ -22,11 +22,9 @@
             this.playerService = playerService;
         }
 
-        [Route("[controller]/[action]/{seasonId:int}")]
-        public async Task<IActionResult> SeasonAllStarTeams(int seasonId)
+        [Route("[controller]/[action]/{year:int}")]
+        public async Task<IActionResult> SeasonAllStarTeams(int year)
         {
-            var year = await this.seasonService.GetYearAsync(seasonId);
-
             var astTeams = await this.astService.GetAllASTeamsAsync(year);
 
             return this.View(astTeams);
