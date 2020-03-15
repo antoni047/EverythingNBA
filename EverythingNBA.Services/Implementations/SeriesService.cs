@@ -155,31 +155,7 @@
             var series = await this.GetSeriesAsync(seriesId);
 
             var model = mapper.Map<SeriesOverviewServiceModel>(series);
-            if (series.Team1Name.Split(" ").Length == 3)
-            {
-                model.Team1Name = series.Team1Name.Split(" ")[1] + " " + series.Team1Name.Split(" ")[1];
-                if (model.Team1Name == "Los Angeles")
-                {
-                    model.Team1Name = "LA" + " " + series.Team1Name.Split(" ")[2];
-                }
-            }
-            else
-            {
-                model.Team1Name = series.Team1Name.Split(" ")[0];
-            }
-
-            if (series.Team2Name.Split(" ").Length == 3)
-            {
-                model.Team2Name = series.Team2Name.Split(" ")[1] + " " + series.Team2Name.Split(" ")[1];
-                if (model.Team2Name == "Los Angeles")
-                {
-                    model.Team2Name = "LA" + " " + series.Team2Name.Split(" ")[2];
-                }
-            }
-            else
-            {
-                model.Team2Name = series.Team2Name.Split(" ")[0];
-            }
+            
 
             return model;
         }

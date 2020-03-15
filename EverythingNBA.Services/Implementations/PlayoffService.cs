@@ -115,6 +115,32 @@
             {
                 var serieModel = mapper.Map<SeriesOverviewServiceModel>(serie);
 
+                if (serie.Team1.Name.Split(" ").Length == 3)
+                {
+                    serieModel.Team1Name = serie.Team1.Name.Split(" ")[0] + " " + serie.Team1.Name.Split(" ")[1];
+                    if (serieModel.Team1Name == "Los Angeles")
+                    {
+                        serieModel.Team1Name = "LA" + " " + serie.Team1.Name.Split(" ")[2];
+                    }
+                }
+                else
+                {
+                    serieModel.Team1Name = serie.Team1.Name.Split(" ")[0];
+                }
+
+                if (serie.Team2.Name.Split(" ").Length == 3)
+                {
+                    serieModel.Team2Name = serie.Team2.Name.Split(" ")[0] + " " + serie.Team2.Name.Split(" ")[1];
+                    if (serieModel.Team2Name == "Los Angeles")
+                    {
+                        serieModel.Team2Name = "LA" + " " + serie.Team2.Name.Split(" ")[2];
+                    }
+                }
+                else
+                {
+                    serieModel.Team2Name = serie.Team2.Name.Split(" ")[0];
+                }
+
                 seriesModels.Add(serieModel);
             }
 
@@ -122,8 +148,11 @@
             {
                 Id = playoff.Id,
                 SeasonId = playoff.SeasonId,
-                Series = new HashSet<SeriesOverviewServiceModel>(seriesModels),
-                WinnerName = winnerName
+                Series = seriesModels,
+                WinnerName = winnerName,
+                AreConferenceFinalsFinished = playoff.AreConferenceFinalsFinished,
+                AreQuarterFinalsFinished = playoff.AreQuarterFinalsFinished,
+                AreSemiFinalsFinished = playoff.AreSemiFinalsFinished
             };
 
             return model;
@@ -166,6 +195,86 @@
             await this.AddSeriesAsync(playoffId, wQuarterSecondId);
             await this.AddSeriesAsync(playoffId, wQuarterThirdId);
             await this.AddSeriesAsync(playoffId, wQuarterFourthId);
+
+
+        }
+
+        public async Task FinishQuarterFinals(int playoffId)
+        {
+            var playoffFromDB = await this.db.Playoffs.FindAsync(playoffId);
+            playoffFromDB.AreQuarterFinalsFinished = true;
+            await this.db.SaveChangesAsync();
+
+            var playoff = await this.GetDetailsAsync(playoffId);
+
+            var easternSemiFinalFirstTeam1 = await this.seriesService.GetWinnerAsync(playoff.Series[0].Id);
+            var easternSemiFinalFirstTeam2 = await this.seriesService.GetWinnerAsync(playoff.Series[1].Id);
+
+            var easternSemiFinalFirst = await this.seriesService.AddSeriesAsync(playoffId, easternSemiFinalFirstTeam1, 
+                easternSemiFinalFirstTeam2, 0, 0, null, null, null, null, null, null, null, "Eastern", "SemiFinal", 1);
+            await this.AddSeriesAsync(playoffId, easternSemiFinalFirst);
+
+            var easternSemiFinalSecondTeam1 = await this.seriesService.GetWinnerAsync(playoff.Series[2].Id);
+            var easternSemiFinalSecondTeam2 = await this.seriesService.GetWinnerAsync(playoff.Series[3].Id);
+
+            var easternSemiFinalSecond = await this.seriesService.AddSeriesAsync(playoffId, easternSemiFinalSecondTeam1,
+                easternSemiFinalSecondTeam2, 0, 0, null, null, null, null, null, null, null, "Eastern", "SemiFinal", 2);
+            await this.AddSeriesAsync(playoffId, easternSemiFinalSecond);
+
+            var westernSemiFinalFirstTeam1 = await this.seriesService.GetWinnerAsync(playoff.Series[4].Id);
+            var westernSemiFinalFirstTeam2 = await this.seriesService.GetWinnerAsync(playoff.Series[5].Id);
+
+            var westerSemiFinalFirst = await this.seriesService.AddSeriesAsync(playoffId, westernSemiFinalFirstTeam1,
+                westernSemiFinalFirstTeam2, 0, 0, null, null, null, null, null, null, null, "Western", "SemiFinal", 1);
+            await this.AddSeriesAsync(playoffId, westerSemiFinalFirst);
+
+            var westernSemiFinalSecondTeam1 = await this.seriesService.GetWinnerAsync(playoff.Series[6].Id);
+            var westernSemiFinalSecondTeam2 = await this.seriesService.GetWinnerAsync(playoff.Series[7].Id);
+                
+            var westernSemiFinalSecond = await this.seriesService.AddSeriesAsync(playoffId, westernSemiFinalSecondTeam1,
+                westernSemiFinalSecondTeam2, 0, 0, null, null, null, null, null, null, null, "Western", "SemiFinal", 2);
+            await this.AddSeriesAsync(playoffId, westernSemiFinalSecond);
+        }
+
+        public async Task FinishSemiFinals(int playoffId)
+        {
+            var playoffFromDB = await this.db.Playoffs.FindAsync(playoffId);
+            playoffFromDB.AreSemiFinalsFinished = true;
+            await this.db.SaveChangesAsync();
+
+            var playoff = await this.GetDetailsAsync(playoffId);
+            
+
+            var westernFinalFirstTeam1 = await this.seriesService.GetWinnerAsync(playoff.Series[8].Id);
+            var westernFinalFirstTeam2 = await this.seriesService.GetWinnerAsync(playoff.Series[9].Id);
+
+            var westernFinalFirst = await this.seriesService.AddSeriesAsync(playoffId, westernFinalFirstTeam1,
+                westernFinalFirstTeam2, 0, 0, null, null, null, null, null, null, null, "Western", "ConferenceFinal", 1);
+            await this.AddSeriesAsync(playoffId, westernFinalFirst);
+
+            var easternFinalFirstTeam1 = await this.seriesService.GetWinnerAsync(playoff.Series[10].Id);
+            var easternFinalFirstTeam2 = await this.seriesService.GetWinnerAsync(playoff.Series[11].Id);
+                
+            var easternFinalFirst = await this.seriesService.AddSeriesAsync(playoffId, easternFinalFirstTeam1,
+                easternFinalFirstTeam2, 0, 0, null, null, null, null, null, null, null, "Western", "ConferenceFinal", 1);
+            await this.AddSeriesAsync(playoffId, easternFinalFirst);
+        }
+
+        public async Task FinishConferenceFinals(int playoffId)
+        {
+            var playoffFromDB = await this.db.Playoffs.FindAsync(playoffId);
+            playoffFromDB.AreConferenceFinalsFinished = true;
+            await this.db.SaveChangesAsync();
+
+            var playoff = await this.GetDetailsAsync(playoffId);
+            
+
+            var finalTeam1 = await this.seriesService.GetWinnerAsync(playoff.Series[12].Id);
+            var firstTeam2 = await this.seriesService.GetWinnerAsync(playoff.Series[13].Id);
+
+            var westernFinalFirst = await this.seriesService.AddSeriesAsync(playoffId, finalTeam1,firstTeam2, 0, 0, null, null, 
+                null, null, null, null, null, "Western", "Final", 1);
+            await this.AddSeriesAsync(playoffId, westernFinalFirst);
         }
     }
 }

@@ -12,6 +12,12 @@
 
         public string WinnerName { get; set; }
 
-        public HashSet<SeriesOverviewServiceModel> Series { get; set; }
+        public bool AreQuarterFinalsFinished { get; set; }
+
+        public bool AreSemiFinalsFinished { get; set; }
+
+        public bool AreConferenceFinalsFinished { get; set; }
+
+        public List<SeriesOverviewServiceModel> Series { get; set; }
     }
 }

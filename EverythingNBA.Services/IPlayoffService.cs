@@ -19,5 +19,12 @@
         Task RemoveSeriesAsync(int playoffId, int seriesId);
 
         Task SetStartingSeries(int playoffId);
+
+        Task FinishConferenceFinals(int playoffId);
+
+        Task FinishSemiFinals(int playoffId);
+
+        Task FinishQuarterFinals(int playoffId);
+
     }
 }
