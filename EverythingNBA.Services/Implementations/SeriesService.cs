@@ -54,7 +54,7 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<int> AddSeriesAsync(int playoffId, int team1Id, int team2Id, int team1GameWon, int team2GamesWon, int? game1Id, int? game2Id,
+        public async Task<int> AddSeriesAsync(int playoffId, string team1Name, string team2Name, int team1GameWon, int team2GamesWon, int? game1Id, int? game2Id,
             int? game3Id, int? game4Id, int? game5Id, int? game6Id, int? game7Id, string conference, string stage, int stageNumber)
         {
             var seriesObj = new Series
@@ -126,6 +126,31 @@
             var series = await this.GetSeriesAsync(seriesId);
 
             var model = mapper.Map<SeriesOverviewServiceModel>(series);
+            if (series.Team1Name.Split(" ").Length == 3)
+            {
+                model.Team1Name = series.Team1Name.Split(" ")[1] + " " + series.Team1Name.Split(" ")[1];
+                if (model.Team1Name == "Los Angeles")
+                {
+                    model.Team1Name = "LA" + " " + series.Team1Name.Split(" ")[2];
+                }
+            }
+            else
+            {
+                model.Team1Name = series.Team1Name.Split(" ")[0];
+            }
+
+            if (series.Team2Name.Split(" ").Length == 3)
+            {
+                model.Team2Name = series.Team2Name.Split(" ")[1] + " " + series.Team2Name.Split(" ")[1];
+                if (model.Team2Name == "Los Angeles")
+                {
+                    model.Team2Name = "LA" + " " + series.Team2Name.Split(" ")[2];
+                }
+            }
+            else
+            {
+                model.Team2Name = series.Team2Name.Split(" ")[0];
+            }
 
             return model;
         }
