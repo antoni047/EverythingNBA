@@ -12,7 +12,7 @@
 
         Task<bool> DeleteAwardAsync(int awardId);
 
-        Task<ICollection<AwardDetailsServiceModel>> GetSeasonAwardsAsync(int seasonId);
+        Task<ICollection<AwardDetailsServiceModel>> GetSeasonAwardsAsync(int year);
 
         Task<string> GetAwardWinnerAsync(int seasonId, string awardType);
 

@@ -77,9 +77,9 @@
             return true;
         }
 
-        public async Task<GetPlayoffServiceModel> GetDetailsBySeasonAsync(int seasonId)
+        public async Task<GetPlayoffServiceModel> GetDetailsBySeasonAsync(int year)
         {
-            var playoffId = await this.db.Seasons.Where(s => s.Id == seasonId).Select(s => s.PlayoffId).FirstOrDefaultAsync();
+            var playoffId = await this.db.Seasons.Where(s => s.Year == year).Select(s => s.PlayoffId).FirstOrDefaultAsync();
 
             if (playoffId == null)
             {

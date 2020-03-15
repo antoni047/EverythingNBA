@@ -307,13 +307,21 @@
 
         public async Task<ICollection<GetSeasonListingServiceModel>> GetAllSeasonsAsync()
         {
-            var seasons = await this.db.Seasons.ToListAsync();
+            var seasons = await this.db.Seasons.Include(s => s.TitleWinner).OrderByDescending(s => s.Year).ToListAsync();
 
             var models = new List<GetSeasonListingServiceModel>();
 
             foreach (var season in seasons)
             {
                 var model = mapper.Map<GetSeasonListingServiceModel>(season);
+                if (season.TitleWinner == null)
+                {
+                    model.TitleWinnerName = "N/A";
+                }
+                else
+                {
+                    model.TitleWinnerName = season.TitleWinner.Name;
+                }
 
                 models.Add(model);
             }

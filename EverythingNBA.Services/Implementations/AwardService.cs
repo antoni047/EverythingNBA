@@ -66,14 +66,14 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<ICollection<AwardDetailsServiceModel>> GetSeasonAwardsAsync(int seasonId)
+        public async Task<ICollection<AwardDetailsServiceModel>> GetSeasonAwardsAsync(int year)
         {
             var winnersNames = new List<string>();
 
             var awards = await this.db.Awards
                 .Include(a => a.Winner)
                     .ThenInclude(p => p.Team)
-                .Where(a => a.SeasonId == seasonId)
+                .Where(a => a.Year == year)
                 .ToListAsync();
 
             var seasonAwards = new List<AwardDetailsServiceModel>();

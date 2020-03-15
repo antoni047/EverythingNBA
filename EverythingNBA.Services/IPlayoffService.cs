@@ -12,7 +12,7 @@
 
         Task<GetPlayoffServiceModel> GetDetailsAsync(int playoffId);
 
-        Task<GetPlayoffServiceModel> GetDetailsBySeasonAsync(int seasonId);
+        Task<GetPlayoffServiceModel> GetDetailsBySeasonAsync(int year);
 
         Task AddSeriesAsync(int playoffId, int seriesId);
 
