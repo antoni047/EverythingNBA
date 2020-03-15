@@ -51,8 +51,8 @@
             this.CreateMap<Series, GetSeriesDetailsServiceModel>()
                 .ForMember(mdl => mdl.Id, opt => opt.MapFrom(ss => ss.Id));
             this.CreateMap<Series, SeriesOverviewServiceModel>()
-                .ForMember(mdl => mdl.Team1Name, opt => opt.Ignore())
-                .ForMember(mdl => mdl.Team2Name, opt => opt.Ignore())
+                .ForMember(mdl => mdl.Team1Name, opt => opt.MapFrom(s => s.Team1.Name))
+                .ForMember(mdl => mdl.Team2Name, opt => opt.MapFrom(s => s.Team2.Name))
                 .ForMember(mdl => mdl.Id, opt => opt.MapFrom(ss => ss.Id));
             this.CreateMap<TopStatsServiceModel, GetSeriesDetailsServiceModel>();
             this.CreateMap<GetSeriesDetailsServiceModel, SeriesOverviewServiceModel>();

@@ -20,6 +20,8 @@
         [Route("[controller]/[action]/{year:int}")]
         public async Task<IActionResult> PlayoffBracket(int year)
         {
+            await this.playoffService.SetStartingSeries(2);
+
             var model = await this.playoffService.GetDetailsBySeasonAsync(year);
 
             return View(model);
@@ -42,6 +44,8 @@
             }
 
             var playoffId = await this.playoffService.AddPlayoffAsync(seasonId);
+
+            await this.playoffService.SetStartingSeries(playoffId);
 
             await this.seasonService.AddPlayoffAsync(seasonId, playoffId);
 

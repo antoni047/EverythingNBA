@@ -12,6 +12,6 @@
 
         public string WinnerName { get; set; }
 
-        public ICollection<SeriesOverviewServiceModel> Series { get; set; }
+        public HashSet<SeriesOverviewServiceModel> Series { get; set; }
     }
 }

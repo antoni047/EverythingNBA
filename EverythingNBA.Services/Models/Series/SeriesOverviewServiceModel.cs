@@ -8,7 +8,11 @@
 
         public string Team1Name { get; set; }
 
+        public int Team1StandingsPosition { get; set; }
+
         public string Team2Name { get; set; }
+
+        public int Team2StandingsPosition { get; set; }
 
         public int? Team1GamesWon { get; set; }
 

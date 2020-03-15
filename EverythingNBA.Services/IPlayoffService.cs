@@ -17,5 +17,7 @@
         Task AddSeriesAsync(int playoffId, int seriesId);
 
         Task RemoveSeriesAsync(int playoffId, int seriesId);
+
+        Task SetStartingSeries(int playoffId);
     }
 }

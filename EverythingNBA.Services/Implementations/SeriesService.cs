@@ -54,9 +54,12 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<int> AddSeriesAsync(int playoffId, string team1Name, string team2Name, int team1GameWon, int team2GamesWon, int? game1Id, int? game2Id,
+        public async Task<int> AddSeriesAsync(int playoffId, string team1Name, string team2Name,int team1GameWon, int team2GamesWon, int? game1Id, int? game2Id,
             int? game3Id, int? game4Id, int? game5Id, int? game6Id, int? game7Id, string conference, string stage, int stageNumber)
         {
+            var team1Id = await this.db.Teams.Where(t => t.Name == team1Name).Select(t => t.Id).FirstOrDefaultAsync();
+            var team2Id = await this.db.Teams.Where(t => t.Name == team2Name).Select(t => t.Id).FirstOrDefaultAsync();
+
             var seriesObj = new Series
             {
                 PlayoffId = playoffId,
@@ -75,6 +78,32 @@
                 Stage = stage,
                 StageNumber = stageNumber
             };
+
+            if (stage == "QuarterFinal")
+            {
+                switch (stageNumber)
+                {
+                    case 1:
+                        seriesObj.Team1StandingsPosition = 1;
+                        seriesObj.Team2StandingsPosition = 8;
+                        break;
+
+                    case 2:
+                        seriesObj.Team1StandingsPosition = 4;
+                        seriesObj.Team2StandingsPosition = 5;
+                        break;
+
+                    case 3:
+                        seriesObj.Team1StandingsPosition = 3;
+                        seriesObj.Team2StandingsPosition = 6;
+                        break;
+
+                    case 4:
+                        seriesObj.Team1StandingsPosition = 2;
+                        seriesObj.Team2StandingsPosition = 7;
+                        break;
+                }
+            }
 
             this.db.Series.Add(seriesObj);
             await this.db.SaveChangesAsync();

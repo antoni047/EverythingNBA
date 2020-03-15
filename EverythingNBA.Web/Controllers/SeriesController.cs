@@ -61,7 +61,7 @@
             }
 
 
-            var seriesId = await this.seriesService.AddSeriesAsync(inputModel.PlayoffId ,team1.Id, team2.Id, inputModel.Team1GamesWon, inputModel.Team2GamesWon,
+            var seriesId = await this.seriesService.AddSeriesAsync(inputModel.PlayoffId ,team1.Name, team2.Name, inputModel.Team1GamesWon, inputModel.Team2GamesWon,
                             inputModel.Game1Id, inputModel.Game2Id, inputModel.Game3Id, inputModel.Game4Id, inputModel.Game5Id,
                             inputModel.Game6Id, inputModel.Game7Id, inputModel.Conference, inputModel.Stage, inputModel.StageNumber);
 
