@@ -123,6 +123,12 @@ counter{
     font-weight: 400;
     font-size: 20px;
 }
+.standings-table-head {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    background-color: #ebebeb;
+}
+
 .team-name {
     text-decoration: none;
     background-color: none;
@@ -234,6 +240,27 @@ counter{
     margin:auto
 }
 
+/*Awards*/
+
+.awards-table {
+    margin: auto;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+.awards-table-head {
+    background-color: #ebebeb;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.award-link {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+}
 
 
 

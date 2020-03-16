@@ -1,2 +1,91 @@
 ﻿@using EverythingNBA.Services.Models.Award
 @model ICollection<AwardDetailsServiceModel>
+
+<div class="mx-5 w-50" style="margin: auto;">
+    <table class="m-5 table table-bordered table-hover awards-table">
+        <thead class="awards-table-head">
+            <tr>
+                <th>@Model.FirstOrDefault().Year Awards</th>
+                <th>Players</th>
+                <th>Team</th>
+            </tr>
+        </thead>
+        <tbody class="px-2">
+            @foreach (var award in Model)
+            {
+            <tr>
+                @if (award.Type == "MVP")
+                {
+                    <td>Most Valuable Player</td>
+                    <td>
+                        <a class="award-link" asp-controller="Players" asp-action="PlayerDetails" asp-route-playerName="@award.Winner"> @award.Winner</a>
+                    </td>
+                    <td>
+                        <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
+                    </td>
+                }
+                else if (award.Type == "FinalsMVP")
+                {
+                    <td>Finals' Most Valuable Player</td>
+                    <td>
+                        <a class="award-link" asp-controller="Players" asp-action="PlayerDetails" asp-route-playerName="@award.Winner"> @award.Winner</a>
+                    </td>
+                    <td>
+                        <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
+                    </td>
+                }
+                else if (award.Type == "DPOTY")
+                {
+                    <td>Defensive Player of the Year</td>
+                    <td>
+                        <a class="award-link" asp-controller="Players" asp-action="PlayerDetails" asp-route-playerName="@award.Winner"> @award.Winner</a>
+                    </td>
+                    <td>
+                        <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
+                    </td>
+                }
+                else if (award.Type == "ROTY")
+                {
+                    <td>Rookie of the Year</td>
+                    <td>
+                        <a class="award-link" asp-controller="Players" asp-action="PlayerDetails" asp-route-playerName="@award.Winner"> @award.Winner</a>
+                    </td>
+                    <td>
+                        <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
+                    </td>
+                }
+                else if (award.Type == "TopScorer")
+                {
+                    <td>TopScorer</td>
+                    <td>
+                        <a class="award-link" asp-controller="Players" asp-action="PlayerDetails" asp-route-playerName="@award.Winner"> @award.Winner</a>
+                    </td>
+                    <td>
+                        <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
+                    </td>
+                }
+                else if (award.Type == "MIP")
+                {
+                    <td>Most Improved Player</td>
+                    <td>
+                        <a class="award-link" asp-controller="Players" asp-action="PlayerDetails" asp-route-playerName="@award.Winner"> @award.Winner</a>
+                    </td>
+                    <td>
+                        <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
+                    </td>
+                }
+                else if (award.Type == "SixthMOTY")
+                {
+                    <td>Sixth Man of the Year</td>
+                    <td>
+                        <a class="award-link" asp-controller="Players" asp-action="PlayerDetails" asp-route-playerName="@award.Winner"> @award.Winner</a>
+                    </td>
+                    <td>
+                        <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamNam="@award.WinnerTeam"> @award.WinnerTeam</a>
+                    </td>
+                }
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
