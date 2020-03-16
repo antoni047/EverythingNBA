@@ -169,10 +169,49 @@ counter{
     font-size: 17px;
 }
 
+.btn-primary {
+    color: #ffffff;
+    background: #00008b;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+}
+
+.btn-secondary {
+    color: black;
+    background: #8b0000;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+}
+
+.series-links-title {
+    color: black;
+    background: #ebebeb;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    border: 1px solid black;
+}
+.series-links-block {
+    border-left: 2px solid black
+}
+
+btn-info {
+    background-color: lightgrey;
+    color: black;
+    border-right: 1px solid #8b0000;
+    border-bottom: 1px solid #8b0000;
+    border-top: 1px solid #00008b;
+    border-left: 1px solid #00008b;
+}
+
 .team-name {
     text-decoration: none;
     background-color: none;
 }
+
+
 
 button.accept-policy {
     font-size: 1rem;
