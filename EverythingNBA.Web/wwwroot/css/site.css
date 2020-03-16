@@ -87,6 +87,8 @@ html {
     font-weight: 400;
 }
 
+.
+
 
 
 /*Home*/
@@ -196,6 +198,47 @@ counter{
 .series-links-block {
     border-left: 2px solid black
 }
+
+/*All Star Teams*/
+.AST-link {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.AST-head {
+    background: #ebebeb;
+    text-decoration: none;
+    background-color: none;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    border-bottom: 1px solid black;
+}
+
+.AST-head-link {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.AS-team{
+    border:1px solid black;
+    margin:auto
+}
+
+
+
+
+
+
 
 btn-info {
     background-color: lightgrey;

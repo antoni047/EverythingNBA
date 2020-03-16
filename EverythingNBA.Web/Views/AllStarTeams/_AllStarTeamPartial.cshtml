@@ -1,0 +1,12 @@
+﻿@using EverythingNBA.Services.Models.AllStarTeam;
+@model GetAllStarTeamServiceModel
+
+
+<div>
+    @foreach (var player in Model.Players)
+    {
+        <div>
+            <a class="AST-link" asp-controller="Players" asp-action="PlayerDetails" asp-route-playerName="@player.FirstName @player.LastName">@player.FirstName @player.LastName</a>
+        </div>
+    }
+</div>
