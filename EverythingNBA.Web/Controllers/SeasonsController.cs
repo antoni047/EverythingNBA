@@ -29,7 +29,8 @@
         {
             var allTeamsStandings = await this.teamService.GetStandingsAsync(seasonId);
 
-            var playoff = await this.playoffService.GetDetailsBySeasonAsync(seasonId);
+            var seasonYear = await this.seasonService.GetYearAsync(seasonId);
+            var playoff = await this.playoffService.GetDetailsBySeasonAsync(seasonYear);
             ViewBag.playoffId = playoff.Id;
 
             return this.View(allTeamsStandings);
