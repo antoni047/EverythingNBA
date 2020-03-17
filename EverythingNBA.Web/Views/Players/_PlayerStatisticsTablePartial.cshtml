@@ -1,0 +1,40 @@
+﻿@using EverythingNBA.Services.Models.Player
+@model PlayerDetailsServiceModel
+
+<table class="table table-bordered player-statistics-table">
+    <thead class="player-statistics-head">
+        <tr class="text-center player-statistics-table">
+            <th style="text-align: left; border: 1px solid black;"> Statistics</th>
+            <th style="border: 1px solid black;" title="Points per game">PPG</th>
+            <th style="border: 1px solid black;" title="Assits per game">APG</th>
+            <th style="border: 1px solid black;" title="Rebounds per game">RPG</th>
+            <th style="border: 1px solid black;" title="Blocks per game">BPG</th>
+            <th style="border: 1px solid black;" title="Steals per game">SPG</th>
+            <th style="border: 1px solid black;" title="Field goal percentage">FG%</th>
+            <th style="border: 1px solid black;" title="Three points percentage">3P%</th>
+            <th style="border: 1px solid black;" title="Free throw percentage">FT%</th>
+        </tr>
+    </thead>
+    <tr class="text-center player-statistics-table">
+        <td style="text-align: left; border: 1px solid black;">Current Season</td>
+        <td style="border: 1px solid black;">@Model.SeasonStatistics.AveragePoints</td>
+        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageAssists</td>
+        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageRebounds</td>
+        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageBlocks</td>
+        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageSteals</td>
+        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageFieldGoalPercentage</td>
+        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageThreePercentage</td>
+        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageFreeThrowPercentage</td>
+    </tr>
+    <tr class="text-center player-statistics-table">
+        <td style="text-align: left; border: 1px solid black;">Career</td>
+        <td style="border: 1px solid black;">@Model.CareerStatistics.AveragePoints</td>
+        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageAssists</td>
+        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageRebounds</td>
+        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageBlocks</td>
+        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageSteals</td>
+        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageFieldGoalPercentage</td>
+        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageThreePercentage</td>
+        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageFreeThrowPercentage</td>
+    </tr>
+</table>

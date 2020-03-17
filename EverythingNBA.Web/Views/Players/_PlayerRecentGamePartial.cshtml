@@ -1,0 +1,20 @@
+﻿@using EverythingNBA.Services.Models.Player
+@model PlayerRecentGamesListingServiceModel
+
+<div class="col-md-3 container-fluid p-0 m-0 player-game-box">
+    <div class="container-fluid row p-0 player-bio p-0 m-0">
+        <div class="col-md-5 p-0 text-center">@Model.TeamHostName</div>
+        <div class="col-md-2 p-0 text-center">-</div>
+        <div class="col-md-5 p-0 text-center">@Model.Team2Name</div>
+    </div>
+    <div class="container-fluid row player-bio p-0 m-0">
+        <div class="col-md-5 p-0 text-center">@Model.TeamHostPoints</div>
+        <div class="col-md-2 p-0 text-center"></div>
+        <div class="col-md-5 p-0 text-center">@Model.Team2Points</div>
+    </div>
+    <div class="container-fluid row player-bio p-0 m-0">
+        <div class="col-md-4 p-0 text-center">@Model.Points PTS</div>
+        <div class="col-md-4 p-0 text-center">@Model.Assists AST</div>
+        <div class="col-md-4 p-0 text-center">@Model.Rebounds REB</div>
+    </div>
+</div>

@@ -262,6 +262,66 @@ counter{
     color: black;
 }
 
+/*Player*/
+.player-bio {
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    border: 1px solid black;
+}
+.player-link {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+}
+
+.player-image {
+    
+    border: 1px solid black;
+}
+
+.player-main-info {
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    border: 1px solid black;
+    border-top: 2px solid black;
+}
+
+.player-details{
+
+}
+
+.player-statistics-head{
+    background-color: #ebebeb
+}
+
+.player-statistics-table{
+    border: 1px solid black;
+}
+
+.table-bordered {
+    border: 1px solid black;
+}
+
+.player-table-container {
+    padding-left: 0rem;
+    padding-right: 1.85rem;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.games-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
+}
+.player-game-box{
+    border:1.5px solid black;
+}
 
 
 

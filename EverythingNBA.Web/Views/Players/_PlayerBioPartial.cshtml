@@ -1,0 +1,17 @@
+﻿@using EverythingNBA.Services.Models.Player
+@model PlayerDetailsServiceModel
+
+<div><img class="player-image w-100" src="@Model.ImageURL" alt="Player Image" /></div>
+<div class="text-center player-bio py-3 px-2">Age: @Model.Age</div>
+<div class="text-center player-bio py-3 px-2">Height: @Model.Height cm</div>
+<div class="text-center player-bio py-3 px-2">Weight: @Model.Weight kg</div>
+<div class="text-center player-bio py-3 px-2">Rookie Year: @Model.RookieYear</div>
+<div class="text-center p-0 player-bio py-3 px-2">
+    <a class="player-link p-0 m-0" href="@Model.TwitterLink">Twitter</a>
+</div>
+<div class="text-center p-0 player-bio py-3 px-2">
+    <a class=" player-link p-0 m-0" href="@Model.InstagramLink">Instagram</a>
+</div>
+<div class="w-100 text-center player-bio py-3 px-2">
+    <a class="player-link w-100 p-0 m-0" href="" role="button">Awards</a>
+</div>

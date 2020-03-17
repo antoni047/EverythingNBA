@@ -1,2 +1,31 @@
 ﻿@using EverythingNBA.Services.Models.Player
 @model PlayerDetailsServiceModel
+
+<div class="container-fluid row m-3 player-details">
+    <div class="col-md-3 h-100 pr-0">
+        @await Html.PartialAsync("_PlayerBioPartial", Model)
+    </div>
+    <div class="col-md-9 px-0">
+        <div class="container-fluid row">
+            <div class="col-md-5 py-2 player-main-info text-center">
+                Name: @Model.FirstName @Model.LastName
+            </div>
+            <div class="col-md-5 py-2 player-main-info text-center">
+                Team: @Model.CurrentTeam
+            </div>
+            <div class="col-md-2 py-2 player-main-info text-center">
+                #@Model.ShirtNumber
+            </div>
+        </div>
+        <div class="container-fluid player-table-container">
+            @await Html.PartialAsync("_PlayerStatisticsTablePartial", Model)
+        </div>
+        <h4 class="w-100 text-center games-title">Recent Games</h4>
+        <div class="container-fluid row pl-3">
+            @foreach (var game in Model.RecentGames)
+            {
+                @await Html.PartialAsync("_PlayerRecentGamePartial", game)
+            }
+        </div>
+    </div>
+</div>
