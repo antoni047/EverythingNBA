@@ -95,12 +95,14 @@
         {
             var player = await this.db.Players
                 .Include(p => p.SingleGameStatistics)
+                .Include(p => p.CloudinaryImage)
                 .Where(p => p.Id == id)
                 .FirstOrDefaultAsync();
 
             var season = await this.seasonService.GetDetailsByYearAsync(this.GetCurrentSeasonYear());
 
             var model = mapper.Map<PlayerDetailsServiceModel>(player);
+            model.ImageURL = player.CloudinaryImage.ImageURL;
 
             model.CurrentTeam = await this.db.Teams.Include(t => t.Players).Where(t => t.Id == player.TeamId).Select(t => t.Name).FirstOrDefaultAsync();
             model.SeasonStatistics = await this.GetSeasonStatistics(player.Id, season.SeasonId);
@@ -346,8 +348,9 @@
             {
                 var model = new PlayerRecentGamesListingServiceModel
                 {
-                    TeamHostName = gameStat.Game.TeamHost.Name,
-                    Team2Name = gameStat.Game.Team2.Name,
+                    Id = gameStat.Game.Id,
+                    TeamHostName = gameStat.Game.TeamHost.AbbreviatedName,
+                    Team2Name = gameStat.Game.Team2.AbbreviatedName,
                     TeamHostPoints = (int)gameStat.Game.TeamHostPoints,
                     Team2Points = (int)gameStat.Game.Team2Points,
                     Date = gameStat.Game.Date.ToString(@"dd/MM/yyyy", CultureInfo.InvariantCulture),
@@ -372,10 +375,6 @@
             {
                 var imageId = await this.imageService.UploadImageAsync(image);
                 player.CloudinaryImageId = imageId;
-            }
-            else
-            {
-                player.CloudinaryImageId = model.CloudinaryImageId;
             }
 
             player.FirstName = model.FirstName;

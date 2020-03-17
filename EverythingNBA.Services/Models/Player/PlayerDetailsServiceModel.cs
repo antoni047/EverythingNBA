@@ -23,7 +23,7 @@
 
         public bool IsStarter { get; set; }
 
-        public int? CloudinaryImageId { get; set; }
+        public string ImageURL { get; set; }
 
         public int ShirtNumber { get; set; }
 
