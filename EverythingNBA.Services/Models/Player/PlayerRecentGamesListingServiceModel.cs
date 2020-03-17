@@ -2,6 +2,7 @@
 {
     public class PlayerRecentGamesListingServiceModel
     {
+        public int Id { get; set; }
         public string TeamHostName { get; set; }
 
         public string Team2Name { get; set; }
