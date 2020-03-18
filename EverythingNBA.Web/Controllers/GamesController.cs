@@ -116,6 +116,7 @@
             return this.View(gameModel);
         }
 
+        [Route("[controller]/[action]/team1Name&team2Name")]
         public async Task<IActionResult> HeadToHead(string team1Name, string team2Name)
         {
             var games = await this.gameService.GetAllGamesBetweenTeamsAsync(team1Name, team2Name);
