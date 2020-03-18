@@ -103,7 +103,7 @@
 
             var model = mapper.Map<PlayerDetailsServiceModel>(player);
             model.ImageURL = player.CloudinaryImage.ImageURL;
-
+            model.Position = this.ConvertToFriendlyName(player.Position.ToString());
             model.CurrentTeam = await this.db.Teams.Include(t => t.Players).Where(t => t.Id == player.TeamId).Select(t => t.Name).FirstOrDefaultAsync();
             model.SeasonStatistics = await this.GetSeasonStatistics(player.Id, season.SeasonId);
             model.CareerStatistics = await this.GetCareerStatistics(player.Id);
@@ -506,6 +506,7 @@
             foreach (var player in players.OrderByDescending(p => p.IsStarter).ToList())
             {
                 var model = mapper.Map<TeamPlayerOverviewServiceModel>(player);
+                model.Position = this.ConvertToShortPosition(player.Position.ToString());
 
                 playerModels.Add(model);
             }
@@ -605,6 +606,44 @@
             }
 
             return currentYear;
+        }
+
+        private string ConvertToShortPosition(string position)
+        {
+            switch (position)
+            {
+                case "PointGuard":
+                    return "PG";
+                case "ShootingGuard":
+                    return "SG";
+                case "SmallForward":
+                    return "SF";
+                case "PowerForward":
+                    return "PF";
+                case "Center":
+                    return "C";
+                default:
+                    return "";
+            }
+        }
+
+        private string ConvertToFriendlyName(string position)
+        {
+            switch (position)
+            {
+                case "PointGuard":
+                    return "Poin tGuard";
+                case "ShootingGuard":
+                    return "Shooting Guard";
+                case "SmallForward":
+                    return "Small Forward";
+                case "PowerForward":
+                    return "Power Forward";
+                case "Center":
+                    return "Center";
+                default:
+                    return "";
+            }
         }
     }
 }
