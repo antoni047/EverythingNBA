@@ -20,7 +20,7 @@
         <div class="container-fluid player-table-container">
             @await Html.PartialAsync("_PlayerStatisticsTablePartial", Model)
         </div>
-        <h4 class="w-100 text-center games-title">Recent Games</h4>
+        <h4 class="w-100 text-center recent-games-title">Recent Games</h4>
         <div class="container-fluid row pl-3">
             @foreach (var game in Model.RecentGames)
             {

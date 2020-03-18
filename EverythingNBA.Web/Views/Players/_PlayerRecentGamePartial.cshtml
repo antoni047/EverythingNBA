@@ -9,7 +9,10 @@
     </div>
     <div class="container-fluid row player-bio p-0 m-0">
         <div class="col-md-5 p-0 text-center">@Model.TeamHostPoints</div>
-        <div class="col-md-2 p-0 text-center"></div>
+        <div class="col-md-2 p-0 text-center">
+        <a class="w-100 h-100 p-0 m-0 btn btn-secondary game-link"
+            href="/Games/GameDetails/@Model.Id"
+            role="button">Details</a></div>
         <div class="col-md-5 p-0 text-center">@Model.Team2Points</div>
     </div>
     <div class="container-fluid row player-bio p-0 m-0">

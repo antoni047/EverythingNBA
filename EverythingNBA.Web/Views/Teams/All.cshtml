@@ -1,4 +1,5 @@
-﻿@model ICollection<string>
+﻿@using EverythingNBA.Services.Models.Team
+@model ICollection<TeamListingSerivceModel>
 
 <div class="p-3 m-0">
     <h2 class="p-2">All Teams</h2>
@@ -6,7 +7,7 @@
     @foreach (var team in Model)
     {
         <h3>
-            <a class="ml-3 mb-1 container-fluid w-100 player-name" asp-controller="Team" asp-action="TeamDetails" asp-route-teamName="@team">@team</a>
+            <a class="ml-3 mb-1 container-fluid w-100 player-name" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@team.Name">@team.Name</a>
         </h3>
     }
 </div>

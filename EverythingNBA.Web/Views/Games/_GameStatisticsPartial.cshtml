@@ -1,0 +1,68 @@
+﻿@using EverythingNBA.Web.Models.Games
+@model GameDetailsViewModel
+
+<table class="table table-bordered game-statistic-table col-md-6">
+    <thead class="player-statistics-head">
+        <tr class="text-center player-statistics-table">
+            <th style="text-align: left; border: 1px solid black;">@Model.TeamHostName</th>
+            <th style="border: 1px solid black;" title="Points per game">Min</th>
+            <th style="border: 1px solid black;" title="Points per game">PTS</th>
+            <th style="border: 1px solid black;" title="Assits per game">AST</th>
+            <th style="border: 1px solid black;" title="Rebounds per game">REB</th>
+            <th style="border: 1px solid black;" title="Blocks per game">BLK</th>
+            <th style="border: 1px solid black;" title="Steals per game">STL</th>
+            <th style="border: 1px solid black;" title="Field goal percentage">FG%</th>
+            <th style="border: 1px solid black;" title="Three points percentage">3P%</th>
+            <th style="border: 1px solid black;" title="Free throw percentage">FT%</th>
+        </tr>
+    </thead>
+    @foreach (var player in Model.TeamHostPlayerStats)
+    {
+        <tr class="text-center player-statistics-table">
+            <td style="text-align: left; border: 1px solid black; font-size: 17px">@player.PlayerName</td>
+            <td style="border: 1px solid black;">@player.MinutesPlayed</td>
+            <td style="border: 1px solid black;">@player.Points</td>
+            <td style="border: 1px solid black;">@player.Assists</td>
+            <td style="border: 1px solid black;">@player.Rebounds</td>
+            <td style="border: 1px solid black;">@player.Blocks</td>
+            <td style="border: 1px solid black;">@player.Steals</td>
+            <td style="border: 1px solid black;">@player.FieldGoalPercentage</td>
+            <td style="border: 1px solid black;">@player.ThreePercentage</td>
+            <td style="border: 1px solid black;">@player.FreeThrowPercentage</td>
+        </tr>
+    }
+</table>
+
+<table class="table table-bordered game-statistic-table col-md-6">
+    <thead class="player-statistics-head">
+        <tr class="text-center player-statistics-table">
+            <th style="text-align: left; border: 1px solid black;">@Model.Team2Name</th>
+            <th style="border: 1px solid black;" title="Points per game">Min</th>
+            <th style="border: 1px solid black;" title="Points per game">PTS</th>
+            <th style="border: 1px solid black;" title="Assits per game">AST</th>
+            <th style="border: 1px solid black;" title="Rebounds per game">REB</th>
+            <th style="border: 1px solid black;" title="Blocks per game">BLK</th>
+            <th style="border: 1px solid black;" title="Steals per game">STL</th>
+            <th style="border: 1px solid black;" title="Field goal percentage">FG%</th>
+            <th style="border: 1px solid black;" title="Three points percentage">3P%</th>
+            <th style="border: 1px solid black;" title="Free throw percentage">FT%</th>
+        </tr>
+    </thead>
+    @foreach (var player in Model.Team2PlayerStats)
+    {
+        <tr class="text-center player-statistics-table">
+            <td style="text-align: left; border: 1px solid black;">@player.PlayerName</td>
+            <td style="border: 1px solid black;">@player.MinutesPlayed</td>
+            <td style="border: 1px solid black;">@player.Points</td>
+            <td style="border: 1px solid black;">@player.Assists</td>
+            <td style="border: 1px solid black;">@player.Rebounds</td>
+            <td style="border: 1px solid black;">@player.Blocks</td>
+            <td style="border: 1px solid black;">@player.Steals</td>
+            <td style="border: 1px solid black;">@player.FieldGoalPercentage</td>
+            <td style="border: 1px solid black;">@player.ThreePercentage</td>
+            <td style="border: 1px solid black;">@player.FreeThrowPercentage</td>
+        </tr>
+    }
+
+
+</table>
