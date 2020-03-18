@@ -5,6 +5,7 @@ namespace EverythingNBA.Web.Areas.Archive.Controllers
     using System.Threading.Tasks;
 
     using Services;
+    using System;
 
     [Area("Archive")]
     [Route("Archive/[controller]/[action]")]
@@ -24,10 +25,28 @@ namespace EverythingNBA.Web.Areas.Archive.Controllers
 
             if (teamDetailsModel == null)
             {
-                return RedirectToAction("All");
+                return RedirectToAction("Teams", "All");
             }
 
+            ViewBag.CurrentYear = this.GetCurrentSeasonYear();
+            ViewBag.Year = year;
             return this.View(teamDetailsModel);
+        }
+
+        private int GetCurrentSeasonYear()
+        {
+            var currentYear = 0;
+
+            if (DateTime.Now.Month >= 9)
+            {
+                currentYear = DateTime.Now.Year + 1;
+            }
+            else if (DateTime.Now.Month < 9)
+            {
+                currentYear = DateTime.Now.Year;
+            }
+
+            return currentYear;
         }
     }
 }

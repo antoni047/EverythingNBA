@@ -38,11 +38,10 @@
             return RedirectToAction("TeamDetails", new { teamDetailsModel.Name });
         }
 
-        [Route("[controller]/[action]/{teamName}")]
         public async Task<IActionResult> TeamDetails(string teamName)
         {
-            //checking if the name is an abbreviation
-            string fullName = this.GetFullTeamName(teamName);
+            //checking if the name is an abbreviation or short version
+            string fullName = teamName.Split(" ").Length < 2 ? this.GetFullTeamName(teamName) : teamName;
 
             var currentYear = this.GetCurrentSeasonYear();
             var teamDetailsModel = await this.teamService.GetTeamDetailsAsync(fullName, currentYear);
@@ -52,6 +51,8 @@
                 return RedirectToAction("All");
             }
 
+            ViewBag.CurrentYear = this.GetCurrentSeasonYear();
+            ViewBag.Year = currentYear;
             return this.View(teamDetailsModel);
         }
 

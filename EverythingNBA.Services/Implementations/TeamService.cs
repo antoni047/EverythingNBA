@@ -2,13 +2,14 @@
 {
     using Microsoft.AspNetCore.Http;
     using System;
+    using System.Text;
     using System.Linq;
     using System.Threading.Tasks;
     using AutoMapper;
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
     using System.Globalization;
-    
+
     using EverythingNBA.Models;
     using EverythingNBA.Models.Enums;
     using Data;
@@ -67,7 +68,7 @@
 
         }
 
-        public async Task<int> AddTeamAsync(string name, IFormFile FullImageFile, IFormFile smallImageFile, string conference, 
+        public async Task<int> AddTeamAsync(string name, IFormFile FullImageFile, IFormFile smallImageFile, string conference,
             string venue, string instagram, string twitter)
         {
             var fullImageId = await this.imageService.UploadImageAsync(FullImageFile);
@@ -77,7 +78,7 @@
             {
                 Name = name,
                 FullImageId = fullImageId,
-                SmallImageId = smallImageId, 
+                SmallImageId = smallImageId,
                 Conference = (ConferenceType)Enum.Parse(typeof(ConferenceType), conference),
                 Venue = venue,
                 Twitter = twitter,
@@ -124,7 +125,7 @@
                 var gamesPlayed = await this.GetGamesPlayed(team.Id, seasonId);
                 var lastTenGames = await this.GetLastTenGames(team.Id, seasonId);
                 var seasonStatisicModel = await statisticService.GetDetailsAsync(seasonId, team.Id);
-                
+
                 var wins = 0;
                 var losses = 0;
                 var winPercentage = string.Empty;
@@ -190,6 +191,13 @@
             var players = await this.playerService.GetAllPlayersFromTeam(teamId);
             teamDetailsModel.Players = players;
 
+            var titlesString = new StringBuilder();
+            foreach (var title in team.TitlesWon)
+            {
+                titlesString.Append(title.Year.ToString() + ", ");
+            }
+            teamDetailsModel.TitlesWon = titlesString.ToString();
+
             var teamStandings = new List<SeasonStatisticOverviewServiceModel>();
             var allStandings = await this.GetStandingsAsync(seasonId);
 
@@ -205,24 +213,41 @@
                     {
                         if (i == 15)
                         {
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]));
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]));
+                            var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
+                            teamInfront.Position = i - 1;
+                            teamStandings.Add(teamInfront);
+
+                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
+                            currentTeam.Position = i;
+                            teamStandings.Add(currentTeam);
                         }
                         if (i == 0)
                         {
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]));
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]));
+                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
+                            currentTeam.Position = i;
+                            teamStandings.Add(currentTeam);
+
+                            var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
+                            teamBehind.Position = i + 1;
+                            teamStandings.Add(teamBehind);
                         }
                         else
                         {
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]));
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]));
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]));
+                            var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
+                            teamInfront.Position = i - 1;
+                            teamStandings.Add(teamInfront);
+
+                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
+                            currentTeam.Position = i;
+                            teamStandings.Add(currentTeam);
+
+                            var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
+                            teamBehind.Position = i + 1;
+                            teamStandings.Add(teamBehind);
                         }
                     }
                 }
             }
-
             else
             {
                 var listCount = allStandings.EasternStandings.OrderByDescending(x => x.WinPercentage).ToList().Count();
@@ -235,19 +260,37 @@
                     {
                         if (i == 15)
                         {
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]));
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]));
+                            var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
+                            teamInfront.Position = i - 1;
+                            teamStandings.Add(teamInfront);
+
+                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
+                            currentTeam.Position = i;
+                            teamStandings.Add(currentTeam);
                         }
                         if (i == 0)
                         {
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]));
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]));
+                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
+                            currentTeam.Position = i;
+                            teamStandings.Add(currentTeam);
+
+                            var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
+                            teamBehind.Position = i + 1;
+                            teamStandings.Add(teamBehind);
                         }
                         else
                         {
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]));
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]));
-                            teamStandings.Add(mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]));
+                            var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
+                            teamInfront.Position = i - 1;
+                            teamStandings.Add(teamInfront);
+
+                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
+                            currentTeam.Position = i;
+                            teamStandings.Add(currentTeam);
+
+                            var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
+                            teamBehind.Position = i + 1;
+                            teamStandings.Add(teamBehind);
                         }
                     }
                 }
@@ -478,9 +521,17 @@
             team.Twitter = model.Twitter;
         }
 
-        public async Task<ICollection<string>> GetAllTeamsAsync()
+        public async Task<ICollection<TeamListingSerivceModel>> GetAllTeamsAsync()
         {
-            return await this.db.Teams.OrderBy(t => t.Name).Select(t => t.Name).ToListAsync();
+            var teams = await this.db.Teams.OrderBy(t => t.Name).ToListAsync();
+
+            var models = new List<TeamListingSerivceModel>();
+            foreach (var team in teams)
+            {
+                models.Add(mapper.Map<TeamListingSerivceModel>(team));
+            }
+
+            return models;
         }
 
         private async Task<int> GetGamesPlayed(int teamId, int seasonId)
@@ -542,15 +593,17 @@
             teamGames.AddRange(teamHomeGames);
             teamGames.AddRange(teamAwayGames);
 
-            var last9 = teamGames.OrderByDescending(g => g.Date).ToList().Take(9).ToList();
+            var last9 = teamGames.Where(g => g.IsFinished == true).OrderByDescending(g => g.Date).ToList().Take(9).ToList();
 
             var lastNineGames = new List<TeamGameOverviewServiceModel>();
 
             foreach (var game in last9)
             {
                 var model = mapper.Map<TeamGameOverviewServiceModel>(game);
+                model.TeamHostName = game.TeamHost.AbbreviatedName;
+                model.Team2Name = game.Team2.AbbreviatedName;
 
-                if (model.TeamHostName == team.Name)
+                if (model.TeamHostName == team.AbbreviatedName)
                 {
                     model.IsHomeGame = true;
                 }

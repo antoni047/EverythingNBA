@@ -61,11 +61,12 @@
                 .ForMember(mdl => mdl.CurrentSeasonStatistic, opt => opt.Ignore())
                 .ForMember(mdl => mdl.Last9Games, opt => opt.Ignore())
                 .ForMember(mdl => mdl.Players, opt => opt.Ignore())
-                .ForMember(mdl => mdl.TitlesWon, opt => opt.MapFrom(t => t.TitlesWon.Select(x => x.Year).ToList()))
+                .ForMember(mdl => mdl.TitlesWon, opt => opt.Ignore())
                 .ForMember(mdl => mdl.Id, opt => opt.MapFrom(t => t.Id));
 
             this.CreateMap<Team, TeamOverviewServiceModel>()
                 .ForMember(mdl => mdl.Id, opt => opt.MapFrom(t => t.Id));
+            this.CreateMap<Team, TeamListingSerivceModel>();
 
             this.CreateMap<Player, PlayerOverviewServiceModel>()
                 .ForMember(mdl => mdl.Name, opt => opt.MapFrom(p => p.FirstName + " " + p.LastName))

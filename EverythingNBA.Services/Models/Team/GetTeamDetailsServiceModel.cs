@@ -31,6 +31,6 @@
 
         public ICollection<TeamPlayerOverviewServiceModel> Players { get; set; }
 
-        public ICollection<int> TitlesWon { get; set; }
+        public string TitlesWon { get; set; }
     }
 }

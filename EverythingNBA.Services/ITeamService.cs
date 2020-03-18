@@ -37,7 +37,7 @@
 
         Task EditTeamAsync(GetTeamDetailsServiceModel model, int id, IFormFile fullImage, IFormFile smallImage);
 
-        Task<ICollection<string>> GetAllTeamsAsync();
+        Task<ICollection<TeamListingSerivceModel>> GetAllTeamsAsync();
 
         Task<TeamOverviewServiceModel> GetTeamAsync(int teamId);
 
