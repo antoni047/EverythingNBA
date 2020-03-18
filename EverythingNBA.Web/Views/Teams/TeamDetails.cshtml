@@ -1,2 +1,50 @@
 ﻿@using EverythingNBA.Services.Models.Team
 @model GetTeamDetailsServiceModel
+
+<div class="container-fluid row m-3">
+    <div class="col-md-3 p-0">
+        @await Html.PartialAsync("_TeamBioPartial", Model)
+    </div>
+
+    <div class="col-md-6 p-0">
+        <div class="d-flex justify-content-center container-fluid row pr-0">
+            <div class="col-md-2 py-2 border-right text-center team-bio">@Model.AbbreviatedName</div>
+            <div class="col-md-8 py-2 text-center team-bio" style="font-size: 28px">@Model.Name</div>
+            <div class="col-md-2 py-2 border-left text-center team-bio">@ViewBag.Year</div>
+        </div>
+        <div class="mr-3 team-standings">
+            @await Html.PartialAsync("_TeamStandingsTablePartial", Model)
+        </div>
+        <h4 class="w-100 text-center recent-games-title">Recent Games</h4>
+        <div class="container-fluid row pr-0">
+            @foreach (var game in Model.Last9Games)
+            {
+                @await Html.PartialAsync("_TeamRecentGamesPartial", game)
+            }
+
+        </div>
+    </div>
+
+    <div class="col-md-3 p-0 team-player-table">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Players</th>
+                    <th>Age</th>
+                    <th>Pos.</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var player in Model.Players)
+                {
+                    <tr>
+                        <td><a class="w-100 team-player-name" asp-controller="Players" asp-action="PlayerDetails" asp-route-playerName="@player.Name">@player.Name</a></td>
+                        <td>@player.Age</td>
+                        <td>@player.Position</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+

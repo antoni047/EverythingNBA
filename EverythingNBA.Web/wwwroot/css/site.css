@@ -290,8 +290,13 @@ counter{
     border-top: 2px solid black;
 }
 
-.player-details{
-
+.game-link {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
 }
 
 .player-statistics-head{
@@ -314,13 +319,42 @@ counter{
     font-size: 18px;
 }
 
-.games-title {
+.recent-games-title {
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     margin-bottom: 0.4rem;
 }
 .player-game-box{
     border:1.5px solid black;
+}
+
+/*Games*/
+.game-title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 26px;
+    border-bottom: 2px solid;
+    width: 100%;
+}
+
+.game-game-link {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    float: right
+}
+
+.game-details {
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    border: 1.5px solid black;
+    width: 40%;
 }
 
 
@@ -341,6 +375,43 @@ btn-info {
     background-color: none;
 }
 
+.game-statistic-table {
+    border: 1px solid black;
+    font-size: 17px;
+}
+
+/*Teams*/
+.team-bio {
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    border: 1px solid black;
+}
+
+.team-link {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+}
+
+.team-standings{
+    border-right: 1px solid black;
+}
+
+.team-player-table {
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    border: 1px solid black;
+}
+
+.team-player-name {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+}
 
 
 button.accept-policy {

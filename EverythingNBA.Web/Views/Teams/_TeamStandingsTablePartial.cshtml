@@ -1,0 +1,24 @@
+﻿@using EverythingNBA.Services.Models.Team
+@model GetTeamDetailsServiceModel
+
+<table class="standings-table table table-border">
+    <thead class="standings-table-head border-left">
+        <tr>
+            <th class="p-0 text-center border-right">#</th>
+            <th class="py-0 pr-0 pl-1 ">@Model.Conference Conference Standings</th>
+            <th class="p-0 text-center">Record</th>
+            <th class="p-0 text-center">L10</th>
+            <th class="p-0 text-center">GP</th>
+        </tr>
+    </thead>
+    @foreach (var team in Model.CurrentSeasonStatistic)
+    {
+        <tr class="border">
+            <th scope="row" class="p-0 border-right text-center">@team.Position</th>
+            <td class="py-0 pr-0 pl-1">@team.Name</td>
+            <td class="p-0 text-center">@team.Wins-@team.Losses</td>
+            <td class="p-0 text-center">@team.LastTenGames</td>
+            <td class="p-0 text-center">@team.GamesPlayed</td>
+        </tr>
+    }
+</table>
