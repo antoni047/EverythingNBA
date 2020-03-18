@@ -125,6 +125,11 @@
 
             var result = ((double)gameStatistic.FieldGoalsMade / (double)gameStatistic.FieldGoalAttempts) * 100;
 
+            if (result > 100 || result < 0 || double.IsNaN(result))
+            {
+                result = 0;
+            }
+
             return (int)result;
         }
 
@@ -134,6 +139,11 @@
 
             var result = ((double)gameStatistic.FreeThrowsMade / (double)gameStatistic.FreeThrowAttempts) * 100;
 
+            if (result > 100 || result < 0 || double.IsNaN(result))
+            {
+                result = 0;
+            }
+
             return (int)result;
         }
 
@@ -142,6 +152,11 @@
             var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
 
             var result = ((double)gameStatistic.ThreeMade / (double)gameStatistic.ThreeAttempts) * 100;
+
+            if (result > 100 || result < 0 || double.IsNaN(result))
+            {
+                result = 0;
+            }
 
             return (int)result;
         }
