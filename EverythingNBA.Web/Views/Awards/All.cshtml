@@ -1,2 +1,95 @@
 ﻿@using EverythingNBA.Services.Models.Award
 @model ICollection<AllAwardsServiceModel>
+
+<div class="container-fluid mx-3">
+    <table class="table border">
+        <thead>
+            <tr class="text-center">
+                <th>Season</th>
+                <th>MVP</th>
+                <th>Finals' MVP</th>
+                <th>DPOTY</th>
+                <th>Top Scorer</th>
+                <th>ROTY</th>
+                <th>Sixth MOTY</th>
+                <th>MIP</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var season in Model)
+            {
+                <tr class="text-center">
+                    <td>@season.Year</td>
+
+                    @if (@season.MVP != null)
+                    {
+                        <td>@season.MVP</td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+
+                    @if (@season.FinalsMVP != null)
+                    {
+                        <td>@season.FinalsMVP</td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+
+                    @if (@season.DPOTY != null)
+                    {
+                        <td>@season.DPOTY</td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+
+                    @if (@season.TopScorer != null)
+                    {
+                        <td>@season.TopScorer</td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+
+                    @if (@season.ROTY != null)
+                    {
+                        <td>@season.ROTY</td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+
+                    @if (@season.SixthMOTY != null)
+                    {
+                        <td>@season.SixthMOTY</td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+
+                    @if (@season.MIP != null)
+                    {
+                        <td>@season.MIP</td>
+                    }
+                    else
+                    {
+                        <td>N/A</td>
+                    }
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+<div class="container-fluid mx-3">
+    <text class="awards-info"><b>MVP</b> - Most Valuable Player; <b>Finals' MVP</b> - Most Valuable Player of the NBA Finals; <b>DPOTY</b> - Defensive Player of the Year; <b>Top Scorer</b> - Most points scored during the regular season; <b>ROTY</b> - Rookie of the Year; <b>Sixth MOTY</b> - Sixth Man of the Year; <b>MIP</b> - Most Improved Player</text>
+</div>
+    
