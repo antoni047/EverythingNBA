@@ -131,12 +131,13 @@
             var series = await this.db.Series
                 .Include(s => s.Team1)
                 .Include(s => s.Team2)
+                .Include(s => s.Game1).Include(s => s.Game2).Include(s => s.Game3).Include(s => s.Game4)
+                .Include(s => s.Game5).Include(s => s.Game6).Include(s => s.Game6)
                 .Where(s => s.Id == id)
                 .FirstOrDefaultAsync();
 
             var model = mapper.Map<GetSeriesDetailsServiceModel>(series);
-            model.TopStats = await this.GetTopStats(model);
-
+            
             var game1 = series.Game1 != null ? mapper.Map<GameDetailsServiceModel>(series.Game1) : null;
             var game2 = series.Game2 != null ? mapper.Map<GameDetailsServiceModel>(series.Game2) : null;
             var game3 = series.Game3 != null ? mapper.Map<GameDetailsServiceModel>(series.Game3) : null;
