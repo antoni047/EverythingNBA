@@ -76,7 +76,7 @@
                 models.Add(model);
             }
 
-            return models;
+            return models.OrderByDescending(g => g.Date).ToList();
         }
 
         public async Task<ICollection<GameDetailsServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(string team1Name, string team2Name, int seasonId)

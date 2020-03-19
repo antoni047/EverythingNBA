@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using AutoMapper;
 
@@ -116,10 +117,18 @@
             return this.View(gameModel);
         }
 
-        [Route("[controller]/[action]/team1Name&team2Name")]
+        [Route("[controller]/[action]/{team1Name}&{team2Name}")]
         public async Task<IActionResult> HeadToHead(string team1Name, string team2Name)
         {
             var games = await this.gameService.GetAllGamesBetweenTeamsAsync(team1Name, team2Name);
+
+            var yearsList = new HashSet<int>();
+            foreach (var game in games)
+            {
+                yearsList.Add(game.SeasonYear);
+            }
+
+            ViewBag.yearsList = yearsList;
 
             return this.View(games);
         }
