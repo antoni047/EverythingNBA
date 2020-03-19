@@ -1,3 +1,14 @@
 ﻿@using EverythingNBA.Services.Models.AllStarTeam
 @model ICollection<GetAllStarTeamServiceModel>
 
+<h2 class="w-100 container-fluid mx-4 text-center border-bottom">@ViewBag.Type</h2>
+<div class="row mt-3" style="margin: auto; text-align:center">
+    @foreach (var team in Model)
+    {
+        <div class="mx-4 AS-team center">
+            <div class="AST-head px-4">@team.Year</div>
+
+            @await Html.PartialAsync("_AllStarTeamPartial", team)
+        </div>
+    }
+</div>

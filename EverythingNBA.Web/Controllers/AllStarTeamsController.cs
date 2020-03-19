@@ -8,6 +8,7 @@
     using Services;
     using EverythingNBA.Web.Models.AllStarTeams;
     using EverythingNBA.Services.Models.Season;
+    using System.Collections.Generic;
 
     public class AllStarTeamsController : Controller
     {
@@ -34,6 +35,7 @@
         public async Task<IActionResult> AllStarTeamType(string type)
         {
             var astTeams = await this.astService.GetAllASTeamsAsync(type);
+            ViewBag.Type = this.ConvertToFriendlyType(type);
 
             return this.View(astTeams);
         }
@@ -116,6 +118,25 @@
             }
 
             return currentYear;
+        }
+
+        private string ConvertToFriendlyType(string type)
+        {
+            switch (type)
+            {
+                case "FirstAllNBA":
+                    return "First All NBA Team";
+                case "SecondAllNBA":
+                    return "Second All NBA Team";
+                case "ThirdAllNBA":
+                    return "Third All NBA Team";
+                case "AllDefensive":
+                    return "All Defense Team";
+                case "AllRookie":
+                    return "All Rookie Team";
+                default:
+                    return "All NBA Team";
+            }
         }
     }
 }
