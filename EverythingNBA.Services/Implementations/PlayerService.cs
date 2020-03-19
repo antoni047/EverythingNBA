@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using AutoMapper;
+    using System.Text;
     using System.Linq;
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
@@ -402,45 +403,45 @@
                 .Include(p => p.Awards)
                 .FirstOrDefaultAsync();
 
-            var firstNBATeams = new List<int>();
-            var secondNBATeams = new List<int>();
-            var thirdNBATeams = new List<int>();
-            var allDefensiveTeams = new List<int>();
-            var allRookieTeams = new List<int>();
+            var firstNBATeams = new StringBuilder();
+            var secondNBATeams = new StringBuilder();
+            var thirdNBATeams = new StringBuilder();
+            var allDefensiveTeams = new StringBuilder();
+            var allRookieTeams = new StringBuilder();
 
-            var MVPs = new List<int>();
-            var FinalsMVPs = new List<int>();
-            var TopScorerTitles = new List<int>();
-            var DPOTYs = new List<int>();
-            var ROTYs = new List<int>();
-            var SixthMOTYs = new List<int>();
-            var MIPs = new List<int>();
+            var MVPs = new StringBuilder();
+            var FinalsMVPs = new StringBuilder();
+            var TopScorerTitles = new StringBuilder();
+            var DPOTYs = new StringBuilder();
+            var ROTYs = new StringBuilder();
+            var SixthMOTYs = new StringBuilder();
+            var MIPs = new StringBuilder();
 
             foreach (var team in player.AllStarTeams)
             {
                 if (team.AllStarTeam.Type.ToString() == "FirstAllNBA")
                 {
-                    firstNBATeams.Add(team.AllStarTeam.Year);
+                    firstNBATeams.Append(team.AllStarTeam.Year.ToString());
                 }
 
                 else if (team.AllStarTeam.Type.ToString() == "SecondAllNBA")
                 {
-                    secondNBATeams.Add(team.AllStarTeam.Year);
+                    secondNBATeams.Append(team.AllStarTeam.Year.ToString());
                 }
 
                 else if (team.AllStarTeam.Type.ToString() == "ThirdAllNBA")
                 {
-                    thirdNBATeams.Add(team.AllStarTeam.Year);
+                    thirdNBATeams.Append(team.AllStarTeam.Year.ToString());
                 }
 
                 else if (team.AllStarTeam.Type.ToString() == "AllDefensive")
                 {
-                    allDefensiveTeams.Add(team.AllStarTeam.Year);
+                    allDefensiveTeams.Append(team.AllStarTeam.Year.ToString());
                 }
 
                 else if (team.AllStarTeam.Type.ToString() == "AllRookie")
                 {
-                    allRookieTeams.Add(team.AllStarTeam.Year);
+                    allRookieTeams.Append(team.AllStarTeam.Year.ToString());
                 }
             }
 
@@ -448,50 +449,50 @@
             {
                 if (award.Name.ToString() == "MVP")
                 {
-                    MVPs.Add(award.Year);
+                    MVPs.Append(award.Year.ToString());
                 }
 
                 else if (award.Name.ToString() == "FinalsMVP")
                 {
-                    FinalsMVPs.Add(award.Year);
+                    FinalsMVPs.Append(award.Year.ToString());
                 }
 
                 else if (award.Name.ToString() == "ROTY")
                 {
-                    ROTYs.Add(award.Year);
+                    ROTYs.Append(award.Year.ToString());
                 }
 
                 else if (award.Name.ToString() == "TopScorer")
                 {
-                    TopScorerTitles.Add(award.Year);
+                    TopScorerTitles.Append(award.Year.ToString());
                 }
 
                 else if (award.Name.ToString() == "DPOTY")
                 {
-                    DPOTYs.Add(award.Year);
+                    DPOTYs.Append(award.Year.ToString());
                 }
 
                 else if (award.Name.ToString() == "SixthMOTY")
                 {
-                    SixthMOTYs.Add(award.Year);
+                    SixthMOTYs.Append(award.Year.ToString());
                 }
 
                 else if (award.Name.ToString() == "MIP")
                 {
-                    MIPs.Add(award.Year);
+                    MIPs.Append(award.Year.ToString());
                 }
             }
 
 
             var model = new PlayerAccomplishmentsListingServiceModel
             {
-                MVPs = MVPs,
-                FinalsMVPs = FinalsMVPs,
-                TopScorerTitles = TopScorerTitles,
-                DPOTYs = DPOTYs,
-                ROTYs = ROTYs,
-                SixthMOTYs = SixthMOTYs,
-                MIPs = MIPs
+                MVPs = MVPs.ToString(),
+                FinalsMVPs = FinalsMVPs.ToString(),
+                TopScorerTitles = TopScorerTitles.ToString(),
+                DPOTYs = DPOTYs.ToString(),
+                ROTYs = ROTYs.ToString(),
+                SixthMOTYs = SixthMOTYs.ToString(),
+                MIPs = MIPs.ToString()
             };
 
             return model;

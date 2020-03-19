@@ -1,2 +1,78 @@
 ﻿@using EverythingNBA.Services.Models.Player
 @model PlayerAccomplishmentsListingServiceModel
+
+<div class="container-fluid row m-3 p-0" >
+    <div class="col-md-6">
+        <table class="player-awards-table table border">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th class="text-center">Awards</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="px-2 border-right">MVP</td>
+                    <td class="px-2">@Model.MVPs</td>
+                </tr>
+                <tr>
+                    <td class="px-2 border-right">Finals' MVP</td>
+                    <td class="px-2">@Model.FinalsMVPs</td>
+                </tr>
+                <tr>
+                    <td class="px-2 border-right">Top Scorer</td>
+                    <td class="px-2">@Model.TopScorerTitles</td>
+                </tr>
+                <tr>
+                    <td class="px-2 border-right">DPOTY</td>
+                    <td class="px-2">@Model.DPOTYs</td>
+                </tr>
+                <tr>
+                    <td class="px-2 border-right">ROTY</td>
+                    <td class="px-2">@Model.ROTYs</td>
+                </tr>
+                <tr>
+                    <td class="px-2 border-right">Sixth MOTY</td>
+                    <td class="px-2">@Model.SixthMOTYs</td>
+                </tr>
+                <tr>
+                    <td class="px-2 border-right">MIP</td>
+                    <td class="px-2">@Model.MIPs</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-6">
+        <table class="player-awards-table table border">
+            <thead>
+                <tr>
+                    <th class="text-center">Type</th>
+                    <th class="text-center">All NBA Teams</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="px-2 border-right">All NBA First Team</td>
+                    <td class="px-2">@Model.FirstAllNBATeams</td>
+                </tr>
+                <tr>
+                    <td class="px-2 border-right">All NBA Second Team</td>
+                    <td class="px-2">@Model.SecondAllNBATeams</td>
+                </tr>
+                <tr>
+                    <td class="px-2 border-right">All NBA Third Team</td>
+                    <td class="px-2">@Model.ThirdAllNBATeams</td>
+                </tr>
+                <tr>
+                    <td class="px-2 border-right">All Defensive Team</td>
+                    <td class="px-2">@Model.AllDefensiveTeams</td>
+                </tr>
+                <tr>
+                    <td class="px-2 border-right">All Rookie</td>
+                    <td class="px-2">@Model.AllRookieTeams</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
