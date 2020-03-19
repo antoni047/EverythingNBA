@@ -1,2 +1,19 @@
 ﻿@using EverythingNBA.Services.Models.Game
 @model ICollection<GameDetailsServiceModel>
+
+<div class="container-fluid m-3 p-0 border-top">
+    @foreach (var year in ViewBag.yearsList)
+    {
+        <div class="section-title ml-4 px-2 mt-1 text-center ">@year</div>
+        <div class="container-fluid row m-0 p-4 border">
+            @if (!Model.Where(g => g.SeasonYear == year).Any())
+            {
+                <h4 class="py-2 text-center ml-3 w-100">No Games</h4>
+            }
+            @foreach (var game in Model.Where(g => g.SeasonYear == year))
+            {
+                @await Html.PartialAsync("_HeadToHeadGamePartial", game)
+            }
+        </div>
+    }
+</div>
