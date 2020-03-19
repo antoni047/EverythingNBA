@@ -1,2 +1,48 @@
 ﻿@using EverythingNBA.Services.Models.Series
 @model GetSeriesDetailsServiceModel
+
+<h3 class=" m-1 w-100 text-center p-3 border-dark border-bottom">@Model.Team1Name - @Model.Team2Name, @Model.Team1GamesWon - @Model.Team2GamesWon, @Model.Conference Conference @Model.Stage</h3>
+@{
+    var counter = 0;
+}
+@if (Model.Games.Any())
+{
+    <div class="container-fluid row m-3">
+        @foreach (var game in Model.Games)
+        {
+            counter++;
+            @if (game != null)
+            {
+                @*@await Html.PartialAsync("~/Views/Games/_ResultsScoreboxesPartial.cshtml", game)*@
+                <div class="border nba-scorebox p-1 m-0 col-md-3 row">
+                    <div class="col-md-11 p-0">
+                        <div class="container-fluid">Game @counter</div>
+                        <div class="container row px-1 text-center">
+                            <h4 class="col-md-5 px-1">@game.TeamHostShortName</h4>
+                            <h4 class="col-md-2 m-0 p-0">-</h4>
+                            <h4 class="col-md-5 px-1">@game.Team2ShortName</h4>
+                        </div>
+    
+                        <div class="container-fluid row px-1 text-center">
+                            @if (game.Team2Points < game.TeamHostPoints)
+                            {
+                                <h4 class="col-md-5 px-1 font-weight-bold">@game.TeamHostPoints</h4>
+                                <h4 class="col-md-2 m-0 p-0">-</h4>
+                                <h4 class="col-md-5 px-1">@game.Team2Points</h4>
+                            }
+                            else
+                            {
+                                <h4 class="col-md-5 px-1">@game.TeamHostPoints</h4>
+                                <h4 class="col-md-2 m-0 p-0">-</h4>
+                                <h4 class="col-md-5 px-1 font-weight-bold">@game.Team2Points</h4>
+                            }
+                        </div>
+                    </div>
+    
+                    <a class="col-md-1 p-0" asp-controller="Games" asp-action="GameDetails" asp-route-gameId="@game.Id">G</a>
+                </div>
+    
+            }
+        }
+    </div>
+}

@@ -413,6 +413,15 @@ btn-info {
     color: black;
 }
 
+/*Awards*/
+.awards-info {
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    text-align: center;
+    padding: 0.5rem;
+}
+
 
 button.accept-policy {
     font-size: 1rem;
