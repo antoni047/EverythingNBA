@@ -68,7 +68,7 @@
                 return this.View(model);
             }
 
-            var team = await this.teamService.GetTeamDetailsAsync(model.Team, year);
+            var team = await this.teamService.GetTeamDetailsAsync(model.CurrentTeam, year);
 
             await this.playerService.AddPlayerAsync(model.FirstName, model.LastName, team.Id, model.RookieYear, model.Age, model.Height,
                 model.Weight, model.Position, model.IsStarter, model.Image ,model.ShirtNumber, model.InstagramLink, model.TwitterLink);
@@ -82,24 +82,24 @@
         {
             var playerDetails = await this.playerService.GetPlayerDetailsAsync(playerId);
 
+            var inputModel = mapper.Map<PlayerInputModel>(playerDetails);
 
-
-            return this.View(playerDetails);
+            return this.View(inputModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(PlayerInputModel inputModel, int playerId)
+        public async Task<IActionResult> Edit(PlayerInputModel inputModel)
         {
             var model = mapper.Map<PlayerDetailsServiceModel>(inputModel);
 
             if (!ModelState.IsValid)
             {
-                return this.View(model);
+                return this.View(inputModel);
             }
 
-            await this.playerService.EditPlayerAsync(model, playerId, inputModel.Image);
+            await this.playerService.EditPlayerAsync(model, inputModel.Id, inputModel.Image);
 
-            return RedirectToAction("PlayerDetails");
+            return RedirectToAction("PlayerDetails", new { inputModel.Id });
         }
 
         [HttpGet]

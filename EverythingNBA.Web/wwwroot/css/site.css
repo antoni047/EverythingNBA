@@ -433,11 +433,44 @@ button.accept-policy {
     line-height: inherit;
 }
 
+.player-form-label {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
+
+.player-form {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+}
+
+
+
+
+/*.custom-file-input:focus ~ .custom-file-label {
+    border-color: #8b0000;
+    box-shadow: 0 0 0 0.2rem rgba(241, 130, 141,1);
+}
+
+form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(241, 130, 141,1);
+    border-color: #8b0000;
+    color: #8b0000;
+}*/
+
+
+
+
+
+
+
+
+
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {

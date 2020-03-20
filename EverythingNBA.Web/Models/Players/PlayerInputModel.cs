@@ -7,6 +7,8 @@
 
     public class PlayerInputModel
     {
+        public int Id { get; set; }
+
         [Required]
         [MaxLength(NameMaxLenght)]
         public string FirstName { get; set; }
@@ -15,7 +17,7 @@
         [MaxLength(NameMaxLenght)]
         public string LastName { get; set; }
 
-        public string Team { get; set; }
+        public string CurrentTeam { get; set; }
 
         [Range(MinYear, MaxYear)]
         public int? RookieYear { get; set; }

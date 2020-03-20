@@ -386,7 +386,7 @@
             player.Age = model.Age;
             player.InstagramLink = model.InstagramLink;
             player.TwitterLink = model.TwitterLink;
-            player.Position = (PositionType)Enum.Parse(typeof(PositionType), model.Position);
+            player.Position = (PositionType)Enum.Parse(typeof(PositionType), model.Position.Replace(" ", ""));
             player.TeamId = playerTeam.Id;
             player.ShirtNumber = model.ShirtNumber;
             player.RookieYear = model.RookieYear;

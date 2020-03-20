@@ -1,0 +1,77 @@
+﻿@using EverythingNBA.Web.Models.Players
+@model PlayerInputModel
+
+<h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Edit Player</h3>
+
+<div class="m-3 form-group player-form">
+    <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Players" asp-action="Edit" method="post">
+
+        <input type="hidden" class="form-control" asp-for="Id">
+
+        <div class="form-row">
+            <div class="col">
+                <label>First Name</label>
+                <input type="text" class="form-control" asp-for="FirstName" placeholder="First name...">
+            </div>
+            <div class="col">
+                <label>Last Name</label>
+                <input type="text" class="form-control" asp-for="LastName" placeholder="Last name...">
+            </div>
+        </div> <br />
+
+        <label>Team</label>
+        <input placeholder="Team..." asp-for="CurrentTeam" type="text" class="form-control" /> <br />
+        <label>Rookie Year</label>
+        <input placeholder="Rookie year..." asp-for="RookieYear" type="number" class="form-control" /><br />
+        <label>Age</label>
+        <input placeholder="Age..." asp-for="Age" type="number" class="form-control" /><br />
+        <label>Height</label>
+        <input placeholder="Height" asp-for="Height" type="number" class="form-control" /><br />
+        <label>Weight</label>
+        <input placeholder="Weight" asp-for="Weight" type="number" class="form-control" /> <br />
+        <label>Shirt Number</label>
+        <input placeholder="Shirt number..." asp-for="ShirtNumber" type="number" class="form-control" /> <br />
+
+        <label>Position</label>
+        <select asp-for="Position" id="position" class="form-control">
+            Position
+            <option value="" selected disabled hidden>Position...</option>
+            <option>Point Guard</option>
+            <option>Shooting Guard</option>
+            <option>Small Forward</option>
+            <option>Power Forward</option>
+            <option>Center</option>
+        </select> <br />
+
+        <label class="mr-3">Starter:</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" asp-for="IsStarter" id="inlineRadio1" value="true" checked>
+            <label class="form-check-label" for="inlineRadio1">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" asp-for="IsStarter" id="inlineRadio2" value="false">
+            <label class="form-check-label" for="inlineRadio2">No</label>
+        </div>
+
+        <div class="custom-file">
+            <input type="file" asp-for="Image" class="custom-file-input" id="customFile"><br />
+            <label class="custom-file-label" for="customFile">Upload picture...</label><br />
+        </div>
+
+        <label>Twitter</label>
+        <input placeholder="Paste twitter link here..." asp-for="TwitterLink" type="text" class="form-control" /> <br />
+        <label>Instagram</label>
+        <input placeholder="Paste insagram link here..." asp-for="InstagramLink" type="text" class="form-control" /> <br />
+
+        <button type="submit" class="btn btn-secondary">Submit</button>
+    </form>
+</div>
+
+<script>
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+
+
