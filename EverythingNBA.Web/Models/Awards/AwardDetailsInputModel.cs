@@ -6,8 +6,11 @@
 
     public class AwardDetailsInputModel
     {
+        public int Id { get; set; }
+
         [Required]
-        [Range(NameMinLenght, NameMaxLenght)]
+        [MaxLength(MaxTeamName)]
+        [MinLength(MinTeamName)]
         public string Winner { get; set; }
 
         [Required]

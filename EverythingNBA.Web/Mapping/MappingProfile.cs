@@ -13,12 +13,14 @@
     using Services.Models.Player;
     using Services.Models.Game;
     using Services.Models.GameStatistic;
+    using Services.Models.Award;
     using EverythingNBA.Models;
     using Services.Models;
     using Services.Models.Playoff;
     using Services.Models.Team;
     using Services.Models.SeasonStatistic;
     using Services.Models.Series;
+    using Web.Models.Awards;
 
     public class MappingProfile : Profile
     {
@@ -31,6 +33,7 @@
             this.CreateMap<GameDetailsServiceModel, GameDetailsViewModel>();
             this.CreateMap<PlayerGameStatisticServiceModel, GameStatisticInputModel>();
             this.CreateMap<GameStatisticInputModel, PlayerGameStatisticServiceModel>().ReverseMap();
+            this.CreateMap<AwardDetailsServiceModel, AwardDetailsInputModel>().ReverseMap();
 
 
 

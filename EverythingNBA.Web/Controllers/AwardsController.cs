@@ -1,6 +1,7 @@
 ﻿namespace EverythingNBA.Web.Controllers
 {
     using System.Threading.Tasks;
+    using AutoMapper;
     using Microsoft.AspNetCore.Mvc;
 
     using Services;
@@ -11,12 +12,14 @@
         private readonly IAwardService awardService;
         private readonly ISeasonService seasonService;
         private readonly IPlayerService playerService;
+        private readonly IMapper mapper;
 
-        public AwardsController(IAwardService awardService, ISeasonService seasonService, IPlayerService playerService)
+        public AwardsController(IAwardService awardService, ISeasonService seasonService, IPlayerService playerService, IMapper mapper)
         {
             this.awardService = awardService;
             this.seasonService = seasonService;
             this.playerService = playerService;
+            this.mapper = mapper;
         }
 
         [Route("[controller]/[action]/{year:int}")]
@@ -41,19 +44,19 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(AddAwardInputModel model)
+        public async Task<IActionResult> Add(AwardDetailsInputModel model)
         {
             if (!ModelState.IsValid)
             {
                 return this.View(model);
             }
 
-            var awardId = await this.awardService.AddAwardAsync(model.Type, model.Year, model.WinnerName, model.WinnerTeamName);
+            var awardId = await this.awardService.AddAwardAsync(model.Type, model.Year, model.Winner, model.WinnerTeam);
 
             var season = await this.seasonService.GetDetailsByYearAsync(model.Year);
             await this.seasonService.AddAwardAsync(season.SeasonId, awardId);
 
-            var player = await this.playerService.GetPlayerDetailsAsync(model.WinnerName);
+            var player = await this.playerService.GetPlayerDetailsAsync(model.Winner);
             await this.playerService.AddAward(player.Id, awardId);
 
             return RedirectToAction("All");
@@ -65,11 +68,14 @@
         {
             var award = await this.awardService.GetAwardDetails(awardId);
 
-            return this.View(award);
+            var model = mapper.Map<AwardDetailsInputModel>(award);
+            ViewBag.Id = awardId;
+
+            return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(AwardDetailsInputModel model, int awardId)
+        public async Task<IActionResult> Edit(AwardDetailsInputModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -77,13 +83,13 @@
             }
 
             var oldAwardWinner = await this.playerService.GetPlayerDetailsAsync(model.Winner);
-            await this.playerService.RemoveAward(oldAwardWinner.Id, awardId);
+            await this.playerService.RemoveAward(oldAwardWinner.Id, model.Id);
 
-            await this.awardService.EditAwardWinnerAsync(model.Winner, awardId);
-            var award = await this.awardService.GetAwardDetails(awardId);
+            await this.awardService.EditAwardWinnerAsync(model.Winner, model.Id);
+            var award = await this.awardService.GetAwardDetails(model.Id);
 
             var newAwardWinner = await this.playerService.GetPlayerDetailsAsync(award.Winner);
-            await this.playerService.AddAward(newAwardWinner.Id, awardId);
+            await this.playerService.AddAward(newAwardWinner.Id, model.Id);
 
             return RedirectToAction("All");
         }
