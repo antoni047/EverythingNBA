@@ -29,6 +29,7 @@
         {
             //Web
             this.CreateMap<SeasonDetailsInputModel, GetSeasonListingServiceModel>();
+            this.CreateMap<SeasonDetailsInputModel, GetSeasonDetailsServiceModel>().ReverseMap();
             this.CreateMap<GetAllStarTeamServiceModel, EditAllStarTeamInputModel>();
             this.CreateMap<PlayerInputModel, PlayerDetailsServiceModel>().ReverseMap();
             this.CreateMap<GameDetailsServiceModel, GameDetailsViewModel>();

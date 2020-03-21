@@ -4,6 +4,8 @@
 
     public class SeasonDetailsInputModel
     {
+        public int Id { get; set; }
+
         [Required]
         [Range(1950, 3000)]
         public int Year { get; set; }

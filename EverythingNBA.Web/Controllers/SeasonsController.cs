@@ -81,11 +81,14 @@
                 return RedirectToAction("All"); 
             }
 
-            return this.View(seasonDetails);
+            var model = mapper.Map<SeasonDetailsInputModel>(seasonDetails);
+            model.Id = seasonDetails.SeasonId;
+
+            return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(SeasonDetailsInputModel inputModel, int seasonId)
+        public async Task<IActionResult> Edit(SeasonDetailsInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
@@ -93,8 +96,10 @@
             }
 
             var model = mapper.Map<GetSeasonDetailsServiceModel>(inputModel);
+            var team = await this.teamService.GetTeamAsync(inputModel.TitleWinnerName);
+            model.TitleWinnerId = team.Id;
 
-            await this.seasonService.EditSeasonAsync(model, seasonId);
+            await this.seasonService.EditSeasonAsync(model, inputModel.Id);
 
             return RedirectToAction("All");
         }

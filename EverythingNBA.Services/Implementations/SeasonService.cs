@@ -26,12 +26,19 @@
         {
             var team = await this.db.Teams.Where(t => t.Name == titleWinner).FirstOrDefaultAsync();
 
-            var seasonObj = new Season
+            var seasonObj = new Season();
+
+            if (titleWinner == null)
             {
-                Year = year,
-                TitleWinnerId = team.Id,
-                GamesPlayed = gamesPlayed
-            };
+                seasonObj.Year = year;
+                seasonObj.GamesPlayed = gamesPlayed;
+            }
+            else
+            {
+                seasonObj.Year = year;
+                seasonObj.TitleWinner = team;
+                seasonObj.GamesPlayed = gamesPlayed;
+            }
 
             this.db.Seasons.Add(seasonObj);
 

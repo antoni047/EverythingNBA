@@ -2,3 +2,20 @@
 
 @model SeasonDetailsInputModel
 
+<h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Add Season</h3>
+
+<div class="m-3 form-group player-form">
+    <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Seasons" asp-action="Add" method="post">
+
+        <span asp-validation-for="Year" class="text-danger"></span> <br />
+        <input placeholder="Year..." asp-for="Year" type="number" class="form-control" /> <br />
+
+        <span asp-validation-for="TitleWinnerName" class="text-danger"></span> <br />
+        <input placeholder="Title Winner..." asp-for="TitleWinnerName" type="text" class="form-control" /> <br />
+
+        <span asp-validation-for="GamesPlayed" class="text-danger"></span> <br />
+        <input placeholder="Games Played..." asp-for="GamesPlayed" type="number" class="form-control" /> <br />
+
+        <button type="submit" class="btn btn-secondary">Submit</button>
+    </form>
+</div>
