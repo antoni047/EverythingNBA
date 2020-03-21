@@ -214,35 +214,35 @@
                         if (i == 15)
                         {
                             var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
-                            teamInfront.Position = i - 1;
+                            teamInfront.Position = i;
                             teamStandings.Add(teamInfront);
 
                             var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i;
+                            currentTeam.Position = i + 1;
                             teamStandings.Add(currentTeam);
                         }
                         if (i == 0)
                         {
                             var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i;
+                            currentTeam.Position = i + 1;
                             teamStandings.Add(currentTeam);
 
                             var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
-                            teamBehind.Position = i + 1;
+                            teamBehind.Position = i + 2;
                             teamStandings.Add(teamBehind);
                         }
                         else
                         {
                             var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
-                            teamInfront.Position = i - 1;
+                            teamInfront.Position = i;
                             teamStandings.Add(teamInfront);
 
                             var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i;
+                            currentTeam.Position = i + 1;
                             teamStandings.Add(currentTeam);
 
                             var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
-                            teamBehind.Position = i + 1;
+                            teamBehind.Position = i + 2;
                             teamStandings.Add(teamBehind);
                         }
                     }
@@ -261,35 +261,35 @@
                         if (i == 15)
                         {
                             var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
-                            teamInfront.Position = i - 1;
+                            teamInfront.Position = i;
                             teamStandings.Add(teamInfront);
 
                             var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i;
+                            currentTeam.Position = i + 1;
                             teamStandings.Add(currentTeam);
                         }
                         if (i == 0)
                         {
                             var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i;
+                            currentTeam.Position = i + 1;
                             teamStandings.Add(currentTeam);
 
                             var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
-                            teamBehind.Position = i + 1;
+                            teamBehind.Position = i + 2;
                             teamStandings.Add(teamBehind);
                         }
                         else
                         {
                             var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
-                            teamInfront.Position = i - 1;
+                            teamInfront.Position = i;
                             teamStandings.Add(teamInfront);
 
                             var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i;
+                            currentTeam.Position = i + 1;
                             teamStandings.Add(currentTeam);
 
                             var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
-                            teamBehind.Position = i + 1;
+                            teamBehind.Position = i + 2;
                             teamStandings.Add(teamBehind);
                         }
                     }

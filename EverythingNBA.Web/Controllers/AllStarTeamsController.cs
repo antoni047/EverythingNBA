@@ -54,11 +54,13 @@
                 return this.View(model);
             }
 
-            if (model.PlayerNames.Any())
-            {
-                var id = (int)await this.astService.AddAllStarTeamAsync(model.Year, model.Type, model.PlayerNames);
+            var playerNames = new List<string>() { model.FirstPlayer, model.SecondPlayer, model.SecondPlayer, model.FourthPayers, model.FifthPlayer, };
 
-                foreach (var name in model.PlayerNames)
+            if (playerNames.Any())
+            {
+                var id = (int)await this.astService.AddAllStarTeamAsync(model.Year, model.Type, playerNames);
+
+                foreach (var name in playerNames)
                 {
                     var player = await this.playerService.AddAllStarTeam(name, id);
                 }

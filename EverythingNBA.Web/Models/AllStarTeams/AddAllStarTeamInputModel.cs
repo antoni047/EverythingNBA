@@ -15,6 +15,11 @@
         [Required]
         public string Type { get; set; }
 
-        public ICollection<string> PlayerNames { get; set; }
+        public string FirstPlayer { get; set; }
+        public string SecondPlayer { get; set; }
+        public string ThirdPlayer { get; set; }
+        public string FourthPayers { get; set; }
+        public string FifthPlayer { get; set; }
+
     }
 }

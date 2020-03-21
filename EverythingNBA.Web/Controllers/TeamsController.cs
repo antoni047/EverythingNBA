@@ -38,6 +38,7 @@
             return RedirectToAction("TeamDetails", new { teamDetailsModel.Name });
         }
 
+        [Route("[controller]/[action]/{teamName}")]
         public async Task<IActionResult> TeamDetails(string teamName)
         {
             //checking if the name is an abbreviation or short version
@@ -88,11 +89,13 @@
                 return RedirectToAction("All");
             }
 
-            return this.View(teamModel);
+            var model = mapper.Map<TeamInputModel>(teamModel);
+
+            return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(TeamInputModel inputModel, int teamId, IFormFile fullImageId, IFormFile smallImageId)
+        public async Task<IActionResult> Edit(TeamInputModel inputModel)
         {
             if (!ModelState.IsValid)
             {
@@ -101,9 +104,11 @@
 
             var model = mapper.Map<GetTeamDetailsServiceModel>(inputModel);
 
-            await this.teamService.EditTeamAsync(model, teamId, fullImageId, smallImageId);
+            await this.teamService.EditTeamAsync(model, model.Id, inputModel.FullImage, inputModel.SmallImage);
 
-            return RedirectToAction("TeamDetails");
+            var teamName = model.Name;
+
+            return RedirectToAction("TeamDetails", new { teamName});
         }
 
         [HttpGet]

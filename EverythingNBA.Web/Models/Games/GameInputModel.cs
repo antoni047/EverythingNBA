@@ -13,6 +13,9 @@ namespace EverythingNBA.Web.Models.Games
 
     public class GameInputModel
     {
+
+        public int Id { get; set; }
+
         [Required]
         [MinLength(MinTeamName)]
         [MaxLength(MaxTeamName)]

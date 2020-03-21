@@ -174,11 +174,16 @@
                 return RedirectToAction("Index", "Home");
             }
 
-            return this.View(gameModel);
+            var model = mapper.Map<GameInputModel>(gameModel);
+            model.Team2Name = this.GetFullTeamName(gameModel.Team2ShortName);
+            model.TeamHostName = this.GetFullTeamName(gameModel.TeamHostShortName);
+
+
+            return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditGame(GameInputModel inputModel, int gameId)
+        public async Task<IActionResult> EditGame(GameInputModel inputModel)
         {
             var model = mapper.Map<GameDetailsServiceModel>(inputModel);
 
@@ -187,9 +192,9 @@
                 return this.View(model);
             }
 
-            await this.gameService.EditGameAsync(model, gameId);
+            await this.gameService.EditGameAsync(model, inputModel.Id);
 
-            return RedirectToAction($"GameDetails", new { gameId });
+            return RedirectToAction($"GameDetails", new { inputModel.Id });
         }
 
         [HttpGet]
@@ -200,6 +205,12 @@
 
             var model = mapper.Map<GameStatisticInputModel>(gameStatistic);
             model.GameId = gameId;
+
+            var game = await this.gameService.GetGameOverview(model.GameId);
+            ViewBag.Name = playerName;
+            ViewBag.Team1 = game.TeamHostShortName;
+            ViewBag.Team2 = game.Team2ShortName;
+            ViewBag.Date = game.Date;
 
             return this.View(model);
         }

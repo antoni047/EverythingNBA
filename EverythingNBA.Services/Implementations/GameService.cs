@@ -33,7 +33,7 @@
                 Team2Id = team2Id,
                 TeamHostPoints = teamHostPoints,
                 Team2Points = team2Points,
-                Date = DateTime.ParseExact(date, "dd/MM/yyyy", null),
+                Date = DateTime.ParseExact(date, "yyyy-MM-dd", null),
                 IsFinished = isFinished
             };
 
@@ -289,7 +289,7 @@
 
             game.Team2Points = model.Team2Points;
             game.TeamHostPoints = model.TeamHostPoints;
-            game.Date = DateTime.ParseExact(model.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            game.Date = DateTime.ParseExact(model.Date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             await this.db.SaveChangesAsync();
         }

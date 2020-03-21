@@ -1,0 +1,60 @@
+﻿@using EverythingNBA.Web.Models.Teams
+@model TeamInputModel
+
+<h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Edit Team</h3>
+
+<div class="m-3 form-group player-form">
+    <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Teams" asp-action="Edit" method="post">
+
+        <input type="hidden" class="form-control" asp-for="Id">
+
+        <label>Name</label>
+        <span asp-validation-for="Name" class="text-danger"></span> <br />
+        <input placeholder="Name" asp-for="Name" type="text" class="form-control" /> <br />
+
+        <label>Abbreviated Name</label>
+        <span asp-validation-for="AbbreviatedName" class="text-danger"></span> <br />
+        <input placeholder="Abbreviated Name" asp-for="AbbreviatedName" type="text" class="form-control" /> <br />
+
+        <label class="mr-3">Conference:</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" asp-for="Conference" id="inlineRadio1" value="Western" checked>
+            <label class="form-check-label" for="inlineRadio1">Western</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" asp-for="Conference" id="inlineRadio2" value="Eastern">
+            <label class="form-check-label" for="inlineRadio2">Eastern</label>
+        </div>
+
+        <label>Venue</label>
+        <span asp-validation-for="Venue" class="text-danger"></span> <br />
+        <input placeholder="Venue..." asp-for="Venue" type="text" class="form-control" /> <br />
+
+        <div class="custom-file">
+            <input type="file" asp-for="FullImage" class="custom-file-input" id="customFile"><br />
+            <label class="custom-file-label" for="customFile">Upload full team logo here...</label><br />
+        </div>
+
+        <div class="custom-file">
+            <input type="file" asp-for="SmallImage" class="custom-file-input" id="customFile"><br />
+            <label class="custom-file-label" for="customFile">Upload small team logo here...</label><br />
+        </div>
+
+        <label>Twitter</label>
+        <input placeholder="Paste twitter link here..." asp-for="Twitter" type="text" class="form-control" /> <br />
+        <label>Instagram</label>
+        <input placeholder="Paste insagram link here..." asp-for="Instagram" type="text" class="form-control" /> <br />
+
+        <button type="submit" class="btn btn-secondary">Edit</button>
+    </form>
+</div>
+
+<script>
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
+
+
+

@@ -7,6 +7,8 @@
 
     public class TeamInputModel
     {
+        public int Id { get; set; }
+
         [Required]
         [MinLength(MinTeamName), MaxLength(MaxTeamName)]
         public string Name { get; set; }
