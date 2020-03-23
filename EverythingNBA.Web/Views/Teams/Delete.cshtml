@@ -1,0 +1,55 @@
+﻿@using EverythingNBA.Web.Models.Teams
+@model TeamInputModel
+
+<h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Delete Team</h3>
+
+<div class="m-3 form-group player-form">
+
+    <div class="col-md-4">
+        <img class="player-image w-100" src="@Model.SmallImage" alt="Player Image" />
+    </div>
+
+    <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Teams" asp-action="Delete" method="post">
+
+        <input type="hidden" class="form-control" asp-for="Id">
+
+        <label>Name</label>
+        <span asp-validation-for="Name" class="text-danger"></span> <br />
+        <input placeholder="Name" asp-for="Name" type="text" class="form-control" readonly /> <br />
+
+        <label>Abbreviated Name</label>
+        <span asp-validation-for="AbbreviatedName" class="text-danger"></span> <br />
+        <input placeholder="Abbreviated Name" asp-for="AbbreviatedName" type="text" class="form-control" readonly /> <br />
+
+        <label class="mr-3">Conference:</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" asp-for="Conference" id="inlineRadio1" value="Western" checked readonly>
+            <label class="form-check-label" for="inlineRadio1">Western</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" asp-for="Conference" id="inlineRadio2" value="Eastern" readonly>
+            <label class="form-check-label" for="inlineRadio2">Eastern</label>
+        </div>
+
+        <label>Venue</label>
+        <span asp-validation-for="Venue" class="text-danger"></span> <br />
+        <input placeholder="Venue..." asp-for="Venue" type="text" class="form-control" readonly/> <br />
+
+        <label>Twitter</label>
+        <input placeholder="Paste twitter link here..." asp-for="Twitter" type="text" class="form-control" readonly /> <br />
+        <label>Instagram</label>
+        <input placeholder="Paste insagram link here..." asp-for="Instagram" type="text" class="form-control" readonly /> <br />
+
+        <button type="submit" class="btn btn-secondary">Delete</button>
+    </form>
+</div>
+
+<script>
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
+
+
+

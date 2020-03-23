@@ -123,21 +123,28 @@
                 return RedirectToAction("All");
             }
 
-            return this.View(team);
+            var model = mapper.Map<TeamInputModel>(team);
+
+            return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int teamId, TeamInputModel model)
+        public async Task<IActionResult> Delete(TeamInputModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
             var year = this.GetCurrentSeasonYear();
-            var team = await this.teamService.GetTeamDetailsAsync(teamId, year);
+            var team = await this.teamService.GetTeamDetailsAsync(model.Id, year);
 
             foreach (var playerModel in team.Players)
             {
-                await this.playerService.RemovePlayerFromTeamAsync(teamId, playerModel.Id);
+                await this.playerService.RemovePlayerFromTeamAsync(model.Id, playerModel.Id);
             }
 
-            await this.teamService.DeleteTeamAsync(teamId);
+            await this.teamService.DeleteTeamAsync(model.Id);
 
             return RedirectToAction("All");
         }
