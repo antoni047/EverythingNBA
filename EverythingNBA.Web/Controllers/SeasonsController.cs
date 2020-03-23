@@ -64,9 +64,13 @@
                 return this.View(season);
             }
 
-            await this.seasonService.AddAsync(season.Year, season.TitleWinnerName, season.GamesPlayed);
+            var seasonId = await this.seasonService.AddAsync(season.Year, season.TitleWinnerName, season.GamesPlayed);
 
+            var playoffId = await this.playoffService.AddPlayoffAsync(seasonId);
 
+            await this.playoffService.SetStartingSeries(playoffId);
+
+            await this.seasonService.AddPlayoffAsync(seasonId, playoffId);
 
             return RedirectToAction("All");
         }
@@ -120,6 +124,8 @@
         [HttpPost]
         public async Task<IActionResult> Delete(SeasonDetailsInputModel model, int seasonId)
         {
+            var season = await this.seasonService.GetDetailsAsync(seasonId);
+            await this.playoffService.DeletePlayoffAsync((int)season.PlayoffId);
             await this.seasonService.DeleteAsync(seasonId);
 
             return RedirectToAction("All");

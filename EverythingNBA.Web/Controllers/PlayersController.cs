@@ -112,9 +112,9 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(PlayerDetailsServiceModel model, int playerId)
+        public async Task<IActionResult> Delete(PlayerDetailsServiceModel model)
         {
-            await this.playerService.DeletePlayerAsync(playerId);
+            await this.playerService.DeletePlayerAsync(model.Id);
 
             return RedirectToAction("All");
         }

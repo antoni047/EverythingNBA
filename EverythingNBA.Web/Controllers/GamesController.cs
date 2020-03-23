@@ -231,6 +231,7 @@
         }
 
         [HttpGet]
+        [Route("[controller]/[action]/{gameId:int}")]
         public async Task<IActionResult> Delete(int gameId)
         {
             var game = await this.gameService.GetGameAsync(gameId);
@@ -240,17 +241,21 @@
                 return RedirectToAction("Index", "Home");
             }
 
-            return this.View(game);
+            var model = mapper.Map<GameInputModel>(game);
+            model.TeamHostName = this.GetFullTeamName(game.TeamHostShortName);
+            model.Team2Name = this.GetFullTeamName(game.Team2ShortName);
+
+            return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int gameId, GameInputModel model)
+        public async Task<IActionResult> Delete(GameInputModel model)
         {
-            var game = await this.gameService.GetGameAsync(gameId);
+            var game = await this.gameService.GetGameAsync(model.Id);
 
             var year = this.GetSeasonYear(DateTime.ParseExact(game.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture));
             var season = await this.seasonService.GetDetailsByYearAsync(year);
-            await this.seasonService.RemoveGameAsync(season.SeasonId, gameId);
+            await this.seasonService.RemoveGameAsync(season.SeasonId, model.Id);
 
             var teamHostName = this.GetFullTeamName(game.TeamHostShortName);
             var team2Name = this.GetFullTeamName(game.Team2ShortName);
@@ -260,11 +265,11 @@
                 var teamHost = await this.teamService.GetTeamDetailsAsync(teamHostName, year);
                 var team2 = await this.teamService.GetTeamDetailsAsync(team2Name, year);
 
-                await this.teamService.RemoveGameAsync(gameId, team2.Id);
-                await this.teamService.RemoveGameAsync(gameId, teamHost.Id);
+                await this.teamService.RemoveGameAsync(model.Id, team2.Id);
+                await this.teamService.RemoveGameAsync(model.Id, teamHost.Id);
             }
             
-            await this.gameService.DeleteGameAsync(gameId);
+            await this.gameService.DeleteGameAsync(model.Id);
 
             return RedirectToAction("Index", "Home");
         }

@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using CloudinaryDotNet;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EverythingNBA.Web
 {
@@ -49,7 +50,10 @@ namespace EverythingNBA.Web
             services.AddTransient<IImageService, ImageService>();
             services.AddTransient<ICloudinaryService, CloudinaryService>();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
 
             Account account = new Account(
                 this.Configuration["Cloudinary:AppName"],
