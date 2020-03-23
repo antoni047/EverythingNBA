@@ -8,6 +8,7 @@
                 <th>@Model.FirstOrDefault().Year Awards</th>
                 <th>Players</th>
                 <th>Team</th>
+                <th></th>
             </tr>
         </thead>
         <tbody class="px-2">
@@ -23,6 +24,10 @@
                     <td>
                         <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
                     </td>
+                    <td>
+                        <a href="/Awards/Edit/@award.Id"><i class="p-1 fas fa-pen-square  fa-pull-right"></i></a>
+                        <a href="/Awards/Delete/@award.Id"><i class="p-1 fas fa-trash-alt  fa-pull-right"></i></a>
+                    </td>
                 }
                 else if (award.Type == "FinalsMVP")
                 {
@@ -32,6 +37,10 @@
                     </td>
                     <td>
                         <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
+                    </td>
+                    <td>
+                        <a href="/Awards/Edit/@award.Id"><i class="p-1 fas fa-pen-square  fa-pull-right"></i></a>
+                        <a href="/Awards/Delete/@award.Id"><i class="p-1 fas fa-trash-alt  fa-pull-right"></i></a>
                     </td>
                 }
                 else if (award.Type == "DPOTY")
@@ -43,6 +52,10 @@
                     <td>
                         <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
                     </td>
+                    <td>
+                        <a href="/Awards/Edit/@award.Id"><i class="p-1 fas fa-pen-square  fa-pull-right"></i></a>
+                        <a href="/Awards/Delete/@award.Id"><i class="p-1 fas fa-trash-alt  fa-pull-right"></i></a>
+                    </td>
                 }
                 else if (award.Type == "ROTY")
                 {
@@ -52,6 +65,10 @@
                     </td>
                     <td>
                         <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
+                    </td>
+                    <td>
+                        <a href="/Awards/Edit/@award.Id"><i class="p-1 fas fa-pen-square  fa-pull-right"></i></a>
+                        <a href="/Awards/Delete/@award.Id"><i class="p-1 fas fa-trash-alt  fa-pull-right"></i></a>
                     </td>
                 }
                 else if (award.Type == "TopScorer")
@@ -63,6 +80,10 @@
                     <td>
                         <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
                     </td>
+                    <td>
+                        <a href="/Awards/Edit/@award.Id"><i class="p-1 fas fa-pen-square  fa-pull-right"></i></a>
+                        <a href="/Awards/Delete/@award.Id"><i class="p-1 fas fa-trash-alt  fa-pull-right"></i></a>
+                    </td>
                 }
                 else if (award.Type == "MIP")
                 {
@@ -72,6 +93,10 @@
                     </td>
                     <td>
                         <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@award.WinnerTeam"> @award.WinnerTeam</a>
+                    </td>
+                    <td>
+                        <a href="/Awards/Edit/@award.Id"><i class="p-1 fas fa-pen-square  fa-pull-right"></i></a>
+                        <a href="/Awards/Delete/@award.Id"><i class="p-1 fas fa-trash-alt  fa-pull-right"></i></a>
                     </td>
                 }
                 else if (award.Type == "SixthMOTY")
@@ -83,9 +108,17 @@
                     <td>
                         <a class="award-link" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamNam="@award.WinnerTeam"> @award.WinnerTeam</a>
                     </td>
+                    <td>
+                        <a href="/Awards/Edit/@award.Id"><i class="p-1 fas fa-pen-square  fa-pull-right"></i></a>
+                        <a href="/Awards/Delete/@award.Id"><i class="p-1 fas fa-trash-alt  fa-pull-right"></i></a>
+                    </td>
                 }
             </tr>
             }
         </tbody>
     </table>
+</div>
+
+<div class="container-fluid flex-row-reverse mx-4 my-3">
+    <a href="/Awards/Add"><i class="p-1 fas fa-plus-square fa-2x fa-pull-right"></i></a>
 </div>
