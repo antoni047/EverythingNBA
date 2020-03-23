@@ -3,10 +3,11 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using AutoMapper;
+    using System;
 
     using Services;
     using Web.Models.Series;
-    using System;
+    using Web.Models.Games;
 
     public class SeriesController : Controller
     {
@@ -14,14 +15,16 @@
         private readonly ISeriesService seriesService;
         private readonly ITeamService teamService;
         private readonly IPlayoffService playoffService;
+        private readonly IGameService gameServce;
 
-        public SeriesController(IMapper mapper, ISeriesService seriesService, ITeamService teamService, 
-            IPlayoffService playoffService)
+        public SeriesController(IMapper mapper, ISeriesService seriesService, ITeamService teamService,
+            IPlayoffService playoffService, IGameService gameServce)
         {
             this.mapper = mapper;
             this.seriesService = seriesService;
             this.teamService = teamService;
             this.playoffService = playoffService;
+            this.gameServce = gameServce;
         }
 
         [Route("[controller]/[action]/{conference}&{stage}/{seriesId:int}")]
@@ -37,9 +40,13 @@
         }
 
         [HttpGet]
-        public IActionResult Add()
+        [Route("[controller]/[action]/{playoffId:int}")]
+        public IActionResult Add(int playoffId)
         {
-            return this.View();
+            var model = new SeriesInputModel();
+            model.PlayoffId = playoffId;
+
+            return this.View(model);
         }
 
         [HttpPost]
@@ -61,39 +68,91 @@
             }
 
 
-            var seriesId = await this.seriesService.AddSeriesAsync(inputModel.PlayoffId ,team1.Name, team2.Name, inputModel.Team1GamesWon, inputModel.Team2GamesWon,
-                            inputModel.Game1Id, inputModel.Game2Id, inputModel.Game3Id, inputModel.Game4Id, inputModel.Game5Id,
-                            inputModel.Game6Id, inputModel.Game7Id, inputModel.Conference, inputModel.Stage, inputModel.StageNumber);
+            var seriesId = await this.seriesService.AddSeriesAsync(inputModel.PlayoffId, team1.Name, team2.Name, inputModel.Team1GamesWon,
+                inputModel.Team2GamesWon, null, null, null, null, null, null, null, inputModel.Conference, inputModel.Stage, inputModel.StageNumber);
 
             await this.playoffService.AddSeriesAsync(inputModel.PlayoffId, seriesId);
 
-            return this.View();
+            return RedirectToAction("PlayoffBracket", "Playoffs", new { inputModel.PlayoffId});
         }
 
         [HttpGet]
         [Route("[controller]/[action]/{seriesId:int}")]
         public async Task<IActionResult> Delete(int seriesId)
         {
-            var series = await this.seriesService.GetSeriesAsync(seriesId);
+            var series = await this.seriesService.GetSeriesOverview(seriesId);
 
             if (series == null)
             {
                 return this.View();
             }
 
-            return this.View(series);
+            var model = mapper.Map<SeriesInputModel>(series);
+
+            return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(int seriesId, SeriesInputModel model)
+        public async Task<IActionResult> Delete(SeriesInputModel model)
         {
-            var series = await this.seriesService.GetSeriesAsync(seriesId);
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
 
-            await this.playoffService.RemoveSeriesAsync(series.PlayoffId, series.Id);
+            await this.playoffService.RemoveSeriesAsync(model.PlayoffId, model.Id);
 
-            await this.seriesService.DeleteSeriesAsync(seriesId);
+            await this.seriesService.DeleteSeriesAsync(model.Id);
 
-            return RedirectToAction("PlayoffBracket", "Playoffs");
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [Route("[controller]/[action]/{seriesId:int}")]
+        public async Task<IActionResult> AddGame(int seriesId)
+        {
+            var series = await this.seriesService.GetSeriesOverview(seriesId);
+
+            //if (series == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //var model = new SeriesInputModel()
+            //{
+            //    Team1Name = series.Team1Name,
+            //    Team2Name = series.Team2Name,
+            //    Conference = series.Conference,
+            //    Stage = series.Stage
+            //};
+
+            var model = mapper.Map<SeriesGameInputModel>(series);
+            model.TeamHostName = series.Team1Name;
+            model.StageNumber = series.StageNumber;
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddGame(SeriesGameInputModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            var series = await this.seriesService.GetSeriesAsync(model.SeriesId);
+
+            var playoff = await this.playoffService.GetDetailsAsync(series.PlayoffId);
+            var team1 = await this.teamService.GetTeamAsync(model.TeamHostName);
+            var team2 = await this.teamService.GetTeamAsync(model.Team2Name);
+
+            var gameId = await this.gameServce.AddGameAsync((int)playoff.SeasonId, team1.Id, team2.Id, model.TeamHostPoints, 
+                model.Team2Points, model.Date, model.IsFinished);
+
+            await this.seriesService.AddGameAsync(model.SeriesId, gameId, model.GameNumber);
+
+            return RedirectToAction("SeriesOverview", new { model.SeriesId, model.Conference, model.Stage});
         }
 
         private int GetCurrentSeasonYear()

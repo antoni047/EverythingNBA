@@ -22,6 +22,7 @@
     using Services.Models.Series;
     using Web.Models.Awards;
     using Web.Models.Teams;
+    using Web.Models.Series;
 
     public class MappingProfile : Profile
     {
@@ -38,7 +39,8 @@
             this.CreateMap<GameStatisticInputModel, PlayerGameStatisticServiceModel>().ReverseMap();
             this.CreateMap<AwardDetailsServiceModel, AwardDetailsInputModel>().ReverseMap();
             this.CreateMap<TeamInputModel, GetTeamDetailsServiceModel>().ReverseMap();
-
+            this.CreateMap<SeriesGameInputModel, SeriesOverviewServiceModel>().ReverseMap();
+            this.CreateMap<SeriesInputModel, SeriesOverviewServiceModel>().ReverseMap();
 
             //Services
             this.CreateMap<SeasonStatistic, GetSeasonStatisticDetailsServiceModel>()

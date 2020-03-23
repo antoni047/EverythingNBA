@@ -26,20 +26,6 @@
         [Range(0, 4)]
         public int Team2GamesWon { get; set; }
 
-        public int? Game1Id { get; set; }
-
-        public int? Game2Id { get; set; }
-
-        public int? Game3Id { get; set; }
-
-        public int? Game4Id { get; set; }
-
-        public int? Game5Id { get; set; }
-
-        public int? Game6Id { get; set; }
-
-        public int? Game7Id { get; set; }
-
         [Required]
         [EnumDataType(typeof(ConferenceType))]
         public string Conference { get; set; }
