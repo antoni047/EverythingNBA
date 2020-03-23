@@ -30,12 +30,21 @@ html {
     font-size: 14px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
 }
+
+
 
 @media (min-width: 768px) {
     html {
         font-size: 16px;
-        
+        width: 100%;
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
     }
 }
 
@@ -49,6 +58,8 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
+
 
 /*Navbar*/
 .navbar-nba {
@@ -68,8 +79,6 @@ html {
     border-bottom: 2.5px solid #f00;
 }
 
-
-
 /*General*/
 .container {
     font-family: 'Roboto', sans-serif;
@@ -87,7 +96,7 @@ html {
     font-weight: 400;
 }
 
-.
+
 
 
 
@@ -206,9 +215,17 @@ counter{
 }
 
 /*All Star Teams*/
+
+.AST-title{
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
 .AST-link {
     text-decoration: none;
-    background-color: none;
+    text-decoration: none;
     color: black;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
@@ -235,9 +252,15 @@ counter{
     font-size: 18px;
 }
 
-.AS-team{
+.AS-teams-container{
     border:1px solid black;
-    margin:auto
+    margin:auto;
+}
+
+.AST-content {
+    /*margin-left: auto;
+    margin-right: auto;
+    text-align: center;*/
 }
 
 /*Awards*/
@@ -330,9 +353,9 @@ counter{
 
 /*Games*/
 .game-title {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Bungee Inline', sans-serif;
     font-weight: 500;
-    font-size: 26px;
+    font-size: 28px;
     border-bottom: 2px solid;
     width: 100%;
 }
@@ -350,11 +373,25 @@ counter{
 .game-details {
     margin-left: auto;
     margin-right: auto;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Quantico', sans-serif;
     font-weight: 500;
     font-size: 24px;
-    border: 1.5px solid black;
+    border: 5px solid black;
     width: 40%;
+    background-color: dimgray;
+    color: #fcd12a;
+}
+
+.game-info {
+    font-family: 'Quantico', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+}
+
+.game-score {
+    font-family: 'Quantico', sans-serif;
+    font-weight: 500;
+    font-size: 28px;
 }
 
 
@@ -446,24 +483,19 @@ button.accept-policy {
 
 
 
-/*.custom-file-input:focus ~ .custom-file-label {
-    border-color: #8b0000;
-    box-shadow: 0 0 0 0.2rem rgba(241, 130, 141,1);
+/*Font Awesome Icons*/
+
+.fa-plus-square{
+    color: blue;
 }
 
-form-control:focus {
-    box-shadow: 0 0 0 0.2rem rgba(241, 130, 141,1);
-    border-color: #8b0000;
-    color: #8b0000;
-}*/
+.fa-trash-alt{
+    color: red;
+}
 
-
-
-
-
-
-
-
+.fa-pen-square {
+    color: green;
+}
 
 
 /* Sticky footer styles
@@ -474,9 +506,11 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    margin: 0;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
