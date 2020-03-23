@@ -1,52 +1,58 @@
 ﻿@using EverythingNBA.Services.Models.AllStarTeam;
 @model ICollection<GetAllStarTeamServiceModel>
 
-<h2 class="w-100 container-fluid mx-4 text-center border-bottom">@Model.FirstOrDefault().Year All Star Teams</h2>
-<div class="container row mt-3" style="margin-left:auto; margin-right:auto; text-align:center">
+<h2 class="container-fluid ml-3 AST-title">@Model.FirstOrDefault().Year All Star Teams</h2>
+
+<div class="container row mx-auto text-center mb-3" style="margin-top: 4rem">
     @foreach (var team in Model)
     {
-    <div class="mx-4 AS-team">
-        @if (team.Type == "FirstAllNBA")
-        {
-            <div class="AST-head px-1">
-                <a class="AST-head-link" asp-controller="AllStarTeams" asp-action="AllStarTeamType" asp-route-type="@team.Type">All NBA First Team</a>
-            </div>
+        <div class="mx-4 AS-teams-container">
+            @if (team.Type == "FirstAllNBA")
+            {
+                <div class="AST-head px-1">
+                    <a class="AST-head-link" asp-controller="AllStarTeams" asp-action="AllStarTeamType" asp-route-type="@team.Type">All NBA First Team</a>
+                </div>
 
-            @await Html.PartialAsync("_AllStarTeamPartial", team)
-        }
-        else if (team.Type == "SecondAllNBA")
-        {
-            <div class="AST-head px-1">
-                <a class="AST-head-link" asp-controller="AllStarTeams" asp-action="AllStarTeamType" asp-route-type="@team.Type">All NBA Second Team</a>
-            </div>
+                @await Html.PartialAsync("_AllStarTeamPartial", team)
+            }
+            else if (team.Type == "SecondAllNBA")
+            {
+                <div class="AST-head px-1">
+                    <a class="AST-head-link" asp-controller="AllStarTeams" asp-action="AllStarTeamType" asp-route-type="@team.Type">All NBA Second Team</a>
+                </div>
 
-            @await Html.PartialAsync("_AllStarTeamPartial", team)
-        }
-        else if (team.Type == "ThirdAllNBA")
-        {
-            <div class="AST-head px-1">
-                <a class="AST-head-link" asp-controller="AllStarTeams" asp-action="AllStarTeamType" asp-route-type="@team.Type">All NBA Third Team</a>
-            </div>
+                @await Html.PartialAsync("_AllStarTeamPartial", team)
+            }
+            else if (team.Type == "ThirdAllNBA")
+            {
+                <div class="AST-head px-1">
+                    <a class="AST-head-link" asp-controller="AllStarTeams" asp-action="AllStarTeamType" asp-route-type="@team.Type">All NBA Third Team</a>
+                </div>
 
-            @await Html.PartialAsync("_AllStarTeamPartial", team)
-        }
-        else if (team.Type == "AllDefensive")
-        {
-            <div class="AST-head px-1">
-                <a class="AST-head-link" asp-controller="AllStarTeams" asp-action="AllStarTeamType" asp-route-type="@team.Type">All Defense Team</a>
-            </div>
+                @await Html.PartialAsync("_AllStarTeamPartial", team)
+            }
+            else if (team.Type == "AllDefensive")
+            {
+                <div class="AST-head px-1">
+                    <a class="AST-head-link" asp-controller="AllStarTeams" asp-action="AllStarTeamType" asp-route-type="@team.Type">All Defense Team</a>
+                </div>
 
-            @await Html.PartialAsync("_AllStarTeamPartial", team)
+                @await Html.PartialAsync("_AllStarTeamPartial", team)
 
-        }
-        else if (team.Type == "AllRookie")
-        {
-            <div class="AST-head px-1">
-                <a class="AST-head-link" asp-controller="AllStarTeams" asp-action="AllStarTeamType" asp-route-type="@team.Type">All Rookie Team</a>
-            </div>
+            }
+            else if (team.Type == "AllRookie")
+            {
+                <div class="AST-head px-1">
+                    <a class="AST-head-link" asp-controller="AllStarTeams" asp-action="AllStarTeamType" asp-route-type="@team.Type">All Rookie Team</a>
+                </div>
 
-            @await Html.PartialAsync("_AllStarTeamPartial", team)
-        }
-    </div>
+                @await Html.PartialAsync("_AllStarTeamPartial", team)
+            }
+        </div>
     }
+</div>
+
+<div class="container-fluid flex-row-reverse mx-4 my-3">
+    <i class="p-1 fas fa-trash-alt fa-2x fa-pull-right"></i>
+    <i class="p-1 fas fa-plus-square fa-2x fa-pull-right"></i>
 </div>

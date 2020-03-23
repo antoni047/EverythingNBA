@@ -2,6 +2,8 @@
 {
     public class AwardDetailsServiceModel
     {
+        public int Id { get; set; }
+
         public string Winner { get; set; }
 
         public string Type { get; set; }

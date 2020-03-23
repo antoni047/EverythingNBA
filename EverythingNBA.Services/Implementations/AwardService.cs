@@ -82,6 +82,7 @@
             {
                 var model = new AwardDetailsServiceModel
                 {
+                    Id = award.Id,
                     Winner = award.Winner.FirstName + " " + award.Winner.LastName,
                     Type = award.Name.ToString(),
                     WinnerTeam = award.Winner.Team.Name,
@@ -233,7 +234,7 @@
                 }
             }
 
-            return allAwardsModels;
+            return allAwardsModels.OrderByDescending(x => x.Year).ToList();
         }
 
         public async Task<AwardDetailsServiceModel> GetAwardDetails(int awardId)
