@@ -100,21 +100,29 @@
         {
             var award = await this.awardService.GetAwardDetails(awardId);
 
-            return this.View(award);
+            var model = mapper.Map<AwardDetailsInputModel>(award);
+            model.Id = awardId;
+
+            return this.View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete (AwardDetailsInputModel model, int awardId)
+        public async Task<IActionResult> Delete (AwardDetailsInputModel model)
         {
-            var award = await this.awardService.GetAwardDetails(awardId);
+            if (!ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            var award = await this.awardService.GetAwardDetails(model.Id);
 
             var season = await this.seasonService.GetDetailsByYearAsync(model.Year);
-            await this.seasonService.AddAwardAsync(season.SeasonId, awardId);
+            await this.seasonService.AddAwardAsync(season.SeasonId, model.Id);
 
             var player = await this.playerService.GetPlayerDetailsAsync(award.Winner);
-            await this.playerService.AddAward(player.Id, awardId);
+            await this.playerService.AddAward(player.Id, model.Id);
 
-            await this.awardService.DeleteAwardAsync(awardId);
+            await this.awardService.DeleteAwardAsync(model.Id);
 
             return RedirectToAction("All");
         }
