@@ -211,7 +211,7 @@
 
                     if (standings[i].Name == team.Name)
                     {
-                        if (i == 15)
+                        if (i == 14)
                         {
                             var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
                             teamInfront.Position = i;
@@ -221,7 +221,7 @@
                             currentTeam.Position = i + 1;
                             teamStandings.Add(currentTeam);
                         }
-                        if (i == 0)
+                        else if (i == 0)
                         {
                             var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
                             currentTeam.Position = i + 1;
