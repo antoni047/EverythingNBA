@@ -23,6 +23,20 @@
             <div class="collapse navbar-collapse flex-row-reverse">
                 <ul class="navbar-nav mx-0 row">
                     <li class="nav-item active">
+                        <div class="dropdown">
+                            <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Add
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="/Awards/Add">Add Award</a>
+                                <a class="dropdown-item" href="/Games/Add">Add Game</a>
+                                <a class="dropdown-item" href="/Seasons/Add">Add Season</a>
+                                <a class="dropdown-item" href="/Team/Add">Add Team</a>
+                                <a class="dropdown-item" href="/Player/Add">Add Player</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item active">
                         <a class="nav-link text-dark border-right text-justify" asp-area="" asp-controller="Games" asp-action="CurrentResults">Results</a>
                     </li>
                     <li class="nav-item active">
@@ -40,6 +54,7 @@
                     <li class="nav-item active">
                         <a class="nav-link text-dark  text-justify" asp-area="" asp-controller="Seasons" asp-action="All">Seasons</a>
                     </li>
+
                 </ul>
             </div>
         </nav>
