@@ -55,7 +55,8 @@
         }
 
         public async Task<int> AddSeriesAsync(int playoffId, string team1Name, string team2Name,int team1GameWon, int team2GamesWon, int? game1Id, int? game2Id,
-            int? game3Id, int? game4Id, int? game5Id, int? game6Id, int? game7Id, string conference, string stage, int stageNumber)
+            int? game3Id, int? game4Id, int? game5Id, int? game6Id, int? game7Id, string conference, string stage, int stageNumber, 
+            int? team1Position, int? team2Position)
         {
             var team1Id = await this.db.Teams.Where(t => t.Name == team1Name).Select(t => t.Id).FirstOrDefaultAsync();
             var team2Id = await this.db.Teams.Where(t => t.Name == team2Name).Select(t => t.Id).FirstOrDefaultAsync();
@@ -76,7 +77,9 @@
                 Game7Id = game7Id,
                 Conference = conference,
                 Stage = stage,
-                StageNumber = stageNumber
+                StageNumber = stageNumber,
+                Team1StandingsPosition = team1Position != null ? (int)team1Position : 0,
+                Team2StandingsPosition = team2Position != null ? (int)team2Position : 0,
             };
 
             if (stage == "QuarterFinal")
@@ -161,7 +164,7 @@
             return model;
         }
 
-        public async Task<string> GetWinnerAsync(int seriesId)
+        public async Task<SeriesWinnerServiceModel> GetWinnerAsync(int seriesId)
         {
             var series = await this.db.Series
                 .Include(s => s.Team1)
@@ -169,15 +172,17 @@
                 .Where(s => s.Id == seriesId)
                 .FirstOrDefaultAsync();
 
-            var winner = string.Empty;
+            var winner = mapper.Map<SeriesWinnerServiceModel>(series);
 
             if (series.Team1GamesWon > series.Team2GamesWon)
             {
-                winner = series.Team1.Name;
+                winner.TeamName = series.Team1.Name;
+                winner.StandingsPosition = series.Team1StandingsPosition;
             }
             else
             {
-                winner = series.Team2.Name;
+                winner.TeamName = series.Team2.Name;
+                winner.StandingsPosition = series.Team2StandingsPosition;
             }
 
             return winner;

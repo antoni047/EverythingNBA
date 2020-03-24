@@ -108,6 +108,8 @@
             this.CreateMap<GameStatistic, PlayerGameStatisticServiceModel>()
                 .ForMember(mdl => mdl.PlayerName, opt => opt.MapFrom(gs => gs.Player.FirstName + " " + gs.Player.LastName))
                 .ForMember(mdl => mdl.Id, opt => opt.MapFrom(gs => gs.Id));
+
+            this.CreateMap<Series, SeriesWinnerServiceModel>();
         }
     }
 }
