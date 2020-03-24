@@ -18,5 +18,7 @@
         Task<string> GetWinnerAsync(int seriesId);
 
         Task<SeriesOverviewServiceModel> GetSeriesOverview(int seriesId);
+
+        Task SetGameWon(int seriesId, string winner);
     }
 }

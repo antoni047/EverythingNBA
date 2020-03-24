@@ -183,6 +183,29 @@
             return winner;
         }
 
+        public async Task SetGameWon(int seriesId, string winner)
+        {
+            var series = await this.db.Series
+                .Include(s => s.Team1)
+                .Include(s => s.Team2)
+                .Where(s => s.Id == seriesId).FirstOrDefaultAsync();
+
+            if (series.Team1GamesWon != 4 && series.Team2GamesWon != 4)
+            {
+                if (series.Team1.Name == winner)
+                {
+                    series.Team1GamesWon++;
+                }
+
+                else if (series.Team2.Name == winner)
+                {
+                    series.Team2GamesWon++;
+                }
+            }
+
+            await this.db.SaveChangesAsync();
+        }
+
         private async Task<TopStatsServiceModel> GetTopStats(GetSeriesDetailsServiceModel seriesModel)
         {
             var mostPoints = int.MinValue;

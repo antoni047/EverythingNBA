@@ -152,6 +152,9 @@
 
             await this.seriesService.AddGameAsync(model.SeriesId, gameId, model.GameNumber);
 
+            var winner = await this.gameServce.GetWinnerAsync(gameId);
+            await this.seriesService.SetGameWon(series.Id, winner);
+
             return RedirectToAction("SeriesOverview", new { model.SeriesId, model.Conference, model.Stage});
         }
 

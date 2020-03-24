@@ -22,6 +22,8 @@
 
         public string Conference { get; set; }
 
+        public int StageNumber { get; set; }
+
         public TopStatsServiceModel TopStats { get; set; }
 
         public ICollection<GameDetailsServiceModel> Games { get; set; }

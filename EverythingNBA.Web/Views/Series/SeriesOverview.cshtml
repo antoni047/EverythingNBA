@@ -13,7 +13,6 @@
             counter++;
             @if (game != null)
             {
-                @*@await Html.PartialAsync("~/Views/Games/_ResultsScoreboxesPartial.cshtml", game)*@
                 <div class="border nba-scorebox p-1 m-0 col-md-3 row">
                     <div class="col-md-11 p-0">
                         <div class="container-fluid">Game @counter</div>
@@ -39,10 +38,16 @@
                         </div>
                     </div>
     
-                    <a class="col-md-1 p-0" asp-controller="Games" asp-action="GameDetails" asp-route-gameId="@game.Id">G</a>
+                    <a class="col-md-1 p-0" asp-controller="Games" asp-action="GameDetails" asp-route-gameId="@game.Id">
+                        <i class="fas fa-chevron-right"></i></a>
                 </div>
-    
             }
         }
+    </div>
+
+    <div class="mt-4 mx-3">
+        <a href="/Series/AddGame/@Model.Id"><i class="p-1 fas fa-plus-square fa-2x fa-pull-right"></i></a>
+        <a href="/Series/Edit/@Model.Id"><i class="p-1 fas fa-pen-square fa-pull-right fa-2x"></i></a>
+        <a href="/Series/Delete/@Model.Id"><i class="p-1 fas fa-trash-alt fa-2x fa-pull-right"></i></a>
     </div>
 }
