@@ -59,6 +59,10 @@ html {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
+.btn-dark{
+    background-color: dimgray;
+}
+
 
 
 /*Navbar*/
@@ -192,6 +196,10 @@ counter{
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 17px;
+}
+
+btn-light {
+    background: #ebebeb;
 }
 
 .btn-secondary {
@@ -355,7 +363,7 @@ counter{
 .game-title {
     font-family: 'Bungee Inline', sans-serif;
     font-weight: 500;
-    font-size: 28px;
+    font-size: 30px;
     border-bottom: 2px solid;
     width: 100%;
 }

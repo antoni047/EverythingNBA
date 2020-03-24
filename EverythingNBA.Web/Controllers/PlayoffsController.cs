@@ -20,13 +20,6 @@
         [Route("[controller]/[action]/{year:int}")]
         public async Task<IActionResult> PlayoffBracket(int year)
         {
-            var season = await this.seasonService.GetDetailsByYearAsync(year);
-
-            //await this.playoffService.SetStartingSeries((int)season.PlayoffId);
-            //await this.playoffService.FinishQuarterFinals((int)season.PlayoffId);
-            //await this.playoffService.FinishSemiFinals((int)season.PlayoffId);
-            //await this.playoffService.FinishConferenceFinals((int)season.PlayoffId);
-
             var model = await this.playoffService.GetDetailsBySeasonAsync(year);
 
             return View(model);
@@ -87,6 +80,56 @@
 
             return RedirectToAction("Index", "Home");
         }
+
+
+        [Route("[controller]/[action]/{playoffId:int}")]
+        public async Task<IActionResult> FinishQuarterFinals(int playoffId)
+        {
+            var playoff = await this.playoffService.GetDetailsAsync(playoffId);
+            var year = await this.seasonService.GetYearAsync((int)playoff.SeasonId);
+
+            if (playoff.AreQuarterFinalsFinished == true)
+            {
+                return RedirectToAction("PlayoffBracket", new { year});
+            }
+
+            await this.playoffService.FinishQuarterFinals(playoffId);
+
+            return RedirectToAction("PlayoffBracket", new { year });
+        }
+
+        [Route("[controller]/[action]/{playoffId:int}")]
+        public async Task<IActionResult> FinishSemiFinals(int playoffId)
+        {
+            var playoff = await this.playoffService.GetDetailsAsync(playoffId);
+            var year = await this.seasonService.GetYearAsync((int)playoff.SeasonId);
+
+            if (playoff.AreSemiFinalsFinished == true)
+            {
+                return RedirectToAction("PlayoffBracket", new { year });
+            }
+
+            await this.playoffService.FinishSemiFinals(playoffId);
+
+            return RedirectToAction("PlayoffBracket", new { year });
+        }
+
+        [Route("[controller]/[action]/{playoffId:int}")]
+        public async Task<IActionResult> FinishConferenceFinals(int playoffId)
+        {
+            var playoff = await this.playoffService.GetDetailsAsync(playoffId);
+            var year = await this.seasonService.GetYearAsync((int)playoff.SeasonId);
+
+            if (playoff.AreConferenceFinalsFinished == true)
+            {
+                return RedirectToAction("PlayoffBracket", new { year });
+            }
+
+            await this.playoffService.FinishConferenceFinals(playoffId);
+
+            return RedirectToAction("PlayoffBracket", new { year });
+        }
+
 
         [HttpGet]
         public IActionResult AddSeries()
