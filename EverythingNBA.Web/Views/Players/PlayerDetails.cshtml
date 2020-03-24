@@ -27,5 +27,9 @@
                 @await Html.PartialAsync("_PlayerRecentGamePartial", game)
             }
         </div>
+        <div class="mt-4 mr-3">
+            <a href="/Players/Edit/@Model.Id"><i class="p-1 fas fa-pen-square fa-pull-right fa-2x"></i></a>
+            <a href="/Player/Delete/@Model.Id"><i class="p-1 fas fa-trash-alt fa-2x fa-pull-right"></i></a>
+        </div>
     </div>
 </div>
