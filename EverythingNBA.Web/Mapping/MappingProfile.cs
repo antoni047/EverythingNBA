@@ -27,7 +27,7 @@
     public class MappingProfile : Profile
     {
         public MappingProfile()
-        {
+        { 
             //Web
             this.CreateMap<SeasonDetailsInputModel, GetSeasonListingServiceModel>();
             this.CreateMap<SeasonDetailsInputModel, GetSeasonDetailsServiceModel>().ReverseMap();

@@ -1,20 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
-using System.Threading.Tasks;
-using EverythingNBA.Data;
-using EverythingNBA.Services;
-using EverythingNBA.Services.Implementations;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.EntityFrameworkCore;
-using CloudinaryDotNet;
 using Microsoft.AspNetCore.Mvc;
+using CloudinaryDotNet;
+
+using EverythingNBA.Services.Implementations;
+using EverythingNBA.Services;
+using EverythingNBA.Data;
+using EverythingNBA.Web.Data;
 
 namespace EverythingNBA.Web
 {
@@ -27,14 +25,19 @@ namespace EverythingNBA.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<EverythingNBADbContext>(
-                options => options.UseSqlServer(@"Server=DESKTOP-E6O5I68\SQLEXPRESS01;Database=EverythingNbaDb;Integrated Security=True;"));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddAutoMapper(typeof(Web.Mapping.MappingProfile));
-            services.AddMvc();
+
+            services.AddDbContext<EverythingNBADbContext>(
+                options => options.UseSqlServer(@"Server=DESKTOP-E6O5I68\SQLEXPRESS01;Database=EverythingNbaDb;Integrated Security=True;"));
 
             services.AddTransient<ISeasonService, SeasonService>();
             services.AddTransient<IAwardService, AwardService>();
@@ -63,19 +66,21 @@ namespace EverythingNBA.Web
             Cloudinary cloudinary = new Cloudinary(account);
 
             services.AddSingleton(cloudinary);
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -83,21 +88,17 @@ namespace EverythingNBA.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapAreaControllerRoute(
-                    name: "TeamsArchiveArea",
-                    areaName: "Archive",
-                    pattern: "{area}/{controller=Teams}/{action=TeamDetails}/{teamId:int}/{year:int}"
-                    );
-
                 endpoints.MapControllerRoute("HeadToHeadGames", "Games/HeadToHead/{team1Name}-vs-{team2Name}", new { controller = "Games", action = "HeadToHead" });
 
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

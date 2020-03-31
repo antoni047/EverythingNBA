@@ -13,6 +13,7 @@
     using EverythingNBA.Web.Models;
     using EverythingNBA.Services;
     using System.Linq;
+    using Microsoft.AspNetCore.Identity;
 
     public class HomeController : Controller
     {
@@ -20,22 +21,27 @@
         private readonly IGameService gameService;
         private readonly ISeasonService seasonService;
         private readonly IImageService imageService;
-
-        private readonly IGameStatisticService service;
+        private readonly IGameStatisticService statService;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public HomeController(ITeamService teamService, IGameService gameService, ISeasonService seasonService,
-            IImageService imageService, IGameStatisticService service)
+            IImageService imageService, IGameStatisticService service, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             this.teamService = teamService;
             this.gameService = gameService;
             this.seasonService = seasonService;
             this.imageService = imageService;
-
-            this.service = service;
+            this.statService = service;
+            this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         public async Task<IActionResult> Index()
         {
+
+
+
             var year = this.GetCurrentSeasonYear();
             var season = await this.seasonService.GetDetailsByYearAsync(year);
 
@@ -85,6 +91,24 @@
         [HttpPost("AddPost")]
         public async Task<IActionResult> AddPost(ICollection<IFormFile> images)
         {
+            var newUser = new IdentityUser()
+            {
+                UserName = "admin",
+                Email = "admin@gmail.com",
+            };
+
+            var result = await userManager.CreateAsync(newUser, "adminpassword");
+
+            var roleName = "Administrator";
+            var roleExists = await roleManager.RoleExistsAsync(roleName);
+
+            if (roleExists)
+            {
+                var user = await userManager.GetUserAsync(User);
+                await userManager.AddToRoleAsync(user, roleName);
+            }
+
+
             //await this.service.AddAsync(31, 1, 30, 21, 2, 10, 5, 1, 5, 5, 10, 10, 5, 18);
             //await this.service.AddAsync(31, 2, 30, 50, 3, 8, 5, 1, 5, 5, 10, 10, 5, 12);
             //await this.service.AddAsync(31, 3, 30, 23, 3, 12, 5, 1, 5, 5, 10, 10, 5, 8);
