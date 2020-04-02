@@ -8,9 +8,9 @@
 
     <div class="col-md-6 p-0">
         <div class="d-flex justify-content-center container-fluid row pr-0">
-            <div class="col-md-2 py-2 border-right text-center team-bio">@Model.AbbreviatedName</div>
-            <div class="col-md-8 py-2 text-center team-bio" style="font-size: 28px">@Model.Name</div>
-            <div class="col-md-2 py-2 border-left text-center team-bio">@ViewBag.Year</div>
+            <div class="col-md-2 py-3 border-right text-center team-name">@Model.AbbreviatedName</div>
+            <div class="col-md-8 py-2 text-center team-name" style="font-size: 30px">@Model.Name</div>
+            <div class="col-md-2 py-3 border-left text-center team-name">@ViewBag.Year</div>
         </div>
         <div class="mr-3 team-standings">
             @await Html.PartialAsync("_TeamStandingsTablePartial", Model)
