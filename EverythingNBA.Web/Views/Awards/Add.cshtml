@@ -3,27 +3,32 @@
 
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Add Award</h3>
 
-<div class="m-3 form-group player-form">
-    <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Awards" asp-action="Add" method="post">
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="m-3 form-group player-form">
+        <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Awards" asp-action="Add" method="post">
 
-        <input placeholder="Winner..." asp-for="Winner" type="text" class="form-control" /> <br />
-        <input placeholder="Winner Team..." asp-for="WinnerTeam" type="text" class="form-control" /> <br />
-        <input placeholder="Year..." asp-for="Year" type="number" class="form-control" /><br />
+            <input placeholder="Winner..." asp-for="Winner" type="text" class="form-control" /> <br />
+            <input placeholder="Winner Team..." asp-for="WinnerTeam" type="text" class="form-control" /> <br />
+            <input placeholder="Year..." asp-for="Year" type="number" class="form-control" /><br />
 
-        <select asp-for="Type" id="type" class="form-control">
-            Type
-            <option value="" selected disabled hidden>Type...</option>
-            <option value="MVP">MVP</option>
-            <option value="FinalsMVP">Finals' MVP</option>
-            <option value="TopScorer">Top Scorer</option>
-            <option value="DPOOTY">DPOTY</option>
-            <option value="ROTY">ROTY</option>
-            <option value="SixthMOTY">Sixth MOTY</option>
-            <option value="MIP">MIP</option>
-        </select> <br />
+            <select asp-for="Type" id="type" class="form-control">
+                Type
+                <option value="" selected disabled hidden>Type...</option>
+                <option value="MVP">MVP</option>
+                <option value="FinalsMVP">Finals' MVP</option>
+                <option value="TopScorer">Top Scorer</option>
+                <option value="DPOOTY">DPOTY</option>
+                <option value="ROTY">ROTY</option>
+                <option value="SixthMOTY">Sixth MOTY</option>
+                <option value="MIP">MIP</option>
+            </select> <br />
 
-        <button type="submit" class="btn btn-secondary">Add</button>
-    </form>
-</div>
-
-
+            <button type="submit" class="btn btn-secondary">Add</button>
+        </form>
+    </div>
+}
+else
+{
+    <h4 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Log in to access this page</h4>
+}

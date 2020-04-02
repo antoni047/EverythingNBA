@@ -3,63 +3,73 @@
 
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Add Game</h3>
 
-<div class="m-3 form-group player-form">
-    <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Series" asp-action="AddGame" method="post">
 
-        <input type="hidden" class="form-control" asp-for="Id">
-        <input type="hidden" class="form-control" asp-for="SeriesId">
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="m-3 form-group player-form">
+        <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Series" asp-action="AddGame" method="post">
 
-        <div class="form-row">
-            <div class="col-md-5">
-                <span asp-validation-for="TeamHostName" class="text-danger"></span> <br />
-                <input placeholder="Home team..." asp-for="TeamHostName" type="text" class="form-control" /> <br />
+            <input type="hidden" class="form-control" asp-for="Id">
+            <input type="hidden" class="form-control" asp-for="SeriesId">
+
+            <div class="form-row">
+                <div class="col-md-5">
+                    <span asp-validation-for="TeamHostName" class="text-danger"></span> <br />
+                    <input placeholder="Home team..." asp-for="TeamHostName" type="text" class="form-control" /> <br />
+                </div>
+                <div class="col-md-1">
+                    <span asp-validation-for="TeamHostPoints" class="text-danger"></span> <br />
+                    <input placeholder="Pts" asp-for="TeamHostPoints" type="number" class="form-control" /> <br />
+                </div>
+
+                <div class="col-md-5">
+                    <span asp-validation-for="Team2Name" class="text-danger"></span> <br />
+                    <input placeholder="Away team..." asp-for="Team2Name" type="text" class="form-control" /> <br />
+                </div>
+                <div class="col-md-1">
+                    <span asp-validation-for="Team2Points" class="text-danger"></span> <br />
+                    <input placeholder="Pts" asp-for="Team2Points" type="number" class="form-control" /> <br />
+                </div>
+            </div> <br />
+
+            <span asp-validation-for="Date" class="text-danger"></span> <br />
+            <input placeholder="Date..." asp-for="Date" type="date" class="form-control" /><br />
+
+            <label class="mr-3">Finished:</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" asp-for="IsFinished" id="inlineRadio1" value="true" checked>
+                <label class="form-check-label" for="inlineRadio1">Yes</label>
             </div>
-            <div class="col-md-1">
-                <span asp-validation-for="TeamHostPoints" class="text-danger"></span> <br />
-                <input placeholder="Pts" asp-for="TeamHostPoints" type="number" class="form-control" /> <br />
-            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" asp-for="IsFinished" id="inlineRadio2" value="false">
+                <label class="form-check-label" for="inlineRadio2">No</label>
+            </div> <br />
 
-            <div class="col-md-5">
-                <span asp-validation-for="Team2Name" class="text-danger"></span> <br />
-                <input placeholder="Away team..." asp-for="Team2Name" type="text" class="form-control" /> <br />
-            </div>
-            <div class="col-md-1">
-                <span asp-validation-for="Team2Points" class="text-danger"></span> <br />
-                <input placeholder="Pts" asp-for="Team2Points" type="number" class="form-control" /> <br />
-            </div>
-        </div> <br />
+            <label>Game Number</label>
+            <span asp-validation-for="GameNumber" class="text-danger"></span> <br />
+            <input asp-for="GameNumber" type="number" class="form-control" /> <br />
 
-        <span asp-validation-for="Date" class="text-danger"></span> <br />
-        <input placeholder="Date..." asp-for="Date" type="date" class="form-control" /><br />
+            <label>Conference</label>
+            <span asp-validation-for="Conference" class="text-danger"></span> <br />
+            <input asp-for="Conference" type="text" class="form-control" /> <br />
 
-        <label class="mr-3">Finished:</label>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" asp-for="IsFinished" id="inlineRadio1" value="true" checked>
-            <label class="form-check-label" for="inlineRadio1">Yes</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" asp-for="IsFinished" id="inlineRadio2" value="false">
-            <label class="form-check-label" for="inlineRadio2">No</label>
-        </div> <br />
+            <label>Stage</label>
+            <span asp-validation-for="Stage" class="text-danger"></span> <br />
+            <input asp-for="Stage" type="text" class="form-control" /> <br />
 
-        <label>Game Number</label>
-        <span asp-validation-for="GameNumber" class="text-danger"></span> <br />
-        <input asp-for="GameNumber" type="number" class="form-control" /> <br />
+            <label>Stage Number</label>
+            <span asp-validation-for="StageNumber" class="text-danger"></span> <br />
+            <input asp-for="StageNumber" type="number" class="form-control" /> <br />
 
-        <label>Conference</label>
-        <span asp-validation-for="Conference" class="text-danger"></span> <br />
-        <input asp-for="Conference" type="text" class="form-control" /> <br />
+            <button type="submit" class="btn btn-secondary">Add</button>
+        </form>
+    </div>
 
-        <label>Stage</label>
-        <span asp-validation-for="Stage" class="text-danger"></span> <br />
-        <input asp-for="Stage" type="text" class="form-control" /> <br />
+}
+else
+{
+    <h4 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Log in to access this page</h4>
+}
 
-        <label>Stage Number</label>
-        <span asp-validation-for="StageNumber" class="text-danger"></span> <br />
-        <input asp-for="StageNumber" type="number" class="form-control" /> <br />
-
-        <button type="submit" class="btn btn-secondary">Add</button>
-    </form>
-</div>
 
 

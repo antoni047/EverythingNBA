@@ -4,56 +4,65 @@
 
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Add Series</h3>
 
-<div class="m-3 form-group player-form">
-    <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Series" asp-action="Add" method="post">
 
-        <input type="hidden" class="form-control" asp-for="PlayoffId" value="@Model.PlayoffId">
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="m-3 form-group player-form">
+        <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Series" asp-action="Add" method="post">
 
-        <div class="form-row">
-            <div class="col-md-5">
-                <span asp-validation-for="Team1Name" class="text-danger"></span> <br />
-                <input placeholder="Team 1..." asp-for="Team1Name" type="text" class="form-control" /> <br />
-            </div>
-            <div class="col-md-1">
-                <span asp-validation-for="Team1GamesWon" class="text-danger"></span> <br />
-                <input placeholder="Games Won..." asp-for="Team1GamesWon" type="number" class="form-control" /> <br />
-            </div>
+            <input type="hidden" class="form-control" asp-for="PlayoffId" value="@Model.PlayoffId">
 
-            <div class="col-md-5">
-                <span asp-validation-for="Team2Name" class="text-danger"></span> <br />
-                <input placeholder="Team 2..." asp-for="Team2Name" type="text" class="form-control" /> <br />
-            </div>
-            <div class="col-md-1">
-                <span asp-validation-for="Team2GamesWon" class="text-danger"></span> <br />
-                <input placeholder="Games Won..." asp-for="Team2GamesWon" type="number" class="form-control" /> <br />
-            </div>
-        </div> <br />
+            <div class="form-row">
+                <div class="col-md-5">
+                    <span asp-validation-for="Team1Name" class="text-danger"></span> <br />
+                    <input placeholder="Team 1..." asp-for="Team1Name" type="text" class="form-control" /> <br />
+                </div>
+                <div class="col-md-1">
+                    <span asp-validation-for="Team1GamesWon" class="text-danger"></span> <br />
+                    <input placeholder="Games Won..." asp-for="Team1GamesWon" type="number" class="form-control" /> <br />
+                </div>
 
-        <select asp-for="Conference" id="position" class="form-control">
-            Conference
-            <option value="" selected disabled hidden>Conference...</option>
-            <option>Western</option>
-            <option>Eastern</option>
-        </select> <br />
+                <div class="col-md-5">
+                    <span asp-validation-for="Team2Name" class="text-danger"></span> <br />
+                    <input placeholder="Team 2..." asp-for="Team2Name" type="text" class="form-control" /> <br />
+                </div>
+                <div class="col-md-1">
+                    <span asp-validation-for="Team2GamesWon" class="text-danger"></span> <br />
+                    <input placeholder="Games Won..." asp-for="Team2GamesWon" type="number" class="form-control" /> <br />
+                </div>
+            </div> <br />
 
-        <select asp-for="Stage" id="position" class="form-control">
-            Stage
-            <option value="" selected disabled hidden>Stage...</option>
-            <option value="QuarterFinal">Quarter-Final</option>
-            <option value="SemiFinal">Semi-Final</option>
-            <option value="ConferenceFinal">Conference-Final</option>
-            <option value="Final">Final</option>
-        </select> <br />
+            <select asp-for="Conference" id="position" class="form-control">
+                Conference
+                <option value="" selected disabled hidden>Conference...</option>
+                <option>Western</option>
+                <option>Eastern</option>
+            </select> <br />
 
-        <select asp-for="StageNumber" id="position" class="form-control">
-            StageNumber
-            <option value="" selected disabled hidden>StageNumber...</option>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-        </select> <br />
+            <select asp-for="Stage" id="position" class="form-control">
+                Stage
+                <option value="" selected disabled hidden>Stage...</option>
+                <option value="QuarterFinal">Quarter-Final</option>
+                <option value="SemiFinal">Semi-Final</option>
+                <option value="ConferenceFinal">Conference-Final</option>
+                <option value="Final">Final</option>
+            </select> <br />
 
-        <button type="submit" class="btn btn-secondary">Add</button>
-    </form>
-</div>
+            <select asp-for="StageNumber" id="position" class="form-control">
+                StageNumber
+                <option value="" selected disabled hidden>StageNumber...</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select> <br />
+
+            <button type="submit" class="btn btn-secondary">Add</button>
+        </form>
+    </div>
+
+}
+else
+{
+    <h4 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Log in to access this page</h4>
+}

@@ -4,61 +4,70 @@
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Edit Game Statistics</h3>
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">@ViewBag.Name - @ViewBag.Team1 vs @ViewBag.Team2 @ViewBag.Date</h3>
 
-<div class="m-3 form-group player-form">
-    <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Games" asp-action="EditGameStatistic" method="post">
 
-        <input type="hidden" class="form-control" asp-for="Id">
 
-        <div class="form-row">
-            <div class="col">
-                <label>PTS</label>
-                <input placeholder="Pts" asp-for="Points" type="number" class="form-control" /><br />
-            </div>
-            <div class="col">
-                <label>AST</label>
-                <input placeholder="Ast" asp-for="Assists" type="number" class="form-control" /><br />
-            </div>
-            <div class="col">
-                <label>REB</label>
-                <input placeholder="Reb" asp-for="Rebounds" type="number" class="form-control" /><br />
-            </div>
-            <div class="col">
-                <label>BLK</label>
-                <input placeholder="Blk" asp-for="Blocks" type="number" class="form-control" /><br />
-            </div>
-            <div class="col">
-                <label>STL</label>
-                <input placeholder="Stl" asp-for="Steals" type="number" class="form-control" /><br />
-            </div>
-        </div> <br />
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="m-3 form-group player-form">
+        <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Games" asp-action="EditGameStatistic" method="post">
 
-        <div class="form-row">
-            <div class="col">
-                <label>Field Goals Made</label>
-                <input placeholder="Field goals made" asp-for="FieldGoalsMade" type="number" class="form-control" /><br />
-            </div>
-            <div class="col">
-                <label>Field Goals Attempts</label>
-                <input placeholder="Field goals attempts" asp-for="FieldGoalAttempts" type="number" class="form-control" /><br />
-            </div>
-            <div class="col">
-                <label>Three Points Made</label>
-                <input placeholder="Threes made" asp-for="ThreeMade" type="number" class="form-control" /><br />
-            </div>
-            <div class="col">
-                <label>Three Points Attempts</label>
-                <input placeholder="Threes attempts" asp-for="ThreeAttempts" type="number" class="form-control" /><br />
-            </div>
-            <div class="col">
-                <label>Free Throws Made</label>
-                <input placeholder="Free throws made" asp-for="FreeThrowsMade" type="number" class="form-control" /><br />
-            </div>
-            <div class="col">
-                <label>FGA</label>
-                <input placeholder="Free throws made" asp-for="FreeThrowAttempts" type="number" class="form-control" /><br />
-            </div>
-        </div>
+            <input type="hidden" class="form-control" asp-for="Id">
 
-        <button type="submit" class="btn btn-secondary">Submit</button>
-    </form>
-</div>
+            <div class="form-row">
+                <div class="col">
+                    <label>PTS</label>
+                    <input placeholder="Pts" asp-for="Points" type="number" class="form-control" /><br />
+                </div>
+                <div class="col">
+                    <label>AST</label>
+                    <input placeholder="Ast" asp-for="Assists" type="number" class="form-control" /><br />
+                </div>
+                <div class="col">
+                    <label>REB</label>
+                    <input placeholder="Reb" asp-for="Rebounds" type="number" class="form-control" /><br />
+                </div>
+                <div class="col">
+                    <label>BLK</label>
+                    <input placeholder="Blk" asp-for="Blocks" type="number" class="form-control" /><br />
+                </div>
+                <div class="col">
+                    <label>STL</label>
+                    <input placeholder="Stl" asp-for="Steals" type="number" class="form-control" /><br />
+                </div>
+            </div> <br />
+
+            <div class="form-row">
+                <div class="col">
+                    <label>Field Goals Made</label>
+                    <input placeholder="Field goals made" asp-for="FieldGoalsMade" type="number" class="form-control" /><br />
+                </div>
+                <div class="col">
+                    <label>Field Goals Attempts</label>
+                    <input placeholder="Field goals attempts" asp-for="FieldGoalAttempts" type="number" class="form-control" /><br />
+                </div>
+                <div class="col">
+                    <label>Three Points Made</label>
+                    <input placeholder="Threes made" asp-for="ThreeMade" type="number" class="form-control" /><br />
+                </div>
+                <div class="col">
+                    <label>Three Points Attempts</label>
+                    <input placeholder="Threes attempts" asp-for="ThreeAttempts" type="number" class="form-control" /><br />
+                </div>
+                <div class="col">
+                    <label>Free Throws Made</label>
+                    <input placeholder="Free throws made" asp-for="FreeThrowsMade" type="number" class="form-control" /><br />
+                </div>
+                <div class="col">
+                    <label>FGA</label>
+                    <input placeholder="Free throws made" asp-for="FreeThrowAttempts" type="number" class="form-control" /><br />
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>
+    </div>
+}
+else
+{
+    <h4 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Log in to access this page</h4>
+}

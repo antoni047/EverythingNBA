@@ -3,29 +3,37 @@
 
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Delete Award</h3>
 
-<div class="m-3 form-group player-form">
-    <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Awards" asp-action="Delete" method="post">
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="m-3 form-group player-form">
+        <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Awards" asp-action="Delete" method="post">
 
-        <input type="hidden" class="form-control" asp-for="Id" value="@Model.Id">
+            <input type="hidden" class="form-control" asp-for="Id" value="@Model.Id">
 
-        <label>Winner</label>
-        <span asp-validation-for="Winner" class="text-danger"></span> <br />
-        <input placeholder="Winner..." asp-for="Winner" type="text" class="form-control" readonly /> <br />
+            <label>Winner</label>
+            <span asp-validation-for="Winner" class="text-danger"></span> <br />
+            <input placeholder="Winner..." asp-for="Winner" type="text" class="form-control" readonly /> <br />
 
-        <label>Winner Team</label>
-        <span asp-validation-for="WinnerTeam" class="text-danger"></span> <br />
-        <input placeholder="Winner Team..." asp-for="WinnerTeam" type="text" class="form-control" readonly /> <br />
+            <label>Winner Team</label>
+            <span asp-validation-for="WinnerTeam" class="text-danger"></span> <br />
+            <input placeholder="Winner Team..." asp-for="WinnerTeam" type="text" class="form-control" readonly /> <br />
 
-        <label>Year</label>
-        <span asp-validation-for="Year" class="text-danger"></span> <br />
-        <input placeholder="Year..." asp-for="Year" type="number" class="form-control" readonly /><br />
+            <label>Year</label>
+            <span asp-validation-for="Year" class="text-danger"></span> <br />
+            <input placeholder="Year..." asp-for="Year" type="number" class="form-control" readonly /><br />
 
-        <label>Type</label>
-        <span asp-validation-for="Type" class="text-danger"></span> <br />
-        <input placeholder="Type..." asp-for="Type" type="text" class="form-control" readonly /><br />
+            <label>Type</label>
+            <span asp-validation-for="Type" class="text-danger"></span> <br />
+            <input placeholder="Type..." asp-for="Type" type="text" class="form-control" readonly /><br />
 
-        <button type="submit" class="btn btn-secondary">Delete</button>
-    </form>
-</div>
+            <button type="submit" class="btn btn-secondary">Delete</button>
+        </form>
+    </div>
+}
+else
+{
+    <h4 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Log in to access this page</h4>
+}
+
 
 

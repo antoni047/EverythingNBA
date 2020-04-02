@@ -3,6 +3,10 @@
 
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Edit Team</h3>
 
+
+
+@if (User.Identity.IsAuthenticated)
+{
 <div class="m-3 form-group player-form">
     <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Teams" asp-action="Edit" method="post">
 
@@ -48,12 +52,18 @@
         <button type="submit" class="btn btn-secondary">Edit</button>
     </form>
 </div>
+}
+else
+{
+    <h4 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Log in to access this page</h4>
+}
+
 
 <script>
-$(".custom-file-input").on("change", function() {
-  var fileName = $(this).val().split("\\").pop();
-  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-});
+    $(".custom-file-input").on("change", function () {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
 </script>
 
 
