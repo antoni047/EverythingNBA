@@ -103,7 +103,7 @@
             var season = await this.seasonService.GetDetailsByYearAsync(this.GetCurrentSeasonYear());
 
             var model = mapper.Map<PlayerDetailsServiceModel>(player);
-            model.ImageURL = player.CloudinaryImage.ImageURL;
+            model.ImageURL = player.CloudinaryImage != null ? player.CloudinaryImage.ImageURL : null;
             model.Position = this.ConvertToFriendlyName(player.Position.ToString());
             model.CurrentTeam = await this.db.Teams.Include(t => t.Players).Where(t => t.Id == player.TeamId).Select(t => t.Name).FirstOrDefaultAsync();
             model.SeasonStatistics = await this.GetSeasonStatistics(player.Id, season.SeasonId);
