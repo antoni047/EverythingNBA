@@ -142,7 +142,7 @@ counter{
     background-color: #ebebeb;
 }
 
-.team-name {
+.standings-team-name {
     text-decoration: none;
     background-color: none;
     color: black;
@@ -415,11 +415,6 @@ btn-info {
     border-left: 1px solid #00008b;
 }
 
-.team-name {
-    text-decoration: none;
-    background-color: none;
-}
-
 .game-statistic-table {
     border: 1px solid black;
     font-size: 17px;
@@ -429,8 +424,16 @@ btn-info {
 .team-bio {
     color: black;
     font-family: 'Roboto', sans-serif;
-    font-weight: 400;
+    font-weight: 500;
     font-size: 18px;
+    border: 1px solid black;
+}
+
+.team-name {
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
     border: 1px solid black;
 }
 
@@ -490,10 +493,15 @@ button.accept-policy {
 
 
 
+home-game-link {
+    text-decoration: none;
+    background-color: none;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+}
 
 /*Font Awesome Icons*/
-
-.fa-plus-square{
+.fa-plus-square {
     color: blue;
 }
 
