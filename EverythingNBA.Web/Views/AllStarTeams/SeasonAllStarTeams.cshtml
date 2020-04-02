@@ -52,7 +52,10 @@
     }
 </div>
 
-<div class="container-fluid flex-row-reverse mx-4 my-3">
-    <i class="p-1 fas fa-trash-alt fa-2x fa-pull-right"></i>
-    <i class="p-1 fas fa-plus-square fa-2x fa-pull-right"></i>
-</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="container-fluid flex-row-reverse mx-4 my-3">
+        <i class="p-1 fas fa-trash-alt fa-2x fa-pull-right"></i>
+        <i class="p-1 fas fa-plus-square fa-2x fa-pull-right"></i>
+    </div>
+}

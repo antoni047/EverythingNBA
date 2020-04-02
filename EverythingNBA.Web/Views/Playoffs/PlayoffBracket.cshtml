@@ -1021,25 +1021,27 @@
                 }
             </div>
         }
-
-        <div class="container-fluid row">
-            <a class="w-100 p-0 my-0 mx-1 btn btn-dark col-md-4"
-               href="/Playoffs/FinishQuarterFinals/@Model.Id"
-               role="button">Finish Quarter-Finals</a>
-            @if (Model.AreQuarterFinalsFinished)
-            {
-
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="container-fluid row">
                 <a class="w-100 p-0 my-0 mx-1 btn btn-dark col-md-4"
-                   href="/Playoffs/FinishSemiFinals/@Model.Id"
-                   role="button">Finish Semi-Finals</a>
-                if (Model.AreSemiFinalsFinished)
+                   href="/Playoffs/FinishQuarterFinals/@Model.Id"
+                   role="button">Finish Quarter-Finals</a>
+                @if (Model.AreQuarterFinalsFinished)
                 {
+
                     <a class="w-100 p-0 my-0 mx-1 btn btn-dark col-md-4"
-                       href="/Playoffs/FinishConferenceFinals/@Model.Id"
-                       role="button">Finish Finals</a>
+                       href="/Playoffs/FinishSemiFinals/@Model.Id"
+                       role="button">Finish Semi-Finals</a>
+                    if (Model.AreSemiFinalsFinished)
+                    {
+                        <a class="w-100 p-0 my-0 mx-1 btn btn-dark col-md-4"
+                           href="/Playoffs/FinishConferenceFinals/@Model.Id"
+                           role="button">Finish Finals</a>
+                    }
                 }
-            }
-        </div>
+            </div>
+        }
     </div>
 </div>
 
