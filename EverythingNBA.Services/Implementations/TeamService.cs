@@ -376,7 +376,7 @@
 
             if (gameSeasonYear == currentYear && team.SeasonsStatistics.Count < 82)
             {
-                await this.statisticService.AddGameAsync(gameId, isGameWon);
+                await this.statisticService.AddGameAsync(teamId, isGameWon);
             }
 
             await this.db.SaveChangesAsync();
@@ -542,8 +542,8 @@
                 .Where(t => t.Id == teamId)
                 .FirstOrDefaultAsync();
 
-            var homeGames = team.HomeGames.Where(g => g.SeasonId == seasonId).ToList();
-            var awayGames = team.AwayGames.Where(g => g.SeasonId == seasonId).ToList();
+            var homeGames = team.HomeGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true).ToList();
+            var awayGames = team.AwayGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true).ToList();
 
             return homeGames.Count() + awayGames.Count();
         }
@@ -561,8 +561,8 @@
 
             var gamesPlayed = new List<Game>();
 
-            gamesPlayed.AddRange(team.HomeGames.Where(g => g.SeasonId == seasonId));
-            gamesPlayed.AddRange(team.AwayGames.Where(g => g.SeasonId == seasonId));
+            gamesPlayed.AddRange(team.HomeGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true));
+            gamesPlayed.AddRange(team.AwayGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true));
 
             var lastTenGames = gamesPlayed.OrderByDescending(g => g.Date).Take(10).ToList();
 

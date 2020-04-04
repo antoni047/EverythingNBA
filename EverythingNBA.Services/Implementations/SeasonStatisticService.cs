@@ -36,9 +36,9 @@
             return seasonStatisticObj.Id;
         }
 
-        public async Task<bool> AddGameAsync(int id, bool isWon)
+        public async Task<bool> AddGameAsync(int teamId, bool isWon)
         {
-            var statistic = await this.db.SeasonStatistics.FindAsync(id);
+            var statistic = await this.db.SeasonStatistics.Where(ss => ss.TeamId == teamId).FirstOrDefaultAsync();
 
             if (statistic == null)
             {
