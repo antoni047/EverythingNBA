@@ -21,14 +21,6 @@
 
         Task<PlayerSeasonStatisticServiceModel> GetSeasonStatistics(int playerId, int seasonId);
 
-        Task<bool> AddGameStatistic(int playerId, int gameStatisticId);
-
-        Task<bool> RemoveGameStatisticStatistic(int playerId, int gameStatisticId);
-
-        Task<bool> AddAward(int playerId, int awardId);
-
-        Task<bool> RemoveAward(int playerId, int awardId);
-
         Task EditPlayerAsync(PlayerDetailsServiceModel model, int playerId, IFormFile image);
 
         Task<PlayerCareerStatisticServiceModel> GetCareerStatistics(int playerId);
@@ -38,10 +30,6 @@
         Task<PlayerAccomplishmentsListingServiceModel> GetPlayerAccomplishentsAsync(int playerId);
 
         Task<ICollection<TeamPlayerOverviewServiceModel>> GetAllPlayersFromTeam(int teamId);
-
-        Task<bool> RemoveAllStarTeam(string playerName, int allStarTeamId);
-
-        Task<bool> AddAllStarTeam(string playerName, int allStarTeamId);
 
         Task<bool> AddPlayerToTeamAsync(int teamId, int playerId);
 

@@ -125,87 +125,6 @@
             return model;
         }
 
-        public async Task<bool> AddAward(int playerId, int awardId)
-        {
-            var player = await this.db.Players
-                .Include(p => p.Awards)
-                .Where(p => p.Id == playerId)
-                .FirstOrDefaultAsync();
-
-            var award = await this.db.Awards.FindAsync(awardId);
-
-            if (player == null || award == null || playerId != award.WinnerId)
-            {
-                return false;
-            }
-
-            player.Awards.Add(award);
-
-            await this.db.SaveChangesAsync();
-
-            return true;
-        }
-
-        public async Task<bool> RemoveAward(int playerId, int awardId)
-        {
-            var player = await this.db.Players
-                 .Include(p => p.Awards)
-                 .Where(p => p.Id == playerId)
-                 .FirstOrDefaultAsync();
-
-            var award = await this.db.Awards.FindAsync(awardId);
-
-            if (player == null || award == null || playerId != award.WinnerId)
-            {
-                return false;
-            }
-
-            player.Awards.Remove(award);
-
-            await this.db.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> AddGameStatistic(int playerId, int gameStatisticId)
-        {
-            var player = await this.db.Players
-              .Include(p => p.SingleGameStatistics)
-              .Where(p => p.Id == playerId)
-              .FirstOrDefaultAsync();
-
-            var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
-
-            if (player == null || gameStatistic == null || playerId != gameStatistic.PlayerId)
-            {
-                return false;
-            }
-
-            player.SingleGameStatistics.Add(gameStatistic);
-
-            await this.db.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> RemoveGameStatisticStatistic(int playerId, int gameStatisticId)
-        {
-            var player = await this.db.Players
-              .Include(p => p.SingleGameStatistics)
-              .Where(p => p.Id == playerId)
-              .FirstOrDefaultAsync();
-
-            var gameStatistic = await this.db.GameStatistics.FindAsync(gameStatisticId);
-
-            if (player == null || gameStatistic == null || playerId != gameStatistic.PlayerId)
-            {
-                return false;
-            }
-
-            player.SingleGameStatistics.Remove(gameStatistic);
-
-            await this.db.SaveChangesAsync();
-            return true;
-        }
-
         public async Task<PlayerSeasonStatisticServiceModel> GetSeasonStatistics(int playerId, int seasonId)
         {
             var player = await this.db.Players
@@ -513,49 +432,6 @@
             }
 
             return playerModels;
-        }
-
-        public async Task<bool> AddAllStarTeam(string playerName, int allStarTeamId)
-        {
-            var obj = await this.db.AllStarTeamsPlayers
-                .Include(x => x.Player)
-                    .ThenInclude(p => p.AllStarTeams)
-                .Include(x => x.AllStarTeam)
-                    .ThenInclude(ast => ast.Players)
-                .Where(x => x.AllStarTeamId == allStarTeamId && x.Player.FirstName + " " + x.Player.LastName == playerName)
-                .FirstOrDefaultAsync();
-
-            if (obj == null || obj.Player == null)
-            {
-                return false;
-            }
-
-            obj.Player.AllStarTeams.Add(obj);
-
-            await this.db.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> RemoveAllStarTeam(string playerName, int allStarTeamId)
-        {
-           var obj = await this.db.AllStarTeamsPlayers
-                .Include(x => x.Player)
-                    .ThenInclude(p => p.AllStarTeams)
-                .Include(x => x.AllStarTeam)
-                    .ThenInclude(ast => ast.Players)
-                .Where(x => x.AllStarTeamId == allStarTeamId && x.Player.FirstName + " " + x.Player.LastName == playerName)
-                .FirstOrDefaultAsync();
-
-            if (obj == null || obj.Player == null)
-            {
-                return false;
-            }
-
-            obj.Player.AllStarTeams.Remove(obj);
-            obj.Player = null;
-
-            await this.db.SaveChangesAsync();
-            return true;
         }
 
         public async Task<bool> AddPlayerToTeamAsync(int teamId, int playerId)

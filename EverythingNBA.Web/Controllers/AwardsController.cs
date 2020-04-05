@@ -53,12 +53,6 @@
 
             var awardId = await this.awardService.AddAwardAsync(model.Type, model.Year, model.Winner, model.WinnerTeam);
 
-            var season = await this.seasonService.GetDetailsByYearAsync(model.Year);
-            await this.seasonService.AddAwardAsync(season.SeasonId, awardId);
-
-            var player = await this.playerService.GetPlayerDetailsAsync(model.Winner);
-            await this.playerService.AddAward(player.Id, awardId);
-
             return RedirectToAction("All");
         }
 
@@ -82,15 +76,7 @@
                 return this.View(model);
             }
 
-            var oldAwardWinner = await this.playerService.GetPlayerDetailsAsync(model.Winner);
-            await this.playerService.RemoveAward(oldAwardWinner.Id, model.Id);
-
             await this.awardService.EditAwardWinnerAsync(model.Winner, model.Id);
-            var award = await this.awardService.GetAwardDetails(model.Id);
-
-            var newAwardWinner = await this.playerService.GetPlayerDetailsAsync(award.Winner);
-            await this.playerService.AddAward(newAwardWinner.Id, model.Id);
-
             return RedirectToAction("All");
         }
 
@@ -113,14 +99,6 @@
             {
                 return this.View(model);
             }
-
-            var award = await this.awardService.GetAwardDetails(model.Id);
-
-            var season = await this.seasonService.GetDetailsByYearAsync(model.Year);
-            await this.seasonService.AddAwardAsync(season.SeasonId, model.Id);
-
-            var player = await this.playerService.GetPlayerDetailsAsync(award.Winner);
-            await this.playerService.AddAward(player.Id, model.Id);
 
             await this.awardService.DeleteAwardAsync(model.Id);
 

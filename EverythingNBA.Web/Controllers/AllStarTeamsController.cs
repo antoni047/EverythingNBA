@@ -62,7 +62,7 @@
 
                 foreach (var name in playerNames)
                 {
-                    var player = await this.playerService.AddAllStarTeam(name, id);
+                    //var player = await this.playerService.AddAllStarTeam(name, id);
                 }
             }
 
@@ -97,7 +97,7 @@
             {
                 foreach (var player in astTeam.Players)
                 {
-                    await this.playerService.RemoveAllStarTeam(player.FirstName + " " + player.LastName, allStarTeamId);
+                    //await this.playerService.RemoveAllStarTeam(player.FirstName + " " + player.LastName, allStarTeamId);
                 }
             }
 
