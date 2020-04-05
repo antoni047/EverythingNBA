@@ -7,6 +7,7 @@
     using EverythingNBA.Services.Implementations;
     using EverythingNBA.Services.Models.GameStatistic;
     using EverythingNBA.Models;
+    using System.Linq;
 
     public class GameStatisticServiceTests
     {
@@ -107,6 +108,33 @@
             Assert.Equal(gameStatistic.MinutesPlayed, gameStatDetails.MinutesPlayed);
         }
 
+        [Fact]
+        public async Task AddGameStatisticShouldAddStatisticToDatabase()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
 
+            var gameStatisticService = new GameStatisticService(db, mapper);
+
+            var season = Seeding.CreateUnfinishedSeason();
+            db.Seasons.Add(season);
+            var teamHost = Seeding.CreateTeam();
+            var team2 = Seeding.CreateTeam();
+            db.Teams.Add(teamHost);
+            db.Teams.Add(team2);
+            var game = Seeding.CreateFinishedGame(season.Id, teamHost, team2, 120, 100);
+            db.Games.Add(game);
+            var player = Seeding.CreatePlayer(teamHost.Id);
+            db.Players.Add(player);
+            await db.SaveChangesAsync();
+
+
+            await gameStatisticService.AddAsync(game.Id, player.Id, 36, 20, 10, 5, 1, 1, 3, 3, 4, 4, 15, 15);
+
+
+            Assert.True(db.GameStatistics.Count() == 1);
+            Assert.Equal(game.Id, db.GameStatistics.First().GameId);
+            Assert.Equal(player.Id, db.GameStatistics.First().PlayerId);
+        }
     }
 }

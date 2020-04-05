@@ -7,6 +7,8 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
+    using System.Linq;
+    using Newtonsoft.Json;
 
     public class SeasonServiceTests
     {
@@ -180,6 +182,33 @@
 
             var date = new DateTime(25 / 10 / 2019);
             Assert.True(DateTime.Compare(date, startDate) == 0);
+        }
+
+        [Fact]
+        public async Task AddSeasonShouldAddSeasonToDatabase()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var seasonService = new SeasonService(db, mapper);
+
+            var team = Seeding.CreateTeam();
+            db.Teams.Add(team);
+            db.SaveChanges();
+            var season = new Season
+            {
+                Id = 1,
+                GamesPlayed = 82,
+                SeasonEndDate = new DateTime(25 / 04 / 2020),
+                SeasonStartDate = new DateTime(25 / 10 / 2019),
+                TitleWinnerId = 1,
+                Year = 2020,
+            };
+
+            await seasonService.AddAsync(2020, team.Name, 82);
+
+
+            Assert.True(db.Seasons.Count() == 1);
         }
     }
 }

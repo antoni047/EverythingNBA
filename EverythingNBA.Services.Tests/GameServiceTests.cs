@@ -3,9 +3,11 @@
     using EverythingNBA.Services.Implementations;
     using EverythingNBA.Services.Models.Game;
     using Newtonsoft.Json;
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
+    using System.Linq;
 
     public class GameServiceTests
     {
@@ -16,7 +18,7 @@
             var mapper = AutomapperSingleton.Mapper;
 
             var gameService = new GameService(db, mapper);
-            
+
             var season = Seeding.CreateUnfinishedSeason();
             db.Seasons.Add(season);
             var teamHost = Seeding.CreateTeam();
@@ -78,7 +80,7 @@
                 Venue = teamHost.Venue
             };
             var fakeGames = new List<GameDetailsServiceModel>() { fakeGame1, fakeGame2 };
-           
+
 
 
             var games = await gameService.GetAllGamesBetweenTeamsAsync(teamHost.Name, team2.Name);
@@ -164,7 +166,7 @@
         }
 
         [Fact]
-        public async Task GetGameOverviewShouldReturnCorrectGameAndData()
+        public async Task EditGameShouldSetCorrectlyNewValues()
         {
             var db = InMemoryDatabase.Get();
             var mapper = AutomapperSingleton.Mapper;
@@ -199,6 +201,81 @@
 
             Assert.Equal(121, game.TeamHostPoints);
             Assert.Equal(111, game.Team2Points);
+        }
+
+        [Fact]
+        public async Task GetGamesOnDateShouldReturnCorrectGames()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var gameService = new GameService(db, mapper);
+
+            var season = Seeding.CreateUnfinishedSeason();
+            db.Seasons.Add(season);
+            var teamHost = Seeding.CreateTeam();
+            var team2 = Seeding.CreateTeam();
+            db.Teams.Add(teamHost);
+            db.Teams.Add(team2);
+            var game = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 04));
+            var game2 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 05));
+            db.Games.Add(game);
+            db.Games.Add(game2);
+            await db.SaveChangesAsync();
+
+
+            var games = await gameService.GetGamesOnDateAsync("04/04/2020");
+
+
+            Assert.Equal(1, games.Count);
+            Assert.Equal("04/04/2020", games.First().Date);
+        }
+
+        [Fact]
+        public async Task AddGameShouldAddGameToDatabase()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var gameService = new GameService(db, mapper);
+
+            var season = Seeding.CreateUnfinishedSeason();
+            db.Seasons.Add(season);
+            var teamHost = Seeding.CreateTeam();
+            var team2 = Seeding.CreateTeam();
+            db.Teams.Add(teamHost);
+            db.Teams.Add(team2);
+
+
+            await gameService.AddGameAsync(season.Id, teamHost.Id, team2.Id, 120, 100, "2020-04-04", true);
+
+
+            Assert.True(db.Games.Count() == 1);
+        }
+
+        [Fact]
+        public async Task DeleteGameShouldRemoveGameFromDatabase()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var gameService = new GameService(db, mapper);
+
+            var season = Seeding.CreateUnfinishedSeason();
+            db.Seasons.Add(season);
+            var teamHost = Seeding.CreateTeam();
+            var team2 = Seeding.CreateTeam();
+            db.Teams.Add(teamHost);
+            db.Teams.Add(team2);
+            var game = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 04));
+            db.Games.Add(game);
+            await db.SaveChangesAsync();
+
+
+            await gameService.DeleteGameAsync(game.Id);
+
+
+            Assert.True(db.Games.Count() == 0);
         }
     }
 }

@@ -108,6 +108,25 @@
             return gameObj;
         }
 
+        public static Game CreateGameOnDate(int seasonId, Team teamHost, Team team2, DateTime date)
+        {
+            var random = new Random();
+
+            var gameObj = new Game
+            {
+                Id = ++gameId,
+                SeasonId = seasonId,
+                Date = date,
+                TeamHost = teamHost,
+                Team2 = team2,
+                IsFinished = false,
+                TeamHostPoints = 0,
+                Team2Points = 0,
+            };
+
+            return gameObj;
+        }
+
         public static GameStatistic CreateGameStatistic(int playerId, int gameId)
         {
             var random = new Random();

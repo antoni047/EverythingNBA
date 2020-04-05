@@ -5,7 +5,7 @@
     using EverythingNBA.Services.Models.Game;
     using EverythingNBA.Services.Models.Series;
     using Newtonsoft.Json;
-    using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
@@ -150,6 +150,33 @@
 
 
             Assert.Equal(1, series.Team2GamesWon);
+        }
+
+        [Fact]
+        public async Task AddSeriesShouldAddSeriesToDatabase()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var seriesService = new SeriesService(db, mapper);
+
+            var team1 = Seeding.CreateTeam();
+            var team2 = Seeding.CreateTeam();
+            var season = Seeding.CreateFinishedSeason(team1.Id, 2019);
+            var playoff = Seeding.CreatePlayoff(season.Id);
+            db.Seasons.Add(season);
+            db.Teams.Add(team1);
+            db.Teams.Add(team2);
+            db.Playoffs.Add(playoff);
+            await db.SaveChangesAsync();
+
+
+            await seriesService.AddSeriesAsync(playoff.Id, team1.Name, team2.Name, 4, 0, null, null, 
+                null, null, null, null, null, "Western", "QuarterFinal", 1, 1, 8);
+
+
+            Assert.True(db.Series.Count() == 1);
+            Assert.True(db.Series.First().PlayoffId == playoff.Id);
         }
     }
 }

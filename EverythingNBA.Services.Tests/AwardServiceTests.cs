@@ -6,6 +6,7 @@
     using Xunit;
     using EverythingNBA.Services.Implementations;
     using EverythingNBA.Services.Models.Award;
+    using System.Linq;
 
     public class AwardServiceTests
     {
@@ -154,5 +155,37 @@
             Assert.Equal(player.FirstName + " " + player.LastName, awardModel.Winner);
             Assert.Equal(team.Name, awardModel.WinnerTeam);
         }
+
+        [Fact]
+        public async Task AddAwardShouldAddAwardToDatabase()
+        {
+            var db = InMemoryDatabase.Get();
+
+            var team = Seeding.CreateTeam();
+            var season = Seeding.CreateFinishedSeason(team.Id, 2020);
+            var player = Seeding.CreatePlayer(team.Id);
+            var player2 = Seeding.CreatePlayer(team.Id);
+            team.Players.Add(player);
+            team.Players.Add(player2);
+            var award = Seeding.CreateAward(player.Id, team.Name, season.Id, 2020);
+            //player.Awards.Add(award);
+            db.Players.Add(player);
+            db.Players.Add(player2);
+            db.Teams.Add(team);
+            db.Seasons.Add(season);
+            await db.SaveChangesAsync();
+
+            var awardService = new AwardService(db);
+
+
+
+            await awardService.AddAwardAsync("MVP", 2020, player.FirstName + " " + player.LastName, team.Name);
+
+
+            
+            Assert.True(db.Awards.Count() == 1);
+            Assert.True(db.Awards.First().Name.ToString() == "MVP");
+        }
+        
     }
 }

@@ -8,6 +8,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Xunit;
+    using System.Linq;
 
 
     public class SeasonStatisticServiceTests
@@ -96,6 +97,28 @@
             var winPercentage = await seasonStatService.GetWinPercentageAsync(seasonStat.Id);
 
             Assert.True(winPercentage == fakeWinPercentage);
+        }
+
+        [Fact]
+        public async Task AddSeasonStatisticShouldAddStatisticToDatabase()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var seasonStatService = new SeasonStatisticService(db, mapper);
+
+            var team = Seeding.CreateTeam();
+            var season = Seeding.CreateFinishedSeason(team.Id, 2019);
+            db.Seasons.Add(season);
+            db.Teams.Add(team);
+            await db.SaveChangesAsync();
+
+
+            await seasonStatService.AddAsync(season.Id, team.Id, 50, 32);
+
+
+            Assert.True(db.SeasonStatistics.Count() == 1);
+            Assert.True(db.SeasonStatistics.First().SeasonId == season.Id);
         }
     }
 }
