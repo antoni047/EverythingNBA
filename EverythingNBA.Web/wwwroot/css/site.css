@@ -230,6 +230,14 @@ btn-light {
     border-left: 2px solid black
 }
 
+.playoff-team-name {
+    text-decoration: none;
+    color: black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 19px;
+}
+
 /*All Star Teams*/
 
 .AST-title{
