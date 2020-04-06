@@ -156,13 +156,6 @@
             var gameId = await this.gameService.AddGameAsync(season.SeasonId, teamHost.Id, team2.Id, inputModel.TeamHostPoints,
                 inputModel.Team2Points, inputModel.Date, inputModel.IsFinished, false);
 
-            var host = await this.teamService.GetTeamDetailsAsync(inputModel.TeamHostName, year);
-            var dos = await this.teamService.GetTeamDetailsAsync(inputModel.Team2Name, year);
-
-            await this.seasonService.AddGameAsync(season.SeasonId, gameId);
-            await this.teamService.AddGameAsync(gameId, teamHost.Id);
-            await this.teamService.AddGameAsync(gameId, team2.Id);
-
             if (inputModel.IsFinished == true)
             {
                 return RedirectToAction("Results", new { year});
