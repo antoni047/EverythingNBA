@@ -66,6 +66,8 @@
 
             var seasonId = await this.seasonService.AddAsync(season.Year, season.TitleWinnerName, season.GamesPlayed);
 
+            await this.seasonService.CreateInitialSeasonStatistics(seasonId);
+
             var playoffId = await this.playoffService.AddPlayoffAsync(seasonId);
 
             await this.playoffService.SetStartingSeries(playoffId);

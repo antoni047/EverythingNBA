@@ -259,7 +259,6 @@
 
             var year = this.GetSeasonYear(DateTime.ParseExact(game.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture));
             var season = await this.seasonService.GetDetailsByYearAsync(year);
-            await this.seasonService.RemoveGameAsync(season.SeasonId, model.Id);
 
             var teamHostName = this.GetFullTeamName(game.TeamHostShortName);
             var team2Name = this.GetFullTeamName(game.Team2ShortName);

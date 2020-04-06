@@ -207,6 +207,26 @@
             return await this.db.Seasons.Where(s => s.Id == seasonId).Select(s => s.SeasonEndDate).FirstOrDefaultAsync();
         }
 
+        public async Task CreateInitialSeasonStatistics(int seasonId)
+        {
+            var teams = await this.db.Teams.ToListAsync();
+
+            foreach (var team in teams)
+            {
+                var statistic = new SeasonStatistic
+                {
+                    SeasonId = seasonId,
+                    Team = team,
+                    Wins = 0,
+                    Losses = 0,
+                };
+
+                this.db.SeasonStatistics.Add(statistic);
+            }
+
+            await this.db.SaveChangesAsync();
+        }
+
         private async Task<List<AllStarTeam>> GetAllStarTeams(int seasonId)
         {
             var season = await this.db.Seasons

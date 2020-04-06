@@ -29,5 +29,7 @@
         Task<DateTime> GetSeasonStartDateAsync(int seasonId);
 
         Task<DateTime> GetSeasonEndDateAsync(int seasonId);
+
+        Task CreateInitialSeasonStatistics(int seeasonId);
     }
 }

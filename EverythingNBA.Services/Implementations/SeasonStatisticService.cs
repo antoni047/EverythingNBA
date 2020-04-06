@@ -97,6 +97,11 @@
             var statistic = await this.db.SeasonStatistics.Where(ss => ss.Id == seasonStatisticId).FirstOrDefaultAsync();
             var season = await this.db.Seasons.Where(ss => ss.Id == statistic.SeasonId).FirstOrDefaultAsync();
 
+            if (season.GamesPlayed == 0)
+            {
+                return "0";
+            }
+
             double result = ((double)statistic.Wins / (double)season.GamesPlayed) * 100;
 
             return (result / 100).ToString(".000");
