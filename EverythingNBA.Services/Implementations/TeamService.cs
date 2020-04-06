@@ -523,12 +523,14 @@
 
         public async Task<ICollection<TeamListingSerivceModel>> GetAllTeamsAsync()
         {
-            var teams = await this.db.Teams.OrderBy(t => t.Name).ToListAsync();
+            var teams = await this.db.Teams.Include(t => t.SmallImage).OrderBy(t => t.Name).ToListAsync();
 
             var models = new List<TeamListingSerivceModel>();
             foreach (var team in teams)
             {
-                models.Add(mapper.Map<TeamListingSerivceModel>(team));
+                var model = mapper.Map<TeamListingSerivceModel>(team);
+                model.Image = team.SmallImage != null ? team.SmallImage.ImageURL : "";
+                models.Add(model);
             }
 
             return models;
