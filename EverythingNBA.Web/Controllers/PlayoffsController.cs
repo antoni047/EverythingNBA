@@ -21,6 +21,7 @@
         public async Task<IActionResult> PlayoffBracket(int year)
         {
             var model = await this.playoffService.GetDetailsBySeasonAsync(year);
+            ViewBag.Year = year;
 
             return View(model);
         }

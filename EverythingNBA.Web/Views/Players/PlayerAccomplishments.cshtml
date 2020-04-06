@@ -1,7 +1,13 @@
 ﻿@using EverythingNBA.Services.Models.Player
 @model PlayerAccomplishmentsListingServiceModel
 
-<div class="container-fluid row m-3 p-0" >
+@{
+    ViewData["Title"] = $"{ViewBag.Name} Accomplishments";
+}
+
+<h3 class="m-3 p-0">@ViewBag.Name Accomplishments</h3>
+
+<div class="container-fluid row m-3 p-0">
     <div class="col-md-6">
         <table class="player-awards-table table border">
             <thead>

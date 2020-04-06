@@ -1,6 +1,12 @@
 ﻿@using EverythingNBA.Services.Models.Series
 @model GetSeriesDetailsServiceModel
 
+@{
+    var team1 = Model.Team1Name.Split(" ").Last();
+    var team2 = Model.Team2Name.Split(" ").Last();
+    ViewData["Title"] = $"{team1} - {team2} Series";
+}
+
 <h3 class=" m-1 w-100 text-center p-3 border-dark border-bottom">@Model.Team1Name - @Model.Team2Name, @Model.Team1GamesWon - @Model.Team2GamesWon, @Model.Conference Conference @Model.Stage</h3>
 @{
     var counter = 0;
@@ -21,7 +27,7 @@
                             <h4 class="col-md-2 m-0 p-0">-</h4>
                             <h4 class="col-md-5 px-1">@game.Team2ShortName</h4>
                         </div>
-    
+
                         <div class="container-fluid row px-1 text-center">
                             @if (game.Team2Points < game.TeamHostPoints)
                             {
@@ -37,9 +43,10 @@
                             }
                         </div>
                     </div>
-    
+
                     <a class="col-md-1 p-0" asp-controller="Games" asp-action="GameDetails" asp-route-gameId="@game.Id">
-                        <i class="fas fa-chevron-right"></i></a>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
                 </div>
             }
         }

@@ -1,6 +1,10 @@
 ﻿@using EverythingNBA.Services.Models.Player
 @model PlayerDetailsServiceModel
 
+@{
+    ViewData["Title"] = $"{Model.FirstName} {Model.LastName}";
+}
+
 <div class="container-fluid row m-3 player-details">
     <div class="col-md-3 h-100 pr-0">
         @await Html.PartialAsync("_PlayerBioPartial", Model)

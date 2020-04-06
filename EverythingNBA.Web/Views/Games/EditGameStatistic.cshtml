@@ -1,6 +1,10 @@
 ﻿@using EverythingNBA.Web.Models.Games
 @model GameStatisticInputModel
 
+@{
+    ViewData["Title"] = $"Edit Game Statistics";
+}
+
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Edit Game Statistics</h3>
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">@ViewBag.Name - @ViewBag.Team1 vs @ViewBag.Team2 @ViewBag.Date</h3>
 

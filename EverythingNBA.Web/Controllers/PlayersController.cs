@@ -47,8 +47,10 @@
         [Route("[controller]/[action]/{playerId:int}")]
         public async Task<IActionResult> PlayerAccomplishments(int playerId)
         {
+            var player = await this.playerService.GetPlayerDetailsAsync(playerId);
             var playerAccomplishments = await this.playerService.GetPlayerAccomplishentsAsync(playerId);
 
+            ViewBag.Name = player.FirstName + " " + player.LastName;
             return this.View(playerAccomplishments);
         }
 

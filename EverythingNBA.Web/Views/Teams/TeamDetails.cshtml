@@ -1,6 +1,10 @@
 ﻿@using EverythingNBA.Services.Models.Team
 @model GetTeamDetailsServiceModel
 
+@{
+    ViewData["Title"] = $"{Model.Name}";
+}
+
 <div class="container-fluid row m-3">
     <div class="col-md-3 p-0">
         @await Html.PartialAsync("_TeamBioPartial", Model)

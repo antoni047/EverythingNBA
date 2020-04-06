@@ -1,6 +1,10 @@
 ﻿@using EverythingNBA.Services.Models.Award
 @model ICollection<AwardDetailsServiceModel>
 
+@{
+    ViewData["Title"] = $"{Model.FirstOrDefault().Year} Awards";
+}
+
 <div class="mx-5 w-50" style="margin: auto;">
     <table class="m-5 table table-bordered table-hover awards-table">
         <thead class="awards-table-head">

@@ -1,6 +1,12 @@
 ﻿@using EverythingNBA.Services.Models.Game
 @model ICollection<GameDetailsServiceModel>
 
+@{
+    var team1 = Model.First().TeamHostShortName;
+    var team2 = Model.First().Team2ShortName;
+    ViewData["Title"] = $"{team1} - {team2}";
+}
+
 <div class="container-fluid m-3 p-0 border-top">
     @foreach (var year in ViewBag.yearsList)
     {

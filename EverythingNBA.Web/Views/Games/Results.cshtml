@@ -1,8 +1,10 @@
 ﻿@using EverythingNBA.Services.Models.Game
 @model ICollection<GameDetailsServiceModel>
-@{ 
+
+@{
     var i = 0;
     var date = DateTime.UtcNow;
+    ViewData["Title"] = $"{Model.First().SeasonYear} Results";
 }
 
 <div class="container-fluid m-3 p-0 border-top">

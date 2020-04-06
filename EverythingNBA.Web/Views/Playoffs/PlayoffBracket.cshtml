@@ -1,6 +1,10 @@
 ﻿@using EverythingNBA.Services.Models.Playoff
 @model GetPlayoffServiceModel
 
+@{
+    ViewData["Title"] = $"{ViewBag.Year} Playoff";
+}
+
 <div class="container-fluid row">
     <table class="mx-4 mt-2 playoff-bracket col-md-7" border="0" cellpadding="0" cellspacing="0" style="margin:1em 2em 1em 1em;">
         <tbody>

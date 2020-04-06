@@ -1,15 +1,18 @@
 ﻿@using EverythingNBA.Web.Models.Seasons
-
 @model SeasonDetailsInputModel
 
+@{
+    ViewData["Title"] = $"Edit {Model.Year} Season";
+}
+
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Edit Season</h3>
-
-
 
 @if (User.Identity.IsAuthenticated)
 {
     <div class="m-3 form-group player-form">
-        <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Seasons" asp-action="Edit" method="post">
+        <form class="m-3 form-group" enctype="multipart/form-data" asp-control@{
+              ViewData["Title"]="Home" ;
+              }ler="Seasons" asp-action="Edit" method="post">
 
             <input type="hidden" class="form-control" asp-for="Id">
 

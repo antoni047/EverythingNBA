@@ -1,8 +1,11 @@
 ﻿@using EverythingNBA.Web.Models.Series
 @model SeriesGameInputModel
 
-<h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Add Game</h3>
+@{
+    ViewData["Title"] = "Add Series Game";
+}
 
+<h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Add Game</h3>
 
 @if (User.Identity.IsAuthenticated)
 {

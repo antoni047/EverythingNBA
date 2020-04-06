@@ -1,8 +1,11 @@
 ﻿@using EverythingNBA.Web.Models.Teams
 @model TeamInputModel
 
-<h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Delete Team</h3>
+@{
+    ViewData["Title"] = "Delete Team";
+}
 
+<h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Delete Team</h3>
 
 @if (User.Identity.IsAuthenticated)
 {

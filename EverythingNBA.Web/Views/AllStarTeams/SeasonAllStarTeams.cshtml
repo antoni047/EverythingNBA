@@ -1,6 +1,10 @@
 ﻿@using EverythingNBA.Services.Models.AllStarTeam;
 @model ICollection<GetAllStarTeamServiceModel>
 
+@{
+    ViewData["Title"] = $"{Model.FirstOrDefault().Year} All Star Teams";
+}
+
 <h2 class="container-fluid ml-3 AST-title">@Model.FirstOrDefault().Year All Star Teams</h2>
 
 <div class="container row mx-auto text-center mb-3" style="margin-top: 4rem">
