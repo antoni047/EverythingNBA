@@ -24,7 +24,7 @@
             this.mapper = mapper;
         }
 
-        public async Task<int> AddGameAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, string date, bool isFinished)
+        public async Task<int> AddGameAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, string date, bool isFinished, bool isPlayoffGame)
         {
             var gameObj = new Game
             {
@@ -34,7 +34,8 @@
                 TeamHostPoints = teamHostPoints,
                 Team2Points = team2Points,
                 Date = DateTime.ParseExact(date, "yyyy-MM-dd", null),
-                IsFinished = isFinished
+                IsFinished = isFinished,
+                IsPlayoffGame = isPlayoffGame,
             };
 
             this.db.Games.Add(gameObj);

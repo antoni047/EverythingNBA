@@ -122,6 +122,7 @@
                 IsFinished = false,
                 TeamHostPoints = 0,
                 Team2Points = 0,
+                IsPlayoffGame = false,
             };
 
             return gameObj;

@@ -9,6 +9,7 @@
         public Game()
         {
             this.PlayerStats = new HashSet<GameStatistic>();
+            
         }
 
         public int Id { get; set; }
@@ -32,6 +33,8 @@
 
         [Required]
         public DateTime Date { get; set; }
+
+        public bool IsPlayoffGame { get; set; } = false;
 
         public virtual ICollection<GameStatistic> PlayerStats{ get; set; }
     }

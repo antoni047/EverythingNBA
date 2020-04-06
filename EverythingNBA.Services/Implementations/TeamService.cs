@@ -542,8 +542,8 @@
                 .Where(t => t.Id == teamId)
                 .FirstOrDefaultAsync();
 
-            var homeGames = team.HomeGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true).ToList();
-            var awayGames = team.AwayGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true).ToList();
+            var homeGames = team.HomeGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true && g.IsPlayoffGame == false).ToList();
+            var awayGames = team.AwayGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true && g.IsPlayoffGame == false).ToList();
 
             return homeGames.Count() + awayGames.Count();
         }
@@ -561,8 +561,8 @@
 
             var gamesPlayed = new List<Game>();
 
-            gamesPlayed.AddRange(team.HomeGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true));
-            gamesPlayed.AddRange(team.AwayGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true));
+            gamesPlayed.AddRange(team.HomeGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true && g.IsPlayoffGame == false));
+            gamesPlayed.AddRange(team.AwayGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true && g.IsPlayoffGame == false));
 
             var lastTenGames = gamesPlayed.OrderByDescending(g => g.Date).Take(10).ToList();
 

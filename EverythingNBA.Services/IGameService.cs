@@ -9,7 +9,7 @@
 
     public interface IGameService
     {
-        Task<int> AddGameAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, string date, bool isFinished);
+        Task<int> AddGameAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, string date, bool isFinished, bool isPlayoffGame);
 
         Task<bool> DeleteGameAsync(int gameId);
 

@@ -24,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Seeding\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\EverythingNBA.Data\EverythingNBA.Data.csproj" />
     <ProjectReference Include="..\EverythingNBA.Services\EverythingNBA.Services.csproj" />
     <ProjectReference Include="..\EverythingNBA.Web\EverythingNBA.Web.csproj" />

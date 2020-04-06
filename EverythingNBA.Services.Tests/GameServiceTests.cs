@@ -247,7 +247,7 @@
             db.Teams.Add(team2);
 
 
-            await gameService.AddGameAsync(season.Id, teamHost.Id, team2.Id, 120, 100, "2020-04-04", true);
+            await gameService.AddGameAsync(season.Id, teamHost.Id, team2.Id, 120, 100, "2020-04-04", true, false);
 
 
             Assert.True(db.Games.Count() == 1);

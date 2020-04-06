@@ -154,7 +154,7 @@
             var team2 = await this.teamService.GetTeamDetailsAsync(inputModel.Team2Name, year);
 
             var gameId = await this.gameService.AddGameAsync(season.SeasonId, teamHost.Id, team2.Id, inputModel.TeamHostPoints,
-                inputModel.Team2Points, inputModel.Date, inputModel.IsFinished);
+                inputModel.Team2Points, inputModel.Date, inputModel.IsFinished, false);
 
             var host = await this.teamService.GetTeamDetailsAsync(inputModel.TeamHostName, year);
             var dos = await this.teamService.GetTeamDetailsAsync(inputModel.Team2Name, year);

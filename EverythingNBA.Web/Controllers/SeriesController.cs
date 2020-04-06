@@ -113,10 +113,10 @@
         {
             var series = await this.seriesService.GetSeriesOverview(seriesId);
 
-            //if (series == null)
-            //{
-            //    return NotFound();
-            //}
+            if (series == null)
+            {
+                return NotFound();
+            }
 
             //var model = new SeriesInputModel()
             //{
@@ -148,7 +148,7 @@
             var team2 = await this.teamService.GetTeamAsync(model.Team2Name);
 
             var gameId = await this.gameServce.AddGameAsync((int)playoff.SeasonId, team1.Id, team2.Id, model.TeamHostPoints, 
-                model.Team2Points, model.Date, model.IsFinished);
+                model.Team2Points, model.Date, model.IsFinished, true);
 
             await this.seriesService.AddGameAsync(model.SeriesId, gameId, model.GameNumber);
 
