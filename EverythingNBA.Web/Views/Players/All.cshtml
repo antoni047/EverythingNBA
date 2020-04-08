@@ -1,4 +1,5 @@
-﻿@model ICollection<string>
+﻿@using EverythingNBA.Web.Models.Players
+@model AllPlayersViewModel
 
 @{
     ViewData["Title"] = "Players";
@@ -7,7 +8,19 @@
 <div class="p-3 m-0">
     <h2 class="p-2">All Players</h2>
 
-    @foreach (var player in Model)
+    <div class="row ml-3 mb-3">
+        @if (!Model.PreviousPageIsDisabled)
+        {
+            <a class="ml-3" role="button" href="/Players/All?page=@Model.PreviousPage"><i class="fas fa-chevron-left"></i></a>
+        }
+
+        @if (!Model.NextPageIsDisabled)
+        {
+            <a class="ml-3" role="button" href="/Players/All?page=@Model.NextPage"><i class="fas fa-chevron-right"></i></a>
+        }
+    </div>
+
+    @foreach (var player in Model.PlayerNames)
     {
         <h3><a class="ml-3 mb-1 container-fluid w-100 player-name" asp-controller="Players" asp-action="PlayerDetails" asp-route-playerName="@player">@player</a></h3>
     }

@@ -13,7 +13,9 @@
 
         Task<bool> DeletePlayerAsync(int playerId);
 
-        Task<ICollection<string>> GetAllPlayersAsync();
+        Task<ICollection<string>> GetAllPlayersAsync(int page = 1);
+
+        Task<int> TotalPlayers();
 
         Task<PlayerDetailsServiceModel> GetPlayerDetailsAsync(int id);
 

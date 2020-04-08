@@ -17,6 +17,7 @@
 
     public class PlayerService : IPlayerService
     {
+        private const int PlayersPageSize = 25;
         private readonly EverythingNBADbContext db;
         private readonly IImageService imageService;
         private readonly IMapper mapper;
@@ -76,21 +77,17 @@
             return true;
         }
 
-        public async Task<ICollection<string>> GetAllPlayersAsync()
+        public async Task<ICollection<string>> GetAllPlayersAsync(int page = 1)
         {
-            var allPlayers = await this.db.Players.ToListAsync();
-
-            var names = new List<string>();
-
-            foreach (var player in allPlayers.OrderBy(p => p.FirstName))
-            {
-                var name = player.FirstName + " " + player.LastName;
-
-                names.Add(name);
-            }
-
-            return names;
+             return await this.db.Players
+                .OrderBy(p => p.FirstName)
+                .Select(p => p.FirstName + " " + p.LastName)
+                .Skip((page - 1) * PlayersPageSize)
+                .Take(PlayersPageSize)
+                .ToListAsync();
         }
+
+        public async Task<int> TotalPlayers() => await this.db.Players.CountAsync();
 
         public async Task<PlayerDetailsServiceModel> GetPlayerDetailsAsync(int id)
         {

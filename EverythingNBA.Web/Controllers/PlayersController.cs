@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using AutoMapper;
+    using System.Linq;
 
     using Services;
     using Services.Models.Player;
@@ -22,11 +23,20 @@
             this.teamService = teamService;
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int page = 1)
         {
-            var players = await this.playerService.GetAllPlayersAsync();
+            var players = await this.playerService.GetAllPlayersAsync(page);
 
-            return this.View(players);
+            var totalPlayers = await this.playerService.TotalPlayers();
+
+            var model = new AllPlayersViewModel
+            {
+                PlayerNames = players,
+                Total = totalPlayers,
+                CurrentPage = page,
+            };
+
+            return this.View(model);
         }
 
         [Route("[controller]/[action]/{playerId:int}")]
