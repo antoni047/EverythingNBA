@@ -311,12 +311,23 @@ btn-light {
 
 /*Player*/
 .player-bio {
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    border: 1px solid black;
+    background: #8b0000;
+}
+
+.player-recent-games {
     color: black;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 18px;
     border: 1px solid black;
+    background: #ebebeb;
 }
+
 .player-link {
     text-decoration: none;
     background-color: none;
@@ -329,12 +340,13 @@ btn-light {
 }
 
 .player-main-info {
-    color: black;
+    color: white;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     font-size: 22px;
     border: 1px solid black;
     border-top: 2px solid black;
+    background: #8b0000;
 }
 
 .game-link {
@@ -347,7 +359,13 @@ btn-light {
 }
 
 .player-statistics-head{
-    background-color: #ebebeb
+    background-color: #00008b;
+    color: white;
+}
+
+.player-statistics-table-head {
+    background-color: black;
+    color: white;
 }
 
 .player-statistics-table{

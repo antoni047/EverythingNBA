@@ -2,7 +2,7 @@
 @model PlayerDetailsServiceModel
 
 <table class="table table-bordered player-statistics-table">
-    <thead class="player-statistics-head">
+    <thead class="player-statistics-table-head">
         <tr class="text-center player-statistics-table">
             <th style="text-align: left; border: 1px solid black;"> Statistics</th>
             <th style="border: 1px solid black;" title="Points per game">PPG</th>
@@ -16,7 +16,7 @@
         </tr>
     </thead>
     <tr class="text-center player-statistics-table">
-        <td style="text-align: left; border: 1px solid black;">Current Season</td>
+        <td style="text-align: left; background: black; color:white">Current Season</td>
         <td style="border: 1px solid black;">@Model.SeasonStatistics.AveragePoints</td>
         <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageAssists</td>
         <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageRebounds</td>
@@ -27,7 +27,7 @@
         <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageFreeThrowPercentage%</td>
     </tr>
     <tr class="text-center player-statistics-table">
-        <td style="text-align: left; border: 1px solid black;">Career</td>
+        <td style="text-align: left; background: black; color:white">Career</td>
         <td style="border: 1px solid black;">@Model.CareerStatistics.AveragePoints</td>
         <td style="border: 1px solid black;">@Model.CareerStatistics.AverageAssists</td>
         <td style="border: 1px solid black;">@Model.CareerStatistics.AverageRebounds</td>

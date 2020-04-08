@@ -8,11 +8,17 @@
 <div class="text-center player-bio py-3 px-2">Weight: @Model.Weight kg</div>
 <div class="text-center player-bio py-3 px-2">Rookie Year: @Model.RookieYear</div>
 <div class="text-center p-0 player-bio py-3 px-2">
-    <a class="player-link p-0 m-0" href="@Model.TwitterLink">Twitter</a>
+    <a class="player-link p-0 m-0 text-white" href="@Model.TwitterLink">
+        <span style="display: block;">Twitter</span>
+    </a>
 </div>
 <div class="text-center p-0 player-bio py-3 px-2">
-    <a class=" player-link p-0 m-0" href="@Model.InstagramLink">Instagram</a>
+    <a class="player-link p-0 m-0 text-white" href="@Model.InstagramLink">
+        <span style="display: block;">Instagram</span>
+    </a>
 </div>
 <div class="w-100 text-center player-bio py-3 px-2">
-    <a class="player-link w-100 p-0 m-0" href="" role="button">Awards</a>
+    <a class="player-link p-0 m-0 text-white" href="/Players/PlayerAccomplishments/@Model.Id">
+        <span style="display: block;">Awards</span>
+    </a>
 </div>

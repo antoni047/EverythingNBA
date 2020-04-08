@@ -12,7 +12,7 @@
         <div class="col-md-2" style="border-bottom: 2px solid black"></div>
         <div class="container-fluid game-title text-center pt-2 mx-0 px-0 col-md-8">@Model.TeamHostName &#160; : &#160; @Model.Team2Name</div>
         <div class="pl-3 pt-1 col-md-2 flex-row-reverse" style="border-bottom: 2px solid black">
-            <a class="p-1 m-0 btn btn-secondary game-link text-center"
+            <a class="p-1 mb-3 mx-0 mt-0 btn btn-secondary game-link text-center"
                href="/Games/HeadToHead/@Model.TeamHostName&@Model.Team2Name"
                role="button">HeadToHead</a>
             @if (User.Identity.IsAuthenticated)
