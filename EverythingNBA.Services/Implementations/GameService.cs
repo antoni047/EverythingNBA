@@ -284,6 +284,66 @@
             return model;
         }
 
+        public async Task<GameListingServiceModel> GetFixturesAsync(int seasonId, int page = 1)
+        {
+            var season = await this.db.Seasons.FindAsync(seasonId);
+            var seasonGames = await this.GetSeasonGamesAsync(season.Id);
+
+            var totalDays = (new DateTime(season.Year, 7, 1) - DateTime.Now).TotalDays;
+            var dates = new List<DateTime>();
+
+            for (int i = 0; i < (int)totalDays; i++)
+            {
+                dates.Add(DateTime.UtcNow.AddDays(i));
+            }
+
+            var gamesNotPlayed = seasonGames.Where(g => g.IsFinished == false)
+                .OrderBy(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .Skip((page - 1) * 10)
+                .Take(10)
+                .ToList();
+
+            var model = new GameListingServiceModel
+            {
+                Games = gamesNotPlayed,
+                Dates = dates.Skip((page - 1) * 10).Take(10).ToList(),
+                Total = dates.Count(),
+                CurrentPage = page,
+            };
+
+            return model;
+        }
+
+        public async Task<GameListingServiceModel> GetResultsAsync(int seasonId, int page = 1)
+        {
+            var season = await this.db.Seasons.FindAsync(seasonId);
+            var seasonGames = await this.GetSeasonGamesAsync(season.Id);
+
+            var totalDays = (DateTime.UtcNow - season.SeasonStartDate).TotalDays;
+            var dates = new List<DateTime>();
+
+            for (int i = 0; i < (int)totalDays; i++)
+            {
+                dates.Add(DateTime.UtcNow.AddDays(-i));
+            }
+
+            var gamesPlayed = seasonGames.Where(g => g.IsFinished == true)
+                .OrderBy(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture))
+                .Skip((page - 1) * 10)
+                .Take(10)
+                .ToList();
+
+            var model = new GameListingServiceModel
+            {
+                Games = gamesPlayed,
+                Dates = dates.Skip((page - 1) * 10).Take(10).ToList(),
+                Total = dates.Count(),
+                CurrentPage = page,
+            };
+
+            return model;
+        }
+
         public async Task EditGameAsync(GameDetailsServiceModel model, int gameId)
         {
             var game = await this.db.Games.FindAsync(gameId);

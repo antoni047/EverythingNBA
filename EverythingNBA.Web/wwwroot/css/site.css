@@ -436,6 +436,23 @@ btn-light {
     font-size: 28px;
 }
 
+.page-link {
+    color: #8b0000
+}
+
+.fa-chevron-right{
+    color: #8b0000
+}
+
+.fa-chevron-left {
+    color: #8b0000
+}
+
+.page-item.active .page-link {
+    background-color: #8b0000;
+    border-color: #8b0000;
+}
+
 
 
 

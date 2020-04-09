@@ -34,19 +34,15 @@
         }
 
         [Route("[controller]/[action]/{year:int}")]
-        public async Task<IActionResult> Results(int year)
+        public async Task<IActionResult> Results(int year, int page = 1)
         {
             var season = await this.seasonService.GetDetailsByYearAsync(year);
-           
-            var seasonGames = await this.gameService.GetSeasonGamesAsync(season.SeasonId);
 
-            var results = seasonGames.Where(g => g.IsFinished == true).
-                OrderByDescending(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture)).ToList();
+            var model = await this.gameService.GetResultsAsync(season.SeasonId, page);
 
-            ViewBag.SeasonStartDate = await this.seasonService.GetSeasonStartDateAsync(season.SeasonId);
-            ViewBag.SeasonEndDate = await this.seasonService.GetSeasonEndDateAsync(season.SeasonId);
+            ViewBag.Year = year;
 
-            return this.View(results);
+            return this.View(model);
         }
 
         public IActionResult CurrentResults()
@@ -56,20 +52,14 @@
             return RedirectToAction("Results", "Games", new { year });
         }
 
-        public async Task<IActionResult> Fixtures()
+        public async Task<IActionResult> Fixtures(int page = 1)
         {
             var year = this.GetCurrentSeasonYear();
             var season = await this.seasonService.GetDetailsByYearAsync(year);
 
-            var seasonGames = await this.gameService.GetSeasonGamesAsync(season.SeasonId);
+            var model = await this.gameService.GetFixturesAsync(season.SeasonId, page);
 
-            var gamesNotPlayed = seasonGames.Where(g => g.IsFinished == false)
-                .OrderBy(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture)).ToList();
-
-            ViewBag.SeasonStartDate = await this.seasonService.GetSeasonStartDateAsync(season.SeasonId);
-            ViewBag.SeasonEndDate = await this.seasonService.GetSeasonEndDateAsync(season.SeasonId);
-
-            return this.View(gamesNotPlayed);
+            return this.View(model);
         }
 
         [Route("[controller]/[action]/{gameId:int}")]

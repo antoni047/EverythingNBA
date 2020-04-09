@@ -1,32 +1,57 @@
 ﻿@using EverythingNBA.Services.Models.Game
-@model ICollection<GameDetailsServiceModel>
+@model GameListingServiceModel
 
 @{
-    var i = 0;
-    var date = DateTime.UtcNow;
-    ViewData["Title"] = $"{Model.First().SeasonYear} Results";
+    ViewData["Title"] = $"{ViewBag.Year} Results";
 }
 
-<div class="container-fluid m-3 p-0 border-top">
-    @while (date.AddDays(-i) > ViewBag.SeasonStartDate)
-    {
-        if (i == 6)
+    <div class="container-fluid m-3 p-0 border-top">
+        @foreach (var date in Model.Dates)
         {
-            break;
+            <div class="section-title ml-4 px-2 mt-1 text-center ">@date.DayOfWeek @date.Day/@date.Month</div>
+            <div class="container-fluid row m-0 p-4 border">
+                @if (!Model.Games.Where(g => g.Date.Split("/")[0] == date.Day.ToString()).Any())
+                {
+                    <h4 class="py-2 text-center ml-3 w-100">No Games</h4>
+                }
+                @foreach (var game in Model.Games.Where(g => g.Date.Split("/")[0] == date.Day.ToString()))
+                {
+                    @await Html.PartialAsync("_ResultsScoreboxesPartial", game)
+                }
+            </div>
         }
-        <div class="section-title ml-4 px-2 mt-1 text-center ">@date.AddDays(-i).DayOfWeek @date.AddDays(-i).Day/@date.AddDays(-i).Month</div>
-        <div class="container-fluid row m-0 p-4 border">
-            @if (!Model.Where(g => g.Date.Split("/")[0] == @date.AddDays(-i).Day.ToString()).Any())
-            {
-                <h4 class="py-2 text-center ml-3 w-100">No Games</h4>
-            }
-            @foreach (var game in Model.Where(g => g.Date.Split("/")[0] == @date.AddDays(-i).Day.ToString()))
-            {
-                @await Html.PartialAsync("_ResultsScoreboxesPartial", game)
-            }
-            @{
-                i++;
-            }
-        </div>
-    }
-</div>
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center my-3">
+                @if (!Model.PreviousPageIsDisabled)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="/Games/Results/@ViewBag.Year?page=@Model.PreviousPage" aria-label="Previous">
+                            <span aria-hidden="true"><i class="fa fa-chevron-left"></i></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                }
+                @for (int i = 1; i <= ((double)Model.Total) / 10; i++)
+                {
+                    if (i == Model.CurrentPage)
+                    {
+                        <li class="page-item active"><a class="page-link" href="/Games/Results/@ViewBag.Year?page=@i">@i</a></li>
+                    }
+                    else
+                    {
+                        <li class="page-item"><a class="page-link" href="/Games/Results/@ViewBag.Year?page=@i">@i</a></li>
+                    }
+                }
+                @if (!Model.NextPageIsDisabled)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="/Games/Results/@ViewBag.Year?page=@Model.NextPage" aria-label="Next">
+                            <span aria-hidden="true"><i class="fa fa-chevron-right"></i></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
