@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
     using Xunit;
     using System.Linq;
+    using EverythingNBA.Models;
 
     public class GameServiceTests
     {
@@ -276,6 +277,81 @@
 
 
             Assert.True(db.Games.Count() == 0);
+        }
+
+        [Fact]
+        public async Task GetFixturesShouldReturnOnlyNotFinishedUpcomingGames()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var gameService = new GameService(db, mapper);
+
+            var season = Seeding.CreateUnfinishedSeason();
+            db.Seasons.Add(season);
+            var teamHost = Seeding.CreateTeam();
+            var team2 = Seeding.CreateTeam();
+            db.Teams.Add(teamHost);
+            db.Teams.Add(team2);
+            var game = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 12));
+            db.Games.Add(game);
+            var game2 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 13));
+            db.Games.Add(game2);
+            var game4 = Seeding.CreateFinishedGame(season.Id, teamHost, team2, 120, 100);
+            db.Games.Add(game4);
+            var game3 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 25));
+            db.Games.Add(game3);
+            await db.SaveChangesAsync();
+
+
+            var fixtures = await gameService.GetFixturesAsync(season.Id);
+
+
+            Assert.True(fixtures.Games.Count == 2);
+            foreach (var gameFixture in fixtures.Games)
+            {
+                Assert.True(gameFixture.IsFinished == false);
+            }
+        }
+
+        [Fact]
+        public async Task GetResultsShouldReturnOnlyFinishedGames()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var gameService = new GameService(db, mapper);
+
+            var season = Seeding.CreateUnfinishedSeason();
+            db.Seasons.Add(season);
+            var teamHost = Seeding.CreateTeam();
+            var team2 = Seeding.CreateTeam();
+            db.Teams.Add(teamHost);
+            db.Teams.Add(team2);
+            var game = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 12));
+            var game2 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 10));
+            var game3= Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 09));
+            var game4 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 08));
+
+            db.Games.Add(game);
+            db.Games.Add(game2);
+            db.Games.Add(game4);
+            db.Games.Add(game3);
+
+            game2.IsFinished = true;
+            game3.IsFinished = true;
+            game4.IsFinished = true;
+            await db.SaveChangesAsync();
+
+
+            var results = await gameService.GetResultsAsync(season.Id);
+
+
+            Assert.True(results.Games.Count == 3);
+            foreach (var gameresult in results.Games)
+            {
+                Assert.True(gameresult.IsFinished = true);
+            }
         }
     }
 }

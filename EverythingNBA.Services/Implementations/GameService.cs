@@ -297,16 +297,18 @@
                 dates.Add(DateTime.UtcNow.AddDays(i));
             }
 
+            var datesList = dates.Skip((page - 1) * 10).Take(10).ToList();
+
             var gamesNotPlayed = seasonGames.Where(g => g.IsFinished == false)
                 .OrderBy(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture))
-                .Skip((page - 1) * 10)
-                .Take(10)
+                .Where(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture) >= datesList.First() 
+                        && DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture) <= datesList.Last())
                 .ToList();
 
             var model = new GameListingServiceModel
             {
                 Games = gamesNotPlayed,
-                Dates = dates.Skip((page - 1) * 10).Take(10).ToList(),
+                Dates = datesList,
                 Total = dates.Count(),
                 CurrentPage = page,
             };
@@ -327,16 +329,18 @@
                 dates.Add(DateTime.UtcNow.AddDays(-i));
             }
 
+            var datesList = dates.Skip((page - 1) * 10).Take(10).ToList();
+
             var gamesPlayed = seasonGames.Where(g => g.IsFinished == true)
                 .OrderBy(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture))
-                .Skip((page - 1) * 10)
-                .Take(10)
+                .Where(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture) <= datesList.First()
+                        && DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture) >= datesList.Last())
                 .ToList();
 
             var model = new GameListingServiceModel
             {
                 Games = gamesPlayed,
-                Dates = dates.Skip((page - 1) * 10).Take(10).ToList(),
+                Dates = datesList,
                 Total = dates.Count(),
                 CurrentPage = page,
             };

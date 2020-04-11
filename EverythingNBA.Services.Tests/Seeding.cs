@@ -77,7 +77,7 @@
             {
                 Id = ++gameId,
                 SeasonId = seasonId,
-                Date = DateTime.UtcNow.AddDays(random.Next(5, 80)),
+                Date = DateTime.UtcNow.AddDays(random.Next(-30, -5)),
                 TeamHost = teamHost,
                 Team2 = team2,
                 IsFinished = true,
