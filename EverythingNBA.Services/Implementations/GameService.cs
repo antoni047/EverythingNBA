@@ -24,7 +24,7 @@
             this.mapper = mapper;
         }
 
-        public async Task<int> AddGameAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, string date, bool isFinished, bool isPlayoffGame)
+        public async Task<string> AddGameAsync(int seasonId, int teamHostId, int team2Id, int teamHostPoints, int team2Points, string date, bool isFinished, bool isPlayoffGame)
         {
             var gameObj = new Game
             {
@@ -38,10 +38,15 @@
                 IsPlayoffGame = isPlayoffGame,
             };
 
+            if (this.db.Games.Contains(gameObj))
+            {
+                return "Game_already_exists" + " " + gameObj.Id;
+            }
+
             this.db.Games.Add(gameObj);
             await this.db.SaveChangesAsync();
 
-            return gameObj.Id;
+            return "Success" + " " + gameObj.Id;
         }
 
         public async Task<bool> DeleteGameAsync(int gameId)

@@ -147,12 +147,12 @@
             var team1 = await this.teamService.GetTeamAsync(model.TeamHostName);
             var team2 = await this.teamService.GetTeamAsync(model.Team2Name);
 
-            var gameId = await this.gameServce.AddGameAsync((int)playoff.SeasonId, team1.Id, team2.Id, model.TeamHostPoints, 
+            var game = await this.gameServce.AddGameAsync((int)playoff.SeasonId, team1.Id, team2.Id, model.TeamHostPoints, 
                 model.Team2Points, model.Date, model.IsFinished, true);
 
-            await this.seriesService.AddGameAsync(model.SeriesId, gameId, model.GameNumber);
+            await this.seriesService.AddGameAsync(model.SeriesId, int.Parse(game.Split(" ")[1]), model.GameNumber);
 
-            var winner = await this.gameServce.GetWinnerAsync(gameId);
+            var winner = await this.gameServce.GetWinnerAsync(int.Parse(game.Split(" ")[1]));
             await this.seriesService.SetGameWon(series.Id, winner);
 
             return RedirectToAction("SeriesOverview", new { model.SeriesId, model.Conference, model.Stage});
