@@ -395,8 +395,8 @@ btn-light {
 
 /*Games*/
 .game-title {
-    font-family: 'Bungee Inline', sans-serif;
-    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
     font-size: 30px;
     border-bottom: 2px solid;
     width: 100%;

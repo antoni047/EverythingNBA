@@ -20,7 +20,7 @@
     {
         <tr class="text-center player-statistics-table">
             <td style="text-align: left; border: 1px solid black; font-size: 17px">
-            @player.PlayerName <a href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square fa-align-right"></i></a></td>
+            @player.PlayerName <a class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a></td>
             <td style="border: 1px solid black;">@player.MinutesPlayed</td>
             <td style="border: 1px solid black;">@player.Points</td>
             <td style="border: 1px solid black;">@player.Assists</td>
@@ -53,7 +53,7 @@
     {
         <tr class="text-center player-statistics-table">
             <td style="text-align: left; border: 1px solid black; font-size: 17px">
-                @player.PlayerName <a href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a>
+                @player.PlayerName <a  class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a>
             </td>
             <td style="border: 1px solid black;">@player.MinutesPlayed</td>
             <td style="border: 1px solid black;">@player.Points</td>
