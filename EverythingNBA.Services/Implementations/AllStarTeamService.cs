@@ -21,42 +21,68 @@
             this.db = db;
         }
 
-        public async Task<int?> AddAllStarTeamAsync(int year, string type, ICollection<string> playerNames)
+        public async Task<int?> AddAllStarTeamAsync(int year, string type, List<string> playerNames)
         {
-            var allStarTeamObj = new AllStarTeam
+            var allStarTeam = new AllStarTeam
             {
                 Year = year,
                 Type = (AllStarTeamType)Enum.Parse(typeof(AllStarTeamType), type)
             };
 
-            var allStarTeamsPlayersList = new List<AllStarTeamsPlayers>();
+            var player1 = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == playerNames[0]).FirstOrDefaultAsync();
+            var player2 = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == playerNames[1]).FirstOrDefaultAsync();
+            var player3 = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == playerNames[2]).FirstOrDefaultAsync();
+            var player4 = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == playerNames[3]).FirstOrDefaultAsync();
+            var player5 = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == playerNames[4]).FirstOrDefaultAsync();
 
-            foreach (var name in playerNames)
+            allStarTeam.Players = new List<AllStarTeamsPlayers>
             {
-                var player = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == name).FirstOrDefaultAsync();
+                new AllStarTeamsPlayers { Player = player1, AllStarTeam = allStarTeam },
+                new AllStarTeamsPlayers { Player = player2, AllStarTeam = allStarTeam },
+                new AllStarTeamsPlayers { Player = player3, AllStarTeam = allStarTeam },
+                new AllStarTeamsPlayers { Player = player4, AllStarTeam = allStarTeam },
+                new AllStarTeamsPlayers { Player = player5, AllStarTeam = allStarTeam }
+            };
 
-                if (player == null)
-                {
-                    return null;
-                }
-
-                var obj = new AllStarTeamsPlayers
-                {
-                    AllStarTeam = allStarTeamObj,
-                    Player = player
-                };
-
-                await this.db.AllStarTeamsPlayers.AddAsync(obj);
-
-                allStarTeamsPlayersList.Add(obj);
-            }
-
-            allStarTeamObj.Players = allStarTeamsPlayersList;
-
-            this.db.AllStarTeams.Add(allStarTeamObj);
+            this.db.AllStarTeams.Add(allStarTeam);
             await this.db.SaveChangesAsync();
 
-            return allStarTeamObj.Id;
+            return allStarTeam.Id;
+
+            //var allStarTeamExists = this.db.AllStarTeams.Where(x => x.Year == year && x.Type == (AllStarTeamType)Enum.Parse(typeof(AllStarTeamType), type)).FirstOrDefault();
+
+            //if (allStarTeamExists != null)
+            //{
+            //    return null;
+            //}
+
+            //this.db.AllStarTeams.Add(allStarTeamObj);
+            //await this.db.SaveChangesAsync();
+
+            //var ast = this.db.AllStarTeams.Where(x => x.Year == year && x.Type == (AllStarTeamType)Enum.Parse(typeof(AllStarTeamType), type)).FirstOrDefault();
+
+            //foreach (var name in playerNames)
+            //{
+            //    var player = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == name).FirstOrDefaultAsync();
+
+            //    if (player == null)
+            //    {
+            //        continue;
+            //    }
+
+            //    var obj = new AllStarTeamsPlayers
+            //    {
+            //        AllStarTeamId = ast.Id,
+            //        PlayerId = player.Id
+            //    };
+
+            //    this.db.AllStarTeamsPlayers.Add(obj);
+            //}
+
+
+            //await this.db.SaveChangesAsync();
+
+            //return ast.Id;
         }
 
         public async Task<bool> DeleteAllStarTeamAsync(int allStarTeamId)

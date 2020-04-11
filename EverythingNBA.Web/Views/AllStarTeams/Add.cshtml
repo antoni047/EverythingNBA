@@ -1,0 +1,41 @@
+﻿@using EverythingNBA.Web.Models.AllStarTeams;
+@model AddAllStarTeamInputModel;
+
+@{
+    ViewData["Title"] = "Add All Star Team";
+}
+
+<h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Add Player</h3>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="m-3 form-group player-form">
+        <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="AllStarTeams" asp-action="Add" method="post">
+
+            <input placeholder="Year..." asp-for="Year" type="number" class="form-control" /><br />
+
+            <select asp-for="Type" id="type" class="form-control">
+                Type
+                <option value="" selected disabled hidden>Type...</option>
+                <option value="FirstAllNBA">First All NBA</option>
+                <option value="SecondAllNBA">Second All NBA</option>
+                <option value="ThirdAllNBA">Third All NBA</option>
+                <option value="AllDefensive">All Defensive</option>
+                <option value="AllRookie">All Rookie</option>
+            </select> <br />
+
+            <input placeholder="First player..." type="text" asp-for="FirstPlayer" class="form-control">
+            <input placeholder="Second player..." type="text" asp-for="SecondPlayer" class="form-control">
+            <input placeholder="Third player..." type="text" asp-for="ThirdPlayer" class="form-control">
+            <input placeholder="Fourth player..." type="text" asp-for="FourthPayers" class="form-control">
+            <input placeholder="Fifth player..." type="text" asp-for="FifthPlayer" class="form-control">
+
+            <button type="submit" class="btn btn-secondary">Submit</button>
+        </form>
+    </div>
+}
+else
+{
+    <h4 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Log in to access this page</h4>
+}
+
