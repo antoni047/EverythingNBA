@@ -1,8 +1,27 @@
 ﻿@using EverythingNBA.Web.Models.Home
 @model IndexViewModel;
 
-@{ 
+@{
     ViewData["Title"] = "Home";
+    var message = TempData["Message"] as string;
+    var type = TempData["Type"] as string;
+}
+
+@if (message != null)
+{
+    if (type == "Success")
+    {
+        @await Html.PartialAsync("/Views/Shared/_SuccessBoxPartial.cshtml", message);
+    }
+    else if (type == "Warning")
+    {
+        @await Html.PartialAsync("/Views/Shared/_WarningBoxPartial.cshtml", message);
+    }
+    else
+    {
+        @await Html.PartialAsync("/Views/Shared/_ErrorBoxPartial.cshtml", message);
+    }
+
 }
 
 
@@ -68,7 +87,7 @@
                                 <h3 class="">@westernCounter</h3>
                             </td>
                             <td asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@Model.WesternTop8Standings[i].TeamAbbreviation" class="home-team-name">
-                                <img class="home-team-logo pr-1"  src="@Model.WesternTop8Standings[i].ImageURL" alt="logo" />
+                                <img class="home-team-logo pr-1" src="@Model.WesternTop8Standings[i].ImageURL" alt="logo" />
                                 <a class="team-link" href="/Teams/TeamDetails/@Model.WesternTop8Standings[i].TeamAbbreviation">@Model.WesternTop8Standings[i].TeamAbbreviation</a>
                             </td>
                         </tr>
@@ -89,7 +108,7 @@
                                 <h3 class="">@easternCounter</h3>
                             </td>
                             <td asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@Model.EasternTop8Standings[i].TeamAbbreviation" class="home-team-name">
-                                <img class="home-team-logo pr-1" src="@Model.EasternTop8Standings[i].ImageURL" alt="logo" />  
+                                <img class="home-team-logo pr-1" src="@Model.EasternTop8Standings[i].ImageURL" alt="logo" />
                                 <a class="team-link" href="/Teams/TeamDetails/@Model.EasternTop8Standings[i].TeamAbbreviation">@Model.EasternTop8Standings[i].TeamAbbreviation</a>
                             </td>
                         </tr>

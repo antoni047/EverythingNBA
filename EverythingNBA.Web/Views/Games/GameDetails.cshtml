@@ -5,6 +5,13 @@
     var team1 = Model.TeamHostName.Split(" ").Last();
     var team2 = Model.Team2Name.Split(" ").Last();
     ViewData["Title"] = $"{team1} - {team2}";
+    var message = TempData["Message"] as string;
+    var type = TempData["Type"] as string;
+}
+
+@if (message != null)
+{
+    @await Html.PartialAsync("/Views/Shared/_SuccessBoxPartial.cshtml", message);
 }
 
 <div class="container-fluid mt-0">

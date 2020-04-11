@@ -64,6 +64,15 @@ html {
 }
 
 
+.alert {
+    z-index: 1;
+    margin-left: auto;
+    margin-right: auto;
+    left: 100px;
+    right: 100px;
+    top: 70px;
+}
+
 
 /*Navbar*/
 .navbar-nba {

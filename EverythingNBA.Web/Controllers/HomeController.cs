@@ -39,9 +39,6 @@
 
         public async Task<IActionResult> Index()
         {
-
-
-
             var year = this.GetCurrentSeasonYear();
             var season = await this.seasonService.GetDetailsByYearAsync(year);
 

@@ -143,8 +143,20 @@
             var teamHost = await this.teamService.GetTeamDetailsAsync(inputModel.TeamHostName, year);
             var team2 = await this.teamService.GetTeamDetailsAsync(inputModel.Team2Name, year);
 
-            var gameId = await this.gameService.AddGameAsync(season.SeasonId, teamHost.Id, team2.Id, inputModel.TeamHostPoints,
+            var gameAdded = await this.gameService.AddGameAsync(season.SeasonId, teamHost.Id, team2.Id, inputModel.TeamHostPoints,
                 inputModel.Team2Points, inputModel.Date, inputModel.IsFinished, false);
+
+            //Success notification data 
+            if (gameAdded.Split(" ")[0] == "Success")
+            {
+                TempData["Message"] = "Game added successfully";
+                TempData["Type"] = "Success";
+            }
+            else
+            {
+                TempData["Message"] = "Game already exists";
+                TempData["Type"] = "Error";
+            }
 
             if (inputModel.IsFinished == true)
             {
@@ -188,6 +200,10 @@
 
             await this.gameService.EditGameAsync(model, inputModel.Id);
 
+            //Success notification data 
+            TempData["Message"] = "Game edited successfully";
+            TempData["Type"] = "Success";
+
             return RedirectToAction($"GameDetails", new { inputModel.Id });
         }
 
@@ -220,6 +236,10 @@
             var editedStats = mapper.Map<PlayerGameStatisticServiceModel>(inputModel);
 
             await this.gameStatisticService.EditGameStatisticAsync(editedStats, inputModel.Id);
+
+            //Success notification data 
+            TempData["Message"] = "Game statistic edited successfully";
+            TempData["Type"] = "Success";
 
             return RedirectToAction("GameDetails", new { inputModel.GameId });
         }
@@ -262,7 +282,20 @@
                 await this.teamService.RemoveGameAsync(model.Id, teamHost.Id);
             }
             
-            await this.gameService.DeleteGameAsync(model.Id);
+            var deleted = await this.gameService.DeleteGameAsync(model.Id);
+
+            //Success notification data 
+            if (deleted == true)
+            {
+                TempData["Message"] = "Game deleted successfully";
+                TempData["Type"] = "Success";
+            }
+            else
+            {
+                TempData["Message"] = "Game not deleted";
+                TempData["Type"] = "Error";
+            }
+            
 
             return RedirectToAction("Index", "Home");
         }

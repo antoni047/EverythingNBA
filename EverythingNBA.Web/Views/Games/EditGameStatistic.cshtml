@@ -3,11 +3,17 @@
 
 @{
     ViewData["Title"] = $"Edit Game Statistics";
+    var message = TempData["Message"] as string;
+    var type = TempData["Type"] as string;
+}
+
+@if (message != null)
+{
+    @await Html.PartialAsync("/Views/Shared/_SuccessBoxPartial.cshtml", message);
 }
 
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Edit Game Statistics</h3>
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">@ViewBag.Name - @ViewBag.Team1 vs @ViewBag.Team2 @ViewBag.Date</h3>
-
 
 
 @if (User.Identity.IsAuthenticated)
