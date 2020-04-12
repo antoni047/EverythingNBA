@@ -70,8 +70,6 @@
 
             var playoffId = await this.playoffService.AddPlayoffAsync(seasonId);
 
-            //await this.playoffService.SetStartingSeries(playoffId);
-
             await this.seasonService.AddPlayoffAsync(seasonId, playoffId);
 
             return RedirectToAction("All");

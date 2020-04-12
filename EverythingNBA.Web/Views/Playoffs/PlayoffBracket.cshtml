@@ -5,1048 +5,1064 @@
     ViewData["Title"] = $"{ViewBag.Year} Playoff";
 }
 
-<div class="container-fluid row">
-    <table class="mx-4 mt-2 playoff-bracket col-md-7" border="0" cellpadding="0" cellspacing="0" style="margin:1em 2em 1em 1em;">
-        <tbody>
-            <tr class="bracket-stage-title">
-                <td>
-                    &#160;
-                </td>
-                <td colspan="3" style="text-align:center;border:1px solid #aaa;">Quarter-Finals</td>
-                <td colspan="2"> </td>
-                <td colspan="3" style="text-align:center;border:1px solid #aaa;">Semi-Finals</td>
-                <td colspan="2"></td>
-                <td colspan="3" style="text-align:center;border:1px solid #aaa;">Conference Finals</td>
-                <td colspan="2"></td>
-                <td colspan="3" style="text-align:center;border:1px solid #aaa;">NBA Finals</td>
-            </tr>
-            <tr>
-                <td height="4" width="1">&#160;</td>
-                <td width="30">&#160;</td>
-                <td width="140">&#160;</td>
-                <td width="30"> &#160;</td>
-                <td width="5"> &#160;</td>
-                <td width="5">&#160;</td>
-                <td width="30"> &#160;</td>
-                <td width="140"> &#160;</td>
-                <td width="30">&#160;</td>
-                <td width="5"> &#160; </td>
-                <td width="5"> &#160;</td>
-                <td width="30">&#160;</td>
-                <td width="140"> &#160;</td>
-                <td width="30">&#160;</td>
-                <td width="5">&#160;</td>
-                <td width="5">&#160; </td>
-                <td width="30">&#160; </td>
-                <td width="140">&#160; </td>
-                <td width="30">&#160;</td>
-            </tr>
-            <tr>
-                <td height="1"></td>
-                <td style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                    <span style="color:#ffffff;"><b>E @Model.Series[0].Team1StandingsPosition</b></span>
-                </td>
-                <td style="border:1px solid #006;padding-left:0.3em;">
-                    @if (@Model.Series[0].Team1GamesWon > Model.Series[0].Team2GamesWon && (@Model.Series[0].Team1GamesWon != 0 || Model.Series[0].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[0].Team1Name">@Model.Series[0].Team1Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[0].Team1Name">@Model.Series[0].Team1Name</a>
-                    }
-                </td>
-                <td style="text-align:center;border:1px solid #006;">@Model.Series[0].Team1GamesWon</td>
-                <td>&#160;</td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                    <span style="color:#ffffff;">E @Model.Series[0].Team2StandingsPosition</span>
-                </td>
-                <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                    @if (@Model.Series[0].Team2GamesWon > Model.Series[0].Team1GamesWon && (@Model.Series[0].Team1GamesWon != 0 || Model.Series[0].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[0].Team2Name">@Model.Series[0].Team2Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[0].Team2Name">@Model.Series[0].Team2Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[0].Team2GamesWon</td>
-                <td rowspan="6">&#160;</td>
-            </tr>
-
-
-            <tr>
-                @if (Model.AreQuarterFinalsFinished)
-                {
-                    <td height="7"></td>
-                    <td rowspan="2"> &#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;"><b>E @Model.Series[8].Team1StandingsPosition</b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                        @if (@Model.Series[8].Team1GamesWon > Model.Series[8].Team2GamesWon && (@Model.Series[8].Team1GamesWon != 0 || Model.Series[8].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[8].Team1Name">@Model.Series[8].Team1Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[8].Team1Name">@Model.Series[8].Team1Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[8].Team1GamesWon</td>
-                    <td rowspan="12">&#160;</td>
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td rowspan="2">&#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;"></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;"></td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
-                    <td rowspan="12">&#160;</td>
-                }
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" colspan="3" style="text-align:center;"></td>
-            </tr>
-            <tr>
-                @if (Model.AreQuarterFinalsFinished)
-                {
-                    <td height="7"></td>
-                    <td rowspan="2">&#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;">E @Model.Series[8].Team2StandingsPosition</span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                        @if (@Model.Series[8].Team2GamesWon > Model.Series[8].Team1GamesWon && (@Model.Series[8].Team1GamesWon != 0 || Model.Series[8].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[8].Team2Name">@Model.Series[8].Team2Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[8].Team2Name">@Model.Series[8].Team2Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[8].Team2GamesWon</td>
-
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td rowspan="2">&#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;"></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;"></td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
-
-                }
-            </tr>
-
-
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                    <span style="color:#ffffff;"><b>E @Model.Series[1].Team1StandingsPosition</b></span>
-                </td>
-                <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                    @if (@Model.Series[1].Team1GamesWon > Model.Series[1].Team2GamesWon && (@Model.Series[1].Team1GamesWon != 0 || Model.Series[1].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[1].Team1Name">@Model.Series[1].Team1Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[1].Team1Name">@Model.Series[1].Team1Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[1].Team1GamesWon</td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                    <span style="color:#ffffff;">E @Model.Series[1].Team2StandingsPosition</span>
-                </td>
-                <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                    @if (@Model.Series[1].Team2GamesWon > Model.Series[1].Team1GamesWon && (@Model.Series[1].Team1GamesWon != 0 || Model.Series[1].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[1].Team2Name">@Model.Series[1].Team2Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[1].Team2Name">@Model.Series[1].Team2Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #006">@Model.Series[1].Team2GamesWon</td>
-                <td rowspan="2">&#160;</td>
-            </tr>
-
-
-            <tr>
-                @if (Model.AreSemiFinalsFinished)
-                {
-                    <td height="7"></td>
-                    <td colspan="5"></td>
-                    <td rowspan="2">&#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;">E @Model.Series[12].Team1StandingsPosition</span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                        @if (@Model.Series[12].Team1GamesWon > Model.Series[12].Team2GamesWon && (@Model.Series[12].Team1GamesWon != 0 || Model.Series[12].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[12].Team1Name">@Model.Series[12].Team1Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[12].Team1Name">@Model.Series[12].Team1Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[12].Team1GamesWon</td>
-                    <td rowspan="2">&#160;</td>
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td colspan="5"></td>
-                    <td rowspan="2">&#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;"></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
-                    <td rowspan="2">&#160;</td>
-                }
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" colspan="8" style="text-align:center;"><b>Eastern Conference</b> </td>
-            </tr>
-            <tr>
-                @if (Model.AreSemiFinalsFinished)
-                {
-                    <td height="7"> </td>
-                    <td rowspan="2"> &#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;"><b>E @Model.Series[12].Team2StandingsPosition</b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                        @if (@Model.Series[12].Team2GamesWon > Model.Series[12].Team1GamesWon && (@Model.Series[12].Team1GamesWon != 0 || Model.Series[12].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[12].Team2Name">@Model.Series[12].Team2Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[12].Team2Name">@Model.Series[12].Team2Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[12].Team2GamesWon</td>
-                    <td rowspan="24">&#160;</td>
-                }
-                else
-                {
-
-                    <td height="7"> </td>
-                    <td rowspan="2"> &#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;"><b></b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
-                    <td rowspan="24">&#160;</td>
-                }
-            </tr>
-
-
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                    <span style="color:#ffffff;"><b>E @Model.Series[2].Team1StandingsPosition</b></span>
-                </td>
-                <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                    @if (@Model.Series[2].Team1GamesWon > Model.Series[2].Team2GamesWon && (@Model.Series[2].Team1GamesWon != 0 || Model.Series[2].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[2].Team1Name">@Model.Series[2].Team1Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[2].Team1Name">@Model.Series[2].Team1Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[2].Team1GamesWon</td>
-                <td rowspan="2">&#160;</td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                    <span style="color:#ffffff;">E @Model.Series[2].Team2StandingsPosition</span>
-                </td>
-                <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                    @if (@Model.Series[2].Team2GamesWon > Model.Series[2].Team1GamesWon && (@Model.Series[2].Team1GamesWon != 0 || Model.Series[2].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[2].Team2Name">@Model.Series[2].Team2Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[2].Team2Name">@Model.Series[2].Team2Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[2].Team2GamesWon</td>
-                <td rowspan="6">&#160;</td>
-            </tr>
-
-
-            <tr>
-                @if (Model.AreQuarterFinalsFinished)
-                {
-                    <td height="7"></td>
-                    <td rowspan="2"> &#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;">E @Model.Series[9].Team1StandingsPosition</span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                        @if (@Model.Series[9].Team1GamesWon > Model.Series[9].Team2GamesWon && (@Model.Series[9].Team1GamesWon != 0 || Model.Series[9].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[9].Team1Name">@Model.Series[9].Team1Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[9].Team1Name">@Model.Series[9].Team1Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[9].Team1GamesWon</td>
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td rowspan="2"> &#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;"></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;"></td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
-                }
-            </tr>
-            <tr>
-                <td height="7"> </td>
-                <td rowspan="2" colspan="3" style="text-align:center;"></td>
-            </tr>
-            <tr>
-                @if (Model.AreQuarterFinalsFinished)
-                {
-                    <td height="7"></td>
-                    <td rowspan="2">&#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;"><b>E @Model.Series[9].Team2StandingsPosition</b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                        @if (@Model.Series[9].Team2GamesWon > Model.Series[9].Team1GamesWon && (@Model.Series[9].Team1GamesWon != 0 || Model.Series[9].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[9].Team2Name">@Model.Series[9].Team2Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[9].Team2Name">@Model.Series[9].Team2Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[10].Team2GamesWon</td>
-                    <td rowspan="12"> &#160;</td>
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td rowspan="2"> &#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;"></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;"></td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
-                }
-            </tr>
-
-
-            <tr>
-                <td height="7"> </td>
-                <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                    <span style="color:#ffffff;"><b>E @Model.Series[3].Team1StandingsPosition</b></span>
-                </td>
-                <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                    @if (@Model.Series[3].Team1GamesWon > Model.Series[3].Team2GamesWon && (@Model.Series[3].Team1GamesWon != 0 || Model.Series[3].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[3].Team1Name">@Model.Series[3].Team1Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[3].Team1Name">@Model.Series[3].Team1Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[3].Team1GamesWon</td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                    <span style="color:#ffffff;">E @Model.Series[3].Team2StandingsPosition</span>
-                </td>
-                <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                    @if (@Model.Series[3].Team2GamesWon > Model.Series[3].Team1GamesWon && (@Model.Series[3].Team1GamesWon != 0 || Model.Series[3].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[3].Team2Name">@Model.Series[3].Team2Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[3].Team2Name">@Model.Series[3].Team2Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[3].Team2GamesWon</td>
-                <td rowspan="2">&#160; </td>
-            </tr>
-
-
-            <tr>
-                @if (Model.AreConferenceFinalsFinished)
-                {
-                    <td height="7"> </td>
-                    <td colspan="10"></td>
-                    <td rowspan="2"> &#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;"><b>E @Model.Series[14].Team1StandingsPosition</b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
-                        @if (@Model.Series[14].Team1GamesWon > Model.Series[14].Team2GamesWon && (@Model.Series[14].Team1GamesWon != 0 || Model.Series[14].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[14].Team1Name">@Model.Series[14].Team1Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[14].Team1Name">@Model.Series[14].Team1Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[14].Team1GamesWon</td>
-                }
-                else
-                {
-                    <td height="7"> </td>
-                    <td colspan="10"></td>
-                    <td rowspan="2"> &#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
-                        <span style="color:#ffffff;"><b> </b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;"> </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
-                }
-            </tr>
-
-            <tr>
-                <td rowspan="2"></td>
-                <td height="7"></td>
-                <td rowspan="2" colspan="12" style="text-align:center;"></td>
-            </tr>
-
-            <tr>
-                @if (Model.AreConferenceFinalsFinished)
-                {
-                    <td height="7"></td>
-                    <td rowspan="2">&#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;">W @Model.Series[14].Team2StandingsPosition</span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                        @if (@Model.Series[14].Team2GamesWon > Model.Series[14].Team1GamesWon && (@Model.Series[15].Team1GamesWon != 0 || Model.Series[15].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[14].Team2Name">@Model.Series[14].Team2Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[14].Team2Name">@Model.Series[14].Team2Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[14].Team2GamesWon</td>
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td rowspan="2">&#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;"></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid red;padding-left:0.3em;">
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;"></td>
-                }
-            </tr>
-
-
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                    <span style="color:#ffffff;"><b>W @Model.Series[4].Team1StandingsPosition</b></span>
-                </td>
-                <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    @if (@Model.Series[4].Team1GamesWon > Model.Series[4].Team2GamesWon && (@Model.Series[4].Team1GamesWon != 0 || Model.Series[4].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[4].Team1Name">@Model.Series[4].Team1Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[4].Team1Name">@Model.Series[4].Team1Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[4].Team1GamesWon</td>
-                <td rowspan="2">&#160;</td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                    <span style="color:#ffffff;">W @Model.Series[4].Team2StandingsPosition</span>
-                </td>
-                <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    @if (@Model.Series[4].Team2GamesWon > Model.Series[4].Team1GamesWon && (@Model.Series[4].Team1GamesWon != 0 || Model.Series[4].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[4].Team2Name">@Model.Series[4].Team2Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[4].Team2Name">@Model.Series[4].Team2Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[4].Team2GamesWon</td>
-                <td rowspan="6">&#160;</td>
-            </tr>
-            <tr>
-                @if (Model.AreQuarterFinalsFinished)
-                {
-                    <td height="7"></td>
-                    <td rowspan="2">&#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;"><b>W @Model.Series[10].Team1StandingsPosition</b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                        @if (@Model.Series[10].Team1GamesWon > Model.Series[10].Team2GamesWon && (@Model.Series[10].Team1GamesWon != 0 || Model.Series[10].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[10].Team1Name">@Model.Series[10].Team1Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[10].Team1Name">@Model.Series[10].Team1Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[10].Team1GamesWon</td>
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td rowspan="2">&#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;"><b></b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;"><b></b></td>
-                }
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" colspan="3" style="text-align:center;"></td>
-            </tr>
-            <tr>
-                @if (Model.AreQuarterFinalsFinished)
-                {
-                    <td height="7"></td>
-                    <td rowspan="2"> &#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;">W @Model.Series[10].Team2StandingsPosition</span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                        @if (@Model.Series[10].Team2GamesWon > Model.Series[10].Team1GamesWon && (@Model.Series[10].Team1GamesWon != 0 || Model.Series[10].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[10].Team2Name">@Model.Series[10].Team2Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[10].Team2Name">@Model.Series[10].Team2Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[10].Team2GamesWon</td>
-                    <td rowspan="12">&#160;</td>
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td rowspan="2">&#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;"><b></b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;"><b></b></td>
-                    <td rowspan="12">&#160;</td>
-                }
-            </tr>
-
-
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                    <span style="color:#ffffff;"><b>W @Model.Series[5].Team1StandingsPosition</b></span>
-                </td>
-                <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    @if (@Model.Series[5].Team1GamesWon > Model.Series[5].Team2GamesWon && (@Model.Series[5].Team1GamesWon != 0 || Model.Series[5].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[5].Team1Name">@Model.Series[5].Team1Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[5].Team1Name">@Model.Series[5].Team1Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[5].Team1GamesWon</td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                    <span style="color:#ffffff;">W @Model.Series[5].Team2StandingsPosition</span>
-                </td>
-                <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    @if (@Model.Series[5].Team2GamesWon > Model.Series[5].Team1GamesWon && (@Model.Series[5].Team1GamesWon != 0 || Model.Series[5].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[5].Team2Name">@Model.Series[5].Team2Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[5].Team2Name">@Model.Series[5].Team2Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[5].Team2GamesWon</td>
-                <td rowspan="2"> &#160;</td>
-            </tr>
-
-
-            <tr>
-                @if (Model.AreSemiFinalsFinished)
-                {
-                    <td height="7"> </td>
-                    <td colspan="5"></td>
-                    <td rowspan="2"> &#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;"><b>W @Model.Series[13].Team1StandingsPosition</b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                        @if (@Model.Series[13].Team1GamesWon > Model.Series[13].Team2GamesWon && (@Model.Series[13].Team1GamesWon != 0 || Model.Series[13].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[13].Team1Name">@Model.Series[13].Team1Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[13].Team1Name">@Model.Series[13].Team1Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;"> @Model.Series[13].Team1GamesWon</td>
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td colspan="5"></td>
-                    <td rowspan="2" style="text-align:center;"> &#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;"><b></b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em"></td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;"><b></b></td>
-                }
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" colspan="8" style="text-align:center;"><b>Western Conference</b></td>
-            </tr>
-
-            <tr>
-                @if (Model.AreSemiFinalsFinished)
-                {
-                    <td height="7"></td>
-                    <td rowspan="2">&#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;">W @Model.Series[13].Team2StandingsPosition</span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                        @if (@Model.Series[13].Team2GamesWon > Model.Series[13].Team1GamesWon && (@Model.Series[13].Team1GamesWon != 0 || Model.Series[13].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[13].Team2Name">@Model.Series[13].Team2Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[13].Team2Name">@Model.Series[13].Team2Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[13].Team2GamesWon</td>
-                    <td rowspan="2"> &#160; </td>
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td rowspan="2" style="text-align:center;"> &#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;"></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;"></td>
-                    <td rowspan="2" style="text-align:center;">&#160;</td>
-                }
-            </tr>
-
-
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                    <span style="color:#ffffff;"><b>W @Model.Series[6].Team1StandingsPosition</b></span>
-                </td>
-                <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    @if (@Model.Series[6].Team1GamesWon > Model.Series[6].Team2GamesWon && (@Model.Series[6].Team1GamesWon != 0 || Model.Series[6].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[6].Team1Name">@Model.Series[6].Team1Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[6].Team1Name">@Model.Series[6].Team1Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[6].Team1GamesWon</td>
-                <td rowspan="2"> &#160; </td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                    <span style="color:#ffffff;">W @Model.Series[6].Team2StandingsPosition</span>
-                </td>
-                <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    @if (@Model.Series[6].Team2GamesWon > Model.Series[6].Team1GamesWon && (@Model.Series[6].Team1GamesWon != 0 || Model.Series[6].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[6].Team2Name">@Model.Series[6].Team2Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[6].Team2Name">@Model.Series[6].Team2Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[6].Team2GamesWon</td>
-                <td rowspan="6">&#160;</td>
-            </tr>
-
-
-            <tr>
-                @if (Model.AreQuarterFinalsFinished)
-                {
-                    <td height="7"></td>
-                    <td rowspan="2"> &#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;"><b>W @Model.Series[11].Team1StandingsPosition</b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                        @if (@Model.Series[11].Team1GamesWon > Model.Series[11].Team2GamesWon && (@Model.Series[11].Team1GamesWon != 0 || Model.Series[11].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[11].Team1Name">@Model.Series[11].Team1Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[11].Team1Name">@Model.Series[11].Team1Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;"> @Model.Series[11].Team1GamesWon</td>
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td rowspan="2"> &#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;"><b></b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;"> </td>
-                }
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" colspan="3" style="text-align:center;"></td>
-            </tr>
-            <tr>
-                @if (Model.AreQuarterFinalsFinished)
-                {
-                    <td height="7"></td>
-                    <td rowspan="2"> &#160; </td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;">W @Model.Series[11].Team2StandingsPosition</span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                        @if (@Model.Series[11].Team2GamesWon > Model.Series[11].Team1GamesWon && (@Model.Series[11].Team1GamesWon != 0 || Model.Series[11].Team2GamesWon != 0))
-                        {
-                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[11].Team2Name">@Model.Series[11].Team2Name</a></b>
-                        }
-                        else
-                        {
-                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[11].Team2Name">@Model.Series[11].Team2Name</a>
-                        }
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[11].Team2GamesWon</td>
-                    <td rowspan="2"> &#160; </td>
-                }
-                else
-                {
-                    <td height="7"></td>
-                    <td rowspan="2"> &#160;</td>
-                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                        <span style="color:#ffffff;"><b></b></span>
-                    </td>
-                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    </td>
-                    <td rowspan="2" style="text-align:center;border:1px solid #600;"> </td>
-                }
-            </tr>
-
-
-            <tr>
-                <td height="7"></td>
-                <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                    <span style="color:#ffffff;"><b>W @Model.Series[7].Team1StandingsPosition</b></span>
-                </td>
-                <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
-                    @if (@Model.Series[7].Team1GamesWon > Model.Series[7].Team2GamesWon && (@Model.Series[7].Team1GamesWon != 0 || Model.Series[7].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[7].Team1Name">@Model.Series[7].Team1Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[7].Team1Name">@Model.Series[7].Team1Name</a>
-                    }
-                </td>
-                <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[7].Team1GamesWon</td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-            </tr>
-            <tr>
-                <td height="7"></td>
-                <td style="text-align:center;background-color:#8b0000;border:1px solid #600;">
-                    <span style="color:#ffffff;">W @Model.Series[7].Team2StandingsPosition</span>
-                </td>
-                <td style="border:1px solid #600;padding-left:0.3em">
-                    @if (@Model.Series[7].Team2GamesWon > Model.Series[7].Team1GamesWon && (@Model.Series[7].Team1GamesWon != 0 || Model.Series[7].Team2GamesWon != 0))
-                    {
-                        <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[7].Team2Name">@Model.Series[7].Team2Name</a></b>
-                    }
-                    else
-                    {
-                        <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[7].Team2Name">@Model.Series[7].Team2Name</a>
-                    }
-                </td>
-                <td style="text-align:center;border:1px solid #600;">@Model.Series[7].Team2GamesWon</td>
-                <td> &#160;</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <div class="py-4 mr-0 ml-3 pr-0 col-md-4 ml-0 container-fluid series-links-block">
-        <div class="container-fluid p-0 mb-2 ">
-            <div class="w-100 mb-1 text-center series-links-title">Quarter-Finals</div>
-
-            @if (Model.Series[0] != null)
-            {
-                <div class="w-100 text-center">
-                    <a class="w-100 p-0 m-0 btn btn-primary"
-                       href="/Series/SeriesOverview/@Model.Series[0].Conference&@Model.Series[0].Stage/@Model.Series[0].Id"
-                       role="button">@Model.Series[0].Team1Name - @Model.Series[0].Team2Name</a>
-                </div>
-            }
-            @if (Model.Series[1] != null)
-            {
-                <div class="w-100 text-center">
-                    <a class="w-100 p-0 m-0 btn btn-primary"
-                       href="/Series/SeriesOverview/@Model.Series[1].Conference&@Model.Series[1].Stage/@Model.Series[1].Id"
-                       role="button">@Model.Series[1].Team1Name - @Model.Series[1].Team2Name</a>
-                </div>
-            }
-            @if (Model.Series[2] != null)
-            {
-                <div class="w-100 text-center">
-                    <a class="w-100 p-0 m-0 btn btn-primary"
-                       href="/Series/SeriesOverview/@Model.Series[2].Conference&@Model.Series[1].Stage/@Model.Series[2].Id"
-                       role="button">@Model.Series[2].Team1Name - @Model.Series[2].Team2Name</a>
-                </div>
-            }
-            @if (Model.Series[3] != null)
-            {
-                <div class="w-100 text-center">
-                    <a class="w-100 p-0 m-0 btn btn-primary"
-                       href="/Series/SeriesOverview/@Model.Series[0].Conference&@Model.Series[3].Stage/@Model.Series[3].Id"
-                       role="button">@Model.Series[3].Team1Name - @Model.Series[3].Team2Name</a>
-                </div>
-            }
-        </div>
-
-        <div class="container-fluid p-0 mb-2">
-            @if (Model.Series[4] != null)
-            {
-                <div class="w-100 text-center">
-                    <a class="w-100 p-0 m-0 btn btn-secondary"
-                       href="/Series/SeriesOverview/@Model.Series[4].Conference&@Model.Series[4].Stage/@Model.Series[4].Id"
-                       role="button">@Model.Series[4].Team1Name - @Model.Series[4].Team2Name</a>
-                </div>
-            }
-            @if (Model.Series[5] != null)
-            {
-                <div class="w-100 text-center">
-                    <a class="w-100 p-0 m-0 btn btn-secondary"
-                       href="/Series/SeriesOverview/@Model.Series[5].Conference&@Model.Series[5].Stage/@Model.Series[5].Id"
-                       role="button">@Model.Series[5].Team1Name - @Model.Series[5].Team2Name</a>
-                </div>
-            }
-            @if (Model.Series[6] != null)
-            {
-                <div class="w-100 text-center">
-                    <a class="w-100 p-0 m-0 btn btn-secondary"
-                       href="/Series/SeriesOverview/@Model.Series[6].Conference&@Model.Series[6].Stage/@Model.Series[6].Id"
-                       role="button">@Model.Series[6].Team1Name - @Model.Series[6].Team2Name</a>
-                </div>
-            }
-            @if (Model.Series[7] != null)
-            {
-                <div class="w-100 text-center">
-                    <a class="w-100 p-0 m-0 btn btn-secondary"
-                       href="/Series/SeriesOverview/@Model.Series[7].Conference&@Model.Series[7].Stage/@Model.Series[7].Id"
-                       role="button">@Model.Series[7].Team1Name - @Model.Series[7].Team2Name</a>
-                </div>
-            }
-        </div>
-
-        @if (Model.Series.Count() > 8)
-        {
-            <div class="container-fluid p-0 mb-2">
-                <div class="w-100 mb-1 text-center series-links-title">Semi-Finals</div>
-
-                @if (Model.Series[8] != null)
-                {
-                    <div class="w-100 text-center">
-                        <a class="w-100 p-0 m-0 btn btn-primary"
-                           href="/Series/SeriesOverview/@Model.Series[8].Conference&@Model.Series[8].Stage/@Model.Series[8].Id"
-                           role="button">@Model.Series[8].Team1Name - @Model.Series[8].Team2Name</a>
-                    </div>
-                }
-                @if (Model.Series[9] != null)
-                {
-                    <div class="w-100 text-center">
-                        <a class="w-100 p-0 m-0 btn btn-primary"
-                           href="/Series/SeriesOverview/@Model.Series[9].Conference&@Model.Series[9].Stage/@Model.Series[9].Id"
-                           role="button">@Model.Series[9].Team1Name - @Model.Series[9].Team2Name</a>
-                    </div>
-                }
-            </div>
-
-            <div class="container-fluid p-0 mb-2">
-                @if (Model.Series[10] != null)
-                {
-                    <div class="w-100 text-center">
-                        <a class="w-100 p-0 m-0 btn btn-secondary"
-                           href="/Series/SeriesOverview/@Model.Series[10].Conference&@Model.Series[10].Stage/@Model.Series[10].Id"
-                           role="button">@Model.Series[10].Team1Name - @Model.Series[10].Team2Name</a>
-                    </div>
-                }
-                @if (Model.Series[11] != null)
-                {
-                    <div class="w-100 text-center">
-                        <a class="w-100 p-0 m-0 btn btn-secondary"
-                           href="/Series/SeriesOverview/@Model.Series[11].Conference&@Model.Series[11].Stage/@Model.Series[11].Id"
-                           role="button">@Model.Series[11].Team1Name - @Model.Series[11].Team2Name</a>
-                    </div>
-                }
-            </div>
-        }
-
-        @if (Model.Series.Count() > 12)
-        {
-            <div class="container-fluid p-0 mb-2">
-                <div class="w-100 mb-1 text-center series-links-title">Conference-Finals</div>
-
-                @if (Model.Series[12] != null)
-                {
-                    <div class="w-100 text-center mb-2">
-                        <a class="w-100 p-0 m-0 btn btn-primary"
-                           href="/Series/SeriesOverview/@Model.Series[12].Conference&@Model.Series[12].Stage/@Model.Series[12].Id"
-                           role="button">@Model.Series[12].Team1Name - @Model.Series[12].Team2Name</a>
-                    </div>
-                }
-                @if (Model.Series[13] != null)
-                {
-                    <div class="w-100 text-center">
-                        <a class="w-100 p-0 m-0 btn btn-secondary"
-                           href="/Series/SeriesOverview/@Model.Series[13].Conference&@Model.Series[13].Stage/@Model.Series[13].Id"
-                           role="button">@Model.Series[13].Team1Name - @Model.Series[13].Team2Name</a>
-                    </div>
-                }
-            </div>
-        }
-
-        @if (Model.Series.Count() > 14)
-        {
-            <div class="container-fluid p-0 mb-2">
-                <div class="w-100 mb-1 text-center series-links-title">Finals</div>
-
-                @if (Model.Series[14] != null)
-                {
-                    <div class="w-100 text-center mb-2">
-                        <a class="w-100 p-0 m-0 btn btn-dark"
-                           href="/Series/SeriesOverview/@Model.Series[14].Conference&@Model.Series[14].Stage/@Model.Series[14].Id"
-                           role="button">@Model.Series[14].Team1Name - @Model.Series[14].Team2Name</a>
-                    </div>
-                }
-            </div>
-        }
-        @if (User.Identity.IsAuthenticated)
-        {
-            <div class="container-fluid row">
-                <a class="w-100 p-0 my-0 mx-1 btn btn-dark col-md-4"
-                   href="/Playoffs/FinishQuarterFinals/@Model.Id"
-                   role="button">Finish Quarter-Finals</a>
-                @if (Model.AreQuarterFinalsFinished)
-                {
-
-                    <a class="w-100 p-0 my-0 mx-1 btn btn-dark col-md-4"
-                       href="/Playoffs/FinishSemiFinals/@Model.Id"
-                       role="button">Finish Semi-Finals</a>
-                    if (Model.AreSemiFinalsFinished)
-                    {
-                        <a class="w-100 p-0 my-0 mx-1 btn btn-dark col-md-4"
-                           href="/Playoffs/FinishConferenceFinals/@Model.Id"
-                           role="button">Finish Finals</a>
-                    }
-                }
-            </div>
-        }
+@if (!Model.Series.Any())
+{
+    <div>
+        <p class="ml-3">
+            <i>*<strong>Recommended!</strong> Create bracket after the all regular season games have finished
+                <br>*<strong>Warning!</strong> Top 8 teams are taken based on current standings and the action cannot be reverted</i>
+        </p>
+        
+        <a class="ml-3 p-1 my-0 mx-1 btn btn-primary"
+           href="/Playoffs/SetStartingSeries/@Model.Id"
+           role="button">Create Bracket</a>
     </div>
-</div>
+}
+else
+{
+    <div class="container-fluid row">
+        <table class="mx-4 mt-2 playoff-bracket col-md-7" border="0" cellpadding="0" cellspacing="0" style="margin:1em 2em 1em 1em;">
+            <tbody>
+                <tr class="bracket-stage-title">
+                    <td>
+                        &#160;
+                    </td>
+                    <td colspan="3" style="text-align:center;border:1px solid #aaa;">Quarter-Finals</td>
+                    <td colspan="2"> </td>
+                    <td colspan="3" style="text-align:center;border:1px solid #aaa;">Semi-Finals</td>
+                    <td colspan="2"></td>
+                    <td colspan="3" style="text-align:center;border:1px solid #aaa;">Conference Finals</td>
+                    <td colspan="2"></td>
+                    <td colspan="3" style="text-align:center;border:1px solid #aaa;">NBA Finals</td>
+                </tr>
+                <tr>
+                    <td height="4" width="1">&#160;</td>
+                    <td width="30">&#160;</td>
+                    <td width="140">&#160;</td>
+                    <td width="30"> &#160;</td>
+                    <td width="5"> &#160;</td>
+                    <td width="5">&#160;</td>
+                    <td width="30"> &#160;</td>
+                    <td width="140"> &#160;</td>
+                    <td width="30">&#160;</td>
+                    <td width="5"> &#160; </td>
+                    <td width="5"> &#160;</td>
+                    <td width="30">&#160;</td>
+                    <td width="140"> &#160;</td>
+                    <td width="30">&#160;</td>
+                    <td width="5">&#160;</td>
+                    <td width="5">&#160; </td>
+                    <td width="30">&#160; </td>
+                    <td width="140">&#160; </td>
+                    <td width="30">&#160;</td>
+                </tr>
+                <tr>
+                    <td height="1"></td>
+                    <td style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                        <span style="color:#ffffff;"><b>E @Model.Series[0].Team1StandingsPosition</b></span>
+                    </td>
+                    <td style="border:1px solid #006;padding-left:0.3em;">
+                        @if (@Model.Series[0].Team1GamesWon > Model.Series[0].Team2GamesWon && (@Model.Series[0].Team1GamesWon != 0 || Model.Series[0].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[0].Team1Name">@Model.Series[0].Team1Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[0].Team1Name">@Model.Series[0].Team1Name</a>
+                        }
+                    </td>
+                    <td style="text-align:center;border:1px solid #006;">@Model.Series[0].Team1GamesWon</td>
+                    <td>&#160;</td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                        <span style="color:#ffffff;">E @Model.Series[0].Team2StandingsPosition</span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                        @if (@Model.Series[0].Team2GamesWon > Model.Series[0].Team1GamesWon && (@Model.Series[0].Team1GamesWon != 0 || Model.Series[0].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[0].Team2Name">@Model.Series[0].Team2Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[0].Team2Name">@Model.Series[0].Team2Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[0].Team2GamesWon</td>
+                    <td rowspan="6">&#160;</td>
+                </tr>
+
+
+                <tr>
+                    @if (Model.AreQuarterFinalsFinished)
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2"> &#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;"><b>E @Model.Series[8].Team1StandingsPosition</b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                            @if (@Model.Series[8].Team1GamesWon > Model.Series[8].Team2GamesWon && (@Model.Series[8].Team1GamesWon != 0 || Model.Series[8].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[8].Team1Name">@Model.Series[8].Team1Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[8].Team1Name">@Model.Series[8].Team1Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[8].Team1GamesWon</td>
+                        <td rowspan="12">&#160;</td>
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2">&#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;"></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;"></td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
+                        <td rowspan="12">&#160;</td>
+                    }
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" colspan="3" style="text-align:center;"></td>
+                </tr>
+                <tr>
+                    @if (Model.AreQuarterFinalsFinished)
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2">&#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;">E @Model.Series[8].Team2StandingsPosition</span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                            @if (@Model.Series[8].Team2GamesWon > Model.Series[8].Team1GamesWon && (@Model.Series[8].Team1GamesWon != 0 || Model.Series[8].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[8].Team2Name">@Model.Series[8].Team2Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[8].Team2Name">@Model.Series[8].Team2Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[8].Team2GamesWon</td>
+
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2">&#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;"></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;"></td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
+
+                    }
+                </tr>
+
+
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                        <span style="color:#ffffff;"><b>E @Model.Series[1].Team1StandingsPosition</b></span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                        @if (@Model.Series[1].Team1GamesWon > Model.Series[1].Team2GamesWon && (@Model.Series[1].Team1GamesWon != 0 || Model.Series[1].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[1].Team1Name">@Model.Series[1].Team1Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[1].Team1Name">@Model.Series[1].Team1Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[1].Team1GamesWon</td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                        <span style="color:#ffffff;">E @Model.Series[1].Team2StandingsPosition</span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                        @if (@Model.Series[1].Team2GamesWon > Model.Series[1].Team1GamesWon && (@Model.Series[1].Team1GamesWon != 0 || Model.Series[1].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[1].Team2Name">@Model.Series[1].Team2Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[1].Team2Name">@Model.Series[1].Team2Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #006">@Model.Series[1].Team2GamesWon</td>
+                    <td rowspan="2">&#160;</td>
+                </tr>
+
+
+                <tr>
+                    @if (Model.AreSemiFinalsFinished)
+                    {
+                        <td height="7"></td>
+                        <td colspan="5"></td>
+                        <td rowspan="2">&#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;">E @Model.Series[12].Team1StandingsPosition</span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                            @if (@Model.Series[12].Team1GamesWon > Model.Series[12].Team2GamesWon && (@Model.Series[12].Team1GamesWon != 0 || Model.Series[12].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[12].Team1Name">@Model.Series[12].Team1Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[12].Team1Name">@Model.Series[12].Team1Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[12].Team1GamesWon</td>
+                        <td rowspan="2">&#160;</td>
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td colspan="5"></td>
+                        <td rowspan="2">&#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;"></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
+                        <td rowspan="2">&#160;</td>
+                    }
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" colspan="8" style="text-align:center;"><b>Eastern Conference</b> </td>
+                </tr>
+                <tr>
+                    @if (Model.AreSemiFinalsFinished)
+                    {
+                        <td height="7"> </td>
+                        <td rowspan="2"> &#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;"><b>E @Model.Series[12].Team2StandingsPosition</b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                            @if (@Model.Series[12].Team2GamesWon > Model.Series[12].Team1GamesWon && (@Model.Series[12].Team1GamesWon != 0 || Model.Series[12].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[12].Team2Name">@Model.Series[12].Team2Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[12].Team2Name">@Model.Series[12].Team2Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[12].Team2GamesWon</td>
+                        <td rowspan="24">&#160;</td>
+                    }
+                    else
+                    {
+
+                        <td height="7"> </td>
+                        <td rowspan="2"> &#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;"><b></b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
+                        <td rowspan="24">&#160;</td>
+                    }
+                </tr>
+
+
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                        <span style="color:#ffffff;"><b>E @Model.Series[2].Team1StandingsPosition</b></span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                        @if (@Model.Series[2].Team1GamesWon > Model.Series[2].Team2GamesWon && (@Model.Series[2].Team1GamesWon != 0 || Model.Series[2].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[2].Team1Name">@Model.Series[2].Team1Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[2].Team1Name">@Model.Series[2].Team1Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[2].Team1GamesWon</td>
+                    <td rowspan="2">&#160;</td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                        <span style="color:#ffffff;">E @Model.Series[2].Team2StandingsPosition</span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                        @if (@Model.Series[2].Team2GamesWon > Model.Series[2].Team1GamesWon && (@Model.Series[2].Team1GamesWon != 0 || Model.Series[2].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[2].Team2Name">@Model.Series[2].Team2Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[2].Team2Name">@Model.Series[2].Team2Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[2].Team2GamesWon</td>
+                    <td rowspan="6">&#160;</td>
+                </tr>
+
+
+                <tr>
+                    @if (Model.AreQuarterFinalsFinished)
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2"> &#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;">E @Model.Series[9].Team1StandingsPosition</span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                            @if (@Model.Series[9].Team1GamesWon > Model.Series[9].Team2GamesWon && (@Model.Series[9].Team1GamesWon != 0 || Model.Series[9].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[9].Team1Name">@Model.Series[9].Team1Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[9].Team1Name">@Model.Series[9].Team1Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[9].Team1GamesWon</td>
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2"> &#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;"></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;"></td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
+                    }
+                </tr>
+                <tr>
+                    <td height="7"> </td>
+                    <td rowspan="2" colspan="3" style="text-align:center;"></td>
+                </tr>
+                <tr>
+                    @if (Model.AreQuarterFinalsFinished)
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2">&#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;"><b>E @Model.Series[9].Team2StandingsPosition</b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                            @if (@Model.Series[9].Team2GamesWon > Model.Series[9].Team1GamesWon && (@Model.Series[9].Team1GamesWon != 0 || Model.Series[9].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[9].Team2Name">@Model.Series[9].Team2Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[9].Team2Name">@Model.Series[9].Team2Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[10].Team2GamesWon</td>
+                        <td rowspan="12"> &#160;</td>
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2"> &#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;"></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;"></td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
+                    }
+                </tr>
+
+
+                <tr>
+                    <td height="7"> </td>
+                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                        <span style="color:#ffffff;"><b>E @Model.Series[3].Team1StandingsPosition</b></span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                        @if (@Model.Series[3].Team1GamesWon > Model.Series[3].Team2GamesWon && (@Model.Series[3].Team1GamesWon != 0 || Model.Series[3].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[3].Team1Name">@Model.Series[3].Team1Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[3].Team1Name">@Model.Series[3].Team1Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[3].Team1GamesWon</td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                        <span style="color:#ffffff;">E @Model.Series[3].Team2StandingsPosition</span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                        @if (@Model.Series[3].Team2GamesWon > Model.Series[3].Team1GamesWon && (@Model.Series[3].Team1GamesWon != 0 || Model.Series[3].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[3].Team2Name">@Model.Series[3].Team2Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[3].Team2Name">@Model.Series[3].Team2Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[3].Team2GamesWon</td>
+                    <td rowspan="2">&#160; </td>
+                </tr>
+
+
+                <tr>
+                    @if (Model.AreConferenceFinalsFinished)
+                    {
+                        <td height="7"> </td>
+                        <td colspan="10"></td>
+                        <td rowspan="2"> &#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;"><b>E @Model.Series[14].Team1StandingsPosition</b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;">
+                            @if (@Model.Series[14].Team1GamesWon > Model.Series[14].Team2GamesWon && (@Model.Series[14].Team1GamesWon != 0 || Model.Series[14].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[14].Team1Name">@Model.Series[14].Team1Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[14].Team1Name">@Model.Series[14].Team1Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;">@Model.Series[14].Team1GamesWon</td>
+                    }
+                    else
+                    {
+                        <td height="7"> </td>
+                        <td colspan="10"></td>
+                        <td rowspan="2"> &#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#00008b;border:1px solid #006;">
+                            <span style="color:#ffffff;"><b> </b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #006;padding-left:0.3em;"> </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #006;"></td>
+                    }
+                </tr>
+
+                <tr>
+                    <td rowspan="2"></td>
+                    <td height="7"></td>
+                    <td rowspan="2" colspan="12" style="text-align:center;"></td>
+                </tr>
+
+                <tr>
+                    @if (Model.AreConferenceFinalsFinished)
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2">&#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;">W @Model.Series[14].Team2StandingsPosition</span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                            @if (@Model.Series[14].Team2GamesWon > Model.Series[14].Team1GamesWon && (@Model.Series[15].Team1GamesWon != 0 || Model.Series[15].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[14].Team2Name">@Model.Series[14].Team2Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[14].Team2Name">@Model.Series[14].Team2Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[14].Team2GamesWon</td>
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2">&#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;"></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid red;padding-left:0.3em;">
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;"></td>
+                    }
+                </tr>
+
+
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                        <span style="color:#ffffff;"><b>W @Model.Series[4].Team1StandingsPosition</b></span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        @if (@Model.Series[4].Team1GamesWon > Model.Series[4].Team2GamesWon && (@Model.Series[4].Team1GamesWon != 0 || Model.Series[4].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[4].Team1Name">@Model.Series[4].Team1Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[4].Team1Name">@Model.Series[4].Team1Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[4].Team1GamesWon</td>
+                    <td rowspan="2">&#160;</td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                        <span style="color:#ffffff;">W @Model.Series[4].Team2StandingsPosition</span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        @if (@Model.Series[4].Team2GamesWon > Model.Series[4].Team1GamesWon && (@Model.Series[4].Team1GamesWon != 0 || Model.Series[4].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[4].Team2Name">@Model.Series[4].Team2Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[4].Team2Name">@Model.Series[4].Team2Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[4].Team2GamesWon</td>
+                    <td rowspan="6">&#160;</td>
+                </tr>
+                <tr>
+                    @if (Model.AreQuarterFinalsFinished)
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2">&#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;"><b>W @Model.Series[10].Team1StandingsPosition</b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                            @if (@Model.Series[10].Team1GamesWon > Model.Series[10].Team2GamesWon && (@Model.Series[10].Team1GamesWon != 0 || Model.Series[10].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[10].Team1Name">@Model.Series[10].Team1Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[10].Team1Name">@Model.Series[10].Team1Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[10].Team1GamesWon</td>
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2">&#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;"><b></b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;"><b></b></td>
+                    }
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" colspan="3" style="text-align:center;"></td>
+                </tr>
+                <tr>
+                    @if (Model.AreQuarterFinalsFinished)
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2"> &#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;">W @Model.Series[10].Team2StandingsPosition</span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                            @if (@Model.Series[10].Team2GamesWon > Model.Series[10].Team1GamesWon && (@Model.Series[10].Team1GamesWon != 0 || Model.Series[10].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[10].Team2Name">@Model.Series[10].Team2Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[10].Team2Name">@Model.Series[10].Team2Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[10].Team2GamesWon</td>
+                        <td rowspan="12">&#160;</td>
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2">&#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;"><b></b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;"><b></b></td>
+                        <td rowspan="12">&#160;</td>
+                    }
+                </tr>
+
+
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                        <span style="color:#ffffff;"><b>W @Model.Series[5].Team1StandingsPosition</b></span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        @if (@Model.Series[5].Team1GamesWon > Model.Series[5].Team2GamesWon && (@Model.Series[5].Team1GamesWon != 0 || Model.Series[5].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[5].Team1Name">@Model.Series[5].Team1Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[5].Team1Name">@Model.Series[5].Team1Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[5].Team1GamesWon</td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                        <span style="color:#ffffff;">W @Model.Series[5].Team2StandingsPosition</span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        @if (@Model.Series[5].Team2GamesWon > Model.Series[5].Team1GamesWon && (@Model.Series[5].Team1GamesWon != 0 || Model.Series[5].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[5].Team2Name">@Model.Series[5].Team2Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[5].Team2Name">@Model.Series[5].Team2Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[5].Team2GamesWon</td>
+                    <td rowspan="2"> &#160;</td>
+                </tr>
+
+
+                <tr>
+                    @if (Model.AreSemiFinalsFinished)
+                    {
+                        <td height="7"> </td>
+                        <td colspan="5"></td>
+                        <td rowspan="2"> &#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;"><b>W @Model.Series[13].Team1StandingsPosition</b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                            @if (@Model.Series[13].Team1GamesWon > Model.Series[13].Team2GamesWon && (@Model.Series[13].Team1GamesWon != 0 || Model.Series[13].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[13].Team1Name">@Model.Series[13].Team1Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[13].Team1Name">@Model.Series[13].Team1Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;"> @Model.Series[13].Team1GamesWon</td>
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td colspan="5"></td>
+                        <td rowspan="2" style="text-align:center;"> &#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;"><b></b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em"></td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;"><b></b></td>
+                    }
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" colspan="8" style="text-align:center;"><b>Western Conference</b></td>
+                </tr>
+
+                <tr>
+                    @if (Model.AreSemiFinalsFinished)
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2">&#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;">W @Model.Series[13].Team2StandingsPosition</span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                            @if (@Model.Series[13].Team2GamesWon > Model.Series[13].Team1GamesWon && (@Model.Series[13].Team1GamesWon != 0 || Model.Series[13].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[13].Team2Name">@Model.Series[13].Team2Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[13].Team2Name">@Model.Series[13].Team2Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[13].Team2GamesWon</td>
+                        <td rowspan="2"> &#160; </td>
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2" style="text-align:center;"> &#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;"></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;"></td>
+                        <td rowspan="2" style="text-align:center;">&#160;</td>
+                    }
+                </tr>
+
+
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                        <span style="color:#ffffff;"><b>W @Model.Series[6].Team1StandingsPosition</b></span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        @if (@Model.Series[6].Team1GamesWon > Model.Series[6].Team2GamesWon && (@Model.Series[6].Team1GamesWon != 0 || Model.Series[6].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[6].Team1Name">@Model.Series[6].Team1Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[6].Team1Name">@Model.Series[6].Team1Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[6].Team1GamesWon</td>
+                    <td rowspan="2"> &#160; </td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                        <span style="color:#ffffff;">W @Model.Series[6].Team2StandingsPosition</span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        @if (@Model.Series[6].Team2GamesWon > Model.Series[6].Team1GamesWon && (@Model.Series[6].Team1GamesWon != 0 || Model.Series[6].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[6].Team2Name">@Model.Series[6].Team2Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[6].Team2Name">@Model.Series[6].Team2Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[6].Team2GamesWon</td>
+                    <td rowspan="6">&#160;</td>
+                </tr>
+
+
+                <tr>
+                    @if (Model.AreQuarterFinalsFinished)
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2"> &#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;"><b>W @Model.Series[11].Team1StandingsPosition</b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                            @if (@Model.Series[11].Team1GamesWon > Model.Series[11].Team2GamesWon && (@Model.Series[11].Team1GamesWon != 0 || Model.Series[11].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[11].Team1Name">@Model.Series[11].Team1Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[11].Team1Name">@Model.Series[11].Team1Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;"> @Model.Series[11].Team1GamesWon</td>
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2"> &#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;"><b></b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;"> </td>
+                    }
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" colspan="3" style="text-align:center;"></td>
+                </tr>
+                <tr>
+                    @if (Model.AreQuarterFinalsFinished)
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2"> &#160; </td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;">W @Model.Series[11].Team2StandingsPosition</span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                            @if (@Model.Series[11].Team2GamesWon > Model.Series[11].Team1GamesWon && (@Model.Series[11].Team1GamesWon != 0 || Model.Series[11].Team2GamesWon != 0))
+                            {
+                                <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[11].Team2Name">@Model.Series[11].Team2Name</a></b>
+                            }
+                            else
+                            {
+                                <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[11].Team2Name">@Model.Series[11].Team2Name</a>
+                            }
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[11].Team2GamesWon</td>
+                        <td rowspan="2"> &#160; </td>
+                    }
+                    else
+                    {
+                        <td height="7"></td>
+                        <td rowspan="2"> &#160;</td>
+                        <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                            <span style="color:#ffffff;"><b></b></span>
+                        </td>
+                        <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        </td>
+                        <td rowspan="2" style="text-align:center;border:1px solid #600;"> </td>
+                    }
+                </tr>
+
+
+                <tr>
+                    <td height="7"></td>
+                    <td rowspan="2" style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                        <span style="color:#ffffff;"><b>W @Model.Series[7].Team1StandingsPosition</b></span>
+                    </td>
+                    <td rowspan="2" style="border:1px solid #600;padding-left:0.3em">
+                        @if (@Model.Series[7].Team1GamesWon > Model.Series[7].Team2GamesWon && (@Model.Series[7].Team1GamesWon != 0 || Model.Series[7].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[7].Team1Name">@Model.Series[7].Team1Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[7].Team1Name">@Model.Series[7].Team1Name</a>
+                        }
+                    </td>
+                    <td rowspan="2" style="text-align:center;border:1px solid #600;">@Model.Series[7].Team1GamesWon</td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                </tr>
+                <tr>
+                    <td height="7"></td>
+                    <td style="text-align:center;background-color:#8b0000;border:1px solid #600;">
+                        <span style="color:#ffffff;">W @Model.Series[7].Team2StandingsPosition</span>
+                    </td>
+                    <td style="border:1px solid #600;padding-left:0.3em">
+                        @if (@Model.Series[7].Team2GamesWon > Model.Series[7].Team1GamesWon && (@Model.Series[7].Team1GamesWon != 0 || Model.Series[7].Team2GamesWon != 0))
+                        {
+                            <b><a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[7].Team2Name">@Model.Series[7].Team2Name</a></b>
+                        }
+                        else
+                        {
+                            <a class="playoff-team-name" href="/Teams/TeamDetails/@Model.Series[7].Team2Name">@Model.Series[7].Team2Name</a>
+                        }
+                    </td>
+                    <td style="text-align:center;border:1px solid #600;">@Model.Series[7].Team2GamesWon</td>
+                    <td> &#160;</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="py-4 mr-0 ml-3 pr-0 col-md-4 ml-0 container-fluid series-links-block">
+            <div class="container-fluid p-0 mb-2 ">
+                <div class="w-100 mb-1 text-center series-links-title">Quarter-Finals</div>
+
+                @if (Model.Series[0] != null)
+                {
+                    <div class="w-100 text-center">
+                        <a class="w-100 p-0 m-0 btn btn-primary"
+                           href="/Series/SeriesOverview/@Model.Series[0].Conference&@Model.Series[0].Stage/@Model.Series[0].Id"
+                           role="button">@Model.Series[0].Team1Name - @Model.Series[0].Team2Name</a>
+                    </div>
+                }
+                @if (Model.Series[1] != null)
+                {
+                    <div class="w-100 text-center">
+                        <a class="w-100 p-0 m-0 btn btn-primary"
+                           href="/Series/SeriesOverview/@Model.Series[1].Conference&@Model.Series[1].Stage/@Model.Series[1].Id"
+                           role="button">@Model.Series[1].Team1Name - @Model.Series[1].Team2Name</a>
+                    </div>
+                }
+                @if (Model.Series[2] != null)
+                {
+                    <div class="w-100 text-center">
+                        <a class="w-100 p-0 m-0 btn btn-primary"
+                           href="/Series/SeriesOverview/@Model.Series[2].Conference&@Model.Series[1].Stage/@Model.Series[2].Id"
+                           role="button">@Model.Series[2].Team1Name - @Model.Series[2].Team2Name</a>
+                    </div>
+                }
+                @if (Model.Series[3] != null)
+                {
+                    <div class="w-100 text-center">
+                        <a class="w-100 p-0 m-0 btn btn-primary"
+                           href="/Series/SeriesOverview/@Model.Series[0].Conference&@Model.Series[3].Stage/@Model.Series[3].Id"
+                           role="button">@Model.Series[3].Team1Name - @Model.Series[3].Team2Name</a>
+                    </div>
+                }
+            </div>
+
+            <div class="container-fluid p-0 mb-2">
+                @if (Model.Series[4] != null)
+                {
+                    <div class="w-100 text-center">
+                        <a class="w-100 p-0 m-0 btn btn-secondary"
+                           href="/Series/SeriesOverview/@Model.Series[4].Conference&@Model.Series[4].Stage/@Model.Series[4].Id"
+                           role="button">@Model.Series[4].Team1Name - @Model.Series[4].Team2Name</a>
+                    </div>
+                }
+                @if (Model.Series[5] != null)
+                {
+                    <div class="w-100 text-center">
+                        <a class="w-100 p-0 m-0 btn btn-secondary"
+                           href="/Series/SeriesOverview/@Model.Series[5].Conference&@Model.Series[5].Stage/@Model.Series[5].Id"
+                           role="button">@Model.Series[5].Team1Name - @Model.Series[5].Team2Name</a>
+                    </div>
+                }
+                @if (Model.Series[6] != null)
+                {
+                    <div class="w-100 text-center">
+                        <a class="w-100 p-0 m-0 btn btn-secondary"
+                           href="/Series/SeriesOverview/@Model.Series[6].Conference&@Model.Series[6].Stage/@Model.Series[6].Id"
+                           role="button">@Model.Series[6].Team1Name - @Model.Series[6].Team2Name</a>
+                    </div>
+                }
+                @if (Model.Series[7] != null)
+                {
+                    <div class="w-100 text-center">
+                        <a class="w-100 p-0 m-0 btn btn-secondary"
+                           href="/Series/SeriesOverview/@Model.Series[7].Conference&@Model.Series[7].Stage/@Model.Series[7].Id"
+                           role="button">@Model.Series[7].Team1Name - @Model.Series[7].Team2Name</a>
+                    </div>
+                }
+            </div>
+
+            @if (Model.Series.Count() > 8)
+            {
+                <div class="container-fluid p-0 mb-2">
+                    <div class="w-100 mb-1 text-center series-links-title">Semi-Finals</div>
+
+                    @if (Model.Series[8] != null)
+                    {
+                        <div class="w-100 text-center">
+                            <a class="w-100 p-0 m-0 btn btn-primary"
+                               href="/Series/SeriesOverview/@Model.Series[8].Conference&@Model.Series[8].Stage/@Model.Series[8].Id"
+                               role="button">@Model.Series[8].Team1Name - @Model.Series[8].Team2Name</a>
+                        </div>
+                    }
+                    @if (Model.Series[9] != null)
+                    {
+                        <div class="w-100 text-center">
+                            <a class="w-100 p-0 m-0 btn btn-primary"
+                               href="/Series/SeriesOverview/@Model.Series[9].Conference&@Model.Series[9].Stage/@Model.Series[9].Id"
+                               role="button">@Model.Series[9].Team1Name - @Model.Series[9].Team2Name</a>
+                        </div>
+                    }
+                </div>
+
+                <div class="container-fluid p-0 mb-2">
+                    @if (Model.Series[10] != null)
+                    {
+                        <div class="w-100 text-center">
+                            <a class="w-100 p-0 m-0 btn btn-secondary"
+                               href="/Series/SeriesOverview/@Model.Series[10].Conference&@Model.Series[10].Stage/@Model.Series[10].Id"
+                               role="button">@Model.Series[10].Team1Name - @Model.Series[10].Team2Name</a>
+                        </div>
+                    }
+                    @if (Model.Series[11] != null)
+                    {
+                        <div class="w-100 text-center">
+                            <a class="w-100 p-0 m-0 btn btn-secondary"
+                               href="/Series/SeriesOverview/@Model.Series[11].Conference&@Model.Series[11].Stage/@Model.Series[11].Id"
+                               role="button">@Model.Series[11].Team1Name - @Model.Series[11].Team2Name</a>
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (Model.Series.Count() > 12)
+            {
+                <div class="container-fluid p-0 mb-2">
+                    <div class="w-100 mb-1 text-center series-links-title">Conference-Finals</div>
+
+                    @if (Model.Series[12] != null)
+                    {
+                        <div class="w-100 text-center mb-2">
+                            <a class="w-100 p-0 m-0 btn btn-primary"
+                               href="/Series/SeriesOverview/@Model.Series[12].Conference&@Model.Series[12].Stage/@Model.Series[12].Id"
+                               role="button">@Model.Series[12].Team1Name - @Model.Series[12].Team2Name</a>
+                        </div>
+                    }
+                    @if (Model.Series[13] != null)
+                    {
+                        <div class="w-100 text-center">
+                            <a class="w-100 p-0 m-0 btn btn-secondary"
+                               href="/Series/SeriesOverview/@Model.Series[13].Conference&@Model.Series[13].Stage/@Model.Series[13].Id"
+                               role="button">@Model.Series[13].Team1Name - @Model.Series[13].Team2Name</a>
+                        </div>
+                    }
+                </div>
+            }
+
+            @if (Model.Series.Count() > 14)
+            {
+                <div class="container-fluid p-0 mb-2">
+                    <div class="w-100 mb-1 text-center series-links-title">Finals</div>
+
+                    @if (Model.Series[14] != null)
+                    {
+                        <div class="w-100 text-center mb-2">
+                            <a class="w-100 p-0 m-0 btn btn-dark"
+                               href="/Series/SeriesOverview/@Model.Series[14].Conference&@Model.Series[14].Stage/@Model.Series[14].Id"
+                               role="button">@Model.Series[14].Team1Name - @Model.Series[14].Team2Name</a>
+                        </div>
+                    }
+                </div>
+            }
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="container-fluid row">
+                    <a class="w-100 p-0 my-0 mx-1 btn btn-dark col-md-4"
+                       href="/Playoffs/FinishQuarterFinals/@Model.Id"
+                       role="button">Finish Quarter-Finals</a>
+                    @if (Model.AreQuarterFinalsFinished)
+                    {
+
+                        <a class="w-100 p-0 my-0 mx-1 btn btn-dark col-md-4"
+                           href="/Playoffs/FinishSemiFinals/@Model.Id"
+                           role="button">Finish Semi-Finals</a>
+                        if (Model.AreSemiFinalsFinished)
+                        {
+                            <a class="w-100 p-0 my-0 mx-1 btn btn-dark col-md-4"
+                               href="/Playoffs/FinishConferenceFinals/@Model.Id"
+                               role="button">Finish Finals</a>
+                        }
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}
 
 

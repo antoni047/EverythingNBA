@@ -150,5 +150,19 @@
 
             return RedirectToAction("PlayoffBracket", playoffId);
         }
+
+        [HttpPost]
+        [Route("[controller]/[action]/{playoffId:int}")]
+        public async Task<IActionResult> SetStartingSeries(int playoffId)
+        {
+            var playoff = await this.playoffService.GetDetailsAsync(playoffId);
+            var season = await this.seasonService.GetDetailsAsync((int)playoff.SeasonId);
+            await this.playoffService.SetStartingSeries(playoffId);
+
+            TempData["Message"] = "Playoff bracket created successfully";
+            TempData["Type"] = "Success";
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
