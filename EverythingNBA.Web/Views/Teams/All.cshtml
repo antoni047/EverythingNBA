@@ -3,6 +3,21 @@
 
 @{
     ViewData["Title"] = "Teams";
+    var message = TempData["Message"] as string;
+    var type = TempData["Type"] as string;
+}
+
+@if (message != null)
+{
+    if (type == "Success")
+    {
+        @await Html.PartialAsync("/Views/Shared/_SuccessBoxPartial.cshtml", message);
+    }
+    else
+    {
+        @await Html.PartialAsync("/Views/Shared/_ErrorBoxPartial.cshtml", message);
+    }
+
 }
 
 <div class="p-3 m-0">
@@ -12,7 +27,7 @@
     {
         <div class="ml-4 row">
             <img class="home-team-logo" src="@team.Image" alt="" />
-            
+
             <h3>
                 <a class="ml-2 mb-1 container-fluid w-100 player-name" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@team.Name">@team.Name</a>
             </h3>

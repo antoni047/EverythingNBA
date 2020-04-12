@@ -82,8 +82,20 @@
 
             var team = await this.teamService.GetTeamDetailsAsync(model.CurrentTeam, year);
 
-            await this.playerService.AddPlayerAsync(model.FirstName, model.LastName, team.Id, model.RookieYear, model.Age, model.Height,
+            var player = await this.playerService.AddPlayerAsync(model.FirstName, model.LastName, team.Id, model.RookieYear, model.Age, model.Height,
                 model.Weight, model.Position, model.IsStarter, model.Image ,model.ShirtNumber, model.InstagramLink, model.TwitterLink);
+
+            //Success notification data 
+            if (player.Split(" ")[0] == "Success")
+            {
+                TempData["Message"] = "Player added successfully";
+                TempData["Type"] = "Success";
+            }
+            else
+            {
+                TempData["Message"] = "Player not added";
+                TempData["Type"] = "Success";
+            }
 
             return RedirectToAction("All");
         }
@@ -111,6 +123,9 @@
 
             await this.playerService.EditPlayerAsync(model, inputModel.Id, inputModel.Image);
 
+            TempData["Message"] = "Player edited successfully";
+            TempData["Type"] = "Success";
+
             return RedirectToAction("PlayerDetails", new { inputModel.Id });
         }
 
@@ -126,7 +141,19 @@
         [HttpPost]
         public async Task<IActionResult> Delete(PlayerDetailsServiceModel model)
         {
-            await this.playerService.DeletePlayerAsync(model.Id);
+            var deleted = await this.playerService.DeletePlayerAsync(model.Id);
+
+            if (deleted == true)
+            {
+                TempData["Message"] = "Player deleted successfully";
+                TempData["Type"] = "Success";
+            }
+            else
+            {
+                TempData["Message"] = "Player not deleted";
+                TempData["Type"] = "Error";
+            }
+            
 
             return RedirectToAction("All");
         }

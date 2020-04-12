@@ -51,7 +51,19 @@
                 return this.View(model);
             }
 
-            var awardId = await this.awardService.AddAwardAsync(model.Type, model.Year, model.Winner, model.WinnerTeam);
+            var award = await this.awardService.AddAwardAsync(model.Type, model.Year, model.Winner, model.WinnerTeam);
+
+            //Success notification data 
+            if (award.Split(" ")[0] == "Success")
+            {
+                TempData["Message"] = "Award added successfully";
+                TempData["Type"] = "Success";
+            }
+            else
+            {
+                TempData["Message"] = "Award already exists";
+                TempData["Type"] = "Error";
+            }
 
             return RedirectToAction("All");
         }
@@ -75,6 +87,10 @@
             {
                 return this.View(model);
             }
+
+            //Success notification data 
+            TempData["Message"] = "Award added successfully";
+            TempData["Type"] = "Success";
 
             await this.awardService.EditAwardWinnerAsync(model.Winner, model.Id);
             return RedirectToAction("All");

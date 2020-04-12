@@ -5,6 +5,21 @@
     var team1 = Model.Team1Name.Split(" ").Last();
     var team2 = Model.Team2Name.Split(" ").Last();
     ViewData["Title"] = $"{team1} - {team2} Series";
+    var message = TempData["Message"] as string;
+    var type = TempData["Type"] as string;
+}
+
+@if (message != null)
+{
+    if (type == "Success")
+    {
+        @await Html.PartialAsync("/Views/Shared/_SuccessBoxPartial.cshtml", message);
+    }
+    else
+    {
+        @await Html.PartialAsync("/Views/Shared/_ErrorBoxPartial.cshtml", message);
+    }
+
 }
 
 <h3 class=" m-1 w-100 text-center p-3 border-dark border-bottom">@Model.Team1Name - @Model.Team2Name, @Model.Team1GamesWon - @Model.Team2GamesWon, @Model.Conference Conference @Model.Stage</h3>

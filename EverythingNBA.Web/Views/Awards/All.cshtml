@@ -3,6 +3,20 @@
 
 @{
     ViewData["Title"] = "All Awards";
+    var message = TempData["Message"] as string;
+    var type = TempData["Type"] as string;
+}
+
+@if (message != null)
+{
+    if (type == "Success")
+    {
+        @await Html.PartialAsync("/Views/Shared/_SuccessBoxPartial.cshtml", message);
+    }
+    else
+    {
+        @await Html.PartialAsync("/Views/Shared/_ErrorBoxPartial.cshtml", message);
+    }
 }
 
 <div class="container-fluid mx-3">

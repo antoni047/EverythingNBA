@@ -31,7 +31,7 @@
             this.seasonService = seasonService;
         }
 
-        public async Task<int> AddPlayerAsync(string firstName, string lastName, int teamId, int? rookieYear, int age, int height, int weight,
+        public async Task<string> AddPlayerAsync(string firstName, string lastName, int teamId, int? rookieYear, int age, int height, int weight,
             string position, bool isStarter, IFormFile imageFile, int shirtNumber, string instagramLink, string twitterLink)
         {
             var imageId = await this.imageService.UploadImageAsync(imageFile);
@@ -54,10 +54,15 @@
 
             };
 
+            if (this.db.Players.Contains(playerObj))
+            {
+                return "Error" + " " + playerObj.Id;
+            }
+
             await this.db.Players.AddAsync(playerObj);
             await this.db.SaveChangesAsync();
 
-            return playerObj.Id;
+            return "Success" + " " + playerObj.Id;
 
         }
 
@@ -79,12 +84,12 @@
 
         public async Task<ICollection<string>> GetAllPlayersAsync(int page = 1)
         {
-             return await this.db.Players
-                .OrderBy(p => p.FirstName)
-                .Select(p => p.FirstName + " " + p.LastName)
-                .Skip((page - 1) * PlayersPageSize)
-                .Take(PlayersPageSize)
-                .ToListAsync();
+            return await this.db.Players
+               .OrderBy(p => p.FirstName)
+               .Select(p => p.FirstName + " " + p.LastName)
+               .Skip((page - 1) * PlayersPageSize)
+               .Take(PlayersPageSize)
+               .ToListAsync();
         }
 
         public async Task<int> TotalPlayers() => await this.db.Players.CountAsync();
@@ -165,15 +170,15 @@
             double averageSteals = steals.Any() ? steals.Average() : 0;
             double averageBlocks = blocks.Any() ? blocks.Average() : 0;
 
-            double averageThreePercentage = threesAttempted.Any() && threesMade.Any() 
-                ? threesMade.Average() != 0 && threesAttempted.Average() != 0 
+            double averageThreePercentage = threesAttempted.Any() && threesMade.Any()
+                ? threesMade.Average() != 0 && threesAttempted.Average() != 0
                 ? (threesMade.Average() / threesAttempted.Average()) * 100 : 0 : 0;
 
             double averageFreeThrowPercentage = freeThrowsMade.Any() && freeThrowsAttempted.Any()
                 ? freeThrowsMade.Average() != 0 && freeThrowsAttempted.Average() != 0
-                ? (freeThrowsMade.Average() / freeThrowsAttempted.Average()) * 100 : 0 :0;
+                ? (freeThrowsMade.Average() / freeThrowsAttempted.Average()) * 100 : 0 : 0;
 
-            double averageFieldGoalPercentage = fieldGoalsMade.Any() && fieldGoalsAttempted.Any() 
+            double averageFieldGoalPercentage = fieldGoalsMade.Any() && fieldGoalsAttempted.Any()
                 ? fieldGoalsMade.Average() != 0 && fieldGoalsAttempted.Average() != 0
                 ? (fieldGoalsMade.Average() / fieldGoalsAttempted.Average()) * 100 : 0 : 0;
 
@@ -233,11 +238,11 @@
             var model = new PlayerCareerStatisticServiceModel
             {
                 AveragePoints = totalPoints != 0 ? Math.Round(totalPoints / gamesPlayed, 0) : 0,
-                AverageAssists = totalAssists != 0 ? Math.Round(totalAssists / gamesPlayed, 0): 0,
+                AverageAssists = totalAssists != 0 ? Math.Round(totalAssists / gamesPlayed, 0) : 0,
                 AverageRebounds = totalRebounds != 0 ? Math.Round(totalRebounds / gamesPlayed, 0) : 0,
                 AverageSteals = totalSteals != 0 ? Math.Round(totalSteals / gamesPlayed, 0) : 0,
                 AverageBlocks = totalBlocks != 0 ? Math.Round(totalBlocks / gamesPlayed, 0) : 0,
-                AverageFieldGoalPercentage = totalFGPercentage  != 0 ? Math.Round(totalFGPercentage / gamesPlayed, 0) : 0,
+                AverageFieldGoalPercentage = totalFGPercentage != 0 ? Math.Round(totalFGPercentage / gamesPlayed, 0) : 0,
                 AverageFreeThrowPercentage = totalFTPercentage != 0 ? Math.Round(totalFTPercentage / gamesPlayed, 0) : 0,
                 AverageThreePercentage = totalThreePercentage != 0 ? Math.Round(totalThreePercentage / gamesPlayed, 0) : 0
             };

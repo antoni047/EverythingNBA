@@ -20,7 +20,7 @@
             this.db = db;
         }
 
-        public async Task<int> AddAwardAsync(string name, int year, string winnerName, string winnerTeamName)
+        public async Task<string> AddAwardAsync(string name, int year, string winnerName, string winnerTeamName)
         {
             var season = await this.db.Seasons.Include(s => s.Awards).Where(s => s.Year == year).FirstOrDefaultAsync();
             var player = await this.db.Players.Where(p => p.FirstName + " " + p.LastName == winnerName).FirstOrDefaultAsync();
@@ -34,10 +34,16 @@
                 WinnerTeamName = winnerTeamName
             };
 
+            if (season.Awards.Where(a => a.Year == year && a.Name == awardObj.Name).FirstOrDefault() != null)
+            {
+                return "Error" + " " + awardObj.Id;
+            }
+
             this.db.Awards.Add(awardObj);
             await this.db.SaveChangesAsync();
 
-            return awardObj.Id;
+
+            return "Success" + " " + awardObj.Id;
         }
 
         public async Task<bool> DeleteAwardAsync(int awardId)

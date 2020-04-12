@@ -8,7 +8,7 @@
 
     public interface IAwardService
     {
-        Task<int> AddAwardAsync(string name, int year, string winnerName, string winnerTeamName);
+        Task<string> AddAwardAsync(string name, int year, string winnerName, string winnerTeamName);
 
         Task<bool> DeleteAwardAsync(int awardId);
 

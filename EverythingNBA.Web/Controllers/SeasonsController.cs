@@ -70,7 +70,7 @@
 
             var playoffId = await this.playoffService.AddPlayoffAsync(seasonId);
 
-            await this.playoffService.SetStartingSeries(playoffId);
+            //await this.playoffService.SetStartingSeries(playoffId);
 
             await this.seasonService.AddPlayoffAsync(seasonId, playoffId);
 
@@ -106,6 +106,9 @@
             model.TitleWinnerId = team.Id;
 
             await this.seasonService.EditSeasonAsync(model, inputModel.Id);
+
+            TempData["Message"] = "Season edited successfully";
+            TempData["Type"] = "Success";
 
             return RedirectToAction("All");
         }
