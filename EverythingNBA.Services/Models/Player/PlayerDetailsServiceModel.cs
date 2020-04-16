@@ -31,6 +31,10 @@
 
         public string TwitterLink { get; set; }
 
+        public string TeamPrimaryColorHex { get; set; }
+
+        public string TeamSecondaryColorHex { get; set; }
+
         public PlayerCareerStatisticServiceModel CareerStatistics { get; set; }
 
         public PlayerSeasonStatisticServiceModel SeasonStatistics { get; set; }

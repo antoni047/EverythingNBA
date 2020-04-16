@@ -26,16 +26,16 @@
     </div>
 
     <div class="col-md-6 p-0">
-        <div class="d-flex justify-content-center container-fluid row pr-0">
+        <div class="d-flex justify-content-center container-fluid row px-0 ml-0 text-primary" style="background-color: @Model.PrimaryColorHex;">
             <div class="col-md-2 py-3 border-right text-center team-name">@Model.AbbreviatedName</div>
             <div class="col-md-8 py-2 text-center team-name" style="font-size: 30px">@Model.Name</div>
             <div class="col-md-2 py-3 border-left text-center team-name">@ViewBag.Year</div>
         </div>
-        <div class="mr-3 team-standings">
+        <div class="team-standings">
             @await Html.PartialAsync("_TeamStandingsTablePartial", Model)
         </div>
         <h4 class="w-100 text-center recent-games-title">Recent Games</h4>
-        <div class="container-fluid row pr-0">
+        <div class="container-fluid row px-0 ml-0">
             @foreach (var game in Model.Last9Games)
             {
                 @await Html.PartialAsync("_TeamRecentGamesPartial", game)
@@ -54,10 +54,10 @@
     <div class="col-md-3 p-0 team-player-table">
         <table class="table">
             <thead>
-                <tr>
-                    <th>Players</th>
-                    <th>Age</th>
-                    <th>Pos.</th>
+                <tr class="container-fluid">
+                    <th class="col-md-8">Players</th>
+                    <th class="col-md-2">Age</th>
+                    <th class="col-md-2">Pos.</th>
                 </tr>
             </thead>
             <tbody>

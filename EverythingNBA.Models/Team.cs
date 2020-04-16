@@ -45,6 +45,10 @@
 
         public string Twitter { get; set; }
 
+        public string PrimaryColorHex { get; set; }
+
+        public string SecondaryColorHex { get; set; }
+
         public virtual ICollection<SeasonStatistic> SeasonsStatistics { get; set; } = new List<SeasonStatistic>();
         public virtual ICollection<Game> AwayGames { get; set; }
         public virtual ICollection<Game> GamesWon { get; set; }

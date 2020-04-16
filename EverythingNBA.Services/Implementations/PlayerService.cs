@@ -99,6 +99,7 @@
             var player = await this.db.Players
                 .Include(p => p.SingleGameStatistics)
                 .Include(p => p.CloudinaryImage)
+                .Include(p => p.Team)
                 .Where(p => p.Id == id)
                 .FirstOrDefaultAsync();
 
@@ -111,6 +112,8 @@
             model.SeasonStatistics = await this.GetSeasonStatistics(player.Id, season.SeasonId);
             model.CareerStatistics = await this.GetCareerStatistics(player.Id);
             model.RecentGames = await this.GetRecentGamesAsync(player.Id);
+            model.TeamPrimaryColorHex = player.Team.PrimaryColorHex;
+            model.TeamSecondaryColorHex = player.Team.SecondaryColorHex;
 
             return model;
         }

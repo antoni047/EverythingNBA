@@ -25,6 +25,10 @@
 
         public string Twitter { get; set; }
 
+        public string PrimaryColorHex { get; set; }
+
+        public string SecondaryColorHex  { get; set; }
+
         public ICollection<SeasonStatisticOverviewServiceModel> CurrentSeasonStatistic { get; set; }
 
         public ICollection<TeamGameOverviewServiceModel> Last9Games { get; set; }

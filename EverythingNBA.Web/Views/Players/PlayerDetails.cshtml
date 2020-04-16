@@ -25,7 +25,7 @@
         @await Html.PartialAsync("_PlayerBioPartial", Model)
     </div>
     <div class="col-md-9 px-0">
-        <div class="container-fluid row">
+        <div class="container-fluid row" style="background-color:@Model.TeamPrimaryColorHex">
             <div class="col-md-5 py-2 player-main-info text-center">
                 Name: @Model.FirstName @Model.LastName
             </div>

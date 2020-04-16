@@ -280,7 +280,7 @@
             {
                 return "Washington Wizards";
             }
-            else if (shortName == "PHO" || shortName == "Phoenix")
+            else if (shortName == "PHX" || shortName == "Phoenix")
             {
                 return "Phoenix Suns";
             }
