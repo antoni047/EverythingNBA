@@ -20,7 +20,9 @@
     {
         <tr class="text-center player-statistics-table">
             <td style="text-align: left; border: 1px solid black; font-size: 17px">
-            @player.PlayerName <a class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a></td>
+                <a class="game-player-link" href="/Players/PlayerDetails/@player.PlayerName"> @player.PlayerName</a>
+                <a class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a>
+            </td>
             <td style="border: 1px solid black;">@player.MinutesPlayed</td>
             <td style="border: 1px solid black;">@player.Points</td>
             <td style="border: 1px solid black;">@player.Assists</td>
@@ -53,7 +55,8 @@
     {
         <tr class="text-center player-statistics-table">
             <td style="text-align: left; border: 1px solid black; font-size: 17px">
-                @player.PlayerName <a  class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a>
+                <a class="game-player-link" href="/Players/PlayerDetails/@player.PlayerName"> @player.PlayerName</a>
+                <a class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a>
             </td>
             <td style="border: 1px solid black;">@player.MinutesPlayed</td>
             <td style="border: 1px solid black;">@player.Points</td>
