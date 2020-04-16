@@ -4,24 +4,33 @@
 <div class="border nba-scorebox p-1 m-0 col-md-3">
     <div asp-controller="" class="container row px-1 text-center">
         <h4 class="col-md-5 px-1"><a class="team-link" href="/Teams/TeamDetails/@Model.TeamHostShortName">@Model.TeamHostShortName</a></h4>
-        <h4 class="col-md-2 m-0 p-0">-</h4>
+        <h4 class="col-md-2 m-0 p-0 text-secondary">-</h4>
         <h4 class="col-md-5 px-1"><a class="team-link" href="/Teams/TeamDetails/@Model.Team2ShortName">@Model.Team2ShortName</a></h4>
     </div>
 
-    <div class="container-fluid row px-1 text-center">
-        @if (Model.Team2Points < Model.TeamHostPoints)
-        {
-            <h4 class="col-md-5 px-1 font-weight-bold">@Model.TeamHostPoints</h4>
-            <h4 class="col-md-2 m-0 p-0">-</h4>
-            <h4 class="col-md-5 px-1">@Model.Team2Points</h4>
-        }
-        else
-        {
-            <h4 class="col-md-5 px-1">@Model.TeamHostPoints</h4>
-            <h4 class="col-md-2 m-0 p-0">-</h4>
-            <h4 class="col-md-5 px-1 font-weight-bold">@Model.Team2Points</h4>
-        }
-    </div>
+    @if (!Model.IsFinished)
+    {
+        <div class="container-fluid px-1 text-center">
+            <h5 class="w-100 text-center">@Model.Venue</h5>
+        </div>
+    }
+    else
+    {
+        <div class="container-fluid row px-1 text-center">
+            @if (Model.Team2Points < Model.TeamHostPoints)
+            {
+                <h4 class="col-md-5 px-1 font-weight-bold"><b><u>@Model.TeamHostPoints</u></b></h4>
+                <h4 class="col-md-2 m-0 p-0">-</h4>
+                <h4 class="col-md-5 px-1">@Model.Team2Points</h4>
+            }
+            else
+            {
+                <h4 class="col-md-5 px-1">@Model.TeamHostPoints</h4>
+                <h4 class="col-md-2 m-0 p-0">-</h4>
+                <h4 class="col-md-5 px-1 font-weight-bold"><b><u>@Model.Team2Points</u></b></h4>
+            }
+        </div>
+    }
 
     <a asp-controller="Games" asp-action="GameDetails" asp-route-gameId="@Model.Id">
         <i><b class="home-game-link">Game Details</b></i>

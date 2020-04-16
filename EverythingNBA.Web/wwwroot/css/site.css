@@ -12,11 +12,7 @@ a {
   color: #0366d6;
 }
 
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
+
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;
@@ -63,6 +59,34 @@ html {
     background-color: dimgray;
 }
 
+.btn-primary {
+    color: white;
+    background-color: #2177fb;
+    border-color: white;
+}
+
+.btn-secondary {
+    color: black;
+    background-color: #f12222;
+    border-color: black
+}
+
+.bg-primary {
+    background-color: #2177fb;
+}
+
+.bg-secondary {
+    background-color: #f12222 !important;
+}
+
+.text-primary {
+    color: white !important;
+}
+
+.text-secondary{
+    color: black !important;
+}
+
 
 .alert {
     z-index: 1;
@@ -77,7 +101,7 @@ html {
 /*Navbar*/
 .navbar-nba {
     background: #ebebeb;
-    border-bottom: 2.5px solid #1861ac;
+    border-bottom: 2.5px solid #2177fb;
 }
 
 .nav-item {
@@ -88,8 +112,8 @@ html {
 .red-line {
     margin-bottom: 0px;
     margin-top: 0px;
-    background: #f00;
-    border-bottom: 2.5px solid #f00;
+    background: #f12222;
+    border-bottom: 2.5px solid #f12222;
 }
 
 .logout-btn{
@@ -109,7 +133,9 @@ html {
 .section-title {
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 20px;
+    background-color: #2177fb;
+    color: white;
 }
 
 .navbar {
@@ -125,6 +151,8 @@ html {
 .nba-scorebox {
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
+    background: #f12222;
+    color: white;
 }
 .standings-title{
     height: 40px;
@@ -558,6 +586,7 @@ home-game-link {
     background-color: none;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
+    color: white
 }
 
 /*Font Awesome Icons*/

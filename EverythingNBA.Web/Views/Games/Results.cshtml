@@ -23,7 +23,7 @@
 <div class="container-fluid m-3 p-0 border-top">
     @foreach (var date in Model.Dates)
     {
-        <div class="section-title ml-4 px-2 mt-1 text-center ">@date.DayOfWeek @date.Day/@date.Month</div>
+        <div class="section-title pl-4 pr-2 pt-1 text-center ">@date.DayOfWeek @date.Day/@date.Month</div>
         <div class="container-fluid row m-0 p-4 border">
             @if (!Model.Games.Where(g => g.Date.Split("/")[0] == date.Day.ToString()).Any())
             {

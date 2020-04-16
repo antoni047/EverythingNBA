@@ -6,16 +6,16 @@
 }
 
 <div class="container-fluid row m-3 p-0">
-    <table class="standings-table table table-border col-md-6 w-100">
-        <thead class="standings-table-head">
+    <table class="ml-3 standings-table table table-border w-100">
+        <thead class="standings-table-head" style="background-color: #f12222">
             <tr>
-                <th class="p-0 text-center border-right">#</th>
-                <th class="py-0 pr-0 pl-1 ">Western</th>
-                <th class="p-0 text-center">W</th>
-                <th class="p-0 text-center">L</th>
-                <th class="p-0 text-center">W%</th>
-                <th class="p-0 text-center">L10</th>
-                <th class="p-0 text-center">GP</th>
+                <th class="p-2 text-center border-right">#</th>
+                <th class="p-1 ">Western</th>
+                <th class="p-2 text-center">W</th>
+                <th class="p-2 text-center">L</th>
+                <th class="p-2 text-center">W%</th>
+                <th class="p-2 text-center">L10</th>
+                <th class="p-2 text-center">GP</th>
             </tr>
         </thead>
         @{
@@ -25,29 +25,29 @@
         {
             <tr class="border">
                 <th scope="row" class="p-0 border-right text-center">@westernCounter</th>
-                <td class="py-0 pr-0 pl-1 ">
+                <td class="p-2 ">
                     <a class="standings-team-name p-0 m-0 w-100" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@team.Name">@team.Name</a>
                 </td>
-                <td class="p-0 text-center">@team.Wins</td>
-                <td class="p-0 text-center">@team.Losses</td>
-                <td class="p-0 text-center">@team.WinPercentage</td>
-                <td class="p-0 text-center">@team.LastTenGames</td>
-                <td class="p-0 text-center">@team.GamesPlayed</td>
+                <td class="p-2 text-center">@team.Wins</td>
+                <td class="p-2 text-center">@team.Losses</td>
+                <td class="p-2 text-center">@team.WinPercentage</td>
+                <td class="p-2 text-center">@team.LastTenGames</td>
+                <td class="p-2 text-center">@team.GamesPlayed</td>
             </tr>
             westernCounter++;
         }
     </table>
 
-    <table class="standings-table table table-border col-md-6">
-        <thead class="standings-table-head border-left">
+    <table class="mr-3 standings-table table table-border">
+        <thead class="standings-table-head border-left" style="background-color: #2177fb">
             <tr>
-                <th class="p-0 text-center border-right">#</th>
-                <th class="py-0 pr-0 pl-1 ">Eastern</th>
-                <th class="p-0 text-center">W</th>
-                <th class="p-0 text-center">L</th>
-                <th class="p-0 text-center">W%</th>
-                <th class="p-0 text-center">L10</th>
-                <th class="p-0 text-center">GP</th>
+                <th class="p-2 text-center border-right">#</th>
+                <th class="p-1 ">Eastern</th>
+                <th class="p-2 text-center">W</th>
+                <th class="p-2 text-center">L</th>
+                <th class="p-2 text-center">W%</th>
+                <th class="p-2 text-center">L10</th>
+                <th class="p-2 text-center">GP</th>
             </tr>
         </thead>
         @{
@@ -57,18 +57,20 @@
         {
             <tr class="border">
                 <th scope="row" class="p-0 border-right text-center">@easternCounter</th>
-                <td>
+                <td class="p-2">
                     <a class="standings-team-name p-0 m-0 w-100" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@team.Name">@team.Name</a>
                 </td>
-                <td class="p-0 text-center">@team.Wins</td>
-                <td class="p-0 text-center">@team.Losses</td>
-                <td class="p-0 text-center">@team.WinPercentage</td>
-                <td class="p-0 text-center">@team.LastTenGames</td>
-                <td class="p-0 text-center">@team.GamesPlayed</td>
+                <td class="p-2 text-center">@team.Wins</td>
+                <td class="p-2 text-center">@team.Losses</td>
+                <td class="p-2 text-center">@team.WinPercentage</td>
+                <td class="p-2 text-center">@team.LastTenGames</td>
+                <td class="p-2 text-center">@team.GamesPlayed</td>
             </tr>
             easternCounter++;
         }
     </table>
 
-    <a class="btn btn-primary ml-3" href="/Playoffs/PlayoffBracket/@ViewBag.Year">Playoff Bracket &nbsp; <i class="fas fa-chevron-right"></i></a>
+
 </div>
+
+<a class="btn btn-primary ml-3" href="/Playoffs/PlayoffBracket/@ViewBag.Year">Playoff Bracket &nbsp; <i class="fas fa-chevron-right"></i></a>
