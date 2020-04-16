@@ -225,7 +225,7 @@
             await db.SaveChangesAsync();
 
 
-            var games = await gameService.GetGamesOnDateAsync("04/04/2020");
+            var games = await gameService.GetGamesOnDateAsync(new DateTime(2020, 04, 04));
 
 
             Assert.Equal(1, games.Count);

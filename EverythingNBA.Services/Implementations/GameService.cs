@@ -123,15 +123,15 @@
             return models;
         }
 
-        public async Task<ICollection<GameDetailsServiceModel>> GetGamesOnDateAsync(string date)
+        public async Task<ICollection<GameDetailsServiceModel>> GetGamesOnDateAsync(DateTime date)
         {
-            var parsedDate = DateTime.ParseExact(date, "dd/MM/yyyy", null);
+            //var parsedDate = DateTime.ParseExact(date, "dd/MM/yyyy", null);
 
             var games = await this.db.Games
                 .Include(g => g.PlayerStats)
                 .Include(g => g.Team2)
                 .Include(g => g.TeamHost)
-                .Where(g => DateTime.Compare(g.Date, parsedDate) == 0)
+                .Where(g => g.Date.Date == date.Date)
                 .ToListAsync();
 
             var gameModels = new List<GameDetailsServiceModel>();

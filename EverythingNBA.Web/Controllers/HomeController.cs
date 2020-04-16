@@ -42,9 +42,9 @@
             var year = this.GetCurrentSeasonYear();
             var season = await this.seasonService.GetDetailsByYearAsync(year);
 
-            var gamesYesterday = await this.gameService.GetGamesOnDateAsync(DateTime.UtcNow.AddDays(-1).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
-            var gamesToday = await this.gameService.GetGamesOnDateAsync(DateTime.UtcNow.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
-            var gamesTomorrow = await this.gameService.GetGamesOnDateAsync(DateTime.UtcNow.AddDays(1).ToString("dd/MM/yyyy", CultureInfo.InvariantCulture));
+            var gamesYesterday = await this.gameService.GetGamesOnDateAsync(DateTime.UtcNow.AddDays(-1));
+            var gamesToday = await this.gameService.GetGamesOnDateAsync(DateTime.UtcNow);
+            var gamesTomorrow = await this.gameService.GetGamesOnDateAsync(DateTime.UtcNow.AddDays(1));
             var teamStandings = await this.teamService.GetStandingsAsync(season.SeasonId);
 
             var westernShortTeamStandings = new List<ShortTeamStandingsViewModel>();
