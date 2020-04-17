@@ -44,6 +44,10 @@ html {
     }
 }
 
+.a:hover{
+    color: none;
+}
+
 .border-top {
   border-top: 1px solid #e5e5e5;
 }
@@ -87,6 +91,11 @@ html {
     color: black !important;
 }
 
+.border-dark{
+    border-color: black;
+    border: 1px solid;
+}
+
 
 .alert {
     z-index: 1;
@@ -99,8 +108,8 @@ html {
 
 
 /*Navbar*/
-.navbar-nba {
-    background: #ebebeb;
+.navbar {
+    background-color: #ebebeb;
     border-bottom: 2.5px solid #2177fb;
 }
 
@@ -206,8 +215,7 @@ counter{
 /*Seasons*/
 .all-seasons-link {
     text-decoration: none;
-    background-color: none;
-    color: black;
+    color: white;
     font-size: 18px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
@@ -215,8 +223,8 @@ counter{
 
 .all-seasons-link-year {
     text-decoration: none;
-    background-color: none;
-    color: black;
+    background-color: #2177fb;
+    color: white;
     font-size: 21px;
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
@@ -237,7 +245,7 @@ counter{
 
 .btn-primary {
     color: #ffffff;
-    background: #00008b;
+    background: #2177fb;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 17px;
@@ -249,7 +257,7 @@ btn-light {
 
 .btn-secondary {
     color: black;
-    background: #8b0000;
+    background: #f10000;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 17px;
@@ -372,7 +380,8 @@ btn-light {
 }
 
 .player-image {
-    
+    height: 450px;
+    width: 453px;
     border: 1px solid black;
 }
 
@@ -394,11 +403,6 @@ btn-light {
     font-size: 14px;
 }
 
-.player-statistics-head{
-    background-color: #00008b;
-    color: white;
-}
-
 .player-statistics-table-head {
     background-color: black;
     color: white;
@@ -414,7 +418,6 @@ btn-light {
 
 .player-table-container {
     padding-left: 0rem;
-    padding-right: 1.85rem;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
     font-size: 18px;
@@ -441,15 +444,9 @@ btn-light {
 }
 
 .game-player-link {
-    text-decoration: none;
-    color: black;
-}
-
-.game-player-link {
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
     text-decoration: none;
-    color: black;
 }
 
 .game-game-link {
@@ -487,7 +484,7 @@ btn-light {
 }
 
 .page-link {
-    color: #8b0000
+    color: #2177fb;
 }
 
 .fa-chevron-right{
@@ -499,8 +496,8 @@ btn-light {
 }
 
 .page-item.active .page-link {
-    background-color: #8b0000;
-    border-color: #8b0000;
+    background-color: #2177fb;
+    border-color: #2177fb;
 }
 
 
@@ -539,6 +536,12 @@ btn-info {
 }
 
 .team-link {
+    text-decoration: none;
+    background-color: none;
+    color: black;
+}
+
+.team-bio-link {
     text-decoration: none;
     background-color: none;
     color: white;

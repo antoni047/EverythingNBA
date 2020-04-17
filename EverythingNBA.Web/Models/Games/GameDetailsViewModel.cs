@@ -24,6 +24,14 @@
 
         public string Venue { get; set; }
 
+        public string TeamHostPrimaryColor { get; set; }
+
+        public string TeamHostSecondaryColor { get; set; }
+
+        public string Team2PrimaryColor { get; set; }
+
+        public string Team2SecondaryColor { get; set; }
+
         public ICollection<PlayerGameStatisticServiceModel> TeamHostPlayerStats { get; set; } = new HashSet<PlayerGameStatisticServiceModel>();
 
         public ICollection<PlayerGameStatisticServiceModel> Team2PlayerStats { get; set; } = new HashSet<PlayerGameStatisticServiceModel>();

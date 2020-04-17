@@ -24,8 +24,8 @@
     <div class="col-md-3 h-100 pr-0">
         @await Html.PartialAsync("_PlayerBioPartial", Model)
     </div>
-    <div class="col-md-9 px-0">
-        <div class="container-fluid row" style="background-color:@Model.TeamPrimaryColorHex">
+    <div class="col-md-9 px-0 mx-0">
+        <div class="container-fluid row px-0 mx-0" style="background-color:@Model.TeamPrimaryColorHex">
             <div class="col-md-5 py-2 player-main-info text-center">
                 Name: @Model.FirstName @Model.LastName
             </div>
@@ -36,11 +36,11 @@
                 #@Model.ShirtNumber
             </div>
         </div>
-        <div class="container-fluid player-table-container">
+        <div class="container-fluid player-table-container p-0">
             @await Html.PartialAsync("_PlayerStatisticsTablePartial", Model)
         </div>
         <h4 class="w-100 text-center recent-games-title">Recent Games</h4>
-        <div class="container-fluid row pl-3">
+        <div class="container-fluid row pl-3 pr-0">
             @foreach (var game in Model.RecentGames)
             {
                 @await Html.PartialAsync("_PlayerRecentGamePartial", game)

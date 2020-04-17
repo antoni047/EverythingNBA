@@ -1,8 +1,16 @@
 ﻿@using EverythingNBA.Services.Models.Team
 @model GetTeamDetailsServiceModel
 
+@{
+    var textColor = "white";
+    if (Model.SecondaryColorHex.StartsWith("#f") || Model.SecondaryColorHex.StartsWith("#eee") || Model.SecondaryColorHex.StartsWith("#c1"))
+    {
+        textColor = "black";
+    }
+}
+
 <table class="standings-table table table-border">
-    <thead class="standings-table-head border-left">
+    <thead class="standings-table-head border-left" style="background-color: @Model.SecondaryColorHex; color: @textColor">
         <tr>
             <th class="p-0 text-center border-right">#</th>
             <th class="py-0 pr-0 pl-1 ">@Model.Conference Conference Standings</th>

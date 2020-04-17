@@ -1,23 +1,32 @@
 ﻿@using EverythingNBA.Services.Models.Player
 @model PlayerDetailsServiceModel
 
-<div><img class="player-image w-100" src="@Model.ImageURL" alt="Player Image" /></div>
-<div class="text-center player-bio py-3 px-2">Age: @Model.Age</div>
-<div class="text-center player-bio py-3 px-2">Position: @Model.Position</div>
-<div class="text-center player-bio py-3 px-2">Height: @Model.Height cm</div>
-<div class="text-center player-bio py-3 px-2">Weight: @Model.Weight kg</div>
-<div class="text-center player-bio py-3 px-2">Rookie Year: @Model.RookieYear</div>
-<div class="text-center p-0 player-bio py-3 px-2">
+@if (!String.IsNullOrWhiteSpace(Model.ImageURL))
+{
+    <div><img class="w-100" style="width: 456px" src="@Model.ImageURL" alt="" /></div>
+}
+else
+{
+    <div class="player-image "><img class="w-100" src="https://res.cloudinary.com/bxgmxncloud/image/upload/v1587126999/hiclipart.com_qva8w1.png" alt="" /></div>
+}
+
+
+<div class="text-center player-bio py-3 px-2" style="background:@Model.TeamPrimaryColorHex">Age: @Model.Age</div>
+<div class="text-center player-bio py-3 px-2" style="background:@Model.TeamPrimaryColorHex">Position: @Model.Position</div>
+<div class="text-center player-bio py-3 px-2" style="background:@Model.TeamPrimaryColorHex">Height: @Model.Height cm</div>
+<div class="text-center player-bio py-3 px-2" style="background:@Model.TeamPrimaryColorHex">Weight: @Model.Weight kg</div>
+<div class="text-center player-bio py-3 px-2" style="background:@Model.TeamPrimaryColorHex">Rookie Year: @Model.RookieYear</div>
+<div class="text-center p-0 player-bio py-3 px-2" style="background:@Model.TeamPrimaryColorHex">
     <a class="player-link p-0 m-0 text-white" href="@Model.TwitterLink">
         <span style="display: block;">Twitter</span>
     </a>
 </div>
-<div class="text-center p-0 player-bio py-3 px-2">
+<div class="text-center p-0 player-bio py-3 px-2" style="background:@Model.TeamPrimaryColorHex">
     <a class="player-link p-0 m-0 text-white" href="@Model.InstagramLink">
         <span style="display: block;">Instagram</span>
     </a>
 </div>
-<div class="w-100 text-center player-bio py-3 px-2">
+<div class="w-100 text-center player-bio py-3 px-2" style="background:@Model.TeamPrimaryColorHex">
     <a class="player-link p-0 m-0 text-white" href="/Players/PlayerAccomplishments/@Model.Id">
         <span style="display: block;">Awards</span>
     </a>

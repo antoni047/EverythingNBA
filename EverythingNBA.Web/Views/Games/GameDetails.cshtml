@@ -7,6 +7,7 @@
     ViewData["Title"] = $"{team1} - {team2}";
     var message = TempData["Message"] as string;
     var type = TempData["Type"] as string;
+    
 }
 
 @if (message != null)
@@ -18,13 +19,14 @@
     <div class="row">
         <div class="col-md-2" style="border-bottom: 2px solid black"></div>
         <div class="container-fluid game-title text-center pt-2 mx-0 px-0 col-md-8">
-        <a href="/Teams/TeamDetails/@Model.TeamHostName">@Model.TeamHostName</a> 
+        <a class="team-link" href="/Teams/TeamDetails/@Model.TeamHostName">@Model.TeamHostName</a> 
             &#160; : &#160; 
-        <a href="/Teams/TeamDetails/@Model.Team2Name">@Model.Team2Name</a></div>
+        <a class="team-link" href="/Teams/TeamDetails/@Model.Team2Name">@Model.Team2Name</a></div>
         <div class="pl-3 pt-1 col-md-2 flex-row-reverse" style="border-bottom: 2px solid black">
-            <a class="p-1 mb-3 mx-0 mt-0 btn btn-secondary game-link text-center"
+            <a class="p-1 m-2 btn btn-secondary game-link text-center"
                href="/Games/HeadToHead/@Model.TeamHostName&@Model.Team2Name"
                role="button">HeadToHead</a>
+           
             @if (User.Identity.IsAuthenticated)
             {
                 <a href="/Games/EditGame/@Model.Id"><i class="p-1 fas fa-pen-square fa-2x"></i></a>

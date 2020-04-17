@@ -1,40 +1,48 @@
 ﻿@using EverythingNBA.Services.Models.Player
 @model PlayerDetailsServiceModel
 
+@{
+    var textColor = "white";
+    if (Model.TeamSecondaryColorHex.StartsWith("#f") || Model.TeamSecondaryColorHex.StartsWith("#eee") ||  Model.TeamSecondaryColorHex.StartsWith("#c1"))
+    {
+        textColor = "black";
+    }
+}
+
 <table class="table table-bordered player-statistics-table">
-    <thead class="player-statistics-table-head">
+    <thead class="player-statistics-table-head" style="background-color: @Model.TeamSecondaryColorHex; color: @textColor;">
         <tr class="text-center player-statistics-table">
             <th style="text-align: left; border: 1px solid black;"> Statistics</th>
-            <th style="border: 1px solid black;" title="Points per game">PPG</th>
-            <th style="border: 1px solid black;" title="Assits per game">APG</th>
-            <th style="border: 1px solid black;" title="Rebounds per game">RPG</th>
-            <th style="border: 1px solid black;" title="Blocks per game">BPG</th>
-            <th style="border: 1px solid black;" title="Steals per game">SPG</th>
-            <th style="border: 1px solid black;" title="Field goal percentage">FG%</th>
-            <th style="border: 1px solid black;" title="Three points percentage">3P%</th>
-            <th style="border: 1px solid black;" title="Free throw percentage">FT%</th>
+            <th class="border-dark" title="Points per game">PPG</th>
+            <th class="border-dark" title="Assits per game">APG</th>
+            <th class="border-dark" title="Rebounds per game">RPG</th>
+            <th class="border-dark" title="Blocks per game">BPG</th>
+            <th class="border-dark" title="Steals per game">SPG</th>
+            <th class="border-dark" title="Field goal percentage">FG%</th>
+            <th class="border-dark" title="Three points percentage">3P%</th>
+            <th class="border-dark" title="Free throw percentage">FT%</th>
         </tr>
     </thead>
     <tr class="text-center player-statistics-table">
-        <td style="text-align: left; background: black; color:white">Current Season</td>
-        <td style="border: 1px solid black;">@Model.SeasonStatistics.AveragePoints</td>
-        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageAssists</td>
-        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageRebounds</td>
-        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageBlocks</td>
-        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageSteals</td>
-        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageFieldGoalPercentage%</td>
-        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageThreePercentage%</td>
-        <td style="border: 1px solid black;">@Model.SeasonStatistics.AverageFreeThrowPercentage%</td>
+        <td class="border-dark" style="text-align: left; background: @Model.TeamSecondaryColorHex; color:@textColor">Current Season</td>
+        <td class="border-dark">@Model.SeasonStatistics.AveragePoints</td>
+        <td class="border-dark">@Model.SeasonStatistics.AverageAssists</td>
+        <td class="border-dark">@Model.SeasonStatistics.AverageRebounds</td>
+        <td class="border-dark">@Model.SeasonStatistics.AverageBlocks</td>
+        <td class="border-dark">@Model.SeasonStatistics.AverageSteals</td>
+        <td class="border-dark">@Model.SeasonStatistics.AverageFieldGoalPercentage%</td>
+        <td class="border-dark">@Model.SeasonStatistics.AverageThreePercentage%</td>
+        <td class="border-dark">@Model.SeasonStatistics.AverageFreeThrowPercentage%</td>
     </tr>
     <tr class="text-center player-statistics-table">
-        <td style="text-align: left; background: black; color:white">Career</td>
-        <td style="border: 1px solid black;">@Model.CareerStatistics.AveragePoints</td>
-        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageAssists</td>
-        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageRebounds</td>
-        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageBlocks</td>
-        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageSteals</td>
-        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageFieldGoalPercentage%</td>
-        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageThreePercentage%</td>
-        <td style="border: 1px solid black;">@Model.CareerStatistics.AverageFreeThrowPercentage%</td>
+        <td class="border-dark" style="text-align: left; background: @Model.TeamSecondaryColorHex; color:@textColor">Career</td>
+        <td class="border-dark">@Model.CareerStatistics.AveragePoints</td>
+        <td class="border-dark">@Model.CareerStatistics.AverageAssists</td>
+        <td class="border-dark">@Model.CareerStatistics.AverageRebounds</td>
+        <td class="border-dark">@Model.CareerStatistics.AverageBlocks</td>
+        <td class="border-dark">@Model.CareerStatistics.AverageSteals</td>
+        <td class="border-dark">@Model.CareerStatistics.AverageFieldGoalPercentage%</td>
+        <td class="border-dark">@Model.CareerStatistics.AverageThreePercentage%</td>
+        <td class="border-dark">@Model.CareerStatistics.AverageFreeThrowPercentage%</td>
     </tr>
 </table>

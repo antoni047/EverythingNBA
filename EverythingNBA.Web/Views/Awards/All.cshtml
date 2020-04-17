@@ -19,25 +19,25 @@
     }
 }
 
-<div class="container-fluid mx-3">
-    <table class="table border">
+<div class="container-fluid m-3">
+    <table class="table border-dark">
         <thead>
-            <tr class="text-center">
-                <th>Season</th>
-                <th>MVP</th>
-                <th>Finals' MVP</th>
-                <th>DPOTY</th>
-                <th>Top Scorer</th>
-                <th>ROTY</th>
-                <th>Sixth MOTY</th>
-                <th>MIP</th>
+            <tr class="text-center bg-primary text-primary" style="font-size: 22px">
+                <th class="border-right">Season</th>
+                <th class="border-right">MVP</th>
+                <th class="border-right">Finals' MVP</th>
+                <th class="border-right">DPOTY</th>
+                <th class="border-right">Top Scorer</th>
+                <th class="border-right">ROTY</th>
+                <th class="border-right">Sixth MOTY</th>
+                <th class="border-right">MIP</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var season in Model)
             {
-                <tr class="text-center">
-                    <td>@season.Year</td>
+                <tr class="text-center" style="font-size: 18px">
+                    <td class="bg-secondary text-primary font-weight-bold" style="font-size: 22px">@season.Year</td>
 
                     @if (@season.MVP != null)
                     {

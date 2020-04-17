@@ -1,27 +1,43 @@
 ﻿@using EverythingNBA.Web.Models.Games
 @model GameDetailsViewModel
 
+@{ 
+    var teamHostTextColor = "white";
+    var team2TextColor = "white";
+    if (Model.TeamHostSecondaryColor.StartsWith("#f") || Model.TeamHostSecondaryColor.StartsWith("#eee") || Model.TeamHostSecondaryColor.StartsWith("#c1"))
+    {
+        teamHostTextColor = "black";
+    }
+    if (Model.Team2SecondaryColor.StartsWith("#f") || Model.Team2SecondaryColor.StartsWith("#eee") || Model.Team2SecondaryColor.StartsWith("#c1"))
+    {
+        team2TextColor = "black";
+    }
+}
+
 <table class="table table-bordered game-statistic-table col-md-6">
-    <thead class="player-statistics-head">
+    <thead class="text-primary" style="background: @Model.TeamHostPrimaryColor">
         <tr class="text-center player-statistics-table">
             <th style="text-align: left; border: 1px solid black;">@Model.TeamHostName.Split("0").LastOrDefault()</th>
-            <th style="border: 1px solid black;" title="Points per game">Min</th>
-            <th style="border: 1px solid black;" title="Points per game">PTS</th>
-            <th style="border: 1px solid black;" title="Assits per game">AST</th>
-            <th style="border: 1px solid black;" title="Rebounds per game">REB</th>
-            <th style="border: 1px solid black;" title="Blocks per game">BLK</th>
-            <th style="border: 1px solid black;" title="Steals per game">STL</th>
-            <th style="border: 1px solid black;" title="Field goal percentage">FG%</th>
-            <th style="border: 1px solid black;" title="Three points percentage">3P%</th>
-            <th style="border: 1px solid black;" title="Free throw percentage">FT%</th>
+            <th class="border-dark" title="Minutes Played">Min</th>
+            <th class="border-dark" title="Points per game">PTS</th>
+            <th class="border-dark" title="Assits per game">AST</th>
+            <th class="border-dark" title="Rebounds per game">REB</th>
+            <th class="border-dark" title="Blocks per game">BLK</th>
+            <th class="border-dark" title="Steals per game">STL</th>
+            <th class="border-dark" title="Field goal percentage">FG%</th>
+            <th class="border-dark" title="Three points percentage">3P%</th>
+            <th class="border-dark" title="Free throw percentage">FT%</th>
         </tr>
     </thead>
     @foreach (var player in Model.TeamHostPlayerStats)
     {
         <tr class="text-center player-statistics-table">
-            <td style="text-align: left; border: 1px solid black; font-size: 17px">
-                <a class="game-player-link" href="/Players/PlayerDetails/@player.PlayerName"> @player.PlayerName</a>
-                <a class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a>
+            <td style="text-align: left; border: 1px solid black; font-size: 17px; background: @Model.TeamHostSecondaryColor;">
+                <a class="game-player-link" style="color: @teamHostTextColor" href="/Players/PlayerDetails/@player.PlayerName"> @player.PlayerName</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a>
+                }
             </td>
             <td style="border: 1px solid black;">@player.MinutesPlayed</td>
             <td style="border: 1px solid black;">@player.Points</td>
@@ -37,26 +53,29 @@
 </table>
 
 <table class="table table-bordered game-statistic-table col-md-6">
-    <thead class="player-statistics-head">
-        <tr class="text-center player-statistics-table">
-            <th style="text-align: left; border: 1px solid black;">@Model.Team2Name.Split("0").LastOrDefault()</th>
-            <th style="border: 1px solid black;" title="Points per game">Min</th>
-            <th style="border: 1px solid black;" title="Points per game">PTS</th>
-            <th style="border: 1px solid black;" title="Assits per game">AST</th>
-            <th style="border: 1px solid black;" title="Rebounds per game">REB</th>
-            <th style="border: 1px solid black;" title="Blocks per game">BLK</th>
-            <th style="border: 1px solid black;" title="Steals per game">STL</th>
-            <th style="border: 1px solid black;" title="Field goal percentage">FG%</th>
-            <th style="border: 1px solid black;" title="Three points percentage">3P%</th>
-            <th style="border: 1px solid black;" title="Free throw percentage">FT%</th>
+    <thead class="text-primary" style="background: @Model.Team2PrimaryColor">
+        <tr class="text-center border-dark">
+            <th style="text-align: left; border: 1px solid black; color:white">@Model.Team2Name.Split("0").LastOrDefault()</th>
+            <th class="border-dark" title="Points per game">Min</th>
+            <th class="border-dark" title="Points per game">PTS</th>
+            <th class="border-dark" title="Assits per game">AST</th>
+            <th class="border-dark" title="Rebounds per game">REB</th>
+            <th class="border-dark" title="Blocks per game">BLK</th>
+            <th class="border-dark" title="Steals per game">STL</th>
+            <th class="border-dark" title="Field goal percentage">FG%</th>
+            <th class="border-dark" title="Three points percentage">3P%</th>
+            <th class="border-dark" title="Free throw percentage">FT%</th>
         </tr>
     </thead>
     @foreach (var player in Model.Team2PlayerStats)
     {
         <tr class="text-center player-statistics-table">
-            <td style="text-align: left; border: 1px solid black; font-size: 17px">
-                <a class="game-player-link" href="/Players/PlayerDetails/@player.PlayerName"> @player.PlayerName</a>
-                <a class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a>
+            <td style="text-align: left; border: 1px solid black; font-size: 17px; background: @Model.Team2SecondaryColor">
+                <a class="game-player-link" style="color: @team2TextColor" href="/Players/PlayerDetails/@player.PlayerName"> @player.PlayerName</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <a class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a>
+                }
             </td>
             <td style="border: 1px solid black;">@player.MinutesPlayed</td>
             <td style="border: 1px solid black;">@player.Points</td>
@@ -69,6 +88,4 @@
             <td style="border: 1px solid black;">@player.FreeThrowPercentage</td>
         </tr>
     }
-
-
 </table>

@@ -2,7 +2,10 @@
 @model ICollection<GetAllStarTeamServiceModel>
 
 @{
-    ViewData["Title"] = $"{Model.FirstOrDefault().Year} All Star Teams";
+    if (Model.Any())
+    {
+        ViewData["Title"] = $"{Model.FirstOrDefault().Year} All Star Teams";
+    }
 }
 
 <h2 class="container-fluid ml-3 AST-title">@Model.FirstOrDefault().Year All Star Teams</h2>

@@ -83,6 +83,10 @@
 
             gameModel.TeamHostName = teamHost.Name;
             gameModel.Team2Name = team2.Name;
+            gameModel.TeamHostPrimaryColor = teamHost.PrimaryColorHex;
+            gameModel.TeamHostSecondaryColor = teamHost.SecondaryColorHex;
+            gameModel.Team2PrimaryColor = team2.PrimaryColorHex;
+            gameModel.Team2SecondaryColor = team2.SecondaryColorHex;
 
             var teamHostSeasonStats = await this.statService.GetDetailsAsync(season.SeasonId, teamHost.Id);
             var team2SeasonStat = await this.statService.GetDetailsAsync(season.SeasonId, team2.Id);

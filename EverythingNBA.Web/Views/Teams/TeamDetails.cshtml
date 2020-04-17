@@ -5,6 +5,12 @@
     ViewData["Title"] = $"{Model.Name}";
     var message = TempData["Message"] as string;
     var type = TempData["Type"] as string;
+
+    var textColor = "white";
+    if (Model.SecondaryColorHex.StartsWith("#f") || Model.SecondaryColorHex.StartsWith("#eee") || Model.SecondaryColorHex.StartsWith("#c1"))
+    {
+        textColor = "black";
+    }
 }
 
 @if (message != null)
@@ -17,7 +23,6 @@
     {
         @await Html.PartialAsync("/Views/Shared/_ErrorBoxPartial.cshtml", message);
     }
-
 }
 
 <div class="container-fluid row m-3">
@@ -53,7 +58,7 @@
 
     <div class="col-md-3 p-0 team-player-table">
         <table class="table">
-            <thead>
+            <thead style="background-color: @Model.SecondaryColorHex; color: @textColor">
                 <tr class="container-fluid">
                     <th class="col-md-8">Players</th>
                     <th class="col-md-2">Age</th>
