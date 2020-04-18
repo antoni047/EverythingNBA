@@ -38,36 +38,6 @@
             this.playerService = playerService;
         }
 
-        public async Task AddPlayerAsync(int playerId, int teamId)
-        {
-            var player = await this.db.Players.FindAsync(playerId);
-            var team = await this.db.Teams.FindAsync(teamId);
-
-            team.Players.Add(player);
-            player.Team = team;
-
-            await this.db.SaveChangesAsync();
-        }
-
-        public async Task<bool> RemovePlayerAsync(int playedId, int teamId)
-        {
-            var team = await this.db.Teams.Where(t => t.Id == teamId).FirstOrDefaultAsync();
-            var player = team.Players.Where(p => p.Id == playedId).FirstOrDefault();
-
-            if (player == null)
-            {
-                return false;
-            }
-
-            team.Players.Remove(player);
-            player.Team = null;
-
-            await this.db.SaveChangesAsync();
-
-            return true;
-
-        }
-
         public async Task<int> AddTeamAsync(string name, IFormFile FullImageFile, IFormFile smallImageFile, string conference,
             string venue, string instagram, string twitter)
         {
@@ -196,109 +166,63 @@
             {
                 titlesString.Append(title.Year.ToString() + ", ");
             }
+
             teamDetailsModel.TitlesWon = titlesString.ToString();
 
             var teamStandings = new List<SeasonStatisticOverviewServiceModel>();
             var allStandings = await this.GetStandingsAsync(seasonId);
 
-            if (teamDetailsModel.Conference == "Western")
+
+            var standings = teamDetailsModel.Conference == "Western"
+                ? allStandings.WesternStandings.OrderByDescending(x => x.WinPercentage).ToList()
+                : allStandings.EasternStandings.OrderByDescending(x => x.WinPercentage).ToList();
+
+            for (int i = 0; i < standings.Count; i++)
             {
-                var listCount = allStandings.WesternStandings.OrderByDescending(x => x.WinPercentage).ToList().Count();
-
-                for (int i = 0; i < listCount; i++)
+                if (standings[i].Name == team.Name)
                 {
-                    var standings = allStandings.WesternStandings.OrderByDescending(x => x.WinPercentage).ToList();
-
-                    if (standings[i].Name == team.Name)
+                    if (i == 14)
                     {
-                        if (i == 14)
-                        {
-                            var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
-                            teamInfront.Position = i;
-                            teamStandings.Add(teamInfront);
+                        var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
+                        teamInfront.Position = i;
+                        teamStandings.Add(teamInfront);
 
-                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i + 1;
-                            teamStandings.Add(currentTeam);
-                        }
-                        else if (i == 0)
-                        {
-                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i + 1;
-                            teamStandings.Add(currentTeam);
-
-                            var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
-                            teamBehind.Position = i + 2;
-                            teamStandings.Add(teamBehind);
-                        }
-                        else
-                        {
-                            var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
-                            teamInfront.Position = i;
-                            teamStandings.Add(teamInfront);
-
-                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i + 1;
-                            teamStandings.Add(currentTeam);
-
-                            var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
-                            teamBehind.Position = i + 2;
-                            teamStandings.Add(teamBehind);
-                        }
+                        var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
+                        currentTeam.Position = i + 1;
+                        teamStandings.Add(currentTeam);
                     }
-                }
-            }
-            else
-            {
-                var listCount = allStandings.EasternStandings.OrderByDescending(x => x.WinPercentage).ToList().Count();
 
-                for (int i = 0; i < listCount; i++)
-                {
-                    var standings = allStandings.EasternStandings.OrderByDescending(x => x.WinPercentage).ToList();
-
-                    if (standings[i].Name == team.Name)
+                    else if (i == 0)
                     {
-                        if (i == 15)
-                        {
-                            var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
-                            teamInfront.Position = i;
-                            teamStandings.Add(teamInfront);
+                        var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
+                        currentTeam.Position = i + 1;
+                        teamStandings.Add(currentTeam);
 
-                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i + 1;
-                            teamStandings.Add(currentTeam);
-                        }
-                        if (i == 0)
-                        {
-                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i + 1;
-                            teamStandings.Add(currentTeam);
+                        var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
+                        teamBehind.Position = i + 2;
+                        teamStandings.Add(teamBehind);
+                    }
 
-                            var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
-                            teamBehind.Position = i + 2;
-                            teamStandings.Add(teamBehind);
-                        }
-                        else
-                        {
-                            var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
-                            teamInfront.Position = i;
-                            teamStandings.Add(teamInfront);
+                    else
+                    {
+                        var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
+                        teamInfront.Position = i;
+                        teamStandings.Add(teamInfront);
 
-                            var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                            currentTeam.Position = i + 1;
-                            teamStandings.Add(currentTeam);
+                        var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
+                        currentTeam.Position = i + 1;
+                        teamStandings.Add(currentTeam);
 
-                            var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
-                            teamBehind.Position = i + 2;
-                            teamStandings.Add(teamBehind);
-                        }
+                        var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
+                        teamBehind.Position = i + 2;
+                        teamStandings.Add(teamBehind);
                     }
                 }
             }
 
             teamDetailsModel.CurrentSeasonStatistic = teamStandings;
 
-            var games = this.GetLastNineGames(team);
+            var games = this.GetLastTwelveGames(team);
             teamDetailsModel.Last9Games = games;
 
             return teamDetailsModel;
@@ -324,64 +248,6 @@
             var teamId = await this.db.Teams.Where(t => t.Name == name).Select(t => t.Id).FirstOrDefaultAsync();
 
             return await this.GetTeamAsync(teamId);
-        }
-
-        public async Task<bool> AddGameAsync(int gameId, int teamId)
-        {
-            var team = await this.db.Teams
-                .Include(t => t.GamesWon)
-                .Include(t => t.HomeGames)
-                .Include(t => t.AwayGames)
-                .Where(t => t.Id == teamId)
-                .FirstOrDefaultAsync();
-
-            var game = await this.db.Games.FindAsync(gameId);
-            bool teamIsHost;
-            bool isGameWon = false;
-
-            if (game.TeamHostId == teamId)
-            {
-                team.HomeGames.Add(game);
-                teamIsHost = true;
-            }
-            else if (game.Team2Id == teamId)
-            {
-                team.AwayGames.Add(game);
-                teamIsHost = false;
-            }
-            else
-            {
-                return false;
-            }
-
-            if (game.IsFinished)
-            {
-                if (game.TeamHostPoints > game.Team2Points && teamIsHost)
-                {
-                    team.GamesWon.Add(game);
-                    isGameWon = true;
-                }
-                else
-                {
-                    if (teamIsHost == false)
-                    {
-                        team.GamesWon.Add(game);
-                        isGameWon = true;
-                    }
-                }
-            }
-
-            var gameSeasonYear = this.GetSeasonYear(game.Date);
-            var currentYear = this.GetCurrentSeasonYear();
-
-            if (gameSeasonYear == currentYear && team.SeasonsStatistics.Count < 82)
-            {
-                await this.statisticService.AddGameAsync(teamId, isGameWon);
-            }
-
-            await this.db.SaveChangesAsync();
-
-            return true;
         }
 
         public async Task<bool> RemoveGameAsync(int gameId, int teamId)
@@ -415,87 +281,6 @@
             {
                 return false;
             }
-        }
-
-        public async Task<bool> AddTitleAsync(int teamId, int year)
-        {
-            var team = await this.db.Teams
-                .Include(t => t.TitlesWon)
-                .Where(t => t.Id == teamId)
-                .FirstOrDefaultAsync();
-
-            var season = await this.db.Seasons
-                .Include(s => s.TitleWinner)
-                .Where(s => s.Year == year)
-                .FirstOrDefaultAsync();
-
-            if (team == null || season == null)
-            {
-                return false;
-            }
-
-            if (season.TitleWinner == null)
-            {
-                season.TitleWinner = team;
-            }
-
-            team.TitlesWon.Add(season);
-
-            await this.db.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> RemoveTitleAsync(int teamId, int seasonId)
-        {
-            var team = await this.db.Teams.FindAsync(teamId);
-            var season = await this.db.Seasons.FindAsync(seasonId);
-
-            if (team == null || season == null)
-            {
-                return false;
-            }
-
-            season.TitleWinner = null;
-            team.TitlesWon.Remove(season);
-
-            await this.db.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> AddSeasonStatistic(int teamId, int seasonStatisticId)
-        {
-            var team = await this.db.Teams
-                .Include(t => t.SeasonsStatistics)
-                .Where(t => t.Id == teamId)
-                .FirstOrDefaultAsync();
-
-            var seasonStatistic = await this.db.SeasonStatistics.FindAsync(seasonStatisticId);
-
-            if (team == null || seasonStatistic == null)
-            {
-                return false;
-            }
-
-            team.SeasonsStatistics.Add(seasonStatistic);
-
-            await this.db.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> RemoveSeasonStatistic(int teamId, int seasonStatisticId)
-        {
-            var team = await this.db.Teams.FindAsync(teamId);
-            var seasonStatistic = await this.db.SeasonStatistics.FindAsync(seasonStatisticId);
-
-            if (team == null || seasonStatistic == null)
-            {
-                return false;
-            }
-
-            team.SeasonsStatistics.Remove(seasonStatistic);
-
-            await this.db.SaveChangesAsync();
-            return true;
         }
 
         public async Task EditTeamAsync(GetTeamDetailsServiceModel model, int id, IFormFile fullImage, IFormFile smallImage)
@@ -585,7 +370,7 @@
             return $"{gamesWon}-{gamesLost}";
         }
 
-        private ICollection<TeamGameOverviewServiceModel> GetLastNineGames(Team team)
+        private ICollection<TeamGameOverviewServiceModel> GetLastTwelveGames(Team team)
         {
             var teamHomeGames = team.HomeGames;
             var teamAwayGames = team.AwayGames;
@@ -595,7 +380,7 @@
             teamGames.AddRange(teamHomeGames);
             teamGames.AddRange(teamAwayGames);
 
-            var last9 = teamGames.Where(g => g.IsFinished == true).OrderByDescending(g => g.Date).ToList().Take(9).ToList();
+            var last9 = teamGames.Where(g => g.IsFinished == true).OrderByDescending(g => g.Date).ToList().Take(12).ToList();
 
             var lastNineGames = new List<TeamGameOverviewServiceModel>();
 
@@ -618,38 +403,6 @@
             }
 
             return lastNineGames.OrderByDescending(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture)).ToList();
-        }
-
-        private int GetSeasonYear(DateTime date)
-        {
-            var seasonYear = 0;
-
-            if (date.Month >= 9)
-            {
-                seasonYear = date.Year + 1;
-            }
-            else if (date.Month < 9)
-            {
-                seasonYear = date.Year;
-            }
-
-            return seasonYear;
-        }
-
-        private int GetCurrentSeasonYear()
-        {
-            var currentYear = 0;
-
-            if (DateTime.Now.Month >= 9)
-            {
-                currentYear = DateTime.Now.Year + 1;
-            }
-            else if (DateTime.Now.Month < 9)
-            {
-                currentYear = DateTime.Now.Year;
-            }
-
-            return currentYear;
         }
     }
 }
