@@ -6,6 +6,7 @@
     var message = TempData["Message"] as string;
     var type = TempData["Type"] as string;
 
+    ViewData["Color"] = Model.PrimaryColorHex;
     var textColor = "white";
     if (Model.SecondaryColorHex.StartsWith("#f") || Model.SecondaryColorHex.StartsWith("#eee") || Model.SecondaryColorHex.StartsWith("#c1"))
     {
@@ -39,11 +40,11 @@
         <div class="team-standings">
             @await Html.PartialAsync("_TeamStandingsTablePartial", Model)
         </div>
-        <h4 class="w-100 text-center recent-games-title">Recent Games</h4>
+        <h4 class="m-0 py-3 recent-games-title" style="background: @Model.SecondaryColorHex; color: @textColor">Recent Games</h4>
         <div class="container-fluid row px-0 ml-0">
             @foreach (var game in Model.Last9Games)
             {
-                @await Html.PartialAsync("_TeamRecentGamesPartial", game)
+                @await Html.PartialAsync("_TeamRecentGamesPartial", game, ViewData);
             }
 
         </div>

@@ -2,29 +2,48 @@
 @model TeamGameOverviewServiceModel
 
     <div class="col-md-4 container-fluid p-0 m-0 player-game-box">
-        <div class="container-fluid row p-0 player-bio p-0 m-0">
-            <div class="col-md-5 p-0 text-center">@Model.TeamHostName</div>
-            <div class="col-md-2 p-0 text-center">-</div>
-            <div class="col-md-5 p-0 text-center">@Model.Team2Name</div>
-        </div>
-        <div class="container-fluid row player-bio p-0 m-0">
-            <div class="col-md-5 p-0 text-center">@Model.TeamHostPoints</div>
-            <div class="col-md-2 p-0 text-center">
-                <a class="w-100 h-100 p-0 m-0 btn btn-secondary game-link"
-                   href="/Games/GameDetails/@Model.Id"
-                   role="button">Det.</a>
-            </div>
-            <div class="col-md-5 p-0 text-center">@Model.Team2Points</div>
-        </div>
-        <div class="container-fluid row player-bio p-0 m-0">
+        <div class="container-fluid row p-0 m-0">
+            <div class="col-md-5 p-2 text-center">@Model.TeamHostName</div>
+            <div class="col-md-5 p-2 text-center border-right">@Model.Team2Name</div>
             @if (Model.IsHomeGame == true)
             {
-                <div class="col-md-6 pl-1 text-left">Home</div>
+                <div class="col-md-2 p-0 text-center" style="font-size: 17px;">Home</div>
             }
             else
             {
-                <div class="col-md-6 pl-1 text-left">Away</div>
+                <div class="col-md-2 p-0 text-center" style="font-size: 17px;">Away</div>
             }
-            <div class="col-md-6 pr-1 text-right">@Model.Date</div>
+        </div>
+        <div class="container-fluid row p-0 m-0">
+            <div class="col-md-5 p-2 text-center border-bottom ">@Model.TeamHostPoints</div>
+            <div class="col-md-5 p-2 text-center border-bottom border-right">@Model.Team2Points</div>
+            @if (Model.TeamHostPoints > Model.Team2Points)
+            {
+                if (Model.IsHomeGame == true)
+                {
+                    <div class="col-md-2 text-right pr-3" style="color: green; font-weight:500; font-size:24px">W</div>
+                }
+                else
+                {
+                    <div class="col-md-2 text-right pr-3" style="color: red; font-weight:500; font-size:24px">L</div>
+                }
+            }
+            else
+            {
+                if (Model.IsHomeGame == false)
+                {
+                    <div class="col-md-2 text-right pr-3" style="color: green; font-weight:500; font-size:24px">W</div>
+                }                      
+                else                   
+                {                      
+                    <div class="col-md-2 text-right pr-3" style="color: red; font-weight:500; font-size:24px">L</div>
+                }
+            }
+        </div>
+        <div class="container-fluid row p-0 m-0">
+            <div class="col-md-10 pr-1 text-center">@Model.Date</div>
+            <div class="col-md-2 p-0 text-center">
+                <a href="/Games/GameDetails/@Model.Id"><i class="fas fa-info-circle"></i></a>
+            </div>
         </div>
     </div>
