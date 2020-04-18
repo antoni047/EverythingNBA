@@ -9,7 +9,7 @@
     }
 }
 
-<table class="table table-bordered player-statistics-table">
+<table class="table table-bordered player-statistics-table mb-0">
     <thead class="player-statistics-table-head" style="background-color: @Model.TeamSecondaryColorHex; color: @textColor;">
         <tr class="text-center player-statistics-table">
             <th style="text-align: left; border: 1px solid black;"> Statistics</th>
@@ -24,7 +24,7 @@
         </tr>
     </thead>
     <tr class="text-center player-statistics-table">
-        <td class="border-dark" style="text-align: left; background: @Model.TeamSecondaryColorHex; color:@textColor">Current Season</td>
+        <td class="border-dark" style="text-align: left;">Current Season</td>
         <td class="border-dark">@Model.SeasonStatistics.AveragePoints</td>
         <td class="border-dark">@Model.SeasonStatistics.AverageAssists</td>
         <td class="border-dark">@Model.SeasonStatistics.AverageRebounds</td>
@@ -35,7 +35,7 @@
         <td class="border-dark">@Model.SeasonStatistics.AverageFreeThrowPercentage%</td>
     </tr>
     <tr class="text-center player-statistics-table">
-        <td class="border-dark" style="text-align: left; background: @Model.TeamSecondaryColorHex; color:@textColor">Career</td>
+        <td class="border-dark" style="text-align: left;">Career</td>
         <td class="border-dark">@Model.CareerStatistics.AveragePoints</td>
         <td class="border-dark">@Model.CareerStatistics.AverageAssists</td>
         <td class="border-dark">@Model.CareerStatistics.AverageRebounds</td>

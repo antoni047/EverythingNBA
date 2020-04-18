@@ -5,6 +5,14 @@
     ViewData["Title"] = $"{Model.FirstName} {Model.LastName}";
     var message = TempData["Message"] as string;
     var type = TempData["Type"] as string;
+    var textColor = "white";
+    if (Model.TeamSecondaryColorHex.StartsWith("#f") || Model.TeamSecondaryColorHex.StartsWith("#eee") || Model.TeamSecondaryColorHex.StartsWith("#c1"))
+    {
+        textColor = "black";
+    }
+    ViewData["Text"] = textColor;
+    ViewData["PrimaryColor"] = Model.TeamPrimaryColorHex;
+    ViewData["SecondaryColor"] = Model.TeamSecondaryColorHex;
 }
 
 @if (message != null)
@@ -39,11 +47,11 @@
         <div class="container-fluid player-table-container p-0">
             @await Html.PartialAsync("_PlayerStatisticsTablePartial", Model)
         </div>
-        <h4 class="w-100 text-center recent-games-title">Recent Games</h4>
-        <div class="container-fluid row pl-3 pr-0">
+        <h4 class="m-0 py-3 recent-games-title" style="background: @Model.TeamSecondaryColorHex; color: @textColor">Recent Games</h4>
+        <div class="container-fluid row m-0 p-0">
             @foreach (var game in Model.RecentGames)
             {
-                @await Html.PartialAsync("_PlayerRecentGamePartial", game)
+                @await Html.PartialAsync("_PlayerRecentGamePartial", game, ViewData)
             }
         </div>
         <div class="mt-4 mr-3">

@@ -426,10 +426,16 @@ btn-light {
 .recent-games-title {
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
-    margin-bottom: 0.4rem;
+    text-align: center;
+    width: 100%;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 }
-.player-game-box{
-    border:1.5px solid black;
+.player-game-box {
+    border: 1.5px solid black;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 22px
 }
 
 /*Games*/
@@ -547,8 +553,10 @@ btn-info {
     color: white;
 }
 
-.team-standings{
+.team-standings {
     border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
 }
 
 .team-player-table {
