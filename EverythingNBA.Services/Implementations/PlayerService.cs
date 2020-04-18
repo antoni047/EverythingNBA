@@ -265,7 +265,7 @@
                         .ThenInclude(g => g.TeamHost)
                 .FirstOrDefaultAsync();
 
-            var gameStats = player.SingleGameStatistics.OrderByDescending(gs => gs.Game.Date).ToList().Take(9).ToList();
+            var gameStats = player.SingleGameStatistics.OrderByDescending(gs => gs.Game.Date).ToList().Take(12).ToList();
 
             var modelsList = new List<PlayerRecentGamesListingServiceModel>();
 
