@@ -1,8 +1,8 @@
 ﻿namespace EverythingNBA.Services
 {
-    using Microsoft.AspNetCore.Http;
     using System.Threading.Tasks;
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Http;
 
     using EverythingNBA.Services.Models.Team;
 

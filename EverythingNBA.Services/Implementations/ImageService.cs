@@ -1,12 +1,12 @@
-﻿using System.Threading.Tasks;
-using CloudinaryDotNet;
-using Microsoft.AspNetCore.Http;
-
-using EverythingNBA.Data;
-using EverythingNBA.Models;
-
-namespace EverythingNBA.Services.Implementations
+﻿namespace EverythingNBA.Services.Implementations
 {
+    using System.Threading.Tasks;
+    using CloudinaryDotNet;
+    using Microsoft.AspNetCore.Http;
+
+    using EverythingNBA.Data;
+    using EverythingNBA.Models;
+
     public class ImageService : IImageService
     {
         private readonly ICloudinaryService cloudinary;

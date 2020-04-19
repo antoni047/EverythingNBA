@@ -1,10 +1,9 @@
-﻿using CloudinaryDotNet.Actions;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Threading.Tasks;
-
-namespace EverythingNBA.Services
+﻿namespace EverythingNBA.Services
 {
+    using System.Threading.Tasks;
+    using CloudinaryDotNet.Actions;
+    using Microsoft.AspNetCore.Http;
+
     public interface ICloudinaryService
     {
         Task<ImageUploadResult> UploadFormFileAsync(IFormFile file);
@@ -12,7 +11,5 @@ namespace EverythingNBA.Services
         Task DeleteImages(params string[] publicIds);
 
         string GetImageURL(string publicId);
-
-        //string GetImageThumbnailURL(string thumbnailPublicId);
     }
 }

@@ -1,11 +1,10 @@
 ﻿namespace EverythingNBA.Services.Models.Team
 {
-    using EverythingNBA.Models;
+    using System.Collections.Generic;
+
     using EverythingNBA.Services.Models.Player;
     using Services.Models.SeasonStatistic;
     using Services.Models.Game;
-
-    using System.Collections.Generic;
 
     public class GetTeamDetailsServiceModel
     {
@@ -27,7 +26,7 @@
 
         public string PrimaryColorHex { get; set; }
 
-        public string SecondaryColorHex  { get; set; }
+        public string SecondaryColorHex { get; set; }
 
         public ICollection<SeasonStatisticOverviewServiceModel> CurrentSeasonStatistic { get; set; }
 

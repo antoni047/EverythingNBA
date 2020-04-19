@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
-    
+
     using Data;
     using EverythingNBA.Models;
     using EverythingNBA.Models.Enums;
@@ -197,8 +197,7 @@
 
             foreach (var year in seasonsYears)
             {
-                var model = new AllAwardsServiceModel();
-                model.Year = year;
+                var model = new AllAwardsServiceModel() { Year = year };
                 allAwardsModels.Add(model);
             }
 

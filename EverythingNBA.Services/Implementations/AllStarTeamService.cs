@@ -128,7 +128,7 @@
 
         public async Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsAsync(int year)
         {
-            return await this.CreateAllStarTeamServiceModelCollection(year, "");
+            return await this.CreateAllStarTeamServiceModelCollection(year, string.Empty);
         }
 
         public async Task<GetAllStarTeamServiceModel> GetAllStarTeamAsync(int id)
@@ -168,7 +168,7 @@
         {
             var allStarTeams = new List<AllStarTeam>();
 
-            if (String.IsNullOrWhiteSpace(type))
+            if (string.IsNullOrWhiteSpace(type))
             {
                 allStarTeams = await this.db.AllStarTeams
                 .Include(ast => ast.Players)
@@ -176,7 +176,6 @@
                 .Where(ast => ast.Year == year)
                 .ToListAsync();
             }
-
             else
             {
                 var enumType = (AllStarTeamType)Enum.Parse(typeof(AllStarTeamType), type);

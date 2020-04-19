@@ -1,10 +1,10 @@
 ﻿namespace EverythingNBA.Services
 {
-    using EverythingNBA.Services.Models.Player;
-
-    using Microsoft.AspNetCore.Http;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+
+    using EverythingNBA.Services.Models.Player;
 
     public interface IPlayerService
     {

@@ -1,10 +1,9 @@
 ﻿namespace EverythingNBA.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     using EverythingNBA.Models.Enums;
     using static EverythingNBA.Models.Utilities.DataConstants;
-
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Award
     {

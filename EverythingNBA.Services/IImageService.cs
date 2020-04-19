@@ -1,7 +1,8 @@
 ﻿namespace EverythingNBA.Services
 {
-    using Microsoft.AspNetCore.Http;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
+
 
     public interface IImageService
     {

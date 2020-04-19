@@ -1,8 +1,8 @@
 ﻿namespace EverythingNBA.Services.Models.Playoff
 {
-    using Services.Models.Series;
-
     using System.Collections.Generic;
+
+    using Services.Models.Series;
 
     public class GetPlayoffServiceModel
     {

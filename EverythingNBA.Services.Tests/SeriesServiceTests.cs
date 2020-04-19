@@ -1,14 +1,14 @@
 ﻿namespace EverythingNBA.Services.Tests
 {
-    using EverythingNBA.Models;
-    using EverythingNBA.Services.Implementations;
-    using EverythingNBA.Services.Models.Game;
-    using EverythingNBA.Services.Models.Series;
-    using Newtonsoft.Json;
     using System.Linq;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Newtonsoft.Json;
     using Xunit;
+
+    using EverythingNBA.Services.Implementations;
+    using EverythingNBA.Services.Models.Game;
+    using EverythingNBA.Services.Models.Series;
 
     public class SeriesServiceTests
     {

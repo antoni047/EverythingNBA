@@ -35,14 +35,6 @@ namespace EverythingNBA.Services.Implementations
             await cloudinary.DeleteResourcesAsync(deleteParams);
         }
 
-        //public string GetImageThumbnailURL(string thumbnailPublicId)
-        //{
-        //    var imageURL = cloudinary.Api.UrlImgUp.Transform(new Transformation().Height(200).Width(200).Crop("thumb"))
-        //        .BuildUrl(string.Format(thumbnailPublicId));
-
-        //    return imageURL;
-        //}
-
         public string GetImageURL(string publicId)
         {
             var imageURL = this.cloudinary.Api.UrlImgUp.BuildUrl(publicId);
@@ -52,6 +44,8 @@ namespace EverythingNBA.Services.Implementations
 
         public async Task<ImageUploadResult> UploadFormFileAsync(IFormFile file)
         {
+            if (file == null) { return null; }
+
             using var memoryStream = file.OpenReadStream();
 
             var generator = new Random();
@@ -74,7 +68,6 @@ namespace EverythingNBA.Services.Implementations
 
         private void StartCloudinary()
         {
-            var key = configuration.GetSection("Cloudinary:AppName").Value;
             this.cloudinary = new Cloudinary(
                 new Account(
                     configuration.GetSection("Cloudinary:AppName").Value,

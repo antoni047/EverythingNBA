@@ -1,10 +1,10 @@
 ﻿namespace EverythingNBA.Services.Implementations
 {
-    using EverythingNBA.Data;
-    using EverythingNBA.Models;
-
     using System;
     using System.Threading.Tasks;
+
+    using EverythingNBA.Data;
+    using EverythingNBA.Models;
 
     public class ImageInfoWriterService : IImageInfoWriterService
     {
@@ -15,12 +15,11 @@
             this.db = db;
         }
 
-        public async Task<int> WriteToDbAsync(string imageURL,/* string imageThumbnailURL,*/ string publicId, long imageLenght)
+        public async Task<int> WriteToDbAsync(string imageURL, string publicId, long imageLenght)
         {
             var image = new CloudinaryImage
             {
                 ImageURL = imageURL,
-                //ImageThumbnailURL = imageThumbnailURL,
                 Length = imageLenght,
                 ImagePublicId = publicId
             };

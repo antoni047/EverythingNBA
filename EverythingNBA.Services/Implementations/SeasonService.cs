@@ -1,15 +1,15 @@
 ﻿namespace EverythingNBA.Services.Implementations
 {
+    using System;
     using System.Linq;
-    using AutoMapper;
     using System.Threading.Tasks;
-    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
+    using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
 
     using EverythingNBA.Models;
     using Data;
     using Services.Models.Season;
-    using System;
 
     public class SeasonService : ISeasonService
     {
@@ -76,7 +76,7 @@
             await this.db.SaveChangesAsync();
             return true;
         }
-      
+
 
         public async Task<bool> DeleteAsync(int seasonId)
         {
@@ -128,20 +128,6 @@
                 GamesPlayed = season.GamesPlayed,
                 PlayoffId = season.PlayoffId,
                 SeasonId = season.Id,
-                //BestSeed = bestSeed,
-                //WorstSeed = worstSeed,
-                //MVP = awardWinners[0],
-                //TopScorer = awardWinners[1],
-                //DPOTY = awardWinners[2],
-                //SixthMOTY = awardWinners[3],
-                //ROTY = awardWinners[4],
-                //MIP = awardWinners[5],
-                //FinalsMVP = awardWinners[6],
-                //FirstAllNBATeamId = allStarTeams[0].Id,
-                //SecondAllNBATeamId = allStarTeams[1].Id,
-                //ThirdAllNBATeamId = allStarTeams[2].Id,
-                //AllDefenesiveTeamId = allStarTeams[3].Id,
-                //AllRookieTeamId = allStarTeams[4].Id
             };
 
             return model;
@@ -183,6 +169,8 @@
 
         public async Task EditSeasonAsync(GetSeasonDetailsServiceModel model, int seasonId)
         {
+            if (model == null) { return; }
+
             var season = await this.db.Seasons.FindAsync(seasonId);
 
             season.Year = model.Year;

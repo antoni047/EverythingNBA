@@ -11,7 +11,7 @@
 
         public string ImageURL { get; set; }
 
-        public string ImageThumbnailURL{ get; set; }
+        public string ImageThumbnailURL { get; set; }
 
         public long Length { get; set; }
     }

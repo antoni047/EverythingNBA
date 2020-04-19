@@ -6,7 +6,7 @@
 
         public string Name { get; set; }
 
-        public string ImageURL{ get; set; }
+        public string ImageURL { get; set; }
 
         public string Conference { get; set; }
 
@@ -14,7 +14,7 @@
 
         public int Losses { get; set; }
 
-        public string  WinPercentage { get; set; }
+        public string WinPercentage { get; set; }
 
         public int GamesPlayed { get; set; }
 

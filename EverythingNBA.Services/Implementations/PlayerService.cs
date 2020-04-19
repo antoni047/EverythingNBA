@@ -2,13 +2,13 @@
 {
     using System;
     using System.Threading.Tasks;
-    using AutoMapper;
+    using System.Globalization;
     using System.Text;
     using System.Linq;
     using System.Collections.Generic;
     using Microsoft.EntityFrameworkCore;
-    using System.Globalization;
     using Microsoft.AspNetCore.Http;
+    using AutoMapper;
 
     using EverythingNBA.Models;
     using EverythingNBA.Models.Enums;
@@ -106,7 +106,7 @@
             var season = await this.seasonService.GetDetailsByYearAsync(this.GetCurrentSeasonYear());
 
             var model = mapper.Map<PlayerDetailsServiceModel>(player);
-            model.ImageURL = player.CloudinaryImage != null ? player.CloudinaryImage.ImageURL : null;
+            model.ImageURL = player.CloudinaryImage?.ImageURL;
             model.Position = this.ConvertToFriendlyName(player.Position.ToString());
             model.CurrentTeam = await this.db.Teams.Include(t => t.Players).Where(t => t.Id == player.TeamId).Select(t => t.Name).FirstOrDefaultAsync();
             model.SeasonStatistics = await this.GetSeasonStatistics(player.Id, season.SeasonId);
@@ -138,7 +138,7 @@
                 .FirstOrDefaultAsync();
 
             var seasonGameStatistics = player.SingleGameStatistics.Where(gs => gs.Game.SeasonId == seasonId).ToList();
-            var totalGames = seasonGameStatistics.Count();
+            var totalGames = seasonGameStatistics.Count;
 
             var points = new List<double>();
             var assists = new List<double>();
@@ -222,7 +222,7 @@
 
                 gamesPlayed = await this.db.Players
                     .Where(p => p.Id == playerId)
-                    .Select(p => p.SingleGameStatistics.Count())
+                    .Select(p => p.SingleGameStatistics.Count)
                     .FirstOrDefaultAsync();
 
                 if (seasonStats != null)
@@ -292,6 +292,8 @@
 
         public async Task EditPlayerAsync(PlayerDetailsServiceModel model, int id, IFormFile image)
         {
+            if (model == null) return;
+
             var player = await this.db.Players.FindAsync(id);
 
             var playerTeam = await this.db.Teams.Where(t => t.Name == model.CurrentTeam).FirstOrDefaultAsync();
@@ -310,7 +312,7 @@
             player.Age = model.Age;
             player.InstagramLink = model.InstagramLink;
             player.TwitterLink = model.TwitterLink;
-            player.Position = (PositionType)Enum.Parse(typeof(PositionType), model.Position.Replace(" ", ""));
+            player.Position = (PositionType)Enum.Parse(typeof(PositionType), model.Position.Replace(" ", string.Empty));
             player.TeamId = playerTeam.Id;
             player.ShirtNumber = model.ShirtNumber;
             player.RookieYear = model.RookieYear;
@@ -492,40 +494,28 @@
 
         private string ConvertToShortPosition(string position)
         {
-            switch (position)
+            return position switch
             {
-                case "PointGuard":
-                    return "PG";
-                case "ShootingGuard":
-                    return "SG";
-                case "SmallForward":
-                    return "SF";
-                case "PowerForward":
-                    return "PF";
-                case "Center":
-                    return "C";
-                default:
-                    return "";
-            }
+                "PointGuard" => "PG",
+                "ShootingGuard" => "SG",
+                "SmallForward" => "SF",
+                "PowerForward" => "PF",
+                "Center" => "C",
+                _ => "",
+            };
         }
 
         private string ConvertToFriendlyName(string position)
         {
-            switch (position)
+            return position switch
             {
-                case "PointGuard":
-                    return "Poin tGuard";
-                case "ShootingGuard":
-                    return "Shooting Guard";
-                case "SmallForward":
-                    return "Small Forward";
-                case "PowerForward":
-                    return "Power Forward";
-                case "Center":
-                    return "Center";
-                default:
-                    return "";
-            }
+                "PointGuard" => "Poin tGuard",
+                "ShootingGuard" => "Shooting Guard",
+                "SmallForward" => "Small Forward",
+                "PowerForward" => "Power Forward",
+                "Center" => "Center",
+                _ => string.Empty,
+            };
         }
     }
 }

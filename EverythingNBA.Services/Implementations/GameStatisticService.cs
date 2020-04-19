@@ -64,6 +64,11 @@
 
         public async Task EditGameStatisticAsync(PlayerGameStatisticServiceModel editedStats, int statId)
         {
+            if (editedStats == null)
+            {
+                return;
+            }
+
             var stats = await this.db.GameStatistics.FindAsync(statId);
 
             stats.MinutesPlayed = editedStats.MinutesPlayed;

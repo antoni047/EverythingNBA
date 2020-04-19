@@ -1,8 +1,8 @@
 ﻿namespace EverythingNBA.Services
 {
-    using EverythingNBA.Services.Models.Series;
-
     using System.Threading.Tasks;
+
+    using EverythingNBA.Services.Models.Series;
 
     public interface ISeriesService
     {
@@ -10,7 +10,7 @@
              int? game3Id, int? game4Id, int? game5Id, int? game6Id, int? game7Id, string conference, string stage, int stageNumber,
              int? team1Position, int? team2Position);
 
-        Task<bool> DeleteSeriesAsync (int seriesId);
+        Task<bool> DeleteSeriesAsync(int seriesId);
 
         Task<GetSeriesDetailsServiceModel> GetSeriesAsync(int id);
 

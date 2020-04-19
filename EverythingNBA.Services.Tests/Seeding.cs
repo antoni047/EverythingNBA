@@ -1,11 +1,13 @@
 ﻿namespace EverythingNBA.Services.Tests
 {
+    using System;
+
     using EverythingNBA.Models;
     using EverythingNBA.Models.Enums;
-    using System;
 
     public class Seeding
     {
+        private const string DefaultPictureUrl = "https://www.cloudinary.com";
         private static int awardId;
         private static int gameId;
         private static int gameStatisticId;
@@ -16,7 +18,6 @@
         private static int seriesId;
         private static int teamId;
         private static int picId;
-        private const string DefaultPictureUrl = "https://www.cloudinary.com";
 
         public static Award CreateAward(int winnerId, string winnerTeam, int seasonId, int year)
         {
@@ -305,7 +306,7 @@
                 Id = ++seasonStatisticId,
                 Losses = 32,
                 Wins = 50,
-                SeasonId =  seasonId,
+                SeasonId = seasonId,
                 TeamId = teamId
             };
 

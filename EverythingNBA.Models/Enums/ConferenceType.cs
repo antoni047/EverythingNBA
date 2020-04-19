@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EverythingNBA.Models.Enums
+﻿namespace EverythingNBA.Models.Enums
 {
     public enum ConferenceType
     {

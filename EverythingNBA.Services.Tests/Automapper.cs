@@ -1,19 +1,17 @@
-﻿using AutoMapper;
-using EverythingNBA.Web.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EverythingNBA.Services.Tests
+﻿namespace EverythingNBA.Services.Tests
 {
+    using AutoMapper;
+
+    using EverythingNBA.Web.Mapping;
+
     public class AutomapperSingleton
     {
-        private static IMapper _mapper;
+        private static IMapper mapper;
         public static IMapper Mapper
         {
             get
             {
-                if (_mapper == null)
+                if (mapper == null)
                 {
                     // Auto Mapper Configurations
                     var mappingConfig = new MapperConfiguration(mc =>
@@ -21,9 +19,9 @@ namespace EverythingNBA.Services.Tests
                         mc.AddProfile(new MappingProfile());
                     });
                     IMapper mapper = mappingConfig.CreateMapper();
-                    _mapper = mapper;
+                    AutomapperSingleton.mapper = mapper;
                 }
-                return _mapper;
+                return mapper;
             }
         }
     }

@@ -1,14 +1,14 @@
 ﻿namespace EverythingNBA.Services.Tests
 {
-    using EverythingNBA.Services.Implementations;
-    using EverythingNBA.Services.Models.Game;
-    using Newtonsoft.Json;
     using System;
+    using System.Linq;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Newtonsoft.Json;
     using Xunit;
-    using System.Linq;
-    using EverythingNBA.Models;
+
+    using EverythingNBA.Services.Implementations;
+    using EverythingNBA.Services.Models.Game;
 
     public class GameServiceTests
     {
@@ -90,7 +90,6 @@
 
             Assert.True(games.Count == 2);
             Assert.IsType<List<GameDetailsServiceModel>>(games);
-            //Assert.Equal(fakeGames, games);
         }
 
         [Fact]
@@ -276,7 +275,7 @@
             await gameService.DeleteGameAsync(game.Id);
 
 
-            Assert.True(db.Games.Count() == 0);
+            Assert.True(!db.Games.Any());
         }
 
         [Fact]
@@ -330,7 +329,7 @@
             db.Teams.Add(team2);
             var game = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 12));
             var game2 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 10));
-            var game3= Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 09));
+            var game3 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 09));
             var game4 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 08));
 
             db.Games.Add(game);

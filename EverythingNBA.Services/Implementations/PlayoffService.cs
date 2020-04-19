@@ -149,7 +149,7 @@
                 Id = playoff.Id,
                 SeasonId = playoff.SeasonId,
                 Series = seriesModels,
-                WinnerName = winner != null ? winner.TeamName : "",
+                WinnerName = winner != null ? winner.TeamName : string.Empty,
                 AreConferenceFinalsFinished = playoff.AreConferenceFinalsFinished,
                 AreQuarterFinalsFinished = playoff.AreQuarterFinalsFinished,
                 AreSemiFinalsFinished = playoff.AreSemiFinalsFinished
@@ -169,32 +169,32 @@
             var easternTop8 = standings.EasternStandings.Take(8).ToList();
             var westernTop8 = standings.WesternStandings.Take(8).ToList();
 
-            var eQuarterFirstId = await this.seriesService.AddSeriesAsync(playoffId, easternTop8[0].Name, easternTop8[7].Name, 0, 0,
+            var easternQuarterFirstId = await this.seriesService.AddSeriesAsync(playoffId, easternTop8[0].Name, easternTop8[7].Name, 0, 0,
                 null, null, null, null, null, null, null, "Eastern", "QuarterFinal", 1, null, null);
-            var eQuarterSecondId = await this.seriesService.AddSeriesAsync(playoffId, easternTop8[3].Name, easternTop8[4].Name, 0, 0,
+            var easternQuarterSecondId = await this.seriesService.AddSeriesAsync(playoffId, easternTop8[3].Name, easternTop8[4].Name, 0, 0,
                 null, null, null, null, null, null, null, "Eastern", "QuarterFinal", 2, null, null);
-            var eQuarterThirdId = await this.seriesService.AddSeriesAsync(playoffId, easternTop8[2].Name, easternTop8[5].Name, 0, 0,
+            var easternQuarterThirdId = await this.seriesService.AddSeriesAsync(playoffId, easternTop8[2].Name, easternTop8[5].Name, 0, 0,
                 null, null, null, null, null, null, null, "Eastern", "QuarterFinal", 3, null, null);
-            var eQuarterFourthId = await this.seriesService.AddSeriesAsync(playoffId, easternTop8[1].Name, easternTop8[6].Name, 0, 0,
+            var easternQuarterFourthId = await this.seriesService.AddSeriesAsync(playoffId, easternTop8[1].Name, easternTop8[6].Name, 0, 0,
                 null, null, null, null, null, null, null, "Eastern", "QuarterFinal", 4, null, null);
 
-            var wQuarterFirstId = await this.seriesService.AddSeriesAsync(playoffId, westernTop8[0].Name, westernTop8[7].Name, 0, 0,
+            var westernQuarterFirstId = await this.seriesService.AddSeriesAsync(playoffId, westernTop8[0].Name, westernTop8[7].Name, 0, 0,
                 null, null, null, null, null, null, null, "Western", "QuarterFinal", 1, null, null);
-            var wQuarterSecondId = await this.seriesService.AddSeriesAsync(playoffId, westernTop8[3].Name, westernTop8[4].Name, 0, 0,
+            var westernQuarterSecondId = await this.seriesService.AddSeriesAsync(playoffId, westernTop8[3].Name, westernTop8[4].Name, 0, 0,
                 null, null, null, null, null, null, null, "Western", "QuarterFinal", 2, null, null);
-            var wQuarterThirdId = await this.seriesService.AddSeriesAsync(playoffId, westernTop8[2].Name, westernTop8[5].Name, 0, 0,
+            var westernQuarterThirdId = await this.seriesService.AddSeriesAsync(playoffId, westernTop8[2].Name, westernTop8[5].Name, 0, 0,
                 null, null, null, null, null, null, null, "Western", "QuarterFinal", 3, null, null);
-            var wQuarterFourthId = await this.seriesService.AddSeriesAsync(playoffId, westernTop8[1].Name, westernTop8[6].Name, 0, 0,
+            var westernQuarterFourthId = await this.seriesService.AddSeriesAsync(playoffId, westernTop8[1].Name, westernTop8[6].Name, 0, 0,
                 null, null, null, null, null, null, null, "Western", "QuarterFinal", 4, null, null);
 
-            await this.AddSeriesAsync(playoffId, eQuarterFirstId);
-            await this.AddSeriesAsync(playoffId, eQuarterSecondId);
-            await this.AddSeriesAsync(playoffId, eQuarterThirdId);
-            await this.AddSeriesAsync(playoffId, eQuarterFourthId);
-            await this.AddSeriesAsync(playoffId, wQuarterFirstId);
-            await this.AddSeriesAsync(playoffId, wQuarterSecondId);
-            await this.AddSeriesAsync(playoffId, wQuarterThirdId);
-            await this.AddSeriesAsync(playoffId, wQuarterFourthId);
+            await this.AddSeriesAsync(playoffId, easternQuarterFirstId);
+            await this.AddSeriesAsync(playoffId, easternQuarterSecondId);
+            await this.AddSeriesAsync(playoffId, easternQuarterThirdId);
+            await this.AddSeriesAsync(playoffId, easternQuarterFourthId);
+            await this.AddSeriesAsync(playoffId, westernQuarterFirstId);
+            await this.AddSeriesAsync(playoffId, westernQuarterSecondId);
+            await this.AddSeriesAsync(playoffId, westernQuarterThirdId);
+            await this.AddSeriesAsync(playoffId, westernQuarterFourthId);
 
 
         }

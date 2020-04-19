@@ -10,13 +10,13 @@
     {
         Task<int> AddAsync(int year, string titleWinner, int gamesPlayed);
 
-        Task<bool> DeleteAsync (int seasonId);
+        Task<bool> DeleteAsync(int seasonId);
 
         Task<GetSeasonDetailsServiceModel> GetDetailsByYearAsync(int year);
 
         Task<GetSeasonDetailsServiceModel> GetDetailsAsync(int seasonId);
 
-        Task AddPlayoffAsync (int seasonId, int playoffId);
+        Task AddPlayoffAsync(int seasonId, int playoffId);
 
         Task<bool> RemovePlayoffAsync(int seasonId, int playoffId);
 

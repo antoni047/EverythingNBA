@@ -1,15 +1,13 @@
 ﻿namespace EverythingNBA.Services.Tests
 {
-    using EverythingNBA.Models;
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Newtonsoft.Json;
+    using Xunit;
+
     using EverythingNBA.Services.Implementations;
     using EverythingNBA.Services.Models.SeasonStatistic;
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using Xunit;
-    using System.Linq;
-
 
     public class SeasonStatisticServiceTests
     {

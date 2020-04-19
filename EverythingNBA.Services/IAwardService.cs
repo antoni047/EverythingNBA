@@ -1,10 +1,11 @@
 ﻿namespace EverythingNBA.Services
 {
-    using EverythingNBA.Models;
-    using EverythingNBA.Services.Models.Award;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+
+    using EverythingNBA.Models;
+    using EverythingNBA.Services.Models.Award;
 
     public interface IAwardService
     {

@@ -1,9 +1,9 @@
 ﻿namespace EverythingNBA.Services.Tests
 {
+    using System;
+
     using EverythingNBA.Data;
     using Microsoft.EntityFrameworkCore;
-
-    using System;
 
     public class InMemoryDatabase
     {

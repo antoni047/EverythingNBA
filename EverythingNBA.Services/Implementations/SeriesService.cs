@@ -1,10 +1,10 @@
 ﻿namespace EverythingNBA.Services.Implementations
 {
     using System.Threading.Tasks;
-    using AutoMapper;
     using System.Linq;
-    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
+    using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
 
     using EverythingNBA.Models;
     using Data;
@@ -54,8 +54,8 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<int> AddSeriesAsync(int playoffId, string team1Name, string team2Name,int team1GameWon, int team2GamesWon, int? game1Id, int? game2Id,
-            int? game3Id, int? game4Id, int? game5Id, int? game6Id, int? game7Id, string conference, string stage, int stageNumber, 
+        public async Task<int> AddSeriesAsync(int playoffId, string team1Name, string team2Name, int team1GameWon, int team2GamesWon, int? game1Id, int? game2Id,
+            int? game3Id, int? game4Id, int? game5Id, int? game6Id, int? game7Id, string conference, string stage, int stageNumber,
             int? team1Position, int? team2Position)
         {
             var team1Id = await this.db.Teams.Where(t => t.Name == team1Name).Select(t => t.Id).FirstOrDefaultAsync();
@@ -140,7 +140,7 @@
                 .FirstOrDefaultAsync();
 
             var model = mapper.Map<GetSeriesDetailsServiceModel>(series);
-            
+
             var game1 = series.Game1 != null ? mapper.Map<GameDetailsServiceModel>(series.Game1) : null;
             var game2 = series.Game2 != null ? mapper.Map<GameDetailsServiceModel>(series.Game2) : null;
             var game3 = series.Game3 != null ? mapper.Map<GameDetailsServiceModel>(series.Game3) : null;
@@ -159,7 +159,7 @@
             var series = await this.GetSeriesAsync(seriesId);
 
             var model = mapper.Map<SeriesOverviewServiceModel>(series);
-            
+
 
             return model;
         }
@@ -201,7 +201,6 @@
                 {
                     series.Team1GamesWon++;
                 }
-
                 else if (series.Team2.Name == winner)
                 {
                     series.Team2GamesWon++;
@@ -209,120 +208,6 @@
             }
 
             await this.db.SaveChangesAsync();
-        }
-
-        private async Task<TopStatsServiceModel> GetTopStats(GetSeriesDetailsServiceModel seriesModel)
-        {
-            var mostPoints = int.MinValue;
-            var mostPointsPlayerName = string.Empty;
-
-            var mostAssists = int.MinValue;
-            var mostAssistsPlayerName = string.Empty;
-
-            var mostRebounds = int.MinValue;
-            var mostReboundsPlayerName = string.Empty;
-
-            var stats = new List<Dictionary<string, int>>();
-
-            if (seriesModel.Games != null)
-            {
-                foreach (var game in seriesModel.Games)
-                {
-                    var playerPointsDict = new Dictionary<string, int>();
-                    var playerAssistsDict = new Dictionary<string, int>();
-                    var playerReboundsDict = new Dictionary<string, int>();
-
-                    var playerStats = await this.db.Games
-                        .Include(g => g.PlayerStats).ThenInclude(ps => ps.Player)
-                        .Where(g => g.Id == game.Id)
-                        .Select(g => g.PlayerStats)
-                        .FirstOrDefaultAsync();
-
-                    foreach (var stat in playerStats)
-                    {
-                        var playerFullName = stat.Player.FirstName + " " + stat.Player.LastName;
-
-                        if (playerPointsDict.ContainsKey(playerFullName) &&
-                            playerAssistsDict.ContainsKey(playerFullName) &&
-                            playerReboundsDict.ContainsKey(playerFullName))
-                        {
-                            playerPointsDict[playerFullName] += (int)stat.Points;
-                            playerAssistsDict[playerFullName] += (int)stat.Assists;
-                            playerReboundsDict[playerFullName] += (int)stat.Rebounds;
-                        }
-                        else
-                        {
-                            playerPointsDict.Add(playerFullName, (int)stat.Points);
-                            playerAssistsDict.Add(playerFullName, (int)stat.Assists);
-                            playerReboundsDict.Add(playerFullName, (int)stat.Rebounds);
-                        }
-                    }
-
-                    var pointsList = new List<int>();
-                    var assitsList = new List<int>();
-                    var reboundsList = new List<int>();
-
-                    foreach (var playerStat in playerPointsDict)
-                    {
-                        for (int i = 0; i < playerPointsDict.Count(); i++)
-                        {
-                            pointsList[i] = playerStat.Value;
-                        }
-
-                        if (pointsList.Sum() > mostPoints)
-                        {
-                            mostPoints = pointsList.Sum();
-                            mostPointsPlayerName = playerStat.Key;
-                        }
-                    }
-
-                    foreach (var playerStat in playerAssistsDict)
-                    {
-                        for (int i = 0; i < playerAssistsDict.Count(); i++)
-                        {
-                            assitsList[i] = playerStat.Value;
-                        }
-
-                        if (pointsList.Sum() > mostPoints)
-                        {
-                            mostAssists = pointsList.Sum();
-                            mostAssistsPlayerName = playerStat.Key;
-                        }
-                    }
-
-                    foreach (var playerStat in playerReboundsDict)
-                    {
-                        for (int i = 0; i < playerReboundsDict.Count(); i++)
-                        {
-                            reboundsList[i] = playerStat.Value;
-                        }
-
-                        if (pointsList.Sum() > mostPoints)
-                        {
-                            mostRebounds = pointsList.Sum();
-                            mostReboundsPlayerName = playerStat.Key;
-                        }
-                    }
-                }
-            }
-            else
-            {
-                mostPoints = 0;
-                mostAssists = 0;
-                mostRebounds = 0;
-            }
-
-            var topStats = new TopStatsServiceModel
-            {
-                MostPoints = mostPoints,
-                MostPointsPlayerName = mostPointsPlayerName,
-                MostAssists = mostAssists,
-                MostAssistsPlayerName = mostAssistsPlayerName,
-                MostRebounds = mostRebounds,
-                MostReboundsPlayerName = mostReboundsPlayerName
-            };
-
-            return topStats;
         }
     }
 }

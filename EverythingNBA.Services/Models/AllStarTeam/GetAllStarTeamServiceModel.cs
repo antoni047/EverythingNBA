@@ -1,8 +1,8 @@
 ﻿namespace EverythingNBA.Services.Models.AllStarTeam
 {
-    using EverythingNBA.Models;
-
     using System.Collections.Generic;
+
+    using EverythingNBA.Models;
 
     public class GetAllStarTeamServiceModel
     {

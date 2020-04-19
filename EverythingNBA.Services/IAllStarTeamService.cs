@@ -1,11 +1,9 @@
 ﻿namespace EverythingNBA.Services
 {
-    using System.Threading.Tasks;
-    using System;
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     using EverythingNBA.Services.Models.AllStarTeam;
-    using EverythingNBA.Models;
 
     public interface IAllStarTeamService
     {
@@ -15,7 +13,7 @@
 
         Task<GetAllStarTeamServiceModel> GetAllStarTeamAsync(int id);
 
-        Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsAsync (string type);
+        Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsAsync(string type);
 
         Task<ICollection<GetAllStarTeamServiceModel>> GetAllASTeamsAsync(int Year);
 

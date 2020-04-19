@@ -1,14 +1,13 @@
 ﻿namespace EverythingNBA.Services.Tests
 {
+    using System;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     using EverythingNBA.Models;
     using EverythingNBA.Services.Implementations;
     using EverythingNBA.Services.Models.Season;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using Xunit;
-    using System.Linq;
-    using Newtonsoft.Json;
 
     public class SeasonServiceTests
     {
@@ -96,7 +95,7 @@
             };
 
 
-            await seasonService.EditSeasonAsync(editedSeason ,season.Id);
+            await seasonService.EditSeasonAsync(editedSeason, season.Id);
 
 
             Assert.Equal(2018, season.Year);
@@ -137,8 +136,8 @@
             {
                 Id = 1,
                 GamesPlayed = 82,
-                SeasonEndDate = new DateTime(25/04/2020),
-                SeasonStartDate = new DateTime(25/10/2020),
+                SeasonEndDate = new DateTime(2020, 4, 25),
+                SeasonStartDate = new DateTime(2020, 10, 25),
                 TitleWinnerId = 1,
                 Year = 2020,
             };
@@ -150,7 +149,7 @@
             var startDate = await seasonService.GetSeasonStartDateAsync(1);
 
 
-            var date = new DateTime(25/04/2020);
+            var date = new DateTime(2020, 04, 25);
             Assert.True(DateTime.Compare(date, startDate) == 0);
         }
 

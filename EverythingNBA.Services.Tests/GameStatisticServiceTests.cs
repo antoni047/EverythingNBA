@@ -1,13 +1,10 @@
 ﻿namespace EverythingNBA.Services.Tests
 {
-    using System;
-    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Xunit;
     using EverythingNBA.Services.Implementations;
     using EverythingNBA.Services.Models.GameStatistic;
-    using EverythingNBA.Models;
-    using System.Linq;
 
     public class GameStatisticServiceTests
     {

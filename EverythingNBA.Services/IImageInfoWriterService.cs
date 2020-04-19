@@ -4,6 +4,6 @@
 
     public interface IImageInfoWriterService
     {
-        Task<int> WriteToDbAsync(string imageURL,/* string imageThumbnailURL,*/ string publicId, long imageLenght);
+        Task<int> WriteToDbAsync(string imageURL, string publicId, long imageLenght);
     }
 }

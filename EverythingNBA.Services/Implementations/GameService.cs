@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using AutoMapper;
     using System.Linq;
-    using Microsoft.EntityFrameworkCore;
     using System.Globalization;
+    using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
 
     using Data;
     using EverythingNBA.Models;
@@ -193,7 +193,7 @@
 
             return model;
         }
-    
+
         public async Task<PlayerTopStatisticServiceModel> GetTopPointsAsync(int gameId)
         {
             var game = await this.db.Games
@@ -264,10 +264,8 @@
         {
             var game = await this.db.Games.Where(g => g.Id == gameId).FirstOrDefaultAsync();
 
-            if (game.IsFinished)
-            {
-                return false;
-            }
+            if (game.IsFinished) { return false; }
+
             game.TeamHostPoints = teamHostScore;
             game.Team2Points = team2Score;
 
@@ -306,7 +304,7 @@
 
             var gamesNotPlayed = seasonGames.Where(g => g.IsFinished == false)
                 .OrderBy(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture))
-                .Where(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture) >= datesList.First() 
+                .Where(g => DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture) >= datesList.First()
                         && DateTime.ParseExact(g.Date, "dd/MM/yyyy", CultureInfo.InvariantCulture) <= datesList.Last())
                 .ToList();
 
@@ -314,7 +312,7 @@
             {
                 Games = gamesNotPlayed,
                 Dates = datesList,
-                Total = dates.Count(),
+                Total = dates.Count,
                 CurrentPage = page,
             };
 
@@ -346,7 +344,7 @@
             {
                 Games = gamesPlayed,
                 Dates = datesList,
-                Total = dates.Count(),
+                Total = dates.Count,
                 CurrentPage = page,
             };
 
@@ -356,6 +354,11 @@
         public async Task EditGameAsync(GameDetailsServiceModel model, int gameId)
         {
             var game = await this.db.Games.FindAsync(gameId);
+
+            if (model == null)
+            {
+                return;
+            }
 
             game.Team2Points = model.Team2Points;
             game.TeamHostPoints = model.TeamHostPoints;

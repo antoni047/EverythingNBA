@@ -1,14 +1,14 @@
 ﻿namespace EverythingNBA.Services.Implementations
 {
-    using Microsoft.AspNetCore.Http;
     using System;
     using System.Text;
     using System.Linq;
     using System.Threading.Tasks;
-    using AutoMapper;
-    using System.Collections.Generic;
-    using Microsoft.EntityFrameworkCore;
     using System.Globalization;
+    using System.Collections.Generic;
+    using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Http;
 
     using EverythingNBA.Models;
     using EverythingNBA.Models.Enums;
@@ -124,7 +124,6 @@
                 {
                     westernStandingsList.Add(teamStatModel);
                 }
-
                 else
                 {
                     easternStandingsList.Add(teamStatModel);
@@ -191,7 +190,6 @@
                         currentTeam.Position = i + 1;
                         teamStandings.Add(currentTeam);
                     }
-
                     else if (i == 0)
                     {
                         var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
@@ -202,7 +200,6 @@
                         teamBehind.Position = i + 2;
                         teamStandings.Add(teamBehind);
                     }
-
                     else
                     {
                         var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
@@ -268,7 +265,6 @@
                 await this.db.SaveChangesAsync();
                 return true;
             }
-
             else if (team.AwayGames.Contains(game))
             {
                 team.AwayGames.Remove(game);
@@ -276,7 +272,6 @@
                 await this.db.SaveChangesAsync();
                 return true;
             }
-
             else
             {
                 return false;
@@ -287,11 +282,14 @@
         {
             var team = await this.db.Teams.FindAsync(id);
 
+            if (model == null) { return; }
+
             if (fullImage != null)
             {
                 var imageId = await this.imageService.UploadImageAsync(fullImage);
                 team.FullImageId = imageId;
             }
+
             if (smallImage != null)
             {
                 var smallImageId = await this.imageService.UploadImageAsync(smallImage);
@@ -314,7 +312,7 @@
             foreach (var team in teams)
             {
                 var model = mapper.Map<TeamListingSerivceModel>(team);
-                model.Image = team.SmallImage != null ? team.SmallImage.ImageURL : "";
+                model.Image = team.SmallImage != null ? team.SmallImage.ImageURL : string.Empty;
                 models.Add(model);
             }
 
@@ -332,7 +330,7 @@
             var homeGames = team.HomeGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true && g.IsPlayoffGame == false).ToList();
             var awayGames = team.AwayGames.Where(g => g.SeasonId == seasonId && g.IsFinished == true && g.IsPlayoffGame == false).ToList();
 
-            return homeGames.Count() + awayGames.Count();
+            return homeGames.Count + awayGames.Count;
         }
 
         private async Task<string> GetLastTenGames(int teamId, int seasonId)

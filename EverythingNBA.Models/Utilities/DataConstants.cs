@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace EverythingNBA.Models.Utilities
+﻿namespace EverythingNBA.Models.Utilities
 {
     public class DataConstants
     {

@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace EverythingNBA.Models.MappingTables
+﻿namespace EverythingNBA.Models.MappingTables
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class AllStarTeamsPlayers
     {
         [Required]
