@@ -15,6 +15,6 @@
 
         public bool AreConferenceFinalsFinished { get; set; }
 
-        public ICollection<Series> Series { get; set; }
+        public ICollection<Series> Series { get; }
     }
 }

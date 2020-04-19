@@ -61,10 +61,10 @@
 
         public string TwitterLink { get; set; }
 
-        public virtual ICollection<Award> Awards { get; set; }
+        public virtual ICollection<Award> Awards { get; }
 
-        public virtual ICollection<AllStarTeamsPlayers> AllStarTeams { get; set; }
+        public virtual ICollection<AllStarTeamsPlayers> AllStarTeams { get; }
 
-        public virtual ICollection<GameStatistic> SingleGameStatistics { get; set; }
+        public virtual ICollection<GameStatistic> SingleGameStatistics { get; }
     }
 }

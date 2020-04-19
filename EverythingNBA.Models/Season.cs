@@ -34,12 +34,12 @@
 
         public DateTime SeasonEndDate { get; set; }
 
-        public virtual ICollection<AllStarTeam> AllStarTeams { get; set; }
+        public virtual ICollection<AllStarTeam> AllStarTeams { get; }
 
-        public virtual ICollection<Award> Awards { get; set; }
+        public virtual ICollection<Award> Awards { get;  }
 
-        public virtual ICollection<Game> Games { get; set; }
+        public virtual ICollection<Game> Games { get;  }
 
-        public virtual ICollection<SeasonStatistic> SeasonStatistics { get; set; }
+        public virtual ICollection<SeasonStatistic> SeasonStatistics { get; }
     }
 }

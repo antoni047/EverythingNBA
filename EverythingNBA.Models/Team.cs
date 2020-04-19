@@ -49,11 +49,11 @@
 
         public string SecondaryColorHex { get; set; }
 
-        public virtual ICollection<SeasonStatistic> SeasonsStatistics { get; set; } = new List<SeasonStatistic>();
-        public virtual ICollection<Game> AwayGames { get; set; }
-        public virtual ICollection<Game> GamesWon { get; set; }
-        public virtual ICollection<Game> HomeGames { get; set; }
-        public virtual ICollection<Player> Players { get; set; }
-        public virtual ICollection<Season> TitlesWon { get; set; }
+        public virtual ICollection<SeasonStatistic> SeasonsStatistics { get; } = new List<SeasonStatistic>();
+        public virtual ICollection<Game> AwayGames { get; }
+        public virtual ICollection<Game> GamesWon { get; }
+        public virtual ICollection<Game> HomeGames { get; }
+        public virtual ICollection<Player> Players { get; }
+        public virtual ICollection<Season> TitlesWon { get; }
     }
 }

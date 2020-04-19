@@ -36,6 +36,6 @@
 
         public bool IsPlayoffGame { get; set; } = false;
 
-        public virtual ICollection<GameStatistic> PlayerStats{ get; set; }
+        public virtual ICollection<GameStatistic> PlayerStats{ get; }
     }
 }

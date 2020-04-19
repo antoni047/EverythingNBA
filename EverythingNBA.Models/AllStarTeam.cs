@@ -22,6 +22,6 @@
         [Required]
         public AllStarTeamType Type { get; set; }
 
-        public virtual ICollection<AllStarTeamsPlayers> Players { get; set; }
+        public virtual ICollection<AllStarTeamsPlayers> Players { get; }
     }
 }
