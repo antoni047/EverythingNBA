@@ -21,13 +21,19 @@
     }
 
 }
+<div class="container-fluid row my-2 mx-3 border-dark series-title p-0">
+    <div class="col-md-7 py-2 text-center bg-primary text-primary border-right">@Model.Team1Name &nbsp; vs &nbsp; @Model.Team2Name</div>
+    <div class="col-md-1 py-2 text-center bg-secondary text-primary border-right">@Model.Team1GamesWon - @Model.Team2GamesWon</div>
+    <div class="col-md-4 py-2 text-center bg-secondary text-primary">@Model.Conference Conference @Model.Stage</div>
+</div>
 
-<h3 class=" m-1 w-100 text-center p-3 border-dark border-bottom">@Model.Team1Name - @Model.Team2Name, @Model.Team1GamesWon - @Model.Team2GamesWon, @Model.Conference Conference @Model.Stage</h3>
 @{
     var counter = 0;
 }
 @if (Model.Games.Any())
 {
+    <h4 class="m-0 py-3 recent-games-title border-dark">Games</h4>
+
     <div class="container-fluid row m-3">
         @foreach (var game in Model.Games)
         {
@@ -60,13 +66,16 @@
                     </div>
 
                     <a class="col-md-1 p-0" asp-controller="Games" asp-action="GameDetails" asp-route-gameId="@game.Id">
-                        <i class="fas fa-chevron-right"></i>
+                        <i class="fas fa-chevron-right text-primary"></i>
                     </a>
                 </div>
             }
         }
     </div>
+}
 
+@if (User.Identity.IsAuthenticated)
+{
     <div class="mt-4 mx-3">
         <a href="/Series/AddGame/@Model.Id"><i class="p-1 fas fa-plus-square fa-2x fa-pull-right"></i></a>
         <a href="/Series/Edit/@Model.Id"><i class="p-1 fas fa-pen-square fa-pull-right fa-2x"></i></a>
