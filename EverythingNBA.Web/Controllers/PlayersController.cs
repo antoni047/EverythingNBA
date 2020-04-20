@@ -47,11 +47,12 @@
             return this.View(playerDetails);
         }
 
+        [Route("[controller]/[action]/{playerName}")]
         public async Task<IActionResult> PlayerDetails(string playerName)
         {
             var player = await this.playerService.GetPlayerDetailsAsync(playerName);
 
-            return RedirectToAction("PlayerDetails", new { player.Id});
+            return this.View(player);
         }
 
         [Route("[controller]/[action]/{playerId:int}")]
