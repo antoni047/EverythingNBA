@@ -195,33 +195,46 @@
         [HttpPost]
         public async Task<IActionResult> EditGame(GameInputModel inputModel)
         {
-            var model = mapper.Map<GameDetailsServiceModel>(inputModel);
-
             if (!ModelState.IsValid)
             {
-                return this.View(model);
+                return this.View(inputModel);
             }
 
-            await this.gameService.EditGameAsync(model, inputModel.Id);
+            var model = mapper.Map<GameDetailsServiceModel>(inputModel);
+
+            var result = await this.gameService.EditGameAsync(model, inputModel.Id);
+
+            if (result == "Error")
+            {
+                TempData["Message"] = "Points of the two teams cannot be the same";
+                TempData["Type"] = result;
+
+                return this.View(inputModel);
+            }
 
             //Success notification data 
             TempData["Message"] = "Game edited successfully";
-            TempData["Type"] = "Success";
+            TempData["Type"] = result;
 
             return RedirectToAction($"GameDetails", new { inputModel.Id });
         }
 
         [HttpGet]
-        [Route("[controller]/[action]/{gameId:int}/{playerName}")]
-        public async Task<IActionResult> EditGameStatistic(int gameId, string playerName)
+        [Route("[controller]/[action]/{gameStatisticId:int}")]
+        public async Task<IActionResult> EditGameStatistic(int gameStatisticId)
         {
-            var gameStatistic = await this.gameStatisticService.GetGameStatisticsAsync(gameId, playerName);
+            var gameStatistic = await this.gameStatisticService.GetGameStatisticsAsync(gameStatisticId);
+
+            if (gameStatistic == null)
+            {
+                return NotFound();
+            }
 
             var model = mapper.Map<GameStatisticInputModel>(gameStatistic);
-            model.GameId = gameId;
+            model.GameId = gameStatistic.GameId;
 
             var game = await this.gameService.GetGameOverview(model.GameId);
-            ViewBag.Name = playerName;
+            ViewBag.Name = gameStatistic.PlayerName;
             ViewBag.Team1 = game.TeamHostShortName;
             ViewBag.Team2 = game.Team2ShortName;
             ViewBag.Date = game.Date;
