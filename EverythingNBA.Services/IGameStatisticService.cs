@@ -12,6 +12,7 @@
         Task<bool> DeleteAsync(int gameStatisticId);
 
         Task<PlayerGameStatisticServiceModel> GetGameStatisticsAsync(int gameId, string playerName);
+        Task<PlayerGameStatisticServiceModel> GetGameStatisticsAsync(int gameStatisticsId);
 
         Task<int> GetThreePointsPercentage(int gameStatisticId);
 

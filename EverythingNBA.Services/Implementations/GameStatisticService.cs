@@ -120,6 +120,7 @@
             model.FreeThrowPercentage = await this.GetFreeThrowPercentage(gameStatistic.Id);
             model.ThreePercentage = await this.GetThreePointsPercentage(gameStatistic.Id);
             model.IsPlayerStarter = gameStatistic.Player.IsStarter;
+            model.GameId = gameId;
 
             return model;
         }
@@ -164,6 +165,19 @@
             }
 
             return (int)result;
+        }
+
+        public async Task<PlayerGameStatisticServiceModel> GetGameStatisticsAsync(int gameStatisticsId)
+        {
+            var gameStatistic = await this.db.GameStatistics
+                .Include(gs => gs.Game)
+                .Include(gs => gs.Player)
+                .Where(gs => gs.Id == gameStatisticsId)
+                .FirstOrDefaultAsync();
+
+            var playerName = gameStatistic.Player.FirstName + " " + gameStatistic.Player.LastName;
+
+            return await this.GetGameStatisticsAsync(gameStatistic.GameId, playerName);
         }
     }
 }
