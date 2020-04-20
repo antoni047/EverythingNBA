@@ -24,14 +24,13 @@
             this.playoffService = playoffService;
         }
 
-        [Route("[controller]/[action]/{seasonId:int}")]
-        public async Task<IActionResult> Standings(int seasonId)
+        [Route("[controller]/[action]/{year:int}")]
+        public async Task<IActionResult> Standings(int year)
         {
-            var allTeamsStandings = await this.teamService.GetStandingsAsync(seasonId);
+            var season = await this.seasonService.GetDetailsByYearAsync(year);
+            var allTeamsStandings = await this.teamService.GetStandingsAsync(season.SeasonId);
 
-            var seasonYear = await this.seasonService.GetYearAsync(seasonId);
-            var playoff = await this.playoffService.GetDetailsBySeasonAsync(seasonYear);
-            ViewBag.Year = seasonYear;
+            ViewBag.Year = year;
 
             return this.View(allTeamsStandings);
         }
@@ -39,10 +38,10 @@
         public async Task<IActionResult> CurrentStandings()
         {
             var year = this.GetCurrentSeasonYear();
-            var season = await this.seasonService.GetDetailsByYearAsync(year);
 
-            return RedirectToAction("Standings", new { season.SeasonId });
+            return RedirectToAction("Standings", new { year });
         }
+
         public async Task<IActionResult> All()
         {
             var seasons = await this.seasonService.GetAllSeasonsAsync();

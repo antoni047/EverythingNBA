@@ -48,22 +48,25 @@
             var westernShortTeamStandings = new List<ShortTeamStandingsViewModel>();
             var easternShortTeamStandings = new List<ShortTeamStandingsViewModel>();
 
-            var model = new ShortTeamStandingsViewModel();
-
             foreach (var standing in teamStandings.WesternStandings.Take(8))
             {
                 var team = await this.teamService.GetTeamAsync(standing.Name);
-               
+
+                var model = new ShortTeamStandingsViewModel();
                 model.TeamAbbreviation = team.AbbreviatedName;
                 model.ImageURL = standing.ImageURL;
+
                 westernShortTeamStandings.Add(model);
             }
 
             foreach (var standing in teamStandings.EasternStandings.Take(8))
             {
                 var team = await this.teamService.GetTeamAsync(standing.Name);
+
+                var model = new ShortTeamStandingsViewModel();
                 model.TeamAbbreviation = team.AbbreviatedName;
                 model.ImageURL = standing.ImageURL;
+
                 easternShortTeamStandings.Add(model);
             }
 
