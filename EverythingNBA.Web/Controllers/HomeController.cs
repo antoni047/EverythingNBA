@@ -82,39 +82,6 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Add()
-        {
-            return this.View();
-        }
-
-        [HttpPost("AddPost")]
-        public async Task<IActionResult> AddPost(ICollection<IFormFile> images)
-        {
-            var newUser = new IdentityUser()
-            {
-                UserName = "user",
-                Email = "user@gmail.com",
-            };
-
-            await userManager.CreateAsync(newUser, "userpassword");
-
-            var roleName = "Administrator";
-            var roleExists = await roleManager.RoleExistsAsync(roleName);
-
-            if (roleExists)
-            {
-                var user = await userManager.GetUserAsync(User);
-                await userManager.AddToRoleAsync(user, roleName);
-            }
-
-            foreach (var image in images)
-            {
-                await this.imageService.UploadImageAsync(image);
-            }
-
-            return RedirectToAction("Index");
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

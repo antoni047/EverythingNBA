@@ -39,42 +39,6 @@
             return View(seriesModel);
         }
 
-        [HttpGet]
-        [Route("[controller]/[action]/{playoffId:int}")]
-        public IActionResult Add(int playoffId)
-        {
-            var model = new SeriesInputModel();
-            model.PlayoffId = playoffId;
-
-            return this.View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Add(SeriesInputModel inputModel)
-        {
-            if (!ModelState.IsValid)
-            {
-                return this.View(inputModel);
-            }
-
-            var year = this.GetCurrentSeasonYear();
-
-            var team1 = await this.teamService.GetTeamDetailsAsync(inputModel.Team1Name, year);
-            var team2 = await this.teamService.GetTeamDetailsAsync(inputModel.Team2Name, year);
-
-            if (team1 == null || team2 == null)
-            {
-                return this.View(inputModel);
-            }
-
-
-            var seriesId = await this.seriesService.AddSeriesAsync(inputModel.PlayoffId, team1.Name, team2.Name, inputModel.Team1GamesWon,
-                inputModel.Team2GamesWon, null, null, null, null, null, null, null, inputModel.Conference, inputModel.Stage, inputModel.StageNumber, null, null);
-
-            await this.playoffService.AddSeriesAsync(inputModel.PlayoffId, seriesId);
-
-            return RedirectToAction("PlayoffBracket", "Playoffs", new { inputModel.PlayoffId});
-        }
 
         [HttpGet]
         [Route("[controller]/[action]/{seriesId:int}")]

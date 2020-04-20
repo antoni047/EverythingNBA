@@ -58,26 +58,6 @@
         }
 
         [HttpGet]
-        public IActionResult Add()
-        {
-            return this.View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Add(TeamInputModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return this.View(model);
-            }
-
-            await this.teamService.AddTeamAsync(model.Name, model.FullImage, model.SmallImage, model.Conference, model.Venue,
-                model.Instagram, model.Twitter);
-
-            return RedirectToAction("All");
-        }
-
-        [HttpGet]
         [Route("[controller]/[action]/{teamId:int}")]
         public async Task<IActionResult> Edit(int teamId)
         {
@@ -109,44 +89,6 @@
             var teamName = model.Name;
 
             return RedirectToAction("TeamDetails", new { teamName});
-        }
-
-        [HttpGet]
-        [Route("[controller]/[action]/{teamId:int}")]
-        public async Task<IActionResult> Delete(int teamId)
-        {
-            var year = this.GetCurrentSeasonYear();
-            var team = await this.teamService.GetTeamDetailsAsync(teamId, year);
-
-            if (team == null)
-            {
-                return RedirectToAction("All");
-            }
-
-            var model = mapper.Map<TeamInputModel>(team);
-
-            return this.View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Delete(TeamInputModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return this.View(model);
-            }
-
-            var year = this.GetCurrentSeasonYear();
-            var team = await this.teamService.GetTeamDetailsAsync(model.Id, year);
-
-            foreach (var playerModel in team.Players)
-            {
-                await this.playerService.RemovePlayerFromTeamAsync(model.Id, playerModel.Id);
-            }
-
-            await this.teamService.DeleteTeamAsync(model.Id);
-
-            return RedirectToAction("All");
         }
 
         private int GetCurrentSeasonYear()
