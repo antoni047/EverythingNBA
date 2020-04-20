@@ -17,7 +17,7 @@
 <table class="table table-bordered game-statistic-table col-md-6">
     <thead class="text-primary" style="background: @Model.TeamHostPrimaryColor">
         <tr class="text-center player-statistics-table">
-            <th style="text-align: left; border: 1px solid black;">@Model.TeamHostName.Split("0").LastOrDefault()</th>
+            <th style="text-align: left; border: 1px solid black; font-size: 19px;">@Model.TeamHostName.Split(" ").LastOrDefault()</th>
             <th class="border-dark" title="Minutes Played">Min</th>
             <th class="border-dark" title="Points per game">PTS</th>
             <th class="border-dark" title="Assits per game">AST</th>
@@ -36,7 +36,7 @@
                 <a class="game-player-link" style="color: @teamHostTextColor" href="/Players/PlayerDetails/@player.PlayerName"> @player.PlayerName</a>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a>
+                    <a class="float-right" href="/Games/EditGameStatistic/@player.Id"><i class="p-1 fas fa-pen-square" style="color: @teamHostTextColor"></i></a>
                 }
             </td>
             <td style="border: 1px solid black;">@player.MinutesPlayed</td>
@@ -55,7 +55,7 @@
 <table class="table table-bordered game-statistic-table col-md-6">
     <thead class="text-primary" style="background: @Model.Team2PrimaryColor">
         <tr class="text-center border-dark">
-            <th style="text-align: left; border: 1px solid black; color:white">@Model.Team2Name.Split("0").LastOrDefault()</th>
+            <th style="text-align: left; border: 1px solid black; color:white; font-size: 20px;">@Model.Team2Name.Split(" ").LastOrDefault()</th>
             <th class="border-dark" title="Points per game">Min</th>
             <th class="border-dark" title="Points per game">PTS</th>
             <th class="border-dark" title="Assits per game">AST</th>
@@ -74,7 +74,7 @@
                 <a class="game-player-link" style="color: @team2TextColor" href="/Players/PlayerDetails/@player.PlayerName"> @player.PlayerName</a>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a class="float-right" href="/Games/EditGameStatistic/@Model.Id/@player.PlayerName"><i class="p-1 fas fa-pen-square"></i></a>
+                    <a class="float-right" href="/Games/EditGameStatistic/@player.Id"><i class="p-1 fas fa-pen-square" style="color: @team2TextColor"></i></a>
                 }
             </td>
             <td style="border: 1px solid black;">@player.MinutesPlayed</td>

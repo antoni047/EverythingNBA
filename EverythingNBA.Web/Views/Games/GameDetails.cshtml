@@ -22,15 +22,15 @@
         <a class="team-link" href="/Teams/TeamDetails/@Model.TeamHostName">@Model.TeamHostName</a> 
             &#160; : &#160; 
         <a class="team-link" href="/Teams/TeamDetails/@Model.Team2Name">@Model.Team2Name</a></div>
-        <div class="pl-3 pt-1 col-md-2 flex-row-reverse" style="border-bottom: 2px solid black">
-            <a class="p-1 m-2 btn btn-secondary game-link text-center"
+        <div class="pl-3 pr-4 pt-1 col-md-2 flex-row-reverse" style="border-bottom: 2px solid black">
+            <a class="float-right p-1 mb-3 mt-1 ml-3 btn btn-secondary game-link text-center"
                href="/Games/HeadToHead/@Model.TeamHostName&@Model.Team2Name"
                role="button">HeadToHead</a>
            
             @if (User.Identity.IsAuthenticated)
             {
-                <a href="/Games/EditGame/@Model.Id"><i class="p-1 fas fa-pen-square fa-2x"></i></a>
-                <a href="/Games/Delete/@Model.Id"><i class="p-1 fas fa-trash-alt fa-2x"></i></a>
+                <a href="/Games/EditGame/@Model.Id"><i class="p-1 float-right fas fa-pen-square fa-2x"></i></a>
+                <a href="/Games/Delete/@Model.Id"><i class="p-1 float-right fas fa-trash-alt fa-2x"></i></a>
             }
         </div>
     </div>
