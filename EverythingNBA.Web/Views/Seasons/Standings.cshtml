@@ -25,7 +25,7 @@
             @foreach (var team in Model.WesternStandings)
             {
                 <tr class="border">
-                    <th scope="row" class="p-0 border-right text-center">@westernCounter</th>
+                    <th scope="row" class="p-2 border-right text-center">@westernCounter</th>
                     <td class="p-2 ">
                         <a class="standings-team-name p-0 m-0 w-100" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@team.Name">@team.Name</a>
                     </td>
@@ -59,7 +59,7 @@
             @foreach (var team in Model.EasternStandings)
             {
                 <tr class="border">
-                    <th scope="row" class="p-0 border-right text-center">@easternCounter</th>
+                    <th scope="row" class="p-2 border-right text-center">@easternCounter</th>
                     <td class="p-2">
                         <a class="standings-team-name p-0 m-0 w-100" asp-controller="Teams" asp-action="TeamDetails" asp-route-teamName="@team.Name">@team.Name</a>
                     </td>
