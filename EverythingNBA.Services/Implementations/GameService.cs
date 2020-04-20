@@ -255,20 +255,41 @@
                 return "Game has not finished.";
             }
 
-            var winner = game.TeamHostPoints > game.Team2Points ? game.TeamHost.Name : game.TeamHost.Name;
+            var winner = game.TeamHostPoints > game.Team2Points ? game.TeamHost.Name : game.Team2.Name;
 
             return winner;
         }
 
         public async Task<bool> SetScoreAsync(int gameId, int teamHostScore, int team2Score)
         {
-            var game = await this.db.Games.Where(g => g.Id == gameId).FirstOrDefaultAsync();
+            var game = await this.db.Games
+                .Include(g => g.Team2)
+                    .ThenInclude(t => t.SeasonsStatistics)
+                .Include(g => g.TeamHost)
+                    .ThenInclude(t => t.SeasonsStatistics)
+                .Where(g => g.Id == gameId)
+                .FirstOrDefaultAsync();
 
-            if (game.IsFinished) { return false; }
+            if (game.TeamHostPoints > 0 && game.Team2Points > 0) { return false; }
 
             game.TeamHostPoints = teamHostScore;
             game.Team2Points = team2Score;
 
+            var teamHostStats = game.TeamHost.SeasonsStatistics.Where(ss => ss.SeasonId == game.SeasonId).FirstOrDefault();
+            var team2Stats = game.Team2.SeasonsStatistics.Where(ss => ss.SeasonId == game.SeasonId).FirstOrDefault();
+
+            if (teamHostScore > team2Score)
+            {
+                teamHostStats.Wins++;
+                team2Stats.Losses++;
+            }
+            else
+            {
+                teamHostStats.Losses++;
+                team2Stats.Wins++;
+            }
+
+            game.IsFinished = true;
             await this.db.SaveChangesAsync();
             return true;
         }
@@ -351,20 +372,26 @@
             return model;
         }
 
-        public async Task EditGameAsync(GameDetailsServiceModel model, int gameId)
+        public async Task<string> EditGameAsync(GameDetailsServiceModel model, int gameId)
         {
             var game = await this.db.Games.FindAsync(gameId);
 
-            if (model == null)
+            if (game.Team2Points != 0 && game.TeamHostPoints != 0 && game.Team2Points == game.TeamHostPoints)
             {
-                return;
+                return "Error";
             }
 
-            game.Team2Points = model.Team2Points;
-            game.TeamHostPoints = model.TeamHostPoints;
+            var scoreSet = await this.SetScoreAsync(game.Id, (int)model.TeamHostPoints, (int)model.Team2Points);
+            if (scoreSet == false)
+            {
+                game.Team2Points = model.Team2Points;
+                game.TeamHostPoints = model.TeamHostPoints;
+            }
+
             game.Date = DateTime.ParseExact(model.Date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             await this.db.SaveChangesAsync();
+            return "Success";
         }
 
         private int GetCurrentSeasonYear(DateTime date)

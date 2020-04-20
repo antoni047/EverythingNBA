@@ -35,7 +35,7 @@
 
         Task<GameDetailsServiceModel> GetGameOverview(int gameId);
 
-        Task EditGameAsync(GameDetailsServiceModel model, int gameId);
+        Task<string> EditGameAsync(GameDetailsServiceModel model, int gameId);
 
         Task<GameListingServiceModel> GetFixturesAsync(int seasonId, int page = 1);
 
