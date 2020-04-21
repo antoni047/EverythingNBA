@@ -59,25 +59,6 @@
             await this.db.SaveChangesAsync();
         }
 
-        public async Task<bool> RemovePlayoffAsync(int seasonId, int playoffId)
-        {
-            var season = await this.db.Seasons
-                .Include(s => s.Playoff)
-                .Where(s => s.Id == seasonId)
-                .FirstOrDefaultAsync();
-
-            if (season == null || this.db.Playoffs.Find(playoffId) == null)
-            {
-                return false;
-            }
-
-            season.PlayoffId = null;
-
-            await this.db.SaveChangesAsync();
-            return true;
-        }
-
-
         public async Task<bool> DeleteAsync(int seasonId)
         {
             var seasonToDelete = await this.db.Seasons

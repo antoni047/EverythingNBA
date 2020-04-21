@@ -47,21 +47,6 @@
             return statObj.Id;
         }
 
-        public async Task<bool> DeleteAsync(int gameStatisticId)
-        {
-            var statToDelete = await this.db.GameStatistics.FindAsync(gameStatisticId);
-
-            if (statToDelete == null)
-            {
-                return false;
-            }
-
-            this.db.GameStatistics.Remove(statToDelete);
-            await this.db.SaveChangesAsync();
-
-            return true;
-        }
-
         public async Task EditGameStatisticAsync(PlayerGameStatisticServiceModel editedStats, int statId)
         {
             if (editedStats == null)

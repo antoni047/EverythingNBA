@@ -11,8 +11,6 @@
         Task<int> AddTeamAsync(string name, IFormFile FullImageFile, IFormFile smallImageFile, string conference, 
             string venue, string instagram, string twitter);
 
-        Task<bool> DeleteTeamAsync(int teamId);
-
         Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(int teamId, int year);
 
         Task<GetTeamDetailsServiceModel> GetTeamDetailsAsync(string name, int year);

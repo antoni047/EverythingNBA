@@ -61,22 +61,6 @@
             return teamObj.Id;
         }
 
-        public async Task<bool> DeleteTeamAsync(int teamId)
-        {
-            var teamToDelete = await this.db.Teams.FindAsync(teamId);
-
-            if (teamToDelete == null)
-            {
-                return false;
-            }
-
-            this.db.Teams.Remove(teamToDelete);
-
-            await this.db.SaveChangesAsync();
-
-            return true;
-        }
-
         public async Task<TeamStandingsListingServiceModel> GetStandingsAsync(int seasonId)
         {
             var easternStandingsList = new List<TeamSeasonStatisticServiceModel>();

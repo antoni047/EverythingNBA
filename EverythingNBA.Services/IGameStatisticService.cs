@@ -9,8 +9,6 @@
         Task<int> AddAsync(int gameId, int playerId, int minutesPlayed, int points, int assists, int rebounds, int blocks, int steals,
             int freeThrowAttemps, int freeThrowsMade, int threeAttemps, int threeMade, int fieldGoalAttempts, int fieldGoalsMade);
 
-        Task<bool> DeleteAsync(int gameStatisticId);
-
         Task<PlayerGameStatisticServiceModel> GetGameStatisticsAsync(int gameId, string playerName);
         Task<PlayerGameStatisticServiceModel> GetGameStatisticsAsync(int gameStatisticsId);
 

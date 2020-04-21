@@ -15,10 +15,6 @@
 
         Task<ICollection<AwardDetailsServiceModel>> GetSeasonAwardsAsync(int year);
 
-        Task<string> GetAwardWinnerAsync(int seasonId, string awardType);
-
-        Task<ICollection<PlayerAwardsServiceModel>> GetPlayerAwardsAsync(int playerId);
-
         Task EditAwardWinnerAsync(string winnerName, int awardId);
 
         Task<ICollection<AllAwardsServiceModel>> GetAllAwardsAsync();

@@ -23,15 +23,7 @@
 
         Task<string> GetWinnerAsync(int gameId);
 
-        Task<PlayerTopStatisticServiceModel> GetTopPointsAsync(int gameId);
-
-        Task<PlayerTopStatisticServiceModel> GetTopAssistsAsync(int gameId);
-
-        Task<PlayerTopStatisticServiceModel> GetTopReboundsAsync(int gameId);
-
         Task<ICollection<GameDetailsServiceModel>> GetAllGamesBetweenTeamsAsync(string team1Name, string team2Name);
-
-        Task<ICollection<GameDetailsServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(string team1Name, string team2Name, int seasonId);
 
         Task<GameDetailsServiceModel> GetGameOverview(int gameId);
 

@@ -441,41 +441,6 @@
             return playerModels;
         }
 
-        public async Task<bool> AddPlayerToTeamAsync(int teamId, int playerId)
-        {
-            var player = await this.db.Players.Include(p => p.Team).Where(p => p.Id == playerId).FirstOrDefaultAsync();
-            var team = await this.db.Teams.Where(t => t.Id == teamId).FirstOrDefaultAsync();
-
-            if (player == null || team == null)
-            {
-                return false;
-            }
-
-            player.Team = team;
-            team.Players.Add(player);
-
-            await this.db.SaveChangesAsync();
-
-            return true;
-        }
-
-        public async Task<bool> RemovePlayerFromTeamAsync(int teamId, int playerId)
-        {
-            var player = await this.db.Players.Include(p => p.Team).Where(p => p.Id == playerId).FirstOrDefaultAsync();
-            var team = await this.db.Teams.Where(t => t.Id == teamId).FirstOrDefaultAsync();
-
-            if (player == null || team == null)
-            {
-                return false;
-            }
-
-            player.Team = null;
-            team.Players.Remove(player);
-            await this.db.SaveChangesAsync();
-
-            return true;
-        }
-
         private int GetCurrentSeasonYear()
         {
             var currentYear = 0;

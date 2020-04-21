@@ -32,9 +32,5 @@
         Task<PlayerAccomplishmentsListingServiceModel> GetPlayerAccomplishentsAsync(int playerId);
 
         Task<ICollection<TeamPlayerOverviewServiceModel>> GetAllPlayersFromTeam(int teamId);
-
-        Task<bool> AddPlayerToTeamAsync(int teamId, int playerId);
-
-        Task<bool> RemovePlayerFromTeamAsync(int teamId, int playerId);
     }
 }

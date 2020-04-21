@@ -18,8 +18,6 @@
 
         Task AddPlayoffAsync(int seasonId, int playoffId);
 
-        Task<bool> RemovePlayoffAsync(int seasonId, int playoffId);
-
         Task<ICollection<GetSeasonListingServiceModel>> GetAllSeasonsAsync();
 
         Task EditSeasonAsync(GetSeasonDetailsServiceModel model, int seasonId);

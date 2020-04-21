@@ -85,27 +85,6 @@
             return models.OrderByDescending(g => g.Date).ToList();
         }
 
-        public async Task<ICollection<GameDetailsServiceModel>> GetAllGamesBetweenTeamsBySeasonAsync(string team1Name, string team2Name, int seasonId)
-        {
-            var games = await this.db.Games
-                .Include(g => g.TeamHost)
-                .Include(g => g.Team2)
-                .Where(g => (g.TeamHost.Name == team1Name || g.Team2.Name == team1Name) && (g.TeamHost.Name == team2Name || g.Team2.Name == team2Name) && g.SeasonId == seasonId)
-                .ToListAsync();
-
-            var models = new List<GameDetailsServiceModel>();
-
-            foreach (var game in games.OrderByDescending(g => g.Date))
-            {
-                var model = mapper.Map<GameDetailsServiceModel>(game);
-                model.SeasonYear = this.GetCurrentSeasonYear(game.Date);
-
-                models.Add(model);
-            }
-
-            return models;
-        }
-
         public async Task<ICollection<GameDetailsServiceModel>> GetSeasonGamesAsync(int seasonId)
         {
             var currentSeasonGames = await this.db.Games.Include(g => g.TeamHost).Include(g => g.Team2).Where(g => g.SeasonId == seasonId).ToListAsync();
@@ -166,78 +145,6 @@
 
             var model = mapper.Map<GameDetailsServiceModel>(game);
             model.SeasonYear = this.GetCurrentSeasonYear(game.Date);
-
-            return model;
-        }
-
-        public async Task<PlayerTopStatisticServiceModel> GetTopAssistsAsync(int gameId)
-        {
-            var game = await this.db.Games
-                .Include(g => g.PlayerStats)
-                    .ThenInclude(ps => ps.Player)
-                .Where(g => g.Id == gameId)
-                .FirstOrDefaultAsync();
-
-            var playerStat = game.PlayerStats.Select(ps => new
-            {
-                ps.Assists,
-                Name = ps.Player.FirstName + " " + ps.Player.LastName,
-            }).OrderByDescending(ps => ps.Assists)
-              .FirstOrDefault();
-
-            var model = new PlayerTopStatisticServiceModel
-            {
-                PlayerName = playerStat.Name,
-                Value = playerStat.Assists
-            };
-
-            return model;
-        }
-
-        public async Task<PlayerTopStatisticServiceModel> GetTopPointsAsync(int gameId)
-        {
-            var game = await this.db.Games
-                .Include(g => g.PlayerStats)
-                    .ThenInclude(ps => ps.Player)
-                .Where(g => g.Id == gameId)
-                .FirstOrDefaultAsync();
-
-            var playerStat = game.PlayerStats.Select(ps => new
-            {
-                ps.Points,
-                Name = ps.Player.FirstName + " " + ps.Player.LastName,
-            }).OrderByDescending(ps => ps.Points)
-              .FirstOrDefault();
-
-            var model = new PlayerTopStatisticServiceModel
-            {
-                PlayerName = playerStat.Name,
-                Value = playerStat.Points
-            };
-
-            return model;
-        }
-
-        public async Task<PlayerTopStatisticServiceModel> GetTopReboundsAsync(int gameId)
-        {
-            var game = await this.db.Games
-                 .Include(g => g.PlayerStats)
-                    .ThenInclude(ps => ps.Player)
-                 .Where(g => g.Id == gameId)
-                 .FirstOrDefaultAsync();
-
-            var playerStat = game.PlayerStats.Select(ps => new
-            {
-                ps.Rebounds,
-                Name = ps.Player.FirstName + " " + ps.Player.LastName,
-            }).OrderByDescending(ps => ps.Rebounds)
-              .FirstOrDefault();
-
-            var model = new PlayerTopStatisticServiceModel
-            {
-                PlayerName = playerStat.Name,
-                Value = playerStat.Rebounds
-            };
 
             return model;
         }

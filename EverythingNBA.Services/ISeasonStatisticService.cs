@@ -9,14 +9,10 @@
     {
         Task<int> AddAsync(int seasonId, int teamId, int wins, int losses);
 
-        Task<bool> DeleteAsync(int seasonStatisticId);
-
         Task<GetSeasonStatisticDetailsServiceModel> GetDetailsAsync(int seasonId, int teamId);
 
         Task<GetSeasonStatisticDetailsServiceModel> GetDetailsAsync(int id);
 
         Task<string> GetWinPercentageAsync(int seasonStatisticId);
-
-        Task<bool> AddGameAsync(int teamId, bool isWon);
     }
 }
