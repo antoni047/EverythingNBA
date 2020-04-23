@@ -133,5 +133,100 @@
             Assert.Equal(game.Id, db.GameStatistics.First().GameId);
             Assert.Equal(player.Id, db.GameStatistics.First().PlayerId);
         }
+
+        [Fact]
+        public async Task GetFieldGoalPercentageShouldReturnCorrectValue()
+        {
+
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var gameStatisticService = new GameStatisticService(db, mapper);
+
+            var season = Seeding.CreateUnfinishedSeason();
+            db.Seasons.Add(season);
+            var teamHost = Seeding.CreateTeam();
+            var team2 = Seeding.CreateTeam();
+            db.Teams.Add(teamHost);
+            db.Teams.Add(team2);
+            var game = Seeding.CreateFinishedGame(season.Id, teamHost, team2, 120, 100);
+            db.Games.Add(game);
+            var player = Seeding.CreatePlayer(teamHost.Id);
+            db.Players.Add(player);
+
+            var gameStatistic = Seeding.CreateGameStatistic(player.Id, game.Id);
+            var fakeFieldGoalPercentage = (gameStatistic.FieldGoalsMade / gameStatistic.FieldGoalAttempts) * 100;
+            db.GameStatistics.Add(gameStatistic);
+            await db.SaveChangesAsync();
+
+
+            var fieldGoalPercentage = await gameStatisticService.GetFieldGoalPercentage(gameStatistic.Id);
+
+
+            Assert.True((int)fakeFieldGoalPercentage == fieldGoalPercentage);
+        }
+
+        [Fact]
+        public async Task GetFreeThrowPercentageShouldReturnCorrectValue()
+        {
+
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var gameStatisticService = new GameStatisticService(db, mapper);
+
+            var season = Seeding.CreateUnfinishedSeason();
+            db.Seasons.Add(season);
+            var teamHost = Seeding.CreateTeam();
+            var team2 = Seeding.CreateTeam();
+            db.Teams.Add(teamHost);
+            db.Teams.Add(team2);
+            var game = Seeding.CreateFinishedGame(season.Id, teamHost, team2, 120, 100);
+            db.Games.Add(game);
+            var player = Seeding.CreatePlayer(teamHost.Id);
+            db.Players.Add(player);
+
+            var gameStatistic = Seeding.CreateGameStatistic(player.Id, game.Id);
+            var fakeFreeThrowPercentage = (gameStatistic.FreeThrowsMade / gameStatistic.FreeThrowAttempts) * 100;
+            db.GameStatistics.Add(gameStatistic);
+            await db.SaveChangesAsync();
+
+
+            var freeThrowPercentage = await gameStatisticService.GetFreeThrowPercentage(gameStatistic.Id);
+
+
+            Assert.True((int)fakeFreeThrowPercentage == freeThrowPercentage);
+        }
+
+        [Fact]
+        public async Task GetThreePercentageShouldReturnCorrectValue()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var gameStatisticService = new GameStatisticService(db, mapper);
+
+            var season = Seeding.CreateUnfinishedSeason();
+            db.Seasons.Add(season);
+            var teamHost = Seeding.CreateTeam();
+            var team2 = Seeding.CreateTeam();
+            db.Teams.Add(teamHost);
+            db.Teams.Add(team2);
+            var game = Seeding.CreateFinishedGame(season.Id, teamHost, team2, 120, 100);
+            db.Games.Add(game);
+            var player = Seeding.CreatePlayer(teamHost.Id);
+            db.Players.Add(player);
+
+            var gameStatistic = Seeding.CreateGameStatistic(player.Id, game.Id);
+            var fakeThreePercentage = (gameStatistic.ThreeMade / gameStatistic.ThreeAttempts) * 100;
+            db.GameStatistics.Add(gameStatistic);
+            await db.SaveChangesAsync();
+
+
+            var threePercentage = await gameStatisticService.GetThreePointsPercentage(gameStatistic.Id);
+
+
+            Assert.True((int)fakeThreePercentage == threePercentage);
+        }
     }
 }

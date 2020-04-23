@@ -9,6 +9,7 @@
 
     using EverythingNBA.Services.Implementations;
     using EverythingNBA.Services.Models.Game;
+    using System.Globalization;
 
     public class GameServiceTests
     {
@@ -148,7 +149,7 @@
             {
                 Id = game.Id,
                 SeasonYear = season.Year,
-                Date = game.Date.ToString("dd/MM/yyyy"),
+                Date = game.Date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture),
                 TeamHostShortName = teamHost.AbbreviatedName,
                 Team2ShortName = team2.AbbreviatedName,
                 IsFinished = true,
@@ -292,13 +293,13 @@
             var team2 = Seeding.CreateTeam();
             db.Teams.Add(teamHost);
             db.Teams.Add(team2);
-            var game = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 12));
+            var game = Seeding.CreateGameOnDate(season.Id, teamHost, team2, DateTime.Now.AddDays(1));
             db.Games.Add(game);
-            var game2 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 13));
+            var game2 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, DateTime.Now.AddDays(2));
             db.Games.Add(game2);
             var game4 = Seeding.CreateFinishedGame(season.Id, teamHost, team2, 120, 100);
             db.Games.Add(game4);
-            var game3 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 25));
+            var game3 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, DateTime.Now.AddDays(30));
             db.Games.Add(game3);
             await db.SaveChangesAsync();
 
@@ -327,10 +328,10 @@
             var team2 = Seeding.CreateTeam();
             db.Teams.Add(teamHost);
             db.Teams.Add(team2);
-            var game = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 12));
-            var game2 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 10));
-            var game3 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 09));
-            var game4 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, new DateTime(2020, 04, 08));
+            var game = Seeding.CreateGameOnDate(season.Id, teamHost, team2, DateTime.Now.AddDays(-1));
+            var game2 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, DateTime.Now.AddDays(-2));
+            var game3 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, DateTime.Now.AddDays(-3));
+            var game4 = Seeding.CreateGameOnDate(season.Id, teamHost, team2, DateTime.Now.AddDays(-4));
 
             db.Games.Add(game);
             db.Games.Add(game2);
@@ -351,6 +352,39 @@
             {
                 Assert.True(gameresult.IsFinished = true);
             }
+        }
+
+        [Fact]
+        public async Task SetScoreShouldChangePointsAndChangeSeasonStats()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var gameService = new GameService(db, mapper);
+
+            var season = Seeding.CreateUnfinishedSeason();
+            db.Seasons.Add(season);
+            var teamHost = Seeding.CreateTeam();
+            var team2 = Seeding.CreateTeam();
+            var seasonStatistic = Seeding.CreateSeasonStatisitc(season.Id, teamHost.Id);
+            var seasonStatistic2 = Seeding.CreateSeasonStatisitc(season.Id, team2.Id);
+            db.SeasonStatistics.Add(seasonStatistic);
+            db.SeasonStatistics.Add(seasonStatistic2);
+            db.Teams.Add(teamHost);
+            db.Teams.Add(team2);
+            var game = Seeding.CreateUnfinishedGame(season.Id, teamHost, team2);
+            db.Games.Add(game);
+            db.SaveChanges();
+
+
+            await gameService.SetScoreAsync(game.Id, 120, 100);
+
+
+            Assert.True(game.IsFinished == true);
+            Assert.True(game.TeamHostPoints == 120);
+            Assert.True(game.Team2Points == 100);
+            Assert.True(seasonStatistic.Wins == 50);
+            Assert.True(seasonStatistic2.Losses == 32);
         }
     }
 }

@@ -149,7 +149,7 @@
             var startDate = await seasonService.GetSeasonStartDateAsync(1);
 
 
-            var date = new DateTime(2020, 04, 25);
+            var date = new DateTime(2020, 10, 25);
             Assert.True(DateTime.Compare(date, startDate) == 0);
         }
 
@@ -208,6 +208,46 @@
 
 
             Assert.True(db.Seasons.Count() == 1);
+        }
+
+        [Fact]
+        public async Task CreateInitialSeasonStatisticsShouldCreateEmptyStatsInCorrectSeason()
+        {
+            var db = InMemoryDatabase.Get();
+            var mapper = AutomapperSingleton.Mapper;
+
+            var seasonService = new SeasonService(db, mapper);
+
+            var team = Seeding.CreateTeam();
+            db.Teams.Add(team);
+            var team2 = Seeding.CreateTeam();
+            db.Teams.Add(team2);
+            var team3 = Seeding.CreateTeam();
+            db.Teams.Add(team3);
+            var team4 = Seeding.CreateTeam();
+            db.Teams.Add(team4);
+            db.SaveChanges();
+            var season = new Season
+            {
+                Id = 1,
+                GamesPlayed = 82,
+                SeasonEndDate = new DateTime(25 / 04 / 2020),
+                SeasonStartDate = new DateTime(25 / 10 / 2019),
+                TitleWinnerId = 1,
+                Year = 2020,
+            };
+
+
+            await seasonService.CreateInitialSeasonStatistics(season.Id);
+
+
+            Assert.True(db.SeasonStatistics.Count() == 4);
+            foreach (var stat in db.SeasonStatistics)
+            {
+                Assert.True(stat.Wins == 0);
+                Assert.True(stat.Losses == 0);
+                Assert.True(stat.SeasonId == season.Id);
+            }
         }
     }
 }

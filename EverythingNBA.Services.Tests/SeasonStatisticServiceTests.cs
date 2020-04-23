@@ -8,6 +8,7 @@
 
     using EverythingNBA.Services.Implementations;
     using EverythingNBA.Services.Models.SeasonStatistic;
+    using EverythingNBA.Models;
 
     public class SeasonStatisticServiceTests
     {
@@ -84,8 +85,15 @@
             var seasonStatService = new SeasonStatisticService(db, mapper);
 
             var team = Seeding.CreateTeam();
-            var season = Seeding.CreateFinishedSeason(team.Id, 2019);
-            var seasonStat = Seeding.CreateSeasonStatisitc(season.Id, team.Id);
+            var season = Seeding.CreateFinishedSeason(team.Id, 2020);
+            var seasonStat = new SeasonStatistic
+            {
+                Id = 1,
+                TeamId = team.Id,
+                SeasonId = season.Id,
+                Wins = 50,
+                Losses = 32,
+            };
             db.Seasons.Add(season);
             db.Teams.Add(team);
             db.SeasonStatistics.Add(seasonStat);
