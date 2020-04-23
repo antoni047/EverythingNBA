@@ -49,6 +49,8 @@
 
         public string SecondaryColorHex { get; set; }
 
+        public string Coach { get; set; }
+
         public virtual ICollection<SeasonStatistic> SeasonsStatistics { get; } = new List<SeasonStatistic>();
         public virtual ICollection<Game> AwayGames { get; }
         public virtual ICollection<Game> GamesWon { get; }

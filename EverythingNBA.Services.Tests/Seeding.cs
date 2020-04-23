@@ -304,8 +304,8 @@
             var seasonStatisticsObj = new SeasonStatistic
             {
                 Id = ++seasonStatisticId,
-                Losses = 32,
-                Wins = 50,
+                Losses = 31,
+                Wins = 49,
                 SeasonId = seasonId,
                 TeamId = teamId
             };

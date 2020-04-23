@@ -28,6 +28,8 @@
 
         public string SecondaryColorHex { get; set; }
 
+        public string Coach { get; set; }
+
         public ICollection<SeasonStatisticOverviewServiceModel> CurrentSeasonStatistic { get; set; }
 
         public ICollection<TeamGameOverviewServiceModel> Last9Games { get; set; }
