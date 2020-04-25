@@ -20,7 +20,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingNBA.Services.Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingNBA.Web", "EverythingNBA.Web\EverythingNBA.Web.csproj", "{22739942-710A-4B95-86A9-999D775D548E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Seeding", "..\C# Web\Seeding\Seeding.csproj", "{A7D95BBB-2440-4A1B-82CC-DB6BAFC8CF70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Seeding2", "..\C# Web\Seeding\Seeding2.csproj", "{A7D95BBB-2440-4A1B-82CC-DB6BAFC8CF70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Seeding", "Seeding\Seeding.csproj", "{F70CA160-E2FE-4399-8854-590A9E61EF02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,10 @@ Global
 		{A7D95BBB-2440-4A1B-82CC-DB6BAFC8CF70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7D95BBB-2440-4A1B-82CC-DB6BAFC8CF70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7D95BBB-2440-4A1B-82CC-DB6BAFC8CF70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F70CA160-E2FE-4399-8854-590A9E61EF02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F70CA160-E2FE-4399-8854-590A9E61EF02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F70CA160-E2FE-4399-8854-590A9E61EF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F70CA160-E2FE-4399-8854-590A9E61EF02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
