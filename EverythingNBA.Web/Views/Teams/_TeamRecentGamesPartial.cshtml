@@ -2,7 +2,7 @@
 @model TeamGameOverviewServiceModel
 
     <div class="col-md-4 container-fluid p-0 m-0 player-game-box">
-        <div class="container-fluid row pt-2 pl-2 pr-0 pb-0 m-0">
+        <div class="container-fluid row pt-0 pl-2 pr-0 pb-0 m-0">
             <div class="col-md-5 p-0 text-center">@Model.TeamHostName</div>
             <div class="col-md-5 p-0 text-center border-right">@Model.Team2Name</div>
             @if (Model.IsHomeGame == true)
@@ -14,7 +14,7 @@
                 <div class="col-md-2 p-0 text-center" style="font-size: 17px;">Away</div>
             }
         </div>
-        <div class="container-fluid row pb-2 pl-2 pr-0 pt-0 m-0">
+        <div class="container-fluid row pb-1 pl-2 pr-0 pt-0 m-0">
             <div class="col-md-5 p-0 text-center border-bottom ">@Model.TeamHostPoints</div>
             <div class="col-md-5 p-0 text-center border-bottom border-right">@Model.Team2Points</div>
             @if (Model.TeamHostPoints > Model.Team2Points)

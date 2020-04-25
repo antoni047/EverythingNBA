@@ -19,15 +19,73 @@
             <th class="p-0 text-center">GP</th>
         </tr>
     </thead>
-    @foreach (var team in Model.CurrentSeasonStatistic)
+    @if (Model.CurrentSeasonStatistic.Count == 2)
     {
-        <tr class="border">
-            <th scope="row" class="p-0 border-right text-center">@team.Position</th>
-            <td class="py-0 pr-0 pl-1">@team.Name</td>
-            <td class="p-0 text-center">@team.Wins-@team.Losses</td>
-            <td class="p-0 text-center">@team.LastTenGames</td>
-            <td class="p-0 text-center">@team.GamesPlayed</td>
-        </tr>
+        var team = Model.CurrentSeasonStatistic.ToList();
+        if (team[0].Position == 1)
+        {
+            <tr>
+                <th scope="row" class="p-0 border-right text-center">&#160;</th>
+                <td class="py-0 pr-0 pl-1">&#160;</td>
+                <td class="p-0 text-center">&#160;</td>
+                <td class="p-0 text-center">&#160;</td>
+                <td class="p-0 text-center">&#160;</td>
+            </tr>
 
+            <tr class="border">
+                <th scope="row" class="p-0 border-right text-center">@team[0].Position</th>
+                <td class="py-0 pr-0 pl-1">@team[0].Name</td>
+                <td class="p-0 text-center">@team[0].Wins-@team[0].Losses</td>
+                <td class="p-0 text-center">@team[0].LastTenGames</td>
+                <td class="p-0 text-center">@team[0].GamesPlayed</td>
+            </tr>
+
+            <tr class="border">
+                <th scope="row" class="p-0 border-right text-center">@team[1].Position</th>
+                <td class="py-0 pr-0 pl-1">@team[1].Name</td>
+                <td class="p-0 text-center">@team[1].Wins-@team[1].Losses</td>
+                <td class="p-0 text-center">@team[1].LastTenGames</td>
+                <td class="p-0 text-center">@team[1].GamesPlayed</td>
+            </tr>
+        }
+        else if (team[1].Position == 15)
+        {
+            <tr class="border">
+                <th scope="row" class="p-0 border-right text-center">@team[0].Position</th>
+                <td class="py-0 pr-0 pl-1">@team[0].Name</td>
+                <td class="p-0 text-center">@team[0].Wins-@team[0].Losses</td>
+                <td class="p-0 text-center">@team[0].LastTenGames</td>
+                <td class="p-0 text-center">@team[0].GamesPlayed</td>
+            </tr>
+
+            <tr class="border">
+                <th scope="row" class="p-0 border-right text-center">@team[1].Position</th>
+                <td class="py-0 pr-0 pl-1">@team[1].Name</td>
+                <td class="p-0 text-center">@team[1].Wins-@team[1].Losses</td>
+                <td class="p-0 text-center">@team[1].LastTenGames</td>
+                <td class="p-0 text-center">@team[1].GamesPlayed</td>
+            </tr>
+
+            <tr>
+                <th scope="row" class="p-0 border-right text-center">&#160;</th>
+                <td class="py-0 pr-0 pl-1">&#160;</td>
+                <td class="p-0 text-center">&#160;</td>
+                <td class="p-0 text-center">&#160;</td>
+                <td class="p-0 text-center">&#160;</td>
+            </tr>
+        }
+    }
+    else
+    {
+        @foreach (var team in Model.CurrentSeasonStatistic)
+        {
+            <tr class="border">
+                <th scope="row" class="p-0 border-right text-center">@team.Position</th>
+                <td class="py-0 pr-0 pl-1">@team.Name</td>
+                <td class="p-0 text-center">@team.Wins-@team.Losses</td>
+                <td class="p-0 text-center">@team.LastTenGames</td>
+                <td class="p-0 text-center">@team.GamesPlayed</td>
+            </tr>
+        }
     }
 </table>
