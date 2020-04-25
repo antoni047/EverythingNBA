@@ -2,22 +2,25 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-family: 'Kaushan Script', cursive;
+    font-size: 30px;
+    position: absolute;
 }
 
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+    color: #0366d6;
 }
 
 
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 /* Sticky footer styles
@@ -44,22 +47,23 @@ html {
     }
 }
 
-.a:hover{
+.a:hover {
     color: none;
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
-.btn-dark{
+.btn-dark {
     background-color: dimgray;
 }
 
@@ -87,11 +91,11 @@ html {
     color: white !important;
 }
 
-.text-secondary{
+.text-secondary {
     color: black !important;
 }
 
-.border-dark{
+.border-dark {
     border-color: black;
     border: 1px solid;
 }
@@ -125,7 +129,7 @@ html {
     border-bottom: 2.5px solid #f12222;
 }
 
-.logout-btn{
+.logout-btn {
     padding-top: 0.5rem;
     padding-bottom: 0rem;
     text-align: justify;
@@ -163,24 +167,29 @@ html {
     background: #f12222;
     color: white;
 }
-.standings-title{
+
+.standings-title {
     height: 40px;
 }
-.home-team-logo{
+
+.home-team-logo {
     height: 45px;
     width: 45px;
 }
-.home-team-name{
+
+.home-team-name {
     text-decoration: none;
     background-color: none;
     color: black;
     text-align: center;
     font-size: 26px;
 }
-.home-team-standings{
+
+.home-team-standings {
     text-align: center;
 }
-counter{
+
+counter {
     font-size: 24px;
 }
 
@@ -190,6 +199,7 @@ counter{
     font-weight: 400;
     font-size: 20px;
 }
+
 .standings-table-head {
     font-family: 'Roboto', sans-serif;
     font-weight: 500;
@@ -271,6 +281,7 @@ btn-light {
     font-size: 18px;
     border: 1px solid black;
 }
+
 .series-links-block {
     border-left: 2px solid black
 }
@@ -285,7 +296,7 @@ btn-light {
 
 /*All Star Teams*/
 
-.AST-title{
+.AST-title {
     position: absolute;
     width: 100%;
     text-align: center;
@@ -321,9 +332,9 @@ btn-light {
     font-size: 18px;
 }
 
-.AS-teams-container{
-    border:1px solid black;
-    margin:auto;
+.AS-teams-container {
+    border: 1px solid black;
+    margin: auto;
 }
 
 .AST-content {
@@ -408,7 +419,7 @@ btn-light {
     color: white;
 }
 
-.player-statistics-table{
+.player-statistics-table {
     border: 1px solid black;
 }
 
@@ -431,6 +442,7 @@ btn-light {
     border-left: 1px solid black;
     border-right: 1px solid black;
 }
+
 .player-game-box {
     border: 1.5px solid black;
     font-family: 'Roboto', sans-serif;
@@ -493,7 +505,7 @@ btn-light {
     color: #2177fb;
 }
 
-.fa-chevron-right{
+.fa-chevron-right {
     color: #8b0000
 }
 
@@ -626,7 +638,7 @@ home-game-link {
     color: blue;
 }
 
-.fa-trash-alt{
+.fa-trash-alt {
     color: red;
 }
 
@@ -649,9 +661,9 @@ body {
 }
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
 }
