@@ -345,70 +345,57 @@
 
             foreach (var team in player.AllStarTeams)
             {
-                if (team.AllStarTeam.Type.ToString() == "FirstAllNBA")
+                switch (team.AllStarTeam.Type.ToString())
                 {
-                    firstNBATeams.Append(team.AllStarTeam.Year.ToString());
-                }
-
-                else if (team.AllStarTeam.Type.ToString() == "SecondAllNBA")
-                {
-                    secondNBATeams.Append(team.AllStarTeam.Year.ToString());
-                }
-
-                else if (team.AllStarTeam.Type.ToString() == "ThirdAllNBA")
-                {
-                    thirdNBATeams.Append(team.AllStarTeam.Year.ToString());
-                }
-
-                else if (team.AllStarTeam.Type.ToString() == "AllDefensive")
-                {
-                    allDefensiveTeams.Append(team.AllStarTeam.Year.ToString());
-                }
-
-                else if (team.AllStarTeam.Type.ToString() == "AllRookie")
-                {
-                    allRookieTeams.Append(team.AllStarTeam.Year.ToString());
+                    case "FirstAllNBA":
+                        firstNBATeams.Append(team.AllStarTeam.Year.ToString());
+                        break;
+                    case "SecondAllNBA":
+                        secondNBATeams.Append(team.AllStarTeam.Year.ToString());
+                        break;
+                    case "ThirdAllNBA":
+                        thirdNBATeams.Append(team.AllStarTeam.Year.ToString());
+                        break;
+                    case "AllDefensive":
+                        allDefensiveTeams.Append(team.AllStarTeam.Year.ToString());
+                        break;
+                    case "AllRookie":
+                        allRookieTeams.Append(team.AllStarTeam.Year.ToString());
+                        break;
+                    default:
+                        break;
                 }
             }
 
             foreach (var award in player.Awards)
             {
-                if (award.Name.ToString() == "MVP")
+                switch (award.Name.ToString())
                 {
-                    MVPs.Append(award.Year.ToString());
-                }
-
-                else if (award.Name.ToString() == "FinalsMVP")
-                {
-                    FinalsMVPs.Append(award.Year.ToString());
-                }
-
-                else if (award.Name.ToString() == "ROTY")
-                {
-                    ROTYs.Append(award.Year.ToString());
-                }
-
-                else if (award.Name.ToString() == "TopScorer")
-                {
-                    TopScorerTitles.Append(award.Year.ToString());
-                }
-
-                else if (award.Name.ToString() == "DPOTY")
-                {
-                    DPOTYs.Append(award.Year.ToString());
-                }
-
-                else if (award.Name.ToString() == "SixthMOTY")
-                {
-                    SixthMOTYs.Append(award.Year.ToString());
-                }
-
-                else if (award.Name.ToString() == "MIP")
-                {
-                    MIPs.Append(award.Year.ToString());
+                    case "MVP":
+                        MVPs.Append(award.Year.ToString());
+                        break;
+                    case "FinalsMVP":
+                        FinalsMVPs.Append(award.Year.ToString());
+                        break;
+                    case "ROTY":
+                        ROTYs.Append(award.Year.ToString());
+                        break;
+                    case "TopScorer":
+                        TopScorerTitles.Append(award.Year.ToString());
+                        break;
+                    case "DPOTY":
+                        DPOTYs.Append(award.Year.ToString());
+                        break;
+                    case "SixthMOTY":
+                        SixthMOTYs.Append(award.Year.ToString());
+                        break;
+                    case "MIP":
+                        MIPs.Append(award.Year.ToString());
+                        break;
+                    default:
+                        break;
                 }
             }
-
 
             var model = new PlayerAccomplishmentsListingServiceModel
             {

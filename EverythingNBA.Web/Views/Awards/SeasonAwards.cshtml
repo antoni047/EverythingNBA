@@ -4,7 +4,7 @@
 @{
     if (Model.Any())
     {
-         ViewData["Title"] = $"{Model.FirstOrDefault().Year} Awards";
+         ViewData["Title"] = $"{ViewBag.Year} Awards";
     }
 }
 
@@ -12,7 +12,7 @@
     <table class="m-5 table table-bordered table-hover awards-table">
         <thead class="awards-table-head bg-primary text-primary">
             <tr>
-                <th>@Model.FirstOrDefault().Year Awards</th>
+                <th>@ViewBag.Year Awards</th>
                 <th>Players</th>
                 <th>Team</th>
                 @if (User.Identity.IsAuthenticated)

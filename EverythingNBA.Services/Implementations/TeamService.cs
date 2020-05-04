@@ -164,39 +164,27 @@
             {
                 if (standings[i].Name == team.Name)
                 {
-                    if (i == 14)
-                    {
-                        var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
-                        teamInfront.Position = i;
-                        teamStandings.Add(teamInfront);
+                    AddTeamsToStandings(i);
 
-                        var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                        currentTeam.Position = i + 1;
-                        teamStandings.Add(currentTeam);
-                    }
-                    else if (i == 0)
+                    void AddTeamsToStandings(int i) 
                     {
-                        var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
-                        currentTeam.Position = i + 1;
-                        teamStandings.Add(currentTeam);
-
-                        var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
-                        teamBehind.Position = i + 2;
-                        teamStandings.Add(teamBehind);
-                    }
-                    else
-                    {
-                        var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
-                        teamInfront.Position = i;
-                        teamStandings.Add(teamInfront);
+                        if (i != 0)
+                        {
+                            var teamInfront = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i - 1]);
+                            teamInfront.Position = i;
+                            teamStandings.Add(teamInfront);
+                        }
 
                         var currentTeam = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i]);
                         currentTeam.Position = i + 1;
                         teamStandings.Add(currentTeam);
 
-                        var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
-                        teamBehind.Position = i + 2;
-                        teamStandings.Add(teamBehind);
+                        if (i != 14)
+                        {
+                            var teamBehind = mapper.Map<SeasonStatisticOverviewServiceModel>(standings[i + 1]);
+                            teamBehind.Position = i + 2;
+                            teamStandings.Add(teamBehind);
+                        }
                     }
                 }
             }
@@ -217,18 +205,11 @@
             return await this.GetTeamDetailsAsync(teamId, year);
         }
 
-        public async Task<TeamOverviewServiceModel> GetTeamAsync(int teamId)
-        {
-            var team = await this.db.Teams.FindAsync(teamId);
-
-            return mapper.Map<TeamOverviewServiceModel>(team);
-        }
-
         public async Task<TeamOverviewServiceModel> GetTeamAsync(string name)
         {
-            var teamId = await this.db.Teams.Where(t => t.Name == name).Select(t => t.Id).FirstOrDefaultAsync();
+            var team = await this.db.Teams.Where(t => t.Name == name).FirstOrDefaultAsync();
 
-            return await this.GetTeamAsync(teamId);
+            return mapper.Map<TeamOverviewServiceModel>(team);
         }
 
         public async Task<bool> RemoveGameAsync(int gameId, int teamId)

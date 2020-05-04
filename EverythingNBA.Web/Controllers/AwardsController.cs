@@ -27,6 +27,7 @@
         {
             var awards = await this.awardService.GetSeasonAwardsAsync(year);
 
+            ViewBag.Year = year;
             return this.View(awards);
         }
 

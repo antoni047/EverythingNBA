@@ -141,13 +141,13 @@
 
             var model = mapper.Map<GetSeriesDetailsServiceModel>(series);
 
-            var game1 = series.Game1 != null ? mapper.Map<GameDetailsServiceModel>(series.Game1) : null;
-            var game2 = series.Game2 != null ? mapper.Map<GameDetailsServiceModel>(series.Game2) : null;
-            var game3 = series.Game3 != null ? mapper.Map<GameDetailsServiceModel>(series.Game3) : null;
-            var game4 = series.Game4 != null ? mapper.Map<GameDetailsServiceModel>(series.Game4) : null;
-            var game5 = series.Game5 != null ? mapper.Map<GameDetailsServiceModel>(series.Game5) : null;
-            var game6 = series.Game6 != null ? mapper.Map<GameDetailsServiceModel>(series.Game6) : null;
-            var game7 = series.Game7 != null ? mapper.Map<GameDetailsServiceModel>(series.Game7) : null;
+            var game1 = mapper.Map<GameDetailsServiceModel>(series.Game1) ?? null;
+            var game2 = mapper.Map<GameDetailsServiceModel>(series.Game2) ?? null;
+            var game3 = mapper.Map<GameDetailsServiceModel>(series.Game3) ?? null;
+            var game4 = mapper.Map<GameDetailsServiceModel>(series.Game4) ?? null;
+            var game5 = mapper.Map<GameDetailsServiceModel>(series.Game5) ?? null;
+            var game6 = mapper.Map<GameDetailsServiceModel>(series.Game6) ?? null;
+            var game7 = mapper.Map<GameDetailsServiceModel>(series.Game7) ?? null;
 
             model.Games = new List<GameDetailsServiceModel>() { game1, game2, game3, game4, game5, game6, game7 };
 

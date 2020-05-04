@@ -122,34 +122,61 @@
                 {
                     if (model.Year == award.Year)
                     {
-                        if (award.Name.ToString() == "MVP")
+                        switch (award.Name.ToString())
                         {
-                            model.MVP = award.Winner.FirstName + " " + award.Winner.LastName;
+                            case "MVP":
+                                model.MVP = award.Winner.FirstName + " " + award.Winner.LastName;
+                                break;
+                            case "FinalsMVP":
+                                model.FinalsMVP = award.Winner.FirstName + " " + award.Winner.LastName;
+                                break;
+                            case "ROTY":
+                                model.ROTY = award.Winner.FirstName + " " + award.Winner.LastName;
+                                break;
+                            case "TopScorer":
+                                model.TopScorer = award.Winner.FirstName + " " + award.Winner.LastName;
+                                break;
+                            case "DPOTY":
+                                model.DPOTY = award.Winner.FirstName + " " + award.Winner.LastName;
+                                break;
+                            case "SixthMOTY":
+                                model.SixthMOTY = award.Winner.FirstName + " " + award.Winner.LastName;
+                                break;
+                            case "MIP":
+                                model.MIP = award.Winner.FirstName + " " + award.Winner.LastName;
+                                break;
+                            default:
+                                break;
                         }
-                        else if (award.Name.ToString() == "FinalsMVP")
-                        {
-                            model.FinalsMVP = award.Winner.FirstName + " " + award.Winner.LastName;
-                        }
-                        else if (award.Name.ToString() == "MIP")
-                        {
-                            model.MIP = award.Winner.FirstName + " " + award.Winner.LastName;
-                        }
-                        else if (award.Name.ToString() == "DPOTY")
-                        {
-                            model.DPOTY = award.Winner.FirstName + " " + award.Winner.LastName;
-                        }
-                        else if (award.Name.ToString() == "ROTY")
-                        {
-                            model.ROTY = award.Winner.FirstName + " " + award.Winner.LastName;
-                        }
-                        else if (award.Name.ToString() == "TopScorer")
-                        {
-                            model.TopScorer = award.Winner.FirstName + " " + award.Winner.LastName;
-                        }
-                        else if (award.Name.ToString() == "SixthMOTY")
-                        {
-                            model.SixthMOTY = award.Winner.FirstName + " " + award.Winner.LastName;
-                        }
+
+                        //if (award.Name.ToString() == "MVP")
+                        //{
+                        //    model.MVP = award.Winner.FirstName + " " + award.Winner.LastName;
+                        //}
+                        //else if (award.Name.ToString() == "FinalsMVP")
+                        //{
+                        //    model.FinalsMVP = award.Winner.FirstName + " " + award.Winner.LastName;
+                        //}
+                        //else if (award.Name.ToString() == "MIP")
+                        //{
+                        //    model.MIP = award.Winner.FirstName + " " + award.Winner.LastName;
+                        //}
+                        //else if (award.Name.ToString() == "DPOTY")
+                        //{
+                        //    model.DPOTY = award.Winner.FirstName + " " + award.Winner.LastName;
+                        //}
+                        //else if (award.Name.ToString() == "ROTY")
+                        //{
+                        //    model.ROTY = award.Winner.FirstName + " " + award.Winner.LastName;
+                        //}
+                        //else if (award.Name.ToString() == "TopScorer")
+                        //{
+                        //    model.TopScorer = award.Winner.FirstName + " " + award.Winner.LastName;
+                        //}
+                        //else if (award.Name.ToString() == "SixthMOTY")
+                        //{
+                        //    model.SixthMOTY = award.Winner.FirstName + " " + award.Winner.LastName;
+                        //}
                     }
                 }
             }

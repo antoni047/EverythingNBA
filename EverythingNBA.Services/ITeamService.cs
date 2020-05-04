@@ -23,8 +23,6 @@
 
         Task<ICollection<TeamListingSerivceModel>> GetAllTeamsAsync();
 
-        Task<TeamOverviewServiceModel> GetTeamAsync(int teamId);
-
         Task<TeamOverviewServiceModel> GetTeamAsync(string name);
     }
 }
