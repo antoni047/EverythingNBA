@@ -9,6 +9,7 @@
     using EverythingNBA.Web.Models.AllStarTeams;
     using EverythingNBA.Services.Models.Season;
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Authorization;
 
     public class AllStarTeamsController : Controller
     {
@@ -41,12 +42,14 @@
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             return this.View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(AddAllStarTeamInputModel model)
         {
             if (!ModelState.IsValid)
@@ -70,6 +73,7 @@
 
         [HttpGet]
         [Route("[controller]/[action]/{allStarTeamId:int}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int allStarTeamId)
         {
             var model = await this.astService.GetAllStarTeamAsync(allStarTeamId);
@@ -80,6 +84,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Delete (GetSeasonDetailsServiceModel model, int allStarTeamId)
         {
             var astTeam = await this.astService.GetAllStarTeamAsync(allStarTeamId);

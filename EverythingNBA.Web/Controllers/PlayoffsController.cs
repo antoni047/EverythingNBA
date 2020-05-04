@@ -1,6 +1,7 @@
 ﻿namespace EverythingNBA.Web.Controllers
 {
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using Services;
@@ -28,6 +29,7 @@
 
 
         [Route("[controller]/[action]/{playoffId:int}")]
+        [Authorize]
         public async Task<IActionResult> FinishQuarterFinals(int playoffId)
         {
             var playoff = await this.playoffService.GetDetailsAsync(playoffId);
@@ -44,6 +46,7 @@
         }
 
         [Route("[controller]/[action]/{playoffId:int}")]
+        [Authorize]
         public async Task<IActionResult> FinishSemiFinals(int playoffId)
         {
             var playoff = await this.playoffService.GetDetailsAsync(playoffId);
@@ -60,6 +63,7 @@
         }
 
         [Route("[controller]/[action]/{playoffId:int}")]
+        [Authorize]
         public async Task<IActionResult> FinishConferenceFinals(int playoffId)
         {
             var playoff = await this.playoffService.GetDetailsAsync(playoffId);
@@ -76,6 +80,7 @@
         }
 
         [Route("[controller]/[action]/{playoffId:int}")]
+        [Authorize]
         public async Task<IActionResult> SetStartingSeries(int playoffId)
         {
             var playoff = await this.playoffService.GetDetailsAsync(playoffId);

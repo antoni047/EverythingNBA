@@ -9,6 +9,7 @@
     using Services;
     using Services.Models.Player;
     using Web.Models.Players;
+    using Microsoft.AspNetCore.Authorization;
 
     public class PlayersController : Controller
     {
@@ -66,12 +67,14 @@
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             return this.View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(PlayerInputModel model)
         {
             var year = this.GetCurrentSeasonYear();
@@ -102,6 +105,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         [Route("[controller]/[action]/{playerId:int}")]
         public async Task<IActionResult> Edit(int playerId)
         {
@@ -113,6 +117,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(PlayerInputModel inputModel)
         {
             var model = mapper.Map<PlayerDetailsServiceModel>(inputModel);
@@ -131,6 +136,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         [Route("[controller]/[action]/{playerId:int}")]
         public async Task<IActionResult> Delete(int playerId)
         {
@@ -140,6 +146,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Delete(PlayerDetailsServiceModel model)
         {
             var deleted = await this.playerService.DeletePlayerAsync(model.Id);

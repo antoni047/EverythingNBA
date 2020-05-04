@@ -8,6 +8,7 @@
     using Services;
     using Web.Models.Series;
     using Web.Models.Games;
+    using Microsoft.AspNetCore.Authorization;
 
     public class SeriesController : Controller
     {
@@ -41,6 +42,7 @@
 
 
         [HttpGet]
+        [Authorize]
         [Route("[controller]/[action]/{seriesId:int}")]
         public async Task<IActionResult> Delete(int seriesId)
         {
@@ -57,6 +59,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Delete(SeriesInputModel model)
         {
             if (!ModelState.IsValid)
@@ -72,6 +75,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         [Route("[controller]/[action]/{seriesId:int}")]
         public async Task<IActionResult> AddGame(int seriesId)
         {
@@ -98,6 +102,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> AddGame(SeriesGameInputModel model)
         {
             if (!ModelState.IsValid)

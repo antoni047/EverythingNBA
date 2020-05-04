@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using AutoMapper;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     using Services;
@@ -39,12 +40,14 @@
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             return this.View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(AwardDetailsInputModel model)
         {
             if (!ModelState.IsValid)
@@ -71,6 +74,7 @@
 
         [HttpGet]
         [Route("[controller]/[action]/{awardId:int}")]
+        [Authorize]
         public async Task<IActionResult> Edit(int awardId)
         {
             var award = await this.awardService.GetAwardDetails(awardId);
@@ -82,6 +86,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(AwardDetailsInputModel model)
         {
             if (!ModelState.IsValid)
@@ -99,6 +104,7 @@
 
         [HttpGet]
         [Route("[controller]/[action]/{awardId:int}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int awardId)
         {
             var award = await this.awardService.GetAwardDetails(awardId);
@@ -110,6 +116,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Delete (AwardDetailsInputModel model)
         {
             if (!ModelState.IsValid)

@@ -8,6 +8,7 @@
     using Services;
     using EverythingNBA.Web.Models.Seasons;
     using EverythingNBA.Services.Models.Season;
+    using Microsoft.AspNetCore.Authorization;
 
     public class SeasonsController : Controller
     {
@@ -50,12 +51,14 @@
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             return this.View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(SeasonDetailsInputModel season)
         {
             if (!ModelState.IsValid)
@@ -75,6 +78,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         [Route("[controller]/[action]/{seasonId:int}")]
         public async Task<IActionResult> Edit(int seasonId)
         {
@@ -91,6 +95,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(SeasonDetailsInputModel inputModel)
         {
             if (!ModelState.IsValid)
@@ -111,6 +116,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         [Route("[controller]/[action]/{seasonId:int}")]
         public async Task<IActionResult> Delete(int seasonId)
         {
@@ -124,6 +130,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Delete(SeasonDetailsInputModel model, int seasonId)
         {
             var season = await this.seasonService.GetDetailsAsync(seasonId);

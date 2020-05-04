@@ -12,6 +12,7 @@
     using Services.Models.GameStatistic;
     using Web.Models.Games;
     using System.Globalization;
+    using Microsoft.AspNetCore.Authorization;
 
     public class GamesController : Controller
     {
@@ -128,12 +129,14 @@
         }
 
         [HttpGet]
+        [Authorize]
         public IActionResult Add()
         {
             return this.View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(GameInputModel inputModel)
         {
             if (!ModelState.IsValid)
@@ -174,6 +177,7 @@
         }
 
         [HttpGet]
+        [Authorize]
         [Route("[controller]/[action]/{gameId:int}")]
         public async Task<IActionResult> EditGame(int gameId)
         {
@@ -193,6 +197,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> EditGame(GameInputModel inputModel)
         {
             if (!ModelState.IsValid)
@@ -221,6 +226,7 @@
 
         [HttpGet]
         [Route("[controller]/[action]/{gameStatisticId:int}")]
+        [Authorize]
         public async Task<IActionResult> EditGameStatistic(int gameStatisticId)
         {
             var gameStatistic = await this.gameStatisticService.GetGameStatisticsAsync(gameStatisticId);
@@ -243,6 +249,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> EditGameStatistic(GameStatisticInputModel inputModel)
         {
             if (!ModelState.IsValid)
@@ -263,6 +270,7 @@
 
         [HttpGet]
         [Route("[controller]/[action]/{gameId:int}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int gameId)
         {
             var game = await this.gameService.GetGameAsync(gameId);
@@ -280,6 +288,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Delete(GameInputModel model)
         {
             var game = await this.gameService.GetGameAsync(model.Id);

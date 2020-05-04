@@ -9,6 +9,7 @@
     using Services.Models.Team;
     using Web.Models.Teams;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Authorization;
 
     public class TeamsController : Controller
     {
@@ -59,6 +60,7 @@
 
         [HttpGet]
         [Route("[controller]/[action]/{teamId:int}")]
+        [Authorize]
         public async Task<IActionResult> Edit(int teamId)
         {
             var year = this.GetCurrentSeasonYear();
@@ -75,6 +77,7 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Edit(TeamInputModel inputModel)
         {
             if (!ModelState.IsValid)
