@@ -7,63 +7,56 @@
 
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Add Player</h3>
 
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="m-3 form-group player-form">
-        <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Players" asp-action="Add" method="post">
+<div class="m-3 form-group player-form">
+    <form class="m-3 form-group" enctype="multipart/form-data" asp-controller="Players" asp-action="Add" method="post">
 
-            <div class="form-row">
-                <div class="col">
-                    <input type="text" class="form-control" asp-for="FirstName" placeholder="First name...">
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control" asp-for="LastName" placeholder="Last name...">
-                </div>
-            </div> <br />
-
-            <input placeholder="Team..." asp-for="CurrentTeam" type="text" class="form-control" /> <br />
-            <input placeholder="Rookie year..." asp-for="RookieYear" type="number" class="form-control" /><br />
-            <input placeholder="Age..." asp-for="Age" type="number" class="form-control" /><br />
-            <input placeholder="Height" asp-for="Height" type="number" class="form-control" /><br />
-            <input placeholder="Weight" asp-for="Weight" type="number" class="form-control" /> <br />
-            <input placeholder="Shirt number..." asp-for="ShirtNumber" type="number" class="form-control" /> <br />
-
-            <select asp-for="Position" id="position" class="form-control">
-                Position
-                <option value="" selected disabled hidden>Position...</option>
-                <option value="PointGuard">Point Guard</option>
-                <option value="ShootingGuard">Shooting Guard</option>
-                <option value="SmallForward">Small Forward</option>
-                <option value="PowerForward">Power Forward</option>
-                <option value="Center">Center</option>
-            </select> <br />
-
-            <label class="mr-3">Starter:</label>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" asp-for="IsStarter" id="inlineRadio1" value="true" checked>
-                <label class="form-check-label" for="inlineRadio1">Yes</label>
+        <div class="form-row">
+            <div class="col">
+                <input type="text" class="form-control" asp-for="FirstName" placeholder="First name...">
             </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" asp-for="IsStarter" id="inlineRadio2" value="false">
-                <label class="form-check-label" for="inlineRadio2">No</label>
+            <div class="col">
+                <input type="text" class="form-control" asp-for="LastName" placeholder="Last name...">
             </div>
+        </div> <br />
 
-            <div class="custom-file">
-                <input type="file" asp-for="Image" class="custom-file-input" id="customFile"><br />
-                <label class="custom-file-label" for="customFile">Upload picture...</label><br />
-            </div>
+        <input placeholder="Team..." asp-for="CurrentTeam" type="text" class="form-control" /> <br />
+        <input placeholder="Rookie year..." asp-for="RookieYear" type="number" class="form-control" /><br />
+        <input placeholder="Age..." asp-for="Age" type="number" class="form-control" /><br />
+        <input placeholder="Height" asp-for="Height" type="number" class="form-control" /><br />
+        <input placeholder="Weight" asp-for="Weight" type="number" class="form-control" /> <br />
+        <input placeholder="Shirt number..." asp-for="ShirtNumber" type="number" class="form-control" /> <br />
 
-            <input placeholder="Paste twitter link here..." asp-for="TwitterLink" type="text" class="form-control" /> <br />
-            <input placeholder="Paste insagram link here..." asp-for="InstagramLink" type="text" class="form-control" /> <br />
+        <select asp-for="Position" id="position" class="form-control">
+            Position
+            <option value="" selected disabled hidden>Position...</option>
+            <option value="PointGuard">Point Guard</option>
+            <option value="ShootingGuard">Shooting Guard</option>
+            <option value="SmallForward">Small Forward</option>
+            <option value="PowerForward">Power Forward</option>
+            <option value="Center">Center</option>
+        </select> <br />
 
-            <button type="submit" class="btn btn-secondary">Submit</button>
-        </form>
-    </div>
-}
-else
-{
-    <h4 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Log in to access this page</h4>
-}
+        <label class="mr-3">Starter:</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" asp-for="IsStarter" id="inlineRadio1" value="true" checked>
+            <label class="form-check-label" for="inlineRadio1">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" asp-for="IsStarter" id="inlineRadio2" value="false">
+            <label class="form-check-label" for="inlineRadio2">No</label>
+        </div>
+
+        <div class="custom-file">
+            <input type="file" asp-for="Image" class="custom-file-input" id="customFile"><br />
+            <label class="custom-file-label" for="customFile">Upload picture...</label><br />
+        </div>
+
+        <input placeholder="Paste twitter link here..." asp-for="TwitterLink" type="text" class="form-control" /> <br />
+        <input placeholder="Paste insagram link here..." asp-for="InstagramLink" type="text" class="form-control" /> <br />
+
+        <button type="submit" class="btn btn-secondary">Submit</button>
+    </form>
+</div>
 
 
 <script>

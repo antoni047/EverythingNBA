@@ -8,79 +8,70 @@
 <h3 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Delete Player</h3>
 
 
-@if (User.Identity.IsAuthenticated)
-{
-    <div class="m-3 form-group player-form container-fluid row">
-        <div class="col-md-4">
-            <img class="player-image w-100" src="@Model.ImageURL" alt="Player Image" />
-        </div>
-
-        <form class="m-3 col-md-8 form-group" enctype="multipart/form-data" asp-controller="Players" asp-action="Delete" method="post">
-
-            <input type="hidden" class="form-control" asp-for="Id">
-
-            <div class="form-row">
-                <div class="col">
-                    <label>First Name</label>
-                    <input type="text" class="form-control" asp-for="FirstName" placeholder="First name..." readonly>
-                </div>
-                <div class="col">
-                    <label>Last Name</label>
-                    <input type="text" class="form-control" asp-for="LastName" placeholder="Last name..." readonly>
-                </div>
-            </div> <br />
-
-            <label>Team</label>
-            <input placeholder="Team..." asp-for="CurrentTeam" type="text" class="form-control" readonly /> <br />
-            <label>Rookie Year</label>
-            <input placeholder="Rookie year..." asp-for="RookieYear" type="number" class="form-control" readonly /><br />
-            <label>Age</label>
-            <input placeholder="Age..." asp-for="Age" type="number" class="form-control" readonly /><br />
-            <label>Height</label>
-            <input placeholder="Height" asp-for="Height" type="number" class="form-control" readonly /><br />
-            <label>Weight</label>
-            <input placeholder="Weight" asp-for="Weight" type="number" class="form-control" readonly /> <br />
-            <label>Shirt Number</label>
-            <input placeholder="Shirt number..." asp-for="ShirtNumber" type="number" class="form-control" readonly /> <br />
-
-            <label>Position</label>
-            <select asp-for="Position" id="position" class="form-control" readonly>
-                Position
-                <option value="" selected disabled hidden>Position...</option>
-                <option>Point Guard</option>
-                <option>Shooting Guard</option>
-                <option>Small Forward</option>
-                <option>Power Forward</option>
-                <option>Center</option>
-            </select> <br />
-
-            <label class="mr-3">Starter:</label>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" asp-for="IsStarter" id="inlineRadio1" value="true" checked readonly>
-                <label class="form-check-label" for="inlineRadio1">Yes</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" asp-for="IsStarter" id="inlineRadio2" value="false" readonly>
-                <label class="form-check-label" for="inlineRadio2">No</label>
-            </div>
-
-
-
-            <label>Twitter</label>
-            <input placeholder="Paste twitter link here..." asp-for="TwitterLink" type="text" class="form-control" readonly /> <br />
-            <label>Instagram</label>
-            <input placeholder="Paste insagram link here..." asp-for="InstagramLink" type="text" class="form-control" readonly /> <br />
-
-            <button type="submit" class="btn btn-secondary">Delete</button>
-        </form>
+<div class="m-3 form-group player-form container-fluid row">
+    <div class="col-md-4">
+        <img class="player-image w-100" src="@Model.ImageURL" alt="Player Image" />
     </div>
 
-}
-else
-{
-    <h4 class="mx-3 px-3  pt-3 pb-0 w-100 player-form-label">Log in to access this page</h4>
-}
+    <form class="m-3 col-md-8 form-group" enctype="multipart/form-data" asp-controller="Players" asp-action="Delete" method="post">
 
+        <input type="hidden" class="form-control" asp-for="Id">
+
+        <div class="form-row">
+            <div class="col">
+                <label>First Name</label>
+                <input type="text" class="form-control" asp-for="FirstName" placeholder="First name..." readonly>
+            </div>
+            <div class="col">
+                <label>Last Name</label>
+                <input type="text" class="form-control" asp-for="LastName" placeholder="Last name..." readonly>
+            </div>
+        </div> <br />
+
+        <label>Team</label>
+        <input placeholder="Team..." asp-for="CurrentTeam" type="text" class="form-control" readonly /> <br />
+        <label>Rookie Year</label>
+        <input placeholder="Rookie year..." asp-for="RookieYear" type="number" class="form-control" readonly /><br />
+        <label>Age</label>
+        <input placeholder="Age..." asp-for="Age" type="number" class="form-control" readonly /><br />
+        <label>Height</label>
+        <input placeholder="Height" asp-for="Height" type="number" class="form-control" readonly /><br />
+        <label>Weight</label>
+        <input placeholder="Weight" asp-for="Weight" type="number" class="form-control" readonly /> <br />
+        <label>Shirt Number</label>
+        <input placeholder="Shirt number..." asp-for="ShirtNumber" type="number" class="form-control" readonly /> <br />
+
+        <label>Position</label>
+        <select asp-for="Position" id="position" class="form-control" readonly>
+            Position
+            <option value="" selected disabled hidden>Position...</option>
+            <option>Point Guard</option>
+            <option>Shooting Guard</option>
+            <option>Small Forward</option>
+            <option>Power Forward</option>
+            <option>Center</option>
+        </select> <br />
+
+        <label class="mr-3">Starter:</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" asp-for="IsStarter" id="inlineRadio1" value="true" checked readonly>
+            <label class="form-check-label" for="inlineRadio1">Yes</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" asp-for="IsStarter" id="inlineRadio2" value="false" readonly>
+            <label class="form-check-label" for="inlineRadio2">No</label>
+        </div>
+
+
+
+        <label>Twitter</label>
+        <input placeholder="Paste twitter link here..." asp-for="TwitterLink" type="text" class="form-control" readonly /> <br />
+        <label>Instagram</label>
+        <input placeholder="Paste insagram link here..." asp-for="InstagramLink" type="text" class="form-control" readonly /> <br />
+
+        <button type="submit" class="btn btn-secondary">Delete</button>
+    </form>
+</div>
 
 <script>
     $(".custom-file-input").on("change", function () {
